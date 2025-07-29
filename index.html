@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Larrosa Camiones - 40 años de historias en cada kilómetro</title>
+    <meta name="description" content="Desde 1977 conectando a quienes mueven el país. Especialistas en comercialización de camiones. Más de 40 años de trayectoria en el mercado.">
+    <meta name="keywords" content="camiones, venta camiones, Larrosa, 1977, transportistas, Córdoba, Scania, Volvo, Mercedes">
+    <link rel="stylesheet" href="styles/main.css">
+    <script type="module" src="scripts/main.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Larrosa Camiones - 40 años de historias en cada kilómetro">
+    <meta property="og:description" content="Desde 1977 conectando a quienes mueven el país. Especialistas en comercialización de camiones.">
+    <meta property="og:image" content="assets/images/og-image.jpg">
+    <meta property="og:url" content="https://larrosacamiones.com">
+    <meta property="og:type" content="website">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="assets/images/logo-larrosa.png" alt="Larrosa Camiones Logo" class="logo">
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link active">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="sections/unidades-disponibles.html" class="nav-link">Unidades Disponibles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="sections/larrosa-camiones.html" class="nav-link">Larrosa Camiones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="sections/contacto.html" class="nav-link">Contacto</a>
+                    </li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="https://wa.me/5493512345678" class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp
+                    </a>
+                    <a href="sections/randon.html" class="randon-btn" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>
+                        Randon
+                    </a>
+                </div>
+                <div class="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-background">
+                <div class="hero-slider">
+                    <div class="hero-slide active">
+                        <img src="assets/images/hero/volvo-trucks-hero.jpg" alt="Camiones usados en los que puede confiar - Larrosa">
+                    </div>
+                    <div class="hero-slide">
+                        <img src="assets/images/hero/larrosa-camiones-hero-2.jpg" alt="40 años de historias en cada kilómetro">
+                    </div>
+                    <div class="hero-slide">
+                        <img src="assets/images/hero/larrosa-camiones-hero-3.jpg" alt="Desde 1977 conectando a quienes mueven el país">
+                    </div>
+                </div>
+                <div class="hero-overlay"></div>
+            </div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">40 años de historias en cada kilómetro</h1>
+                    <p class="hero-subtitle">Desde 1977 conectando a quienes mueven el país. Especialistas en comercialización de camiones con más de 40 años de trayectoria en el mercado.</p>
+                    <div class="hero-categories">
+                        <a href="sections/unidades-disponibles.html?tipo=tractor" class="hero-category-btn">
+                            <div class="category-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <span>Tractora</span>
+                        </a>
+                        <a href="sections/unidades-disponibles.html?tipo=chasis" class="hero-category-btn">
+                            <div class="category-icon">
+                                <i class="fas fa-truck-pickup"></i>
+                            </div>
+                            <span>Rígido</span>
+                        </a>
+                        <a href="sections/unidades-disponibles.html?tipo=remolques" class="hero-category-btn">
+                            <div class="category-icon">
+                                <i class="fas fa-trailer"></i>
+                            </div>
+                            <span>Remolque</span>
+                        </a>
+                        <a href="sections/unidades-disponibles.html?tipo=utilitarios" class="hero-category-btn">
+                            <div class="category-icon">
+                                <i class="fas fa-van-shuttle"></i>
+                            </div>
+                            <span>Utilitarios</span>
+                        </a>
+                        <a href="sections/unidades-disponibles.html?tipo=varios" class="hero-category-btn">
+                            <div class="category-icon">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                            <span>Varios</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- Hero Controls -->
+            <div class="hero-controls">
+                <button class="hero-prev" onclick="changeHeroSlide(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="hero-next" onclick="changeHeroSlide(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="hero-indicators">
+                <span class="indicator active" onclick="currentHeroSlide(1)"></span>
+                <span class="indicator" onclick="currentHeroSlide(2)"></span>
+                <span class="indicator" onclick="currentHeroSlide(3)"></span>
+            </div>
+        </section>
+
+        <!-- Sección Categorías -->
+        <!-- Esta sección se ha movido al hero, por lo que se elimina -->
+
+        <!-- Unidades Destacadas Section -->
+        <section class="unidades-destacadas-section" id="unidades-destacadas">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Unidades destacadas</h2>
+                    <p>Nuestras mejores unidades seleccionadas especialmente para ti</p>
+                </div>
+                
+                <div class="unidades-grid">
+                    <div class="unidad-card">
+                        <div class="unidad-image">
+                            <img src="assets/images/unidades/volvo-fh-destacado.jpg" alt="Volvo FH 460">
+                            <div class="unidad-status disponible">Disponible</div>
+                        </div>
+                        <div class="unidad-content">
+                            <h3>Volvo FH 460</h3>
+                            <div class="unidad-specs">
+                                <span class="spec"><i class="fas fa-calendar"></i> 2020</span>
+                                <span class="spec"><i class="fas fa-road"></i> 450.000 km</span>
+                                <span class="spec"><i class="fas fa-cog"></i> Automático</span>
+                            </div>
+                            <p class="unidad-description">Tractora Euro 6 con motor D13K de 460 HP. Caja de cambios automática I-Shift.</p>
+                            <div class="unidad-actions">
+                                <a href="sections/unidad-detalle.html?id=volvo-fh-460" class="unidad-cta">Ver detalles</a>
+                                <button class="consultar-precio-btn" onclick="consultarPrecio('volvo-fh-460')">Consultar precio</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unidad-card">
+                        <div class="unidad-image">
+                            <img src="assets/images/unidades/scania-r450-destacado.jpg" alt="Scania R 450">
+                            <div class="unidad-status disponible">Disponible</div>
+                        </div>
+                        <div class="unidad-content">
+                            <h3>Scania R 450</h3>
+                            <div class="unidad-specs">
+                                <span class="spec"><i class="fas fa-calendar"></i> 2019</span>
+                                <span class="spec"><i class="fas fa-road"></i> 520.000 km</span>
+                                <span class="spec"><i class="fas fa-cog"></i> Manual</span>
+                            </div>
+                            <p class="unidad-description">Tractora con motor DC13 de 450 HP. Transmisión manual de 12 velocidades.</p>
+                            <div class="unidad-actions">
+                                <a href="sections/unidad-detalle.html?id=scania-r450" class="unidad-cta">Ver detalles</a>
+                                <button class="consultar-precio-btn" onclick="consultarPrecio('scania-r450')">Consultar precio</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unidad-card">
+                        <div class="unidad-image">
+                            <img src="assets/images/unidades/mercedes-actros-destacado.jpg" alt="Mercedes-Benz Actros">
+                            <div class="unidad-status reservado">Reservado</div>
+                        </div>
+                        <div class="unidad-content">
+                            <h3>Mercedes-Benz Actros 2046</h3>
+                            <div class="unidad-specs">
+                                <span class="spec"><i class="fas fa-calendar"></i> 2021</span>
+                                <span class="spec"><i class="fas fa-road"></i> 320.000 km</span>
+                                <span class="spec"><i class="fas fa-cog"></i> Automático</span>
+                            </div>
+                            <p class="unidad-description">Tractora con motor OM 471 de 460 HP. Transmisión PowerShift automática.</p>
+                            <div class="unidad-actions">
+                                <a href="sections/unidad-detalle.html?id=mercedes-actros-2046" class="unidad-cta">Ver detalles</a>
+                                <button class="consultar-precio-btn disabled" disabled>Reservado</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ver-todas-unidades">
+                    <a href="sections/unidades-disponibles.html" class="cta-button-secondary">
+                        Ver todas las unidades <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ¿Por Qué Larrosa Camiones? Section -->
+        <section class="por-que-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>¿Por qué Larrosa Camiones?</h2>
+                    <p>Más de 40 años de experiencia nos avalan como líderes en el sector</p>
+                </div>
+                
+                <div class="valores-grid">
+                    <div class="valor-card">
+                        <div class="valor-icon">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <h3>Trayectoria y experiencia</h3>
+                        <p>1977 - 2025. Más de 40 años de trayectoria en el mercado. Conocemos cada aspecto del negocio del transporte y entendemos las necesidades de nuestros clientes.</p>
+                    </div>
+
+                    <div class="valor-card">
+                        <div class="valor-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3>Seguridad y confianza</h3>
+                        <p>Trabajamos con total transparencia y honestidad. Cada unidad pasa por rigurosos controles de calidad antes de ser ofrecida a nuestros clientes.</p>
+                    </div>
+
+                    <div class="valor-card">
+                        <div class="valor-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Sólido respaldo comercial</h3>
+                        <p>Contamos con el respaldo de las mejores marcas del mercado y un equipo comercial que te acompaña en todo el proceso de compra.</p>
+                    </div>
+
+                    <div class="valor-card">
+                        <div class="valor-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>Orientación al cliente</h3>
+                        <p>"El cliente es nuestra prioridad, brindamos en cada momento experiencias únicas." Atención personalizada y seguimiento post-venta garantizado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonios Section -->
+        <section class="testimonios-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Testimonios</h2>
+                    <p>Lo que dicen nuestros clientes sobre nosotros</p>
+                </div>
+                
+                <div class="testimonios-grid">
+                    <div class="testimonio-card">
+                        <div class="testimonio-content">
+                            <div class="testimonio-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p>"Ya van 40 años de confianza con Larrosa Camiones. Son empresarios serios y de palabra. Cada unidad que he comprado ha sido una excelente inversión para mi empresa."</p>
+                        </div>
+                        <div class="testimonio-author">
+                            <img src="assets/images/testimonios/bruno-leonard.jpg" alt="Bruno Leonard">
+                            <div class="author-info">
+                                <h4>Bruno Leonard</h4>
+                                <span>Empresario</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonio-card">
+                        <div class="testimonio-content">
+                            <div class="testimonio-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p>"Compramos varias unidades para nuestro proyecto. Desde el momento que pisé el local nos orientaron, asesoraron y ayudaron con todo el papeleo. Un servicio integral excepcional."</p>
+                        </div>
+                        <div class="testimonio-author">
+                            <img src="assets/images/testimonios/lionel-constructora.jpg" alt="Lionel - Constructora Ferco">
+                            <div class="author-info">
+                                <h4>Lionel</h4>
+                                <span>Constructora Ferco</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonio-card">
+                        <div class="testimonio-content">
+                            <div class="testimonio-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p>"Muy profesionales! Hice el servicio que me tocaba hacer y fue espectacular. Los técnicos son muy capacitados y el trato es excelente. Super recomendables."</p>
+                        </div>
+                        <div class="testimonio-author">
+                            <img src="assets/images/testimonios/matias-guerra.jpg" alt="Matías Guerra">
+                            <div class="author-info">
+                                <h4>Matías Guerra</h4>
+                                <span>Transportista</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Financiamiento Section -->
+        <section class="financiamiento-section">
+            <div class="container">
+                <div class="financiamiento-content">
+                    <div class="financiamiento-overlay"></div>
+                    <div class="financiamiento-text">
+                        <h2>Te ponemos un precio a tu usado.</h2>
+                        <p>Dejanos los datos de tu vehículo para poder realizarte una cotización.</p>
+                        <a href="sections/financiamiento.html" class="cta-button">
+                            Quiero cotizar mi vehículo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Marcas Section -->
+        <section class="marcas-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Nuestras marcas</h2>
+                    <p>Trabajamos con las marcas más confiables del mercado</p>
+                </div>
+                
+                <div class="marcas-carousel">
+                    <div class="marcas-container">
+                        <div class="marca-item">
+                            <img src="assets/images/marcas/scania-logo.png" alt="Scania">
+                        </div>
+                        <div class="marca-item">
+                            <img src="assets/images/marcas/volvo-logo.png" alt="Volvo">
+                        </div>
+                        <div class="marca-item">
+                            <img src="assets/images/marcas/mercedes-logo.png" alt="Mercedes-Benz">
+                        </div>
+                        <div class="marca-item">
+                            <img src="assets/images/marcas/iveco-logo.png" alt="Iveco">
+                        </div>
+                        <div class="marca-item">
+                            <img src="assets/images/marcas/volkswagen-logo.png" alt="Volkswagen">
+                        </div>
+                        <div class="marca-item">
+                            <img src="assets/images/marcas/renault-logo.png" alt="Renault">
+                        </div>
+                        <div class="marca-item">
+                            <img src="assets/images/marcas/ford-logo.png" alt="Ford">
+                        </div>
+                        <div class="marca-item">
+                            <img src="assets/images/marcas/randon-logo.png" alt="Randon">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Randon Section -->
+        <section class="randon-section">
+            <div class="container">
+                <div class="randon-content">
+                    <div class="randon-text">
+                        <div class="randon-logo">
+                            <img src="assets/images/logos/randon-argentina.png" alt="Randon Argentina">
+                        </div>
+                        <h2>Concesión oficial Randon Argentina</h2>
+                        <p>Larrosa Camiones cuenta con la concesión oficial de Randon Argentina, líder en fabricación de implementos para el transporte de cargas.</p>
+                        <a href="sections/randon.html" class="cta-button">
+                            Conocé más sobre Randon
+                        </a>
+                    </div>
+                    <div class="randon-image">
+                        <img src="assets/images/randon/randon-implementos.jpg" alt="Implementos Randon">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Final Section -->
+        <section class="cta-final-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>¿Listo para encontrar tu próximo camión?</h2>
+                    <p>Contactanos y te ayudamos a encontrar la unidad perfecta para tu negocio</p>
+                    <div class="cta-buttons">
+                        <a href="sections/unidades-disponibles.html" class="cta-button">
+                            <i class="fas fa-truck"></i>
+                            Ver todas las unidades
+                        </a>
+                        <a href="https://wa.me/5493512345678" class="cta-button-outline" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="assets/images/logo-larrosa.png" alt="Larrosa Camiones Logo" class="footer-logo">
+                    <p>Desde 1977 conectando a quienes mueven el país. Más de 40 años de historias en cada kilómetro.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://wa.me/5493512345678" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Secciones</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="sections/unidades-disponibles.html">Unidades Disponibles</a></li>
+                        <li><a href="sections/larrosa-camiones.html">Larrosa Camiones</a></li>
+                        <li><a href="sections/contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Servicios</h4>
+                    <ul>
+                        <li><a href="sections/financiamiento.html">Financiamiento</a></li>
+                        <li><a href="sections/randon.html">Randon Argentina</a></li>
+                        <li><a href="sections/servicio-tecnico.html">Servicio Técnico</a></li>
+                        <li><a href="sections/garantias.html">Garantías</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Córdoba, Argentina</p>
+                        <p><i class="fas fa-phone"></i> +54 9 351 234-5678</p>
+                        <p><i class="fas fa-envelope"></i> info@larrosacamiones.com</p>
+                        <p><i class="fas fa-clock"></i> Lun-Vie: 8:00-18:00hs | Sáb: 8:00-13:00hs</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Larrosa Camiones. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="sections/privacidad.html">Política de Privacidad</a>
+                    <a href="sections/terminos.html">Términos y Condiciones</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="scripts/main.js"></script>
+</body>
+</html>
