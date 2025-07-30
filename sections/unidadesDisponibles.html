@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidades Disponibles - Larrosa Camiones</title>
+    <meta name="description" content="Explora nuestra amplia selección de camiones usados. Filtra por marca, año, kilómetros y más. Más de 40 años de experiencia en el sector.">
+    <meta name="keywords" content="camiones usados, venta camiones, Larrosa, Córdoba, Scania, Volvo, Mercedes, tractoras, rígidos">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/unidadesDisponibles.css">
+    <script type="module" src="../scripts/unidadesDisponibles.js"></script>
+
+    
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="../index.html">
+                        <img src="../assets/images/logo-larrosa.png" alt="Larrosa Camiones Logo" class="logo">
+                    </a>
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="unidades-disponibles.html" class="nav-link active">Unidades Disponibles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="larrosa-camiones.html" class="nav-link">Larrosa Camiones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contacto.html" class="nav-link">Contacto</a>
+                    </li>
+                </ul>
+                <div class="nav-actions">
+                    <a href="https://wa.me/5493512345678" class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i>
+                        WhatsApp
+                    </a>
+                    <a href="randon.html" class="randon-btn" target="_blank">
+                        <i class="fas fa-external-link-alt"></i>
+                        Randon
+                    </a>
+                </div>
+                <div class="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Page Header with Categories -->
+        <section class="page-header">
+            <div class="container-full">
+                <div class="breadcrumb">
+                    <a href="../index.html">Inicio</a>
+                    <span class="separator">/</span>
+                    <span class="current">Unidades Disponibles</span>
+                </div>
+                
+                <!-- Vehicle Categories Bar -->
+                <div class="categories-bar">
+                    <div class="category-item active" data-category="all">
+                        <div class="category-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="category-info">
+                            <span class="category-name">Todos</span>
+                            <span class="category-count">(45)</span>
+                        </div>
+                    </div>
+                    <div class="category-item" data-category="cabeza-tractora">
+                        <div class="category-icon">
+                            <i class="fas fa-truck-front"></i>
+                        </div>
+                        <div class="category-info">
+                            <span class="category-name">Cabeza tractora</span>
+                            <span class="category-count">(23)</span>
+                        </div>
+                    </div>
+                    <div class="category-item" data-category="camiones">
+                        <div class="category-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="category-info">
+                            <span class="category-name">Camiones</span>
+                            <span class="category-count">(12)</span>
+                        </div>
+                    </div>
+                    <div class="category-item" data-category="furgoneta-liviana">
+                        <div class="category-icon">
+                            <i class="fas fa-van-shuttle"></i>
+                        </div>
+                        <div class="category-info">
+                            <span class="category-name">Furgoneta liviana</span>
+                            <span class="category-count">(4)</span>
+                        </div>
+                    </div>
+                    <div class="category-item" data-category="maquinaria-construccion">
+                        <div class="category-icon">
+                            <i class="fas fa-hard-hat"></i>
+                        </div>
+                        <div class="category-info">
+                            <span class="category-name">Maquinaria de construcción</span>
+                            <span class="category-count">(3)</span>
+                        </div>
+                    </div>
+                    <div class="category-item" data-category="semirremolque">
+                        <div class="category-icon">
+                            <i class="fas fa-trailer"></i>
+                        </div>
+                        <div class="category-info">
+                            <span class="category-name">Semirremolque</span>
+                            <span class="category-count">(2)</span>
+                        </div>
+                    </div>
+                    <div class="category-item" data-category="varios">
+                        <div class="category-icon">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                        <div class="category-info">
+                            <span class="category-name">Varios</span>
+                            <span class="category-count">(1)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h1>Comprar Camiones Usados Y Nuevos</h1>
+                <p class="page-description">En Larrosa Camiones disponemos de un amplio catálogo de camiones nuevos y usados a la venta. Los camiones de nuestro stock son de las marcas más conocidas del mercado argentino.</p>
+                <a href="#" class="read-more">Leer más</a>
+            </div>
+        </section>
+
+        <!-- Main Content with Sidebar -->
+        <section class="content-section">
+            <div class="container-full">
+                <div class="content-layout">
+                    <!-- Sidebar Filters -->
+                    <aside class="sidebar-filters">
+                        <!-- Search Box -->
+                        <div class="filter-search">
+                            <div class="search-input-container">
+                                <input type="text" placeholder="camiones" id="filter-search" class="filter-search-input">
+                                <button class="clear-search-btn">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <button class="clear-all-btn">
+                                <span>Limpiar</span>
+                                <i class="fas fa-redo"></i>
+                            </button>
+                            <button class="save-search-btn">
+                                <span>Guardar</span>
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+
+                        <!-- Condition Filter -->
+                        <div class="filter-group">
+                            <h3 class="filter-title">Condición</h3>
+                            <div class="filter-options">
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="condicion" value="usado" checked>
+                                    <span class="checkmark"></span>
+                                    <span class="option-text">Usado</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="condicion" value="nuevo">
+                                    <span class="checkmark"></span>
+                                    <span class="option-text">Nuevo</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Vehicle Type Filter -->
+                        <div class="filter-group">
+                            <h3 class="filter-title">Tipo del vehículo</h3>
+                            <div class="filter-options">
+                                <label class="filter-radio">
+                                    <input type="radio" name="tipo-vehiculo" value="cabeza-tractora">
+                                    <span class="radio-mark"></span>
+                                    <span class="option-text">Cabeza tractora</span>
+                                </label>
+                                <label class="filter-radio active">
+                                    <input type="radio" name="tipo-vehiculo" value="camiones" checked>
+                                    <span class="radio-mark"></span>
+                                    <span class="option-text">Camiones</span>
+                                </label>
+                                <label class="filter-radio">
+                                    <input type="radio" name="tipo-vehiculo" value="furgoneta-liviana">
+                                    <span class="radio-mark"></span>
+                                    <span class="option-text">Furgoneta liviana</span>
+                                </label>
+                                <label class="filter-radio">
+                                    <input type="radio" name="tipo-vehiculo" value="maquinaria-construccion">
+                                    <span class="radio-mark"></span>
+                                    <span class="option-text">Maquinaria de construcción</span>
+                                </label>
+                                <button class="show-more-btn">
+                                    <i class="fas fa-plus"></i>
+                                    <span>más</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- General Filters (Collapsible) -->
+                        <div class="filter-group collapsible collapsed">
+                            <h3 class="filter-title">
+                                <span>General</span>
+                                <button class="collapse-btn">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </h3>
+                            <div class="filter-content">
+                                <!-- Brand Filter -->
+                                <div class="filter-subgroup">
+                                    <h4 class="filter-subtitle">Marca</h4>
+                                    <div class="filter-options">
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="marca" value="scania">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Scania (15)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="marca" value="volvo">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Volvo (12)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="marca" value="mercedes">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Mercedes-Benz (8)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="marca" value="iveco">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Iveco (6)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="marca" value="daf">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">DAF (4)</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Model Filter -->
+                                <div class="filter-subgroup">
+                                    <h4 class="filter-subtitle">Modelo</h4>
+                                    <div class="model-search">
+                                        <input type="text" placeholder="Buscar modelo..." class="model-search-input">
+                                    </div>
+                                    <div class="filter-options">
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="modelo" value="fh">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">FH (8)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="modelo" value="r-series">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">R Series (7)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="modelo" value="actros">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Actros (5)</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Year Range -->
+                                <div class="filter-subgroup">
+                                    <h4 class="filter-subtitle">Año de construcción</h4>
+                                    <div class="range-filter">
+                                        <div class="range-inputs">
+                                            <input type="number" placeholder="De" class="range-input" min="2000" max="2025">
+                                            <span class="range-separator">-</span>
+                                            <input type="number" placeholder="A" class="range-input" min="2000" max="2025">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Mileage Range -->
+                                <div class="filter-subgroup">
+                                    <h4 class="filter-subtitle">Kilometraje</h4>
+                                    <div class="range-filter">
+                                        <div class="range-inputs">
+                                            <input type="text" placeholder="De" class="range-input">
+                                            <span class="range-separator">-</span>
+                                            <input type="text" placeholder="A" class="range-input">
+                                        </div>
+                                        <div class="range-unit">km</div>
+                                    </div>
+                                </div>
+
+                                <!-- Power Range -->
+                                <div class="filter-subgroup">
+                                    <h4 class="filter-subtitle">Potencia</h4>
+                                    <div class="range-filter">
+                                        <div class="range-inputs">
+                                            <input type="text" placeholder="De" class="range-input">
+                                            <span class="range-separator">-</span>
+                                            <input type="text" placeholder="A" class="range-input">
+                                        </div>
+                                        <div class="range-unit">HP</div>
+                                    </div>
+                                </div>
+
+                                <!-- Transmission -->
+                                <div class="filter-subgroup">
+                                    <h4 class="filter-subtitle">Transmisión</h4>
+                                    <div class="filter-options">
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="transmision" value="manual">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Manual (28)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="transmision" value="automatica">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Automática (17)</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Euro Standard -->
+                                <div class="filter-subgroup">
+                                    <h4 class="filter-subtitle">Norma Euro</h4>
+                                    <div class="filter-options">
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="euro" value="euro6">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Euro 6 (20)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="euro" value="euro5">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Euro 5 (18)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="euro" value="euro4">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Euro 4 (7)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Superstructure Filters (Collapsible) -->
+                        <div class="filter-group collapsible collapsed">
+                            <h3 class="filter-title">
+                                <span>Superestructura</span>
+                                <button class="collapse-btn">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </h3>
+                            <div class="filter-content">
+                                <div class="filter-subgroup">
+                                    <h4 class="filter-subtitle">Configuración de ejes</h4>
+                                    <div class="filter-options">
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="ejes" value="4x2">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">4x2 (15)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="ejes" value="6x2">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">6x2 (18)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="ejes" value="6x4">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">6x4 (12)</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="filter-subgroup">
+                                    <h4 class="filter-subtitle">Carrocería</h4>
+                                    <div class="filter-options">
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="carroceria" value="caja-abierta">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Caja Abierta (8)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="carroceria" value="caja-cerrada">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Caja Cerrada (6)</span>
+                                        </label>
+                                        <label class="filter-checkbox">
+                                            <input type="checkbox" name="carroceria" value="tolva">
+                                            <span class="checkmark"></span>
+                                            <span class="option-text">Tolva (4)</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- Main Content Area -->
+                    <div class="main-content">
+                        <!-- Results Header -->
+                        <div class="results-header">
+                            <div class="results-info">
+                                <div class="results-tabs">
+                                    <button class="tab-btn active">
+                                        <span>información</span>
+                                    </button>
+                                    <button class="tab-btn">
+                                        <span><strong>583 vehículos encontrado</strong></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="results-controls">
+                                <div class="sort-dropdown">
+                                    <button class="sort-btn">
+                                        <span>Clasificar Por</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </button>
+                                    <div class="sort-menu">
+                                        <button class="sort-option active" data-sort="relevance">Relevancia</button>
+                                        <button class="sort-option" data-sort="price-asc">Precio: menor a mayor</button>
+                                        <button class="sort-option" data-sort="price-desc">Precio: mayor a menor</button>
+                                        <button class="sort-option" data-sort="year-desc">Año: más nuevo</button>
+                                        <button class="sort-option" data-sort="year-asc">Año: más viejo</button>
+                                        <button class="sort-option" data-sort="km-asc">Menor kilometraje</button>
+                                        <button class="sort-option" data-sort="km-desc">Mayor kilometraje</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Loading State -->
+                        <div class="loading-state" id="loading-state" style="display: none;">
+                            <div class="loading-spinner"></div>
+                            <p>Cargando vehículos...</p>
+                        </div>
+
+                        <!-- Vehicles Grid -->
+                        <div class="vehicles-grid" id="vehicles-grid">
+                            <!-- Vehicles will be loaded here dynamically -->
+                        </div>
+
+                        <!-- Load More Button -->
+                        <div class="load-more-container">
+                            <button class="load-more-btn" id="load-more-btn">
+                                <span>Cargar más vehículos</span>
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Vehicle Detail Modal -->
+    <div class="modal-overlay" id="vehicle-detail-modal">
+        <div class="modal vehicle-modal">
+            <div class="modal-header">
+                <h2 id="modal-vehicle-title">Detalles del Vehículo</h2>
+                <button class="modal-close" onclick="closeVehicleModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-vehicle-content">
+                <!-- Vehicle details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Compare Modal -->
+    <div class="modal-overlay" id="compare-modal-overlay">
+        <div class="modal compare-modal" id="compare-modal">
+            <div class="modal-header">
+                <h2>Comparar Vehículos</h2>
+                <button class="modal-close" onclick="closeCompareModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="compare-table-container">
+                    <table class="compare-table" id="compare-table">
+                        <!-- Comparison table will be generated dynamically -->
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cta-button-outline" onclick="closeCompareModal()">Cerrar</button>
+                <button class="cta-button" onclick="contactForCompared()">Consultar seleccionados</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compare Bar (Fixed at bottom when items selected) -->
+    <div class="compare-bar" id="compare-bar" style="display: none;">
+        <div class="compare-bar-content">
+            <div class="compare-items" id="compare-items">
+                <!-- Selected items for comparison will appear here -->
+            </div>
+            <div class="compare-actions">
+                <button class="compare-btn" id="open-compare" disabled>
+                    <i class="fas fa-balance-scale"></i>
+                    <span>Comparar (<span id="compare-count">0</span>)</span>
+                </button>
+                <button class="clear-compare-btn" id="clear-compare">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="../assets/images/logo-larrosa.png" alt="Larrosa Camiones Logo" class="footer-logo">
+                    <p>Desde 1977 conectando a quienes mueven el país. Más de 40 años de historias en cada kilómetro.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://wa.me/5493512345678" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Secciones</h4>
+                    <ul>
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="unidades-disponibles.html">Unidades Disponibles</a></li>
+                        <li><a href="larrosa-camiones.html">Larrosa Camiones</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Servicios</h4>
+                    <ul>
+                        <li><a href="financiamiento.html">Financiamiento</a></li>
+                        <li><a href="randon.html">Randon Argentina</a></li>
+                        <li><a href="servicio-tecnico.html">Servicio Técnico</a></li>
+                        <li><a href="garantias.html">Garantías</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Córdoba, Argentina</p>
+                        <p><i class="fas fa-phone"></i> +54 9 351 234-5678</p>
+                        <p><i class="fas fa-envelope"></i> info@larrosacamiones.com</p>
+                        <p><i class="fas fa-clock"></i> Lun-Vie: 8:00-18:00hs | Sáb: 8:00-13:00hs</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Larrosa Camiones. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="privacidad.html">Política de Privacidad</a>
+                    <a href="terminos.html">Términos y Condiciones</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/unidades-disponibles.js"></script>
+</body>
+</html>
