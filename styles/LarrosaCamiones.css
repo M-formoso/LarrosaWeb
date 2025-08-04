@@ -1,0 +1,952 @@
+.randon-text {
+    text-align: center;
+}
+
+.randon-text .section-label {
+    display: inline-block;
+    background: var(--primary-blue);
+    color: var(--primary-white);
+    padding: 0.4rem 1.2rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1.5rem;
+}/* ===== LARROSA CAMIONES - EMPRESA CSS ===== */
+
+/* ===== HERO SECTION ===== */
+.empresa-hero {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 80px;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
+
+.hero-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(61, 95, 172, 0.4));
+    z-index: -1;
+}
+
+.empresa-hero .hero-content {
+    text-align: center;
+    color: var(--primary-white);
+    z-index: 1;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.empresa-hero h1 {
+    font-family: var(--font-primary);
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    line-height: 1.2;
+}
+
+.empresa-hero .hero-subtitle {
+    font-size: 1.3rem;
+    line-height: 1.6;
+    opacity: 0.95;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* ===== SECTION LABELS ===== */
+.section-label {
+    display: inline-block;
+    background: var(--primary-blue);
+    color: var(--primary-white);
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+/* ===== HISTORIA SECTION ===== */
+.historia-section {
+    padding: var(--section-padding);
+    background: var(--primary-white);
+}
+
+.historia-content {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 4rem;
+    align-items: start;
+}
+
+.historia-text h2 {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 2rem;
+    line-height: 1.3;
+}
+
+.historia-text .lead {
+    font-size: 1.2rem;
+    color: var(--primary-blue);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.historia-text p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--secondary-gray);
+    margin-bottom: 1.5rem;
+}
+
+/* Timeline */
+.timeline {
+    margin-top: 3rem;
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--primary-blue);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 2rem;
+    padding-left: 2rem;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 8px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary-blue);
+    border: 3px solid var(--primary-white);
+    box-shadow: 0 0 0 3px var(--primary-blue);
+}
+
+.timeline-year {
+    font-family: var(--font-primary);
+    font-size: 1.1rem;
+    color: var(--primary-blue);
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content h4 {
+    font-weight: 600;
+    color: var(--primary-black);
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content p {
+    color: var(--secondary-gray);
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Historia Image */
+.historia-image {
+    position: sticky;
+    top: 120px;
+}
+
+.historia-image img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: var(--shadow-medium);
+}
+
+.image-caption {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.image-caption p {
+    font-size: 0.9rem;
+    color: var(--secondary-gray);
+    font-style: italic;
+}
+
+/* ===== VALORES SECTION ===== */
+.valores-section {
+    padding: var(--section-padding);
+    background: #f8f9fa;
+}
+
+.valores-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.valores-header h2 {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+}
+
+.valores-header p {
+    font-size: 1.1rem;
+    color: var(--secondary-gray);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.valores-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.valor-card {
+    background: var(--primary-white);
+    padding: 2.5rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    transition: var(--transition-medium);
+    position: relative;
+    overflow: hidden;
+}
+
+.valor-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--secondary-light-blue));
+    transition: var(--transition-medium);
+}
+
+.valor-card:hover::before {
+    left: 0;
+}
+
+.valor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-strong);
+}
+
+.valor-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-blue);
+    border-radius: 50%;
+    transition: var(--transition-medium);
+}
+
+.valor-card:hover .valor-icon {
+    background: var(--secondary-dark-blue);
+    transform: scale(1.1);
+}
+
+.valor-icon i {
+    font-size: 2rem;
+    color: var(--primary-white);
+}
+
+.valor-card h3 {
+    font-family: var(--font-primary);
+    font-size: 1.3rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+}
+
+.valor-card p {
+    color: var(--secondary-gray);
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Larrosa Card Especial */
+.larrosa-card {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-dark-blue));
+    color: var(--primary-white);
+}
+
+.larrosa-card::before {
+    background: linear-gradient(90deg, var(--primary-white), rgba(255, 255, 255, 0.5));
+}
+
+.larrosa-card .valor-logo {
+    width: 120px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary-white);
+    border-radius: 10px;
+    padding: 1rem;
+}
+
+.larrosa-card .valor-logo img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.larrosa-card h3 {
+    color: var(--primary-white);
+    font-size: 1.4rem;
+}
+
+.larrosa-card p {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ===== RANDON SECTION ===== */
+.randon-section {
+    padding: var(--section-padding);
+    background: var(--primary-white);
+    position: relative;
+}
+
+.randon-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f8f9fa 0%, rgba(61, 95, 172, 0.02) 100%);
+    pointer-events: none;
+}
+
+.randon-content {
+    position: relative;
+    z-index: 1;
+    display: block;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.randon-text h2 {
+    font-family: var(--font-secondary);
+    font-size: 1.8rem;
+    color: var(--primary-blue);
+    margin-bottom: 2rem;
+    line-height: 1.4;
+    text-align: center;
+    font-weight: 600;
+}
+
+.randon-text .lead {
+    font-size: 1.1rem;
+    color: var(--secondary-gray);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.randon-text p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--secondary-gray);
+    margin-bottom: 2rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.randon-benefits {
+    margin: 3rem auto 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    max-width: 800px;
+}
+
+.benefit-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--primary-white);
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+    border: 1px solid #f0f0f0;
+    transition: var(--transition-medium);
+}
+
+.benefit-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+    border-color: var(--primary-blue);
+}
+
+.benefit-item i {
+    color: var(--primary-blue);
+    font-size: 2rem;
+    flex-shrink: 0;
+}
+
+.benefit-content h4 {
+    font-weight: 600;
+    color: var(--primary-blue);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.benefit-content p {
+    color: var(--secondary-gray);
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.randon-products {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 3rem auto 2rem;
+    max-width: 600px;
+}
+
+.randon-products h4 {
+    color: var(--primary-blue);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+.randon-products ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.8rem;
+}
+
+.randon-products li {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    color: var(--secondary-gray);
+    font-size: 0.95rem;
+}
+
+.randon-products li i {
+    color: var(--primary-blue);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+.randon-visual {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+}
+
+.randon-logo-container {
+    text-align: center;
+    padding: 2rem;
+    background: var(--primary-white);
+    border-radius: 15px;
+    box-shadow: var(--shadow-light);
+    border: 1px solid #f0f0f0;
+}
+
+.randon-logo {
+    width: 180px;
+    height: auto;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
+}
+
+/* Eliminar la galería de imágenes */
+.randon-gallery {
+    display: none;
+}
+
+/* ===== INSTALACIONES SECTION ===== */
+.instalaciones-section {
+    padding: var(--section-padding);
+    background: #f8f9fa;
+}
+
+.instalaciones-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.instalaciones-text h2 {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 2rem;
+}
+
+.instalaciones-text .lead {
+    font-size: 1.2rem;
+    color: var(--primary-blue);
+    font-weight: 600;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.instalaciones-features {
+    margin: 2rem 0;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.feature-icon {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.feature-icon i {
+    color: var(--primary-white);
+    font-size: 1.5rem;
+}
+
+.feature-content h4 {
+    font-weight: 600;
+    color: var(--primary-black);
+    margin-bottom: 0.5rem;
+}
+
+.feature-content p {
+    color: var(--secondary-gray);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.instalaciones-gallery {
+    position: sticky;
+    top: 120px;
+}
+
+.gallery-main {
+    margin-bottom: 1rem;
+}
+
+.gallery-main-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 15px;
+    box-shadow: var(--shadow-medium);
+    transition: var(--transition-medium);
+}
+
+.gallery-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}
+
+.gallery-thumbnails img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    opacity: 0.7;
+}
+
+.gallery-thumbnails img:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* ===== MARCAS SECTION ===== */
+.marcas-section {
+    padding: var(--section-padding);
+    background: var(--primary-white);
+}
+
+.marcas-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.marcas-header h2 {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+}
+
+.marcas-header p {
+    font-size: 1.1rem;
+    color: var(--secondary-gray);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.marcas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.marca-card {
+    background: var(--primary-white);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    transition: var(--transition-medium);
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.marca-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-strong);
+    border-color: var(--primary-blue);
+}
+
+.marca-card.featured {
+    background: linear-gradient(135deg, #f8f9fa, var(--primary-white));
+    border: 2px solid var(--primary-blue);
+    position: relative;
+    overflow: hidden;
+}
+
+.marca-card.featured::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-blue), var(--secondary-light-blue));
+}
+
+.marca-logo {
+    width: 120px;
+    height: 60px;
+    object-fit: contain;
+    margin: 0 auto 1.5rem;
+    transition: var(--transition-medium);
+}
+
+.marca-card:hover .marca-logo {
+    transform: scale(1.1);
+}
+
+.marca-card h4 {
+    font-family: var(--font-primary);
+    font-size: 1.2rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+}
+
+.marca-card p {
+    color: var(--secondary-gray);
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.marca-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--primary-blue);
+    color: var(--primary-white);
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+/* ===== ESTADÍSTICAS SECTION ===== */
+.stats-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-dark-blue));
+    color: var(--primary-white);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.stat-number {
+    font-family: var(--font-primary);
+    font-size: 3rem;
+    color: var(--primary-white);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ===== CTA SECTION ===== */
+.empresa-cta-section {
+    padding: var(--section-padding);
+    background: #f8f9fa;
+    text-align: center;
+}
+
+.cta-content h2 {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    color: var(--primary-blue);
+    margin-bottom: 1rem;
+}
+
+.cta-content p {
+    font-size: 1.2rem;
+    color: var(--secondary-gray);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: var(--primary-blue);
+    color: var(--primary-white);
+    text-decoration: none;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition-fast);
+    box-shadow: var(--shadow-light);
+}
+
+.cta-button:hover {
+    background: var(--secondary-dark-blue);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+}
+
+.cta-button-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 2rem;
+    background: transparent;
+    color: var(--primary-blue);
+    text-decoration: none;
+    border: 2px solid var(--primary-blue);
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition-fast);
+}
+
+.cta-button-outline:hover {
+    background: var(--primary-blue);
+    color: var(--primary-white);
+    transform: translateY(-2px);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+    .empresa-hero h1 {
+        font-size: 3rem;
+    }
+    
+    .historia-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .historia-image {
+        position: static;
+        order: -1;
+    }
+    
+    .randon-benefits {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .instalaciones-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .instalaciones-gallery {
+        position: static;
+        order: -1;
+    }
+}
+
+@media (max-width: 768px) {
+    .empresa-hero {
+        height: 80vh;
+    }
+    
+    .empresa-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .empresa-hero .hero-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .valores-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .valor-card {
+        padding: 2rem;
+    }
+    
+    .randon-benefits {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin: 2rem auto;
+    }
+    
+    .randon-products ul {
+        grid-template-columns: 1fr;
+    }
+    
+    .randon-logo {
+        width: 150px;
+    }
+    
+    .marcas-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .timeline {
+        padding-left: 1.5rem;
+    }
+    
+    .timeline-item {
+        padding-left: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .empresa-hero h1 {
+        font-size: 2rem;
+        line-height: 1.3;
+    }
+    
+    .section-padding {
+        padding: 60px 0;
+    }
+    
+    .valor-card,
+    .marca-card {
+        padding: 1.5rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .randon-visual {
+        gap: 1rem;
+    }
+    
+    .randon-logo {
+        width: 150px;
+    }
+    
+    .gallery-thumbnails {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
