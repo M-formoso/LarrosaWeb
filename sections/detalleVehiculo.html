@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="vehicle-title">Iveco Stralis 360 - Larrosa Camiones</title>
+    <meta name="description" content="Detalles completos del vehículo. Especificaciones técnicas, galería de imágenes y información de contacto.">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/unidadesDisponibles.css">
+    <link rel="stylesheet" href="../styles/detalleVehiculo.css">
+    
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="../index.html">
+                        <img src="../assets/Azul.pdf" alt="Larrosa Camiones" class="logo">
+                    </a>
+                </div>
+                
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="../index.html" class="nav-link">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="unidadesDisponibles.html" class="nav-link">Unidades Disponibles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="LarrosaCamiones.html" class="nav-link">Larrosa Camiones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="contacto.html" class="nav-link">Contacto</a>
+                    </li>
+                </ul>
+                
+                <div class="nav-button">
+                    <a href="#" class="btn-special">
+                        <img src="../assets/imagenes/IMG_8670(1).JPEG" alt="Usuario" class="btn-icon">
+                    </a>
+                </div>
+                
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="vehicle-detail-main">
+        <!-- Breadcrumb -->
+        <section class="breadcrumb-section">
+            <div class="container">
+                <div class="breadcrumb">
+                    <a href="../index.html">Inicio</a>
+                    <span class="separator">/</span>
+                    <a href="unidadesDisponibles.html">Unidades Disponibles</a>
+                    <span class="separator">/</span>
+                    <span class="current" id="breadcrumb-vehicle">Iveco Stralis 360</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vehicle Detail Section -->
+        <section class="vehicle-detail-section">
+            <div class="container">
+                <div class="vehicle-detail-layout">
+                    <!-- Left Column - Images -->
+                    <div class="vehicle-images-column">
+                        <div class="main-image-container">
+                            <img id="main-image" src="../assets/imagenes/iveco-stralis-main.jpg" alt="Iveco Stralis 360" class="main-vehicle-image">
+                            <div class="image-navigation">
+                                <button class="nav-btn prev-btn" onclick="previousImage()">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button class="nav-btn next-btn" onclick="nextImage()">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="thumbnails-container">
+                            <div class="thumbnail active" onclick="selectImage(0)">
+                                <img src="../assets/imagenes/iveco-stralis-main.jpg" alt="Vista frontal">
+                            </div>
+                            <div class="thumbnail" onclick="selectImage(1)">
+                                <img src="../assets/imagenes/iveco-stralis-side.jpg" alt="Vista lateral">
+                            </div>
+                            <div class="thumbnail" onclick="selectImage(2)">
+                                <img src="../assets/imagenes/iveco-stralis-back.jpg" alt="Vista trasera">
+                            </div>
+                            <div class="thumbnail" onclick="selectImage(3)">
+                                <img src="../assets/imagenes/iveco-stralis-interior.jpg" alt="Interior">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Vehicle Info -->
+                    <div class="vehicle-info-column">
+                        <div class="vehicle-header">
+                            <h1 id="vehicle-name">Iveco Stralis 360</h1>
+                            <div class="vehicle-status-badge">
+                                <i class="fas fa-bolt"></i>
+                                <span>Entrega inmediata</span>
+                            </div>
+                            <div class="vehicle-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Villa María, Córdoba</span>
+                            </div>
+                        </div>
+
+                        <div class="vehicle-actions-top">
+                            <button class="action-btn share-btn">
+                                <i class="fas fa-share-alt"></i>
+                                <span>Share</span>
+                            </button>
+                            <button class="action-btn print-btn" onclick="window.print()">
+                                <i class="fas fa-print"></i>
+                                <span>Print</span>
+                            </button>
+                        </div>
+
+                        <div class="price-section">
+                            <button class="price-btn">CONSULTAR PRECIO</button>
+                        </div>
+
+                        <!-- Especificaciones Generales -->
+                        <div class="specs-section">
+                            <h3>Especificaciones generales</h3>
+                            <div class="specs-grid">
+                                <div class="spec-item">
+                                    <span class="spec-label">Marca:</span>
+                                    <span class="spec-value" id="spec-marca">Iveco</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">Modelo:</span>
+                                    <span class="spec-value" id="spec-modelo">Stralis 360 AT</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">Año:</span>
+                                    <span class="spec-value" id="spec-año">2017</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">Color:</span>
+                                    <span class="spec-value" id="spec-color">Blanco</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">Kilómetros:</span>
+                                    <span class="spec-value" id="spec-km">770.000</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">Fecha de registro:</span>
+                                    <span class="spec-value" id="spec-fecha">15/07/2025</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Especificaciones Técnicas -->
+                        <div class="specs-section">
+                            <h3>Especificaciones técnicas</h3>
+                            <div class="specs-grid">
+                                <div class="spec-item">
+                                    <span class="spec-label">Tipo:</span>
+                                    <span class="spec-value" id="spec-tipo">Tractor</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">Tracción:</span>
+                                    <span class="spec-value" id="spec-traccion">6x2</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">Transmisión:</span>
+                                    <span class="spec-value" id="spec-transmision">Automática</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">Potencia:</span>
+                                    <span class="spec-value" id="spec-potencia">360 Hp</span>
+                                </div>
+                                <div class="spec-item">
+                                    <span class="spec-label">Observaciones:</span>
+                                    <span class="spec-value" id="spec-observaciones">-</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Company Info -->
+                        <div class="company-section">
+                            <h4>Larrosa Camiones</h4>
+                            <p class="company-address">Av. Larrabure y Chiclana, Villa María, Cba.</p>
+                            
+                            <!-- Map Container -->
+                            <div class="map-container">
+                                <div class="map-header">
+                                    <div class="map-tabs">
+                                        <button class="map-tab active">Mapa</button>
+                                        <button class="map-tab">Satélite</button>
+                                    </div>
+                                    <button class="fullscreen-btn">
+                                        <i class="fas fa-expand"></i>
+                                    </button>
+                                </div>
+                                <div class="map-iframe">
+                                    <iframe 
+                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.5!2d-63.2467!3d-32.4167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDI1JzAwLjEiUyA2M8KwMTQnNDguMSJX!5e0!3m2!1sen!2sar!4v1234567890"
+                                        width="100%" 
+                                        height="200" 
+                                        style="border:0;" 
+                                        allowfullscreen="" 
+                                        loading="lazy" 
+                                        referrerpolicy="no-referrer-when-downgrade">
+                                    </iframe>
+                                </div>
+                                <div class="map-controls">
+                                    <button class="map-control-btn">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button class="map-control-btn">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                    <button class="map-control-btn">
+                                        <i class="fas fa-crosshairs"></i>
+                                    </button>
+                                    <button class="map-control-btn">
+                                        <i class="fas fa-expand-arrows-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-buttons">
+                    <button class="contact-btn whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </button>
+                    <button class="contact-btn phone-btn">
+                        <i class="fas fa-phone"></i>
+                        <span>Llamar</span>
+                    </button>
+                    <button class="contact-btn email-btn">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Related Vehicles Section -->
+        <section class="related-vehicles-section">
+            <div class="container">
+                <h2>Vehículos Similares</h2>
+                <div class="related-vehicles-grid" id="related-vehicles">
+                    <!-- Related vehicles will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="../assets/logo-larrosa-white.png" alt="Larrosa Camiones" class="footer-logo">
+                    <p class="footer-description">40 años comercializando camiones. Tu socio confiable en el transporte de cargas.</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Contacto</h4>
+                    <div class="footer-contact">
+                        <p><img src="../assets/icon-location.png" alt="Ubicación"> Villa María, Córdoba</p>
+                        <p><img src="../assets/icon-phone.png" alt="Teléfono"> +54 353 XXX-XXXX</p>
+                        <p><img src="../assets/icon-email.png" alt="Email"> info@larrosacamiones.com</p>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Enlaces</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="unidadesDisponibles.html">Unidades Disponibles</a></li>
+                        <li><a href="LarrosaCamiones.html">Larrosa Camiones</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Larrosa Camiones. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/detalleVehiculo.js"></script>
+</body>
+</html>

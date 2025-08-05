@@ -80,7 +80,7 @@ body {
 }
 
 .nav-logo .logo {
-    height: 65px;
+    height: 85px;
     width: auto;
 }
 
@@ -110,22 +110,25 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 45px;
-    height: 45px;
-    background: var(--primary-blue);
-    border-radius: 50%;
+    width: auto; /* Cambiar de 45px a auto */
+    height: auto; /* Cambiar de 45px a auto */
+    background: transparent; /* Quitar el fondo azul */
+    border-radius: 0; /* Quitar el border-radius circular */
     transition: var(--transition-fast);
+    padding: 5px; /* Agregar un poco de padding para el área clickeable */
 }
 
 .nav-button .btn-special:hover {
-    background: var(--secondary-dark-blue);
-    transform: scale(1.1);
+    background: transparent; /* Mantener transparente en hover */
+    transform: scale(1.05); /* Reducir el scale para que sea más sutil */
 }
 
 .btn-icon {
-    width: 24px;
-    height: 24px;
-    filter: brightness(0) invert(1);
+    width: 80px; /* Ajustar el tamaño de la imagen del logo */
+    height: 50px;
+    border-radius: 0; /* Quitar el border-radius circular */
+    object-fit: contain; /* Cambiar de cover a contain para mantener proporciones */
+    filter: none; /* Quitar cualquier filtro que pueda estar aplicado */
 }
 
 /* Hamburger menu para móvil */
@@ -222,7 +225,7 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between; /* Cambiar de flex-start a space-between */
     background: rgba(255, 255, 255, 0.95);
     border: none;
     padding: 1.2rem 2rem;
@@ -245,21 +248,23 @@ body {
 .category-icon {
     width: 35px;
     height: 35px;
-    margin-right: 1rem;
+    margin-right: 0; /* Quitar el margin-right */
     margin-bottom: 0;
     transition: var(--transition-fast);
 }
-
 .category-btn:hover .category-icon {
     filter: brightness(0) invert(1);
 }
 
 .category-btn span {
     font-family: var(--font-secondary);
-    font-size: 0.9rem;
+    font-size: 0.75rem;
     color: var(--primary-black);
     transition: var(--transition-fast);
     font-weight: 600;
+    text-align: right; /* Agregar alineación a la derecha */
+    flex: 1; /* Permitir que el texto ocupe el espacio disponible */
+    margin-left: 1rem; /* Dar un poco de espacio desde el ícono */
 }
 
 .category-btn:hover span {
