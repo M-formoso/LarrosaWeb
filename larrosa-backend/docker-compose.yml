@@ -48,6 +48,7 @@ services:
       - REDIS_URL=redis://redis:6379
       - SECRET_KEY=tu-clave-super-secreta-cambia-esto-en-produccion-debe-ser-muy-larga-y-aleatoria
       - ENVIRONMENT=development
+      - ALLOWED_HOSTS=["http://localhost:3000", "http://localhost:8000", "http://127.0.0.1:3000", "http://127.0.0.1:8000"]
     ports:
       - "8000:8000"
     volumes:
@@ -63,12 +64,16 @@ services:
     restart: unless-stopped
     command: >
       sh -c "
+        echo '🚛 Iniciando Larrosa Camiones Backend...' &&
         echo 'Esperando base de datos...' &&
-        sleep 10 &&
+        sleep 5 &&
         echo 'Ejecutando migraciones...' &&
         alembic upgrade head &&
+        echo 'Creando directorios...' &&
+        mkdir -p /app/static/uploads/vehicles &&
+        mkdir -p /app/static/uploads/vehicles/thumbnails &&
         echo 'Iniciando servidor...' &&
-        uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+        uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
       "
 
 volumes:
