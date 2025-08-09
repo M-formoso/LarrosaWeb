@@ -257,3 +257,105 @@ def get_vehicle_images(
     
     images = image_service.get_vehicle_images(db=db, vehicle_id=vehicle_id)
     return images
+
+@router.get("/{vehicle_id}/images")
+def get_vehicle_images(
+    vehicle_id: int,
+    db: Session = Depends(get_db)
+):
+    """Obtener todas las imágenes de un vehículo"""
+    
+    # Verificar que el vehículo existe
+    vehicle = vehicle_crud.get_vehicle(db=db, vehicle_id=vehicle_id)
+    if not vehicle:
+        raise HTTPException(status_code=404, detail="Vehículo no encontrado")
+    
+    images = image_service.get_vehicle_images(db=db, vehicle_id=vehicle_id)
+    return images
+
+# === ENDPOINTS PARA EL PANEL DE ADMINISTRACIÓN ===
+
+@router.get("/admin/all")
+def get_all_vehicles_admin(
+    skip: int = Query(0, ge=0),
+    limit: int = Query(50, le=100),
+    search: Optional[str] = Query(None),
+    status: Optional[str] = Query(None),
+    db: Session = Depends(get_db),
+    # TODO: Agregar autenticación de admin
+    # current_user: User = Depends(get_current_superuser)
+):
+    """Obtener todos los vehículos para el panel de administración"""
+    
+    vehicles = vehicle_crud.get_vehicles(
+        db=db,
+        skip=skip,
+        limit=limit,
+        search=search,
+        status=status,
+        is_featured=None  # Mostrar todos
+    )
+    
+    total = vehicle_crud.get_vehicles_count(
+        db=db,
+        search=search,
+        status=status
+    )
+    
+    return {
+        "vehicles": vehicles,
+        "total": total,
+        "page": skip // limit + 1,
+        "size": limit,
+        "pages": (total + limit - 1) // limit
+    }
+
+@router.get("/admin/dashboard-stats")
+def get_dashboard_stats(
+    db: Session = Depends(get_db),
+    # TODO: Agregar autenticación de admin
+    # current_user: User = Depends(get_current_superuser)
+):
+    """Obtener estadísticas para el dashboard de administración"""
+    
+    stats = vehicle_crud.get_vehicle_stats(db=db)
+    
+    # Agregar estadísticas adicionales
+    recent_vehicles = vehicle_crud.get_vehicles(
+        db=db, 
+        skip=0, 
+        limit=5,
+        search=None
+    )
+    
+    return {
+        "stats": stats,
+        "recent_vehicles": recent_vehicles
+    }
+
+@router.patch("/{vehicle_id}/toggle-featured")
+def toggle_vehicle_featured(
+    vehicle_id: int,
+    db: Session = Depends(get_db),
+    # TODO: Agregar autenticación de admin
+    # current_user: User = Depends(get_current_superuser)
+):
+    """Alternar estado destacado de un vehículo"""
+    
+    vehicle = vehicle_crud.get_vehicle(db=db, vehicle_id=vehicle_id)
+    if not vehicle:
+        raise HTTPException(status_code=404, detail="Vehículo no encontrado")
+    
+    # Alternar el estado
+    new_featured = not vehicle.is_featured
+    updated_vehicle = vehicle_crud.update_vehicle(
+        db=db,
+        vehicle_id=vehicle_id,
+        vehicle={"is_featured": new_featured}
+    )
+    
+    return {
+        "message": f"Vehículo {'marcado como destacado' if new_featured else 'desmarcado como destacado'}",
+        "is_featured": new_featured,
+        "vehicle": updated_vehicle
+    }

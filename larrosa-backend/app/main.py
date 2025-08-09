@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from app.core.config import settings
+from app.api.v1 import auth, vehicles
 import os
 
 # Crear la aplicación FastAPI
@@ -27,6 +28,10 @@ app.add_middleware(
 if os.path.exists("static"):
     app.mount("/static", StaticFiles(directory="static"), name="static")
 
+# INCLUIR LAS RUTAS DE LA API
+app.include_router(auth.router, prefix="/api/v1/auth", tags=["authentication"])
+app.include_router(vehicles.router, prefix="/api/v1/vehicles", tags=["vehicles"])
+
 # Rutas básicas
 @app.get("/")
 async def root():
@@ -43,6 +48,8 @@ async def health_check():
         "environment": settings.ENVIRONMENT
     }
 
-# TODO: Agregar rutas de la API aquí cuando las creemos
-# app.include_router(auth.router, prefix="/api/v1/auth", tags=["authentication"])
-# app.include_router(vehicles.router, prefix="/api/v1/vehicles", tags=["vehicles"])
+# Ruta para servir el panel de administración
+@app.get("/admin/{path:path}")
+async def serve_admin(path: str = ""):
+    """Servir archivos del panel de administración"""
+    return {"message": "Panel de administración - Por implementar"}

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Panel Administración | Larrosa Camiones</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+</head>
+<body class="admin-login-body">
+    <!-- Background with truck image -->
+    <div class="login-background">
+        <img src="../assets/imagenes/IMG_8670(1).JPEG" alt="Larrosa Camiones Background">
+        <div class="login-overlay"></div>
+    </div>
+
+    <!-- Login Container -->
+    <div class="login-container">
+        <div class="login-card">
+            <!-- Logo -->
+            <div class="login-header">
+                <img src="../assets/Azul.pdf" alt="Larrosa Camiones" class="login-logo">
+                <h1>Panel de Administración</h1>
+                <p>Acceso exclusivo para personal autorizado</p>
+            </div>
+
+            <!-- Login Form -->
+            <form id="admin-login-form" class="login-form">
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i>
+                        Usuario
+                    </label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        required 
+                        autocomplete="username"
+                        placeholder="Ingresa tu usuario"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        Contraseña
+                    </label>
+                    <div class="password-input-container">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            required 
+                            autocomplete="current-password"
+                            placeholder="Ingresa tu contraseña"
+                        >
+                        <button type="button" class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="remember-me" name="remember">
+                        <span class="checkmark"></span>
+                        Mantener sesión iniciada
+                    </label>
+                </div>
+
+                <button type="submit" class="login-btn" id="login-btn">
+                    <span class="btn-text">Iniciar Sesión</span>
+                    <span class="btn-loading" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        Verificando...
+                    </span>
+                </button>
+            </form>
+
+            <!-- Error/Success Messages -->
+            <div id="login-message" class="login-message" style="display: none;"></div>
+
+            <!-- Footer -->
+            <div class="login-footer">
+                <p>&copy; 2025 Larrosa Camiones - Sistema Interno</p>
+                <a href="../index.html" class="back-to-site">
+                    <i class="fas fa-arrow-left"></i>
+                    Volver al sitio web
+                </a>
+            </div>
+        </div>
+
+        <!-- Features Side Panel -->
+        <div class="features-panel">
+            <div class="features-content">
+                <h2>Panel de Administración</h2>
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <i class="fas fa-truck"></i>
+                        <div>
+                            <h3>Gestión de Vehículos</h3>
+                            <p>Administra el inventario completo de camiones</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-images"></i>
+                        <div>
+                            <h3>Manejo de Imágenes</h3>
+                            <p>Sube, organiza y optimiza fotografías</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-chart-bar"></i>
+                        <div>
+                            <h3>Estadísticas</h3>
+                            <p>Visualiza métricas y reportes del negocio</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-cogs"></i>
+                        <div>
+                            <h3>Configuración</h3>
+                            <p>Personaliza y configura el sistema</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../scripts/admin/auth.js"></script>
+    <script>
+        // Initialize login page
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeLoginPage();
+        });
+        
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.toggle-password i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.className = 'fas fa-eye-slash';
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.className = 'fas fa-eye';
+            }
+        }
+    </script>
+</body>
+</html>

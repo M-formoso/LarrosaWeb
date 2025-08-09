@@ -7,48 +7,55 @@
     <title>Larrosa Camiones - 40 años comercializando camiones</title>
     <link rel="stylesheet" href="styles/main.css">
     <script src="scripts/main.js"></script>
+    <script src="../scripts/nav-session.js"></script>
 </head>
 <body>
-    <!-- Navegación fija -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <!-- Logo -->
-            <div class="nav-logo">
-                <img src="assets/Azul.pdf" alt="Larrosa Camiones" class="logo">
-            </div>
-            
-            <!-- Menú principal -->
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a href="#inicio" class="nav-link active">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a href="sections/unidadesDisponibles.html" class="nav-link">Unidades Disponibles</a>
-                </li>
-                <li class="nav-item">
-                    <a href="sections/LarrosaCamiones.html" class="nav-link">Larrosa Camiones</a>
-                </li>
-                <li class="nav-item">
-                    <a href="sections/contacto.html" class="nav-link">Contacto</a>
-                </li>
-            </ul>
-            
-            <!-- Botón derecha -->
-            <div class="nav-button">
-                <a href="#" class="btn-special">
-                    <img src="assets/Logo negro sin fondo.png" alt="Randon" class="btn-icon">
-                </a>
-            </div>
-            
-            <!-- Hamburger para móvil -->
-            <div class="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+  <!-- Navegación fija -->
+<nav class="navbar">
+    <div class="nav-container">
+        <!-- Logo -->
+        <div class="nav-logo">
+            <img src="assets/Azul.pdf" alt="Larrosa Camiones" class="logo">
         </div>
-    </nav>
-
+        
+        <!-- Menú principal -->
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#inicio" class="nav-link active">Inicio</a>
+            </li>
+            <li class="nav-item">
+                <a href="sections/unidadesDisponibles.html" class="nav-link">Unidades Disponibles</a>
+            </li>
+            <li class="nav-item">
+                <a href="sections/LarrosaCamiones.html" class="nav-link">Larrosa Camiones</a>
+            </li>
+            <li class="nav-item">
+                <a href="sections/contacto.html" class="nav-link">Contacto</a>
+            </li>
+        </ul>
+        
+        <!-- Botón derecha - ACTUALIZADO -->
+        <div class="nav-button">
+            <!-- Botón Admin Panel -->
+            <a href="admin/login.html" class="btn-admin" title="Panel de Administración">
+                <i class="fas fa-user-shield"></i>
+                <span>Admin</span>
+            </a>
+            
+            <!-- Botón Randon (opcional - mantener o quitar) -->
+            <a href="#" class="btn-special">
+                <img src="assets/Logo negro sin fondo.png" alt="Randon" class="btn-icon">
+            </a>
+        </div>
+        
+        <!-- Hamburger para móvil -->
+        <div class="hamburger">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+    </div>
+</nav>
     <!-- Sección Hero/Dashboard -->
     <section class="hero-section" id="inicio">
         <div class="hero-container">

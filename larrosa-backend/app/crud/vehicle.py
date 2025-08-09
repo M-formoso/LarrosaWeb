@@ -127,7 +127,6 @@ class VehicleCRUD:
         db.commit()
         db.refresh(db_vehicle)
         return db_vehicle
-    
     def update_vehicle(self, db: Session, vehicle_id: int, vehicle: VehicleUpdate) -> Optional[Vehicle]:
         """Actualizar un vehículo"""
         db_vehicle = self.get_vehicle(db, vehicle_id)
@@ -142,6 +141,26 @@ class VehicleCRUD:
         db.refresh(db_vehicle)
         return db_vehicle
     
+    def update_vehicle(self, db: Session, vehicle_id: int, vehicle) -> Optional[Vehicle]:
+        """Actualizar un vehículo - versión mejorada que acepta dict o VehicleUpdate"""
+        db_vehicle = self.get_vehicle(db, vehicle_id)
+        if not db_vehicle:
+            return None
+        
+        # Manejar tanto dict como VehicleUpdate
+        if hasattr(vehicle, 'dict'):
+            vehicle_data = vehicle.dict(exclude_unset=True)
+        else:
+            vehicle_data = vehicle
+        
+        for field, value in vehicle_data.items():
+            if hasattr(db_vehicle, field):
+                setattr(db_vehicle, field, value)
+        
+        db.commit()
+        db.refresh(db_vehicle)
+        return db_vehicle
+   
     def delete_vehicle(self, db: Session, vehicle_id: int) -> bool:
         """Eliminar un vehículo (soft delete)"""
         db_vehicle = self.get_vehicle(db, vehicle_id)
