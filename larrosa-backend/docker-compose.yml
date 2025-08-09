@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15
+    container_name: larrosa_postgres
+    environment:
+      POSTGRES_DB: larrosa_camiones
+      POSTGRES_USER: larrosa_user
+      POSTGRES_PASSWORD: larrosa_password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - larrosa_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U larrosa_user -d larrosa_camiones"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis (for caching - opcional por ahora)
+  redis:
+    image: redis:7-alpine
+    container_name: larrosa_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - larrosa_network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+  # FastAPI Backend
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: larrosa_backend
+    environment:
+      - DATABASE_URL=postgresql://larrosa_user:larrosa_password@postgres:5432/larrosa_camiones
+      - REDIS_URL=redis://redis:6379
+      - SECRET_KEY=tu-clave-super-secreta-cambia-esto-en-produccion-debe-ser-muy-larga-y-aleatoria
+      - ENVIRONMENT=development
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./static:/app/static
+      - ./alembic:/app/alembic
+      - ./.env:/app/.env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - larrosa_network
+    restart: unless-stopped
+    command: >
+      sh -c "
+        echo 'Esperando base de datos...' &&
+        sleep 10 &&
+        echo 'Ejecutando migraciones...' &&
+        alembic upgrade head &&
+        echo 'Iniciando servidor...' &&
+        uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+      "
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  larrosa_network:
+    driver: bridge
