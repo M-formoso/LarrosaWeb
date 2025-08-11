@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/contacto.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Navegación -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <img src="../assets/logo-larrosa.png" alt="Larrosa Camiones" class="logo">
+                <a href="../index.html">
+                    <img src="../assets/Azul.pdf" alt="Larrosa Camiones" class="logo">
+                </a>
             </div>
             
             <ul class="nav-menu">
@@ -32,8 +35,12 @@
             </ul>
             
             <div class="nav-button">
+                <a href="../admin/login.html" class="btn-admin" title="Panel de Administración">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin</span>
+                </a>
                 <a href="#" class="btn-special">
-                    <img src="../assets/icon-user.png" alt="Usuario" class="btn-icon">
+                    <img src="../assets/Logo negro sin fondo.png" alt="Randon" class="btn-icon">
                 </a>
             </div>
             
@@ -50,66 +57,485 @@
         <!-- Hero Section -->
         <section class="contacto-hero">
             <div class="hero-background">
-                <img src="../assets/contacto-hero.jpg" alt="Contacto Larrosa Camiones">
+                <img src="../assets/imagenes/IMG_8670(1).JPEG" alt="Contacto Larrosa Camiones">
                 <div class="hero-overlay"></div>
             </div>
             <div class="container">
                 <div class="hero-content">
+                    <span class="hero-badge">Contactanos</span>
                     <h1>¿Buscás un camión o necesitás asesoramiento?</h1>
                     <p class="hero-subtitle">Estamos aquí para ayudarte. Contactanos y recibí atención personalizada de nuestro equipo con más de 40 años de experiencia en el sector del transporte.</p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">40+</div>
+                            <div class="stat-label">Años de experiencia</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Atención WhatsApp</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Garantía de calidad</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Methods Section -->
-        <section class="contact-methods-section">
+        <!-- Quick Contact Bar -->
+        <section class="quick-contact-bar">
             <div class="container">
-                <div class="contact-methods-grid">
-                    <div class="contact-method">
-                        <div class="method-icon">
+                <div class="quick-contacts">
+                    <a href="tel:+543534567890" class="quick-contact-item">
+                        <div class="quick-icon">
                             <i class="fas fa-phone"></i>
                         </div>
-                        <h3>Llamanos directo</h3>
-                        <p>Hablá directamente con nuestro equipo comercial especializado</p>
-                        <div class="contact-details">
-                            <a href="tel:+54353XXXXXXX" class="contact-link">
-                                <strong>+54 353 XXX-XXXX</strong>
-                            </a>
-                            <span class="availability">Lun a Vie: 8:00 - 18:00hs | Sáb: 8:00 - 12:00hs</span>
+                        <div class="quick-info">
+                            <span class="quick-label">Llamanos</span>
+                            <span class="quick-value">+54 353 456-7890</span>
                         </div>
-                    </div>
-
-                    <div class="contact-method">
-                        <div class="method-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <h3>Escribinos un email</h3>
-                        <p>Envianos tu consulta y te responderemos a la brevedad</p>
-                        <div class="contact-details">
-                            <a href="mailto:info@larrosacamiones.com" class="contact-link">
-                                <strong>info@larrosacamiones.com</strong>
-                            </a>
-                            <span class="availability">Respuesta en 24hs</span>
-                        </div>
-                    </div>
-
-                    <div class="contact-method">
-                        <div class="method-icon">
+                    </a>
+                    
+                    <a href="https://wa.me/543534567890" class="quick-contact-item" target="_blank">
+                        <div class="quick-icon whatsapp">
                             <i class="fab fa-whatsapp"></i>
                         </div>
-                        <h3>WhatsApp Business</h3>
-                        <p>Consultas rápidas y coordinar visitas</p>
-                        <div class="contact-details">
-                            <a href="https://wa.me/54353XXXXXXX" class="contact-link" target="_blank">
-                                <strong>+54 353 XXX-XXXX</strong>
-                            </a>
-                            <span class="availability">Respuesta inmediata</span>
+                        <div class="quick-info">
+                            <span class="quick-label">WhatsApp</span>
+                            <span class="quick-value">Respuesta inmediata</span>
+                        </div>
+                    </a>
+                    
+                    <a href="mailto:info@larrosacamiones.com" class="quick-contact-item">
+                        <div class="quick-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="quick-info">
+                            <span class="quick-label">Email</span>
+                            <span class="quick-value">info@larrosacamiones.com</span>
+                        </div>
+                    </a>
+                    
+                    <div class="quick-contact-item" onclick="openMapModal()">
+                        <div class="quick-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="quick-info">
+                            <span class="quick-label">Ubicación</span>
+                            <span class="quick-value">Villa María, Córdoba</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form & Info Section -->
+        <section class="contact-main-section">
+            <div class="container">
+                <div class="contact-layout">
+                    <!-- Contact Form -->
+                    <div class="contact-form-container">
+                        <div class="form-header">
+                            <span class="section-label">Formulario de Contacto</span>
+                            <h2>Envianos tu consulta</h2>
+                            <p>Completá el formulario y te responderemos a la brevedad. Todos los campos marcados con * son obligatorios.</p>
+                        </div>
+
+                        <form id="contact-form" class="contact-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="nombre">Nombre completo *</label>
+                                    <input type="text" id="nombre" name="nombre" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="empresa">Empresa / Organización</label>
+                                    <input type="text" id="empresa" name="empresa">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="telefono">Teléfono *</label>
+                                    <input type="tel" id="telefono" name="telefono" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="provincia">Provincia</label>
+                                    <select id="provincia" name="provincia">
+                                        <option value="">Seleccionar provincia</option>
+                                        <option value="cordoba">Córdoba</option>
+                                        <option value="santa-fe">Santa Fe</option>
+                                        <option value="buenos-aires">Buenos Aires</option>
+                                        <option value="mendoza">Mendoza</option>
+                                        <option value="tucuman">Tucumán</option>
+                                        <option value="salta">Salta</option>
+                                        <option value="otras">Otras</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="consulta-tipo">Tipo de consulta *</label>
+                                    <select id="consulta-tipo" name="consulta-tipo" required>
+                                        <option value="">Seleccionar tipo</option>
+                                        <option value="compra-camion">Compra de camión</option>
+                                        <option value="venta-camion">Venta de camión</option>
+                                        <option value="randon">Productos Randon</option>
+                                        <option value="financiacion">Financiación</option>
+                                        <option value="servicio">Servicio técnico</option>
+                                        <option value="repuestos">Repuestos</option>
+                                        <option value="otros">Otros</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="mensaje">Mensaje *</label>
+                                <textarea id="mensaje" name="mensaje" rows="5" required placeholder="Describí tu consulta en detalle. Si estás interesado en un vehículo específico, mencioná marca, modelo y año..."></textarea>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="newsletter" name="newsletter">
+                                    <span class="checkmark"></span>
+                                    Quiero recibir información sobre ofertas y novedades de Larrosa Camiones
+                                </label>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="privacy" name="privacy" required>
+                                    <span class="checkmark"></span>
+                                    Acepto la <a href="#" onclick="openPrivacyModal()">política de privacidad</a> y el tratamiento de mis datos personales *
+                                </label>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="submit-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                    <span>Enviar consulta</span>
+                                </button>
+                                <p class="form-note">Te responderemos en un plazo máximo de 24 horas</p>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Contact Info -->
+                    <div class="contact-info-container">
+                        <div class="contact-info-card">
+                            <div class="info-header">
+                                <i class="fas fa-building"></i>
+                                <h3>Información de Contacto</h3>
+                            </div>
+                            
+                            <div class="info-items">
+                                <div class="info-item">
+                                    <div class="info-icon">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                    </div>
+                                    <div class="info-content">
+                                        <h4>Dirección</h4>
+                                        <p>Av. Larrabure y Chiclana<br>Villa María, Córdoba, Argentina</p>
+                                    </div>
+                                </div>
+
+                                <div class="info-item">
+                                    <div class="info-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="info-content">
+                                        <h4>Horarios de atención</h4>
+                                        <p><strong>Lunes a Viernes:</strong> 8:00 - 18:00hs<br>
+                                        <strong>Sábados:</strong> 8:00 - 12:00hs<br>
+                                        <strong>Domingos:</strong> Cerrado</p>
+                                    </div>
+                                </div>
+
+                                <div class="info-item">
+                                    <div class="info-icon">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </div>
+                                    <div class="info-content">
+                                        <h4>WhatsApp Business</h4>
+                                        <p>Respuesta inmediata<br>
+                                        <a href="https://wa.me/543534567890" target="_blank">+54 353 456-7890</a></p>
+                                    </div>
+                                </div>
+
+                                <div class="info-item">
+                                    <div class="info-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <div class="info-content">
+                                        <h4>Email</h4>
+                                        <p>Respuesta en 24hs<br>
+                                        <a href="mailto:info@larrosacamiones.com">info@larrosacamiones.com</a></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="social-links">
+                                <h4>Seguinos en redes</h4>
+                                <div class="social-buttons">
+                                    <a href="#" class="social-btn facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                    <a href="#" class="social-btn instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                    <a href="#" class="social-btn linkedin">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </a>
+                                    <a href="#" class="social-btn youtube">
+                                        <i class="fab fa-youtube"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Map Card -->
+                        <div class="map-card">
+                            <div class="map-header">
+                                <h3>Nuestra ubicación</h3>
+                                <button class="map-fullscreen-btn" onclick="openMapModal()">
+                                    <i class="fas fa-expand"></i>
+                                    Ver mapa completo
+                                </button>
+                            </div>
+                            <div class="map-container">
+                                <iframe 
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.5!2d-63.2467!3d-32.4167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDI1JzAwLjEiUyA2M8KwMTQnNDguMSJX!5e0!3m2!1sen!2sar!4v1234567890"
+                                    width="100%" 
+                                    height="250" 
+                                    style="border:0;" 
+                                    allowfullscreen="" 
+                                    loading="lazy" 
+                                    referrerpolicy="no-referrer-when-downgrade">
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <div class="container">
+                <div class="faq-header">
+                    <span class="section-label">Preguntas Frecuentes</span>
+                    <h2>¿Tenés alguna duda?</h2>
+                    <p>Encontrá respuestas a las consultas más comunes sobre nuestros servicios y procesos</p>
+                </div>
+                
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>¿Qué documentación necesito para comprar un camión?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Para comprar un camión necesitás: DNI, CUIT/CUIL, comprobante de ingresos, y en caso de ser empresa, constancia de inscripción. Nosotros te asesoramos con toda la documentación necesaria.</p>
                         </div>
                     </div>
 
-                    <div class="contact-method">
-                        <div class="method-icon">
-                            <i class="fas fa-map-marker-alt"></i>
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>¿Ofrecen financiación?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Sí, trabajamos con diferentes entidades financieras para ofrecerte las mejores opciones de financiación. También aceptamos tu vehículo usado como parte de pago.</p>
                         </div>
-                        <h3>Visitanos</h3>
-                        <p>Conocé nuestras instalaciones en Villa María</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>¿Hacen envíos a otras provincias?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Sí, realizamos envíos a todo el país. El costo del traslado varía según la distancia y el tipo de vehículo. Te cotizamos sin compromiso.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>¿Qué garantía tienen los vehículos?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Todos nuestros vehículos pasan por rigurosos controles de calidad. Ofrecemos garantía mecánica y respaldo post-venta con nuestro taller especializado.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>¿Puedo visitar las instalaciones?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>¡Por supuesto! Nuestro predio está abierto de lunes a viernes de 8 a 18hs y sábados de 8 a 12hs. Te recomendamos coordinarlo previamente para una mejor atención.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" onclick="toggleFaq(this)">
+                            <span>¿Trabajan con productos Randon?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Sí, somos concesionarios oficiales de Randon Argentina. Ofrecemos la línea completa de remolques y semirremolques, además de repuestos originales y servicio técnico.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="contacto-cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <div class="cta-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h2>¿Listo para encontrar el camión perfecto?</h2>
+                    <p>Nuestro equipo está preparado para asesorarte en todo el proceso de compra. Desde la selección del vehículo hasta la entrega final.</p>
+                    <div class="cta-buttons">
+                        <a href="unidadesDisponibles.html" class="cta-button">
+                            <i class="fas fa-truck"></i>
+                            Ver unidades disponibles
+                        </a>
+                        <a href="https://wa.me/543534567890" class="cta-button-outline" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            Contactar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para Mapa -->
+    <div id="map-modal" class="modal">
+        <div class="modal-content map-modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-map-marker-alt"></i> Nuestra Ubicación</h3>
+                <span class="close" onclick="closeMapModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="map-container">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.5!2d-63.2467!3d-32.4167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDI1JzAwLjEiUyA2M8KwMTQnNDguMSJX!5e0!3m2!1sen!2sar!4v1234567890"
+                        width="100%" 
+                        height="400" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                <div class="map-info">
+                    <h4>Información de contacto</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Av. Larrabure y Chiclana, Villa María, Córdoba</p>
+                    <p><i class="fas fa-phone"></i> +54 353 456-7890</p>
+                    <p><i class="fas fa-envelope"></i> info@larrosacamiones.com</p>
+                    <p><i class="fas fa-clock"></i> Lun-Vie: 8:00-18:00hs | Sáb: 8:00-12:00hs</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Política de Privacidad -->
+    <div id="privacy-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Política de Privacidad</h3>
+                <span class="close" onclick="closePrivacyModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="privacy-content">
+                    <h4>Recopilación de Información</h4>
+                    <p>Recopilamos información personal que nos proporcionas voluntariamente cuando te pones en contacto con nosotros a través de nuestros formularios de contacto, por teléfono, email o WhatsApp.</p>
+                    
+                    <h4>Uso de la Información</h4>
+                    <p>Utilizamos tu información personal para:</p>
+                    <ul>
+                        <li>Responder a tus consultas y brindar atención al cliente</li>
+                        <li>Procesar solicitudes de información sobre vehículos</li>
+                        <li>Enviar información comercial si has dado tu consentimiento</li>
+                        <li>Mejorar nuestros servicios</li>
+                    </ul>
+                    
+                    <h4>Protección de Datos</h4>
+                    <p>Implementamos medidas de seguridad apropiadas para proteger tu información personal contra acceso, alteración, divulgación o destrucción no autorizados.</p>
+                    
+                    <h4>Tus Derechos</h4>
+                    <p>Tenés derecho a acceder, rectificar, cancelar u oponerte al tratamiento de tus datos personales contactándonos a través de los medios dispuestos en esta página.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <img src="../assets/logo-larrosa-white.png" alt="Larrosa Camiones" class="footer-logo">
+                    <p class="footer-description">40 años comercializando camiones. Tu socio confiable en el transporte de cargas.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Navegación</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="unidadesDisponibles.html">Unidades Disponibles</a></li>
+                        <li><a href="LarrosaCamiones.html">Larrosa Camiones</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Servicios</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Venta de Camiones</a></li>
+                        <li><a href="#">Productos Randon</a></li>
+                        <li><a href="#">Financiación</a></li>
+                        <li><a href="#">Servicio Técnico</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">Contacto</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> Villa María, Córdoba</p>
+                        <p><i class="fas fa-phone"></i> +54 353 456-7890</p>
+                        <p><i class="fas fa-envelope"></i> info@larrosacamiones.com</p>
+                        <p><i class="fab fa-whatsapp"></i> WhatsApp Business</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Larrosa Camiones. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../scripts/main.js"></script>
+    <script src="../scripts/contacto.js"></script>
+</body>
+</html>
