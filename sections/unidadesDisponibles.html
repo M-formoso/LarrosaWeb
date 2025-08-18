@@ -44,9 +44,18 @@
                     </li>
                 </ul>
                 
+                <!-- ACTUALIZADO: Botón MercadoLibre en navegación -->
                 <div class="nav-button">
+                    <a href="https://listado.mercadolibre.com.ar/larrosa-camiones" 
+                       class="btn-mercadolibre" 
+                       target="_blank" 
+                       title="Ver nuestros vehículos en MercadoLibre">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>MercadoLibre</span>
+                    </a>
+                    
                     <a href="#" class="btn-special">
-                        <img src="../assets/imagenes/IMG_8670(1).JPEG" alt="Usuario" class="btn-icon">
+                        <img src="../assets/Logo negro sin fondo.png" alt="Randon" class="btn-icon">
                     </a>
                 </div>
                 
@@ -372,28 +381,53 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <img src="../assets/logo-larrosa-white.png" alt="Larrosa Camiones" class="footer-logo">
-                    <p class="footer-description">40 años comercializando camiones. Tu socio confiable en el transporte de cargas.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-title">Contacto</h4>
-                    <div class="footer-contact">
-                        <p><img src="../assets/icon-location.png" alt="Ubicación"> Villa María, Córdoba</p>
-                        <p><img src="../assets/icon-phone.png" alt="Teléfono"> +54 353 XXX-XXXX</p>
-                        <p><img src="../assets/icon-email.png" alt="Email"> info@larrosacamiones.com</p>
+                    <img src="../assets/Blanco fondo negro.pdf" alt="Larrosa Camiones" class="footer-logo">
+                    <p>40 años comercializando camiones. Tu socio confiable en el transporte de cargas.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 
                 <div class="footer-section">
-                    <h4 class="footer-title">Enlaces</h4>
-                    <ul class="footer-links">
+                    <h4>Navegación</h4>
+                    <ul>
                         <li><a href="../index.html">Inicio</a></li>
                         <li><a href="unidadesDisponibles.html">Unidades Disponibles</a></li>
                         <li><a href="LarrosaCamiones.html">Larrosa Camiones</a></li>
                         <li><a href="contacto.html">Contacto</a></li>
                     </ul>
                 </div>
+                
+                <div class="footer-section">
+                    <h4>La Empresa</h4>
+                    <ul>
+                        <li><a href="LarrosaCamiones.html#historia">Nuestra Historia</a></li>
+                        <li><a href="LarrosaCamiones.html#valores">Valores</a></li>
+                        <li><a href="LarrosaCamiones.html#randon">Concesión Randon</a></li>
+                        <li><a href="LarrosaCamiones.html#instalaciones">Instalaciones</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Villa María, Córdoba</p>
+                        <p><i class="fas fa-phone"></i> +54 353 XXX-XXXX</p>
+                        <p><i class="fas fa-envelope"></i> info@larrosacamiones.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- NUEVO: Sección admin en footer -->
+            <div class="footer-admin">
+                <a href="../admin/login.html" 
+                   class="btn-admin-footer" 
+                   title="Panel de Administración">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Administración</span>
+                </a>
             </div>
             
             <div class="footer-bottom">
@@ -405,5 +439,6 @@
     <!-- Scripts -->
     <script src="../scripts/main.js"></script>
     <script src="../scripts/unidadesDisponibles.js"></script>
+    <script src="../scripts/nav-session.js"></script>
 </body>
 </html>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../styles/LarrosaCamiones.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="../scripts/LarrosaCamiones.js"></script>
-
+    <script src="../scripts/nav-session.js"></script>
 </head>
 <body>
     <!-- Navegación -->
@@ -33,9 +33,20 @@
                 </li>
             </ul>
             
+            <!-- Botón derecha - ACTUALIZADO con MercadoLibre y Randon -->
             <div class="nav-button">
-                <a href="#" class="btn-special">
-                    <img src="../assets/icon-user.png" alt="Usuario" class="btn-icon">
+                <!-- Botón MercadoLibre -->
+                <a href="https://listado.mercadolibre.com.ar/larrosa-camiones" 
+                   class="btn-mercadolibre" 
+                   target="_blank" 
+                   title="Ver nuestros vehículos en MercadoLibre">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>MercadoLibre</span>
+                </a>
+                
+                <!-- Botón Randon -->
+                <a href="#randon" class="btn-special">
+                    <img src="../assets/Logo negro sin fondo.png" alt="Randon" class="btn-icon">
                 </a>
             </div>
             
@@ -462,11 +473,76 @@
                 </div>
             </div>
             
+            <!-- Nueva sección admin en footer -->
+            <div class="footer-admin">
+                <a href="../admin/login.html" 
+                   class="btn-admin-footer" 
+                   title="Panel de Administración">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Administración</span>
+                </a>
+            </div>
+            
             <div class="footer-bottom">
                 <p>&copy; 2025 Larrosa Camiones. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
+
+    <!-- JavaScript para funcionalidad adicional -->
+    <script>
+        // Actualizar scripts/nav-session.js para que funcione con el botón en footer
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAdminButtonState();
+        });
+
+        function updateAdminButtonState() {
+            const adminButton = document.querySelector('.btn-admin-footer');
+            if (!adminButton) return;
+
+            // Verificar si hay token de admin almacenado
+            const hasAdminToken = localStorage.getItem('admin_token') || sessionStorage.getItem('admin_token');
+            
+            if (hasAdminToken) {
+                // Mostrar estado "logueado"
+                adminButton.classList.add('logged-in');
+                adminButton.title = 'Panel de Administración (Sesión activa)';
+                
+                // Cambiar el texto si existe
+                const buttonText = adminButton.querySelector('span');
+                if (buttonText) {
+                    buttonText.textContent = 'Panel Activo';
+                }
+                
+                // Cambiar destino a dashboard en lugar de login
+                adminButton.href = '../admin/dashboard.html';
+            } else {
+                // Estado normal - ir a login
+                adminButton.classList.remove('logged-in');
+                adminButton.title = 'Panel de Administración';
+                adminButton.href = '../admin/login.html';
+                
+                const buttonText = adminButton.querySelector('span');
+                if (buttonText) {
+                    buttonText.textContent = 'Administración';
+                }
+            }
+        }
+
+        // Tracking para el botón MercadoLibre
+        document.querySelector('.btn-mercadolibre')?.addEventListener('click', function() {
+            // Google Analytics tracking
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'click', {
+                    event_category: 'External Link',
+                    event_label: 'MercadoLibre',
+                    transport_type: 'beacon'
+                });
+            }
+            
+            console.log('🛒 Redirect to MercadoLibre from Larrosa Camiones page');
+        });
+    </script>
 
     <script src="../scripts/main.js"></script>
     <script src="../scripts/LarrosaCamiones.js"></script>
