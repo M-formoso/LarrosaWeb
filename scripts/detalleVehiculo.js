@@ -1,4 +1,4 @@
-// DETALLE VEHÍCULO - JavaScript
+// DETALLE VEHÍCULO - JavaScript Actualizado
 
 // Global Variables
 let currentVehicle = null;
@@ -21,6 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeContactButtons();
     initializeMapFunctionality();
     loadRelatedVehicles();
+    initializeScrollAnimations();
     
     console.log('✅ Detalle Vehículo inicializado correctamente');
 });
@@ -83,12 +84,6 @@ function populateVehicleData(vehicle) {
     document.title = `${vehicle.fullName} - Larrosa Camiones`;
     document.getElementById('vehicle-title').textContent = `${vehicle.fullName} - Larrosa Camiones`;
     
-    // Update breadcrumb
-    const breadcrumbVehicle = document.getElementById('breadcrumb-vehicle');
-    if (breadcrumbVehicle) {
-        breadcrumbVehicle.textContent = vehicle.fullName;
-    }
-    
     // Update vehicle header
     const vehicleName = document.getElementById('vehicle-name');
     if (vehicleName) {
@@ -127,12 +122,38 @@ function updateSpecification(elementId, value) {
 function initializeImageGallery() {
     // Image gallery is initialized when vehicle data is loaded
     currentImageIndex = 0;
+    
+    // Add keyboard navigation
+    document.addEventListener('keydown', function(event) {
+        if (vehicleImages.length === 0) return;
+        
+        switch(event.key) {
+            case 'ArrowLeft':
+                event.preventDefault();
+                previousImage();
+                break;
+            case 'ArrowRight':
+                event.preventDefault();
+                nextImage();
+                break;
+        }
+    });
 }
 
 function updateMainImage(imageSrc) {
     const mainImage = document.getElementById('main-image');
     if (mainImage) {
-        mainImage.src = imageSrc;
+        // Add loading effect
+        mainImage.style.opacity = '0.5';
+        
+        // Create new image to preload
+        const newImage = new Image();
+        newImage.onload = function() {
+            mainImage.src = imageSrc;
+            mainImage.style.opacity = '1';
+        };
+        newImage.src = imageSrc;
+        
         mainImage.alt = currentVehicle ? currentVehicle.fullName : 'Vehículo';
     }
 }
@@ -147,6 +168,17 @@ function updateThumbnails() {
         const thumbnail = document.createElement('div');
         thumbnail.className = `thumbnail ${index === 0 ? 'active' : ''}`;
         thumbnail.onclick = () => selectImage(index);
+        thumbnail.setAttribute('tabindex', '0');
+        thumbnail.setAttribute('role', 'button');
+        thumbnail.setAttribute('aria-label', `Vista ${index + 1}`);
+        
+        // Add keyboard support
+        thumbnail.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                selectImage(index);
+            }
+        });
         
         thumbnail.innerHTML = `
             <img src="${imageSrc}" alt="Vista ${index + 1}" 
@@ -168,6 +200,9 @@ function selectImage(index) {
     thumbnails.forEach((thumb, i) => {
         thumb.classList.toggle('active', i === index);
     });
+    
+    // Track image view
+    trackEvent('Image', 'View', `Image ${index + 1}`);
 }
 
 function nextImage() {
@@ -186,6 +221,7 @@ function initializeContactButtons() {
     const phoneBtn = document.querySelector('.phone-btn');
     const emailBtn = document.querySelector('.email-btn');
     const shareBtn = document.querySelector('.share-btn');
+    const priceBtn = document.querySelector('.price-btn');
     
     if (whatsappBtn) {
         whatsappBtn.addEventListener('click', openWhatsApp);
@@ -202,6 +238,10 @@ function initializeContactButtons() {
     if (shareBtn) {
         shareBtn.addEventListener('click', shareVehicle);
     }
+    
+    if (priceBtn) {
+        priceBtn.addEventListener('click', consultPrice);
+    }
 }
 
 function openWhatsApp() {
@@ -212,6 +252,7 @@ function openWhatsApp() {
     
     window.open(whatsappUrl, '_blank');
     trackEvent('Contact', 'WhatsApp', currentVehicle.fullName);
+    showNotification('Redirigiendo a WhatsApp...', 'success');
 }
 
 function makePhoneCall() {
@@ -231,6 +272,16 @@ function sendEmail() {
     trackEvent('Contact', 'Email', currentVehicle.fullName);
 }
 
+function consultPrice() {
+    if (!currentVehicle) return;
+    
+    // Redirect to contact form with vehicle info
+    const contactUrl = `contacto.html?vehicle=${encodeURIComponent(currentVehicle.fullName)}&year=${currentVehicle.year}&id=${currentVehicle.id}`;
+    window.location.href = contactUrl;
+    
+    trackEvent('Contact', 'Price Consult', currentVehicle.fullName);
+}
+
 function shareVehicle() {
     if (navigator.share && currentVehicle) {
         navigator.share({
@@ -239,6 +290,7 @@ function shareVehicle() {
             url: window.location.href
         }).then(() => {
             trackEvent('Share', 'Native', currentVehicle.fullName);
+            showNotification('Compartido exitosamente', 'success');
         }).catch(console.error);
     } else {
         // Fallback: copy URL to clipboard
@@ -263,7 +315,6 @@ function initializeMapFunctionality() {
             mapTabs.forEach(t => t.classList.remove('active'));
             this.classList.add('active');
             
-            // Here you would implement map type switching
             const mapType = this.textContent.toLowerCase();
             switchMapType(mapType);
         });
@@ -293,7 +344,7 @@ function initializeMapFunctionality() {
 
 function switchMapType(type) {
     console.log(`Switching map to: ${type}`);
-    // Implementation would depend on the map service being used
+    trackEvent('Map', 'Switch Type', type);
 }
 
 function toggleMapFullscreen() {
@@ -303,25 +354,27 @@ function toggleMapFullscreen() {
     if (mapContainer.classList.contains('fullscreen')) {
         mapContainer.classList.remove('fullscreen');
         document.body.style.overflow = 'auto';
+        trackEvent('Map', 'Exit Fullscreen');
     } else {
         mapContainer.classList.add('fullscreen');
         document.body.style.overflow = 'hidden';
+        trackEvent('Map', 'Enter Fullscreen');
     }
 }
 
 function zoomIn() {
     console.log('Zooming in...');
-    // Implementation would depend on the map service
+    trackEvent('Map', 'Zoom In');
 }
 
 function zoomOut() {
     console.log('Zooming out...');
-    // Implementation would depend on the map service
+    trackEvent('Map', 'Zoom Out');
 }
 
 function centerMap() {
     console.log('Centering map...');
-    // Implementation would depend on the map service
+    trackEvent('Map', 'Center');
 }
 
 // === RELATED VEHICLES ===
@@ -334,8 +387,9 @@ function loadRelatedVehicles() {
     
     relatedGrid.innerHTML = '';
     
-    relatedVehicles.forEach(vehicle => {
+    relatedVehicles.forEach((vehicle, index) => {
         const vehicleCard = createRelatedVehicleCard(vehicle);
+        vehicleCard.style.animationDelay = `${index * 0.1}s`;
         relatedGrid.appendChild(vehicleCard);
     });
 }
@@ -368,7 +422,7 @@ function generateRelatedVehicles() {
 
 function createRelatedVehicleCard(vehicle) {
     const card = document.createElement('div');
-    card.className = 'vehicle-card';
+    card.className = 'vehicle-card fade-in';
     card.dataset.vehicleId = vehicle.id;
     
     card.innerHTML = `
@@ -402,32 +456,11 @@ function createRelatedVehicleCard(vehicle) {
         // Store the new vehicle data and redirect
         sessionStorage.setItem('currentVehicle', JSON.stringify(vehicle));
         window.location.href = `detalleVehiculo.html?id=${vehicle.id}`;
+        trackEvent('Related Vehicle', 'Click', vehicle.fullName);
     });
     
     return card;
 }
-
-// === KEYBOARD NAVIGATION ===
-document.addEventListener('keydown', function(event) {
-    if (vehicleImages.length === 0) return;
-    
-    switch(event.key) {
-        case 'ArrowLeft':
-            event.preventDefault();
-            previousImage();
-            break;
-        case 'ArrowRight':
-            event.preventDefault();
-            nextImage();
-            break;
-        case 'Escape':
-            const fullscreenMap = document.querySelector('.map-container.fullscreen');
-            if (fullscreenMap) {
-                toggleMapFullscreen();
-            }
-            break;
-    }
-});
 
 // === SCROLL ANIMATIONS ===
 function initializeScrollAnimations() {
@@ -440,6 +473,13 @@ function initializeScrollAnimations() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-in');
+                
+                // Trigger specific animations
+                if (entry.target.classList.contains('specs-section')) {
+                    animateSpecsSection(entry.target);
+                } else if (entry.target.classList.contains('vehicle-card')) {
+                    entry.target.style.animationPlayState = 'running';
+                }
             }
         });
     }, observerOptions);
@@ -450,12 +490,26 @@ function initializeScrollAnimations() {
     });
 }
 
+function animateSpecsSection(section) {
+    const specs = section.querySelectorAll('.spec-item');
+    specs.forEach((spec, index) => {
+        setTimeout(() => {
+            spec.style.opacity = '1';
+            spec.style.transform = 'translateX(0)';
+        }, index * 100);
+    });
+}
+
 // === UTILITY FUNCTIONS ===
 function formatNumber(num) {
     return new Intl.NumberFormat('es-AR').format(num);
 }
 
 function showNotification(message, type = 'info') {
+    // Remove existing notifications
+    const existingNotifications = document.querySelectorAll('.notification');
+    existingNotifications.forEach(notification => notification.remove());
+    
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.style.cssText = `
@@ -484,7 +538,9 @@ function showNotification(message, type = 'info') {
     setTimeout(() => {
         notification.style.transform = 'translateX(100%)';
         setTimeout(() => {
-            notification.remove();
+            if (notification.parentNode) {
+                notification.remove();
+            }
         }, 300);
     }, 3000);
 }
@@ -502,13 +558,8 @@ function trackEvent(category, action, label) {
     console.log(`📊 Event: ${category} - ${action} - ${label}`);
 }
 
-// === GLOBAL FUNCTIONS FOR HTML ===
-window.selectImage = selectImage;
-window.nextImage = nextImage;
-window.previousImage = previousImage;
-
 // === RESPONSIVE HANDLING ===
-window.addEventListener('resize', function() {
+function handleResize() {
     const isMobile = window.innerWidth <= 768;
     
     if (isMobile) {
@@ -520,16 +571,30 @@ window.addEventListener('resize', function() {
     } else {
         const thumbnailsContainer = document.querySelector('.thumbnails-container');
         if (thumbnailsContainer) {
-            thumbnailsContainer.style.gridTemplateColumns = 'repeat(4, 1fr)';
+            thumbnailsContainer.style.gridTemplateColumns = 'repeat(3, 1fr)';
         }
     }
-});
+}
 
-// === INITIALIZATION ===
-// Initialize scroll animations after DOM load
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(initializeScrollAnimations, 500);
-});
+window.addEventListener('resize', debounce(handleResize, 250));
+handleResize(); // Initial call
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// === GLOBAL FUNCTIONS FOR HTML ===
+window.selectImage = selectImage;
+window.nextImage = nextImage;
+window.previousImage = previousImage;
 
 // === ERROR HANDLING ===
 window.addEventListener('error', function(e) {
@@ -542,6 +607,39 @@ window.addEventListener('load', function() {
     const loadTime = performance.now();
     console.log(`⚡ Página de detalle cargada en ${Math.round(loadTime)}ms`);
     trackEvent('Performance', 'Page Load', Math.round(loadTime));
+    
+    // Initialize animations after load
+    setTimeout(initializeScrollAnimations, 500);
 });
+
+// Add CSS animations
+const style = document.createElement('style');
+style.textContent = `
+    .fade-in {
+        opacity: 0;
+        transform: translateY(20px);
+        animation: fadeInUp 0.6s ease forwards;
+        animation-play-state: paused;
+    }
+    
+    @keyframes fadeInUp {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .spec-item {
+        opacity: 0;
+        transform: translateX(-20px);
+        transition: all 0.3s ease;
+    }
+    
+    .animate-in .spec-item {
+        opacity: 1;
+        transform: translateX(0);
+    }
+`;
+document.head.appendChild(style);
 
 console.log('🚛 Detalle Vehículo JavaScript cargado correctamente');
