@@ -86,199 +86,85 @@ body {
     align-items: center;
     gap: 12px;
 }
-
-/* Estilos del botón Admin */
-.btn-admin {
+.btn-mercadolibre {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    padding: 8px 16px;
-    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-dark-blue));
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #3483fa, #1259c3);
     color: var(--primary-white);
     text-decoration: none;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    transition: var(--transition-fast);
-    box-shadow: 0 2px 8px rgba(61, 95, 172, 0.3);
+    border-radius: 25px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(52, 131, 250, 0.4);
     position: relative;
     overflow: hidden;
+    border: none;
+    cursor: pointer;
 }
 
-.btn-admin::before {
+/* Efecto de brillo que se mueve */
+.btn-mercadolibre::before {
     content: '';
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease;
 }
 
-.btn-admin:hover::before {
+.btn-mercadolibre:hover::before {
     left: 100%;
 }
 
-.btn-admin:hover {
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 4px 15px rgba(61, 95, 172, 0.4);
-    background: linear-gradient(135deg, var(--secondary-dark-blue), var(--primary-blue));
+/* Hover effect */
+.btn-mercadolibre:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(52, 131, 250, 0.6);
+    background: linear-gradient(135deg, #1259c3, #0f4fbe);
 }
 
-.btn-admin i {
-    font-size: 1rem;
-    animation: pulse 2s infinite;
+/* Efecto de pulso sutil */
+.btn-mercadolibre {
+    animation: mercadoLibrePulse 3s infinite;
 }
 
-.btn-admin span {
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-}
-
-/* Animación sutil del icono */
-@keyframes pulse {
-    0%, 100% { 
-        opacity: 1;
-        transform: scale(1);
+@keyframes mercadoLibrePulse {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(52, 131, 250, 0.4);
     }
-    50% { 
-        opacity: 0.8;
-        transform: scale(1.1);
+    50% {
+        box-shadow: 0 4px 20px rgba(52, 131, 250, 0.6);
     }
 }
 
-/* Estado activo cuando estás en el panel admin */
-.btn-admin.active {
-    background: linear-gradient(135deg, #10b981, #059669);
-    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+/* Icono del botón */
+.btn-mercadolibre i {
+    font-size: 1.1rem;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
 }
 
-.btn-admin.active i {
-    animation: none;
+/* Texto del botón */
+.btn-mercadolibre span {
+    font-family: var(--font-primary);
+    font-weight: 800;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== RESPONSIVE PARA BOTÓN ADMIN ===== */
-@media (max-width: 1024px) {
-    .btn-admin {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-    }
-    
-    .btn-admin span {
-        display: none; /* Ocultar texto en tablets */
-    }
+/* Efecto activo/click */
+.btn-mercadolibre:active {
+    transform: translateY(-1px) scale(1.02);
+    transition: all 0.1s ease;
 }
+/* Estilos del botón Admin */
 
-@media (max-width: 768px) {
-    .nav-button {
-        gap: 8px;
-    }
-    
-    .btn-admin {
-        padding: 6px;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-    }
-    
-    .btn-admin span {
-        display: none; /* Solo mostrar icono en móvil */
-    }
-    
-    .btn-admin i {
-        font-size: 1.1rem;
-    }
-}
-
-/* ===== INDICADOR DE SESIÓN ACTIVA ===== */
-.btn-admin.logged-in {
-    background: linear-gradient(135deg, #10b981, #059669);
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-.btn-admin.logged-in::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    right: -2px;
-    width: 8px;
-    height: 8px;
-    background: #22c55e;
-    border: 2px solid var(--primary-white);
-    border-radius: 50%;
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
-}
-
-@keyframes glow {
-    from {
-        box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-    }
-    to {
-        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.6);
-    }
-}
-
-@keyframes ping {
-    75%, 100% {
-        transform: scale(2);
-        opacity: 0;
-    }
-}
-
-/* ===== DROPDOWN ADMIN (OPCIONAL) ===== */
-.admin-dropdown {
-    position: relative;
-}
-
-.admin-dropdown-menu {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: var(--primary-white);
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    box-shadow: var(--shadow-medium);
-    z-index: 1000;
-    min-width: 180px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-}
-
-.admin-dropdown:hover .admin-dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.admin-dropdown-item {
-    display: block;
-    padding: 10px 16px;
-    color: var(--primary-black);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: var(--transition-fast);
-    border-bottom: 1px solid #f3f4f6;
-}
-
-.admin-dropdown-item:last-child {
-    border-bottom: none;
-}
-
-.admin-dropdown-item:hover {
-    background: #f8f9fa;
-    color: var(--primary-blue);
-}
-
-.admin-dropdown-item i {
-    margin-right: 8px;
-    width: 16px;
-    text-align: center;
-}
 /* LOGO LARROSA MÁS GRANDE */
 .nav-logo .logo {
     height: 70px; /* Aumentado de 50px a 70px */
@@ -310,6 +196,32 @@ body {
 }
 
 /* Raya que aparece por debajo al hacer hover */
+.nav-link {
+    text-decoration: none;
+    color: var(--primary-black);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition-fast);
+    padding: 0.5rem 1rem;
+    border-radius: 0; /* Eliminar border-radius */
+    position: relative;
+    overflow: hidden;
+    background: transparent; /* Asegurar fondo transparente */
+}
+
+/* Eliminar el efecto de fondo/recuadro en hover */
+.nav-link:hover {
+    color: var(--primary-blue);
+    background: transparent; /* Sin fondo */
+    transform: translateY(-1px); /* Sutil movimiento hacia arriba */
+}
+
+.nav-link.active {
+    color: var(--primary-blue);
+    background: transparent; /* Sin fondo en estado activo */
+}
+
+/* Mantener solo el efecto de línea por debajo */
 .nav-link::after {
     content: '';
     position: absolute;
@@ -327,10 +239,46 @@ body {
     width: 80%;
 }
 
-.nav-link:hover,
+/* Para unidadesDisponibles.css - mismo efecto */
+.nav-link {
+    text-decoration: none;
+    color: var(--primary-black);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition-fast);
+    padding: 0.5rem 1rem;
+    position: relative;
+    background: transparent;
+    border-radius: 0;
+}
+
+.nav-link:hover {
+    color: var(--primary-blue);
+    background: transparent; /* Eliminar el recuadro de fondo */
+    transform: translateY(-1px); /* Sutil hover hacia arriba */
+}
+
 .nav-link.active {
     color: var(--primary-blue);
-    background: rgba(61, 95, 172, 0.05);
+    background: transparent; /* Sin fondo en activo */
+}
+
+/* Asegurar que la línea se mantenga */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: var(--primary-blue);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 80%;
 }
 
 /* LOGO RANDON MÁS GRANDE */
@@ -1174,6 +1122,183 @@ body {
     padding-top: 2rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.6);
+}
+/* ===== BOTÓN ADMIN EN FOOTER ===== */
+
+.footer-admin {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+}
+
+.btn-admin-footer {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-dark-blue));
+    color: var(--primary-white);
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: var(--transition-fast);
+    box-shadow: 0 2px 10px rgba(61, 95, 172, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0.8;
+}
+
+.btn-admin-footer:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(61, 95, 172, 0.4);
+    background: linear-gradient(135deg, var(--secondary-dark-blue), var(--primary-blue));
+    opacity: 1;
+}
+
+.btn-admin-footer i {
+    font-size: 1rem;
+}
+
+.btn-admin-footer span {
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ===== INDICADOR DE SESIÓN ACTIVA EN FOOTER ===== */
+.btn-admin-footer.logged-in {
+    background: linear-gradient(135deg, #10b981, #059669);
+    animation: adminGlow 2s ease-in-out infinite alternate;
+}
+
+.btn-admin-footer.logged-in::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border: 2px solid var(--primary-white);
+    border-radius: 50%;
+    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes adminGlow {
+    from {
+        box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+    }
+    to {
+        box-shadow: 0 4px 20px rgba(16, 185, 129, 0.5);
+    }
+}
+
+/* ===== ACTUALIZACIÓN DEL NAV-BUTTON ===== */
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Solo mantener el botón especial de Randon si es necesario */
+.btn-special {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    background: transparent;
+    border-radius: 8px;
+    transition: var(--transition-fast);
+    text-decoration: none;
+}
+
+.btn-special:hover {
+    background: rgba(61, 95, 172, 0.1);
+    transform: scale(1.08);
+}
+
+.btn-icon {
+    width: 80px;
+    height: 50px;
+    border-radius: 4px;
+    object-fit: contain;
+    filter: none;
+}
+
+/* ===== RESPONSIVE PARA BOTÓN MERCADOLIBRE ===== */
+@media (max-width: 1024px) {
+    .btn-mercadolibre {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+        gap: 6px;
+    }
+    
+    .btn-mercadolibre span {
+        display: none; /* Ocultar texto en tablets */
+    }
+    
+    .btn-mercadolibre i {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .btn-mercadolibre {
+        padding: 8px 12px;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+    }
+    
+    .btn-mercadolibre span {
+        display: none; /* Solo mostrar icono en móvil */
+    }
+    
+    .btn-mercadolibre i {
+        font-size: 1.3rem;
+    }
+}
+
+/* ===== VARIANTE ALTERNATIVA CON GRADIENTE ANIMADO ===== */
+.btn-mercadolibre-animated {
+    background: linear-gradient(45deg, #3483fa, #1259c3, #3483fa, #1259c3);
+    background-size: 300% 300%;
+    animation: mercadoLibreGradient 3s ease infinite;
+}
+
+@keyframes mercadoLibreGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ===== EFECTO ADICIONAL CON PARTÍCULAS (OPCIONAL) ===== */
+.btn-mercadolibre-particles::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.btn-mercadolibre-particles:hover::after {
+    width: 100px;
+    height: 100px;
+    opacity: 0;
 }
 
 /* ===== CONEXIÓN VISUAL ENTRE SECCIONES ===== */

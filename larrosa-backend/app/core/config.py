@@ -27,6 +27,11 @@ class Settings(BaseSettings):
     # Environment
     ENVIRONMENT: str = "development"
     
+    # Admin Panel - NUEVAS VARIABLES
+    ADMIN_EMAIL: str = "admin@larrosacamiones.com"
+    ADMIN_USERNAME: str = "admin"
+    ADMIN_PASSWORD: str = "admin123"
+    
     # AWS S3 (opcional)
     AWS_ACCESS_KEY_ID: str = ""
     AWS_SECRET_ACCESS_KEY: str = ""

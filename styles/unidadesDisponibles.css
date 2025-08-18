@@ -46,38 +46,83 @@
     font-size: 1rem;
     transition: var(--transition-fast);
     padding: 0.5rem 1rem;
-    border-radius: 5px;
+    border-radius: 0; /* Eliminar border-radius */
+    position: relative;
+    overflow: hidden;
+    background: transparent; /* Asegurar fondo transparente */
 }
 
-.nav-link:hover,
+/* Eliminar el efecto de fondo/recuadro en hover */
+.nav-link:hover {
+    color: var(--primary-blue);
+    background: transparent; /* Sin fondo */
+    transform: translateY(-1px); /* Sutil movimiento hacia arriba */
+}
+
 .nav-link.active {
     color: var(--primary-blue);
-    background: rgba(61, 95, 172, 0.1);
+    background: transparent; /* Sin fondo en estado activo */
 }
 
-.nav-button .btn-special {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 45px;
-    height: 45px;
+/* Mantener solo el efecto de línea por debajo */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
     background: var(--primary-blue);
-    border-radius: 50%;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 80%;
+}
+
+/* Para unidadesDisponibles.css - mismo efecto */
+.nav-link {
+    text-decoration: none;
+    color: var(--primary-black);
+    font-weight: 600;
+    font-size: 1rem;
     transition: var(--transition-fast);
+    padding: 0.5rem 1rem;
+    position: relative;
+    background: transparent;
+    border-radius: 0;
 }
 
-.nav-button .btn-special:hover {
-    background: var(--secondary-dark-blue);
-    transform: scale(1.1);
+.nav-link:hover {
+    color: var(--primary-blue);
+    background: transparent; /* Eliminar el recuadro de fondo */
+    transform: translateY(-1px); /* Sutil hover hacia arriba */
 }
 
-.btn-icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    object-fit: cover;
+.nav-link.active {
+    color: var(--primary-blue);
+    background: transparent; /* Sin fondo en activo */
 }
 
+/* Asegurar que la línea se mantenga */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: var(--primary-blue);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 80%;
+}
 /* Hamburger menu para móvil */
 .hamburger {
     display: none;
