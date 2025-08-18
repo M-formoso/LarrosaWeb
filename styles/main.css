@@ -53,9 +53,8 @@ body {
     font-family: var(--font-primary);
     font-size: 2.5rem;
     color: var(--primary-blue);
-    text-align: center;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
     margin-bottom: 3rem;
-    text-transform: uppercase;
 }
 
 /* ===== NAVEGACIÓN CON EFECTOS MEJORADOS ===== */
@@ -78,14 +77,14 @@ body {
     padding: 0 20px;
     height: 80px;
 }
-/* ===== BOTÓN ADMIN EN NAVEGACIÓN ===== */
 
-/* Actualizar nav-button para mostrar ambos botones */
+/* ===== BOTÓN ADMIN EN NAVEGACIÓN ===== */
 .nav-button {
     display: flex;
     align-items: center;
     gap: 12px;
 }
+
 .btn-mercadolibre {
     display: flex;
     align-items: center;
@@ -95,79 +94,28 @@ body {
     background: linear-gradient(135deg, #3483fa, #1259c3);
     color: var(--primary-white);
     text-decoration: none;
-    border-radius: 25px;
+    border-radius: 0; /* MODIFICADO: Botones cuadrados */
+    border: 2px solid transparent;
     font-size: 0.9rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(52, 131, 250, 0.4);
     position: relative;
     overflow: hidden;
-    border: none;
     cursor: pointer;
 }
 
-/* Efecto de brillo que se mueve */
-.btn-mercadolibre::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-    transition: left 0.6s ease;
-}
-
-.btn-mercadolibre:hover::before {
-    left: 100%;
-}
-
-/* Hover effect */
 .btn-mercadolibre:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 8px 25px rgba(52, 131, 250, 0.6);
-    background: linear-gradient(135deg, #1259c3, #0f4fbe);
+    background: var(--primary-white);
+    color: #1259c3;
+    border-color: #1259c3;
+    transform: translateY(-2px);
 }
-
-/* Efecto de pulso sutil */
-.btn-mercadolibre {
-    animation: mercadoLibrePulse 3s infinite;
-}
-
-@keyframes mercadoLibrePulse {
-    0%, 100% {
-        box-shadow: 0 4px 15px rgba(52, 131, 250, 0.4);
-    }
-    50% {
-        box-shadow: 0 4px 20px rgba(52, 131, 250, 0.6);
-    }
-}
-
-/* Icono del botón */
-.btn-mercadolibre i {
-    font-size: 1.1rem;
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
-}
-
-/* Texto del botón */
-.btn-mercadolibre span {
-    font-family: var(--font-primary);
-    font-weight: 800;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-/* Efecto activo/click */
-.btn-mercadolibre:active {
-    transform: translateY(-1px) scale(1.02);
-    transition: all 0.1s ease;
-}
-/* Estilos del botón Admin */
 
 /* LOGO LARROSA MÁS GRANDE */
 .nav-logo .logo {
-    height: 70px; /* Aumentado de 50px a 70px */
+    height: 70px;
     width: auto;
     transition: var(--transition-fast);
 }
@@ -190,80 +138,23 @@ body {
     font-size: 1rem;
     transition: var(--transition-fast);
     padding: 0.5rem 1rem;
-    border-radius: 5px;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Raya que aparece por debajo al hacer hover */
-.nav-link {
-    text-decoration: none;
-    color: var(--primary-black);
-    font-weight: 600;
-    font-size: 1rem;
-    transition: var(--transition-fast);
-    padding: 0.5rem 1rem;
-    border-radius: 0; /* Eliminar border-radius */
-    position: relative;
-    overflow: hidden;
-    background: transparent; /* Asegurar fondo transparente */
-}
-
-/* Eliminar el efecto de fondo/recuadro en hover */
-.nav-link:hover {
-    color: var(--primary-blue);
-    background: transparent; /* Sin fondo */
-    transform: translateY(-1px); /* Sutil movimiento hacia arriba */
-}
-
-.nav-link.active {
-    color: var(--primary-blue);
-    background: transparent; /* Sin fondo en estado activo */
-}
-
-/* Mantener solo el efecto de línea por debajo */
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 3px;
-    background: var(--primary-blue);
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-    width: 80%;
-}
-
-/* Para unidadesDisponibles.css - mismo efecto */
-.nav-link {
-    text-decoration: none;
-    color: var(--primary-black);
-    font-weight: 600;
-    font-size: 1rem;
-    transition: var(--transition-fast);
-    padding: 0.5rem 1rem;
-    position: relative;
-    background: transparent;
     border-radius: 0;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
 }
 
 .nav-link:hover {
     color: var(--primary-blue);
-    background: transparent; /* Eliminar el recuadro de fondo */
-    transform: translateY(-1px); /* Sutil hover hacia arriba */
+    background: transparent;
+    transform: translateY(-1px);
 }
 
 .nav-link.active {
     color: var(--primary-blue);
-    background: transparent; /* Sin fondo en activo */
+    background: transparent;
 }
 
-/* Asegurar que la línea se mantenga */
 .nav-link::after {
     content: '';
     position: absolute;
@@ -286,22 +177,24 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 8px; /* Aumentado de 5px */
+    padding: 8px;
     background: transparent;
-    border-radius: 8px;
+    border-radius: 0; /* MODIFICADO: Botones cuadrados */
+    border: 2px solid transparent;
     transition: var(--transition-fast);
     text-decoration: none;
 }
 
 .nav-button .btn-special:hover {
-    background: rgba(61, 95, 172, 0.1);
+    background: transparent;
+    border-color: var(--primary-blue);
     transform: scale(1.08);
 }
 
 .btn-icon {
-    width: 80px; /* Aumentado de 60px */
-    height: 50px; /* Aumentado de 35px */
-    border-radius: 4px;
+    width: 80px;
+    height: 50px;
+    border-radius: 0; /* MODIFICADO: Botones cuadrados */
     object-fit: contain;
     filter: none;
 }
@@ -376,6 +269,7 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
     letter-spacing: 1px;
     line-height: 1.1;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .hero-subtitle {
@@ -383,6 +277,7 @@ body {
     margin-bottom: 1rem;
     font-weight: 300;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 /* ===== BOTONES DE CATEGORÍAS MEJORADOS ===== */
@@ -410,12 +305,12 @@ body {
     background: rgba(255, 255, 255, 0.9);
     color: var(--primary-black);
     border: none;
-    padding: 10px 28px;
+    padding: 15px 35px; /* MODIFICADO: Aumentado el padding horizontal para estirar */
     cursor: pointer;
     transition: all 0.2s ease;
-    width: 170px;
-    height: 58px;
-    border-radius: 6px;
+    width: 200px; /* MODIFICADO: Ancho fijo más amplio */
+    height: 75px; /* MODIFICADO: Altura aumentada */
+    border-radius: 0; /* MODIFICADO: Botones cuadrados */
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
     position: relative;
     flex-shrink: 0;
@@ -427,22 +322,35 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
+.category-btn::after {
+    content: '→'; /* MODIFICADO: Añadida flecha a la derecha */
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: var(--primary-black);
+    font-weight: bold;
+}
+
 .category-icon {
-    width: 30px;
-    height: 30px;
-    margin-bottom: 3px;
+    width: 40px; /* MODIFICADO: Aumentado para mejor proporción */
+    height: 35px; /* MODIFICADO: Aumentado para mejor proporción */
+    margin-bottom: 8px; /* MODIFICADO: Más espacio */
     transition: var(--transition-fast);
     filter: none;
     opacity: 0.8;
+    object-fit: contain; /* MODIFICADO: Para que las imágenes se vean bien */
 }
 
 .category-btn:hover .category-icon {
     opacity: 1;
+    transform: scale(1.05); /* MODIFICADO: Ligero efecto de escala */
 }
 
 .category-btn span {
     font-family: var(--font-secondary);
-    font-size: 0.8rem;
+    font-size: 0.9rem; /* MODIFICADO: Tamaño ligeramente mayor */
     color: var(--primary-black);
     transition: var(--transition-fast);
     font-weight: 600;
@@ -474,37 +382,39 @@ body {
 
 /* ===== SECCIÓN UNIDADES DESTACADAS - ESPACIADO OPTIMIZADO ===== */
 .featured-units {
-    padding: 40px 0 60px 0; /* REDUCIDO: Mucho menos padding top */
+    padding: 40px 0 60px 0;
     background: var(--primary-white);
     position: relative;
     margin-top: 0;
 }
 
-/* Título más cerca de las imágenes */
+/* MODIFICADO: Título con DESTACADAS en Roboto Black y sin mayúsculas */
 .section-title-special {
     font-family: var(--font-primary);
     font-size: 2.8rem;
     color: #9ca3af;
-    text-align: center;
-    margin-bottom: 1.5rem; /* REDUCIDO: de 2rem a 1.5rem */
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
+    margin-bottom: 1.5rem;
     margin-top: 0;
-    text-transform: uppercase;
-    font-weight: 700;
+    text-transform: none; /* MODIFICADO: Sin mayúsculas */
+    font-weight: 400; /* Normal para "UNIDADES" */
     letter-spacing: 2px;
     line-height: 1.2;
 }
 
-/* Efecto de palabra más grande en "DESTACADAS" */
+/* MODIFICADO: Efecto de palabra más gruesa en "destacadas" */
 .section-title-special .word-normal {
     font-size: 1em;
     display: inline-block;
+    font-weight: 400; /* Normal */
 }
 
 .section-title-special .word-large {
     font-size: 1.3em;
     display: inline-block;
     margin-left: 0.3em;
-    font-weight: 800;
+    font-weight: 900; /* MODIFICADO: Roboto Black (equivale a 900) */
+    font-family: 'Roboto', sans-serif;
 }
 
 /* Grid más cerca del título */
@@ -512,18 +422,18 @@ body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
-    margin-bottom: 2rem; /* REDUCIDO: de 2.5rem a 2rem */
+    margin-bottom: 2rem;
     max-width: 1000px;
-    margin-left: auto;
+    margin-left: 0; /* MODIFICADO: Alineado a la izquierda */
     margin-right: auto;
     padding: 0 20px;
-    margin-top: 0; /* Sin margen superior extra */
+    margin-top: 0;
 }
 
 /* Cards más cuadradas y simples */
 .unit-card {
     background: var(--primary-white);
-    border-radius: 8px;
+    border-radius: 0; /* MODIFICADO: Esquinas cuadradas */
     overflow: hidden;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
     transition: var(--transition-medium);
@@ -570,7 +480,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    text-align: center;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 /* Título del vehículo */
@@ -583,6 +493,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     line-height: 1.2;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 /* Detalles técnicos simplificados */
@@ -591,6 +502,7 @@ body {
     color: var(--secondary-gray);
     margin-bottom: 0.8rem;
     line-height: 1.3;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .unit-details .unit-year {
@@ -614,11 +526,11 @@ body {
 
 .btn-view-unit {
     width: 100%;
-    background: var(--primary-black);
-    color: var(--primary-white);
-    border: none;
+    background: var(--primary-white); /* MODIFICADO: Fondo blanco */
+    color: var(--primary-black); /* MODIFICADO: Texto negro */
+    border: 2px solid var(--primary-black); /* MODIFICADO: Solo borde negro */
     padding: 0.7rem 1rem;
-    border-radius: 6px;
+    border-radius: 0; /* MODIFICADO: Esquinas cuadradas */
     cursor: pointer;
     font-weight: 600;
     font-size: 0.85rem;
@@ -628,25 +540,26 @@ body {
 }
 
 .btn-view-unit:hover {
-    background: var(--primary-blue);
+    background: var(--primary-black);
+    color: var(--primary-white);
     transform: translateY(-1px);
 }
 
 /* Botón Ver todas las UNIDADES más cerca */
 .view-all-container {
-    text-align: center;
-    margin-top: 1.5rem; /* REDUCIDO: de 2rem a 1.5rem */
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
+    margin-top: 1.5rem;
     margin-bottom: 0;
 }
 
 .btn-view-all {
-    background: #9ca3af;
-    color: var(--primary-white);
-    border: none;
+    background: var(--primary-white); /* MODIFICADO: Fondo blanco */
+    color: var(--primary-black); /* MODIFICADO: Texto negro */
+    border: 2px solid var(--primary-black); /* MODIFICADO: Solo borde negro */
     padding: 1rem 2.5rem;
     font-family: var(--font-primary);
     font-size: 0.9rem;
-    border-radius: 25px;
+    border-radius: 0; /* MODIFICADO: Esquinas cuadradas */
     cursor: pointer;
     transition: var(--transition-fast);
     text-transform: uppercase;
@@ -655,14 +568,15 @@ body {
 }
 
 .btn-view-all:hover {
-    background: var(--primary-blue);
+    background: var(--primary-black);
+    color: var(--primary-white);
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(61, 95, 172, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* ===== SECCIÓN RANDON - ESPACIADO REDUCIDO ===== */
 .randon-section {
-    padding: 40px 0; /* REDUCIDO: de 80px 0 a 40px 0 */
+    padding: 40px 0;
     background: var(--primary-white);
     position: relative;
     overflow: hidden;
@@ -682,7 +596,7 @@ body {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    border-radius: 12px;
+    border-radius: 6px; /* MODIFICADO: Menos curvas, más cuadrado */
     overflow: hidden;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
@@ -707,7 +621,7 @@ body {
     z-index: 1;
 }
 
-/* Logo RANDON superpuesto - SIN FONDO en la esquina superior izquierda */
+/* MODIFICADO: Logo RANDON más pequeño */
 .randon-logo-overlay {
     position: absolute;
     top: 30px;
@@ -720,7 +634,7 @@ body {
 }
 
 .randon-logo-overlay img {
-    height: 100px; /* AUMENTADO: de 80px a 100px */
+    height: 75px; /* MODIFICADO: Reducido de 100px a 75px */
     width: auto;
     object-fit: contain;
     display: block;
@@ -734,7 +648,7 @@ body {
     right: 40px;
     z-index: 3;
     color: var(--primary-black);
-    text-align: right;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
     max-width: 600px;
 }
 
@@ -745,6 +659,7 @@ body {
     margin-bottom: 1rem;
     line-height: 1.3;
     text-shadow: none;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .randon-description {
@@ -754,6 +669,7 @@ body {
     margin-bottom: 1.5rem;
     text-shadow: none;
     opacity: 1;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .randon-description strong {
@@ -765,30 +681,35 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: #5fa8d3;
-    color: var(--primary-white);
-    border: none;
+    background: var(--primary-white); /* MODIFICADO: Fondo blanco */
+    color: var(--primary-black); /* MODIFICADO: Texto negro */
+    border: 2px solid var(--primary-black); /* MODIFICADO: Solo borde negro */
     padding: 12px 24px;
     font-weight: 600;
     font-size: 1rem;
-    border-radius: 6px;
+    border-radius: 0; /* MODIFICADO: Esquinas cuadradas */
     cursor: pointer;
     transition: var(--transition-fast);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .btn-randon:hover {
-    background: #4a8bb8;
+    background: var(--primary-black);
+    color: var(--primary-white);
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
 }
 
 /* ===== SECCIÓN ¿POR QUÉ LARROSA? - ESPACIADO REDUCIDO ===== */
 .why-larrosa {
-    padding: 50px 0; /* REDUCIDO: de 80px 0 a 50px 0 */
+    padding: 50px 0;
     background: #f8f9fa;
+}
+
+.why-larrosa .section-title {
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
+    margin-left: 20px; /* MODIFICADO: Margen para alineación */
 }
 
 .values-grid {
@@ -796,14 +717,14 @@ body {
     grid-template-columns: repeat(3, 1fr);
     gap: 3rem;
     max-width: 1000px;
-    margin: 0 auto;
+    margin: 0 20px; /* MODIFICADO: Alineado a la izquierda */
 }
 
 .value-card {
     background: var(--primary-white);
     padding: 2.5rem 2rem;
-    border-radius: 15px;
-    text-align: center;
+    border-radius: 0; /* MODIFICADO: Esquinas cuadradas */
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
     box-shadow: var(--shadow-light);
     transition: var(--transition-medium);
     position: relative;
@@ -834,10 +755,10 @@ body {
 .value-image {
     width: 120px;
     height: 90px;
-    margin: 0 auto 2rem;
+    margin: 0 0 2rem 0; /* MODIFICADO: Alineado a la izquierda */
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* MODIFICADO: Alineación a la izquierda */
     transition: var(--transition-medium);
     position: relative;
 }
@@ -864,30 +785,38 @@ body {
     color: var(--primary-blue);
     margin-bottom: 1.5rem;
     font-weight: 700;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .value-description {
     color: var(--secondary-gray);
     line-height: 1.7;
     font-size: 1.05rem;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 /* ===== SECCIÓN TESTIMONIOS - ESPACIADO REDUCIDO ===== */
 .testimonials {
-    padding: 50px 0; /* REDUCIDO */
+    padding: 50px 0;
     background: var(--primary-white);
+}
+
+.testimonials .section-title {
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
+    margin-left: 20px; /* MODIFICADO: Margen para alineación */
 }
 
 .testimonials-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
+    margin: 0 20px; /* MODIFICADO: Alineado a la izquierda */
 }
 
 .testimonial-card {
     background: #f8f9fa;
     padding: 2rem;
-    border-radius: 15px;
+    border-radius: 0; /* MODIFICADO: Esquinas cuadradas */
     box-shadow: var(--shadow-light);
     transition: var(--transition-medium);
 }
@@ -907,7 +836,7 @@ body {
 .testimonial-avatar {
     width: 60px;
     height: 60px;
-    border-radius: 50%;
+    border-radius: 0; /* MODIFICADO: Esquinas cuadradas */
     object-fit: cover;
 }
 
@@ -915,27 +844,31 @@ body {
     font-weight: 600;
     color: var(--primary-blue);
     margin-bottom: 0.2rem;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .testimonial-role {
     color: var(--secondary-gray);
     font-size: 0.9rem;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .testimonial-rating {
     margin-bottom: 1rem;
     font-size: 1.2rem;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .testimonial-text {
     color: var(--secondary-gray);
     line-height: 1.6;
     font-style: italic;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 /* ===== SECCIÓN FINANCIAMIENTO - ESPACIADO REDUCIDO ===== */
 .financing {
-    padding: 50px 0; /* REDUCIDO */
+    padding: 50px 0;
     background: linear-gradient(135deg, var(--primary-blue), var(--secondary-dark-blue));
     position: relative;
     overflow: hidden;
@@ -959,38 +892,42 @@ body {
 }
 
 .financing-overlay {
-    text-align: center;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
     color: var(--primary-white);
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 20px; /* MODIFICADO: Alineado a la izquierda */
 }
 
 .financing-title {
     font-family: var(--font-primary);
     font-size: 2.5rem;
     margin-bottom: 1rem;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .financing-subtitle {
     font-size: 1.2rem;
     margin-bottom: 2rem;
     opacity: 0.9;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .btn-financing {
-    background: var(--primary-white);
-    color: var(--primary-blue);
-    border: none;
+    background: var(--primary-white); /* MODIFICADO: Fondo blanco */
+    color: var(--primary-black); /* MODIFICADO: Texto negro */
+    border: 2px solid var(--primary-black); /* MODIFICADO: Solo borde negro */
     padding: 1.2rem 2.5rem;
     font-family: var(--font-primary);
     font-size: 1rem;
-    border-radius: 30px;
+    border-radius: 0; /* MODIFICADO: Esquinas cuadradas */
     cursor: pointer;
     transition: var(--transition-fast);
     text-transform: uppercase;
 }
 
 .btn-financing:hover {
+    background: var(--primary-black);
+    color: var(--primary-white);
     transform: scale(1.05);
     box-shadow: var(--shadow-medium);
 }
@@ -1009,7 +946,7 @@ body {
 .brands-track {
     display: flex;
     gap: 3rem;
-    justify-content: center;
+    justify-content: flex-start; /* MODIFICADO: Alineación a la izquierda */
     align-items: center;
     flex-wrap: wrap;
     padding: 0 20px;
@@ -1053,10 +990,10 @@ body {
 .brand-logo:nth-child(6) { animation-delay: 0.6s; }
 .brand-logo:nth-child(7) { animation-delay: 0.7s; }
 
-/* ===== FOOTER ===== */
+/* ===== FOOTER MODIFICADO ===== */
 .footer {
-    background: var(--primary-black);
-    color: var(--primary-white);
+    background: #d1d5db; /* MODIFICADO: Gris claro en lugar de negro */
+    color: var(--primary-black); /* MODIFICADO: Texto negro */
     padding: 3rem 0 1rem;
 }
 
@@ -1071,11 +1008,13 @@ body {
     height: 60px;
     width: auto;
     margin-bottom: 1rem;
+    filter: none; /* MODIFICADO: Sin filtros para mantener colores originales */
 }
 
 .footer-description {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--primary-black); /* MODIFICADO: Texto negro */
     line-height: 1.6;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .footer-title {
@@ -1083,6 +1022,7 @@ body {
     font-size: 1.2rem;
     margin-bottom: 1rem;
     color: var(--primary-blue);
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .footer-contact p {
@@ -1090,17 +1030,19 @@ body {
     align-items: center;
     gap: 0.5rem;
     margin-bottom: 0.5rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--primary-black); /* MODIFICADO: Texto negro */
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .footer-contact img {
     width: 16px;
     height: 16px;
-    filter: brightness(0) invert(1);
+    filter: none; /* MODIFICADO: Sin filtros */
 }
 
 .footer-links {
     list-style: none;
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
 }
 
 .footer-links li {
@@ -1108,7 +1050,7 @@ body {
 }
 
 .footer-links a {
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--primary-black); /* MODIFICADO: Texto negro */
     text-decoration: none;
     transition: var(--transition-fast);
 }
@@ -1118,18 +1060,19 @@ body {
 }
 
 .footer-bottom {
-    text-align: center;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.6);
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
+    padding: 2rem 0 0 20px; /* MODIFICADO: Padding izquierdo */
+    border-top: 1px solid rgba(0, 0, 0, 0.1); /* MODIFICADO: Borde negro translúcido */
+    color: var(--primary-black); /* MODIFICADO: Texto negro */
 }
-/* ===== BOTÓN ADMIN EN FOOTER ===== */
 
+/* ===== BOTÓN ADMIN EN FOOTER ===== */
 .footer-admin {
     margin-top: 20px;
     padding-top: 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    text-align: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.1); /* MODIFICADO: Borde negro translúcido */
+    text-align: left; /* MODIFICADO: Alineación a la izquierda */
+    padding-left: 20px; /* MODIFICADO: Padding izquierdo */
 }
 
 .btn-admin-footer {
@@ -1138,22 +1081,21 @@ body {
     justify-content: center;
     gap: 8px;
     padding: 12px 24px;
-    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-dark-blue));
-    color: var(--primary-white);
+    background: var(--primary-white); /* MODIFICADO: Fondo blanco */
+    color: var(--primary-black); /* MODIFICADO: Texto negro */
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 0; /* MODIFICADO: Esquinas cuadradas */
+    border: 2px solid var(--primary-black); /* MODIFICADO: Solo borde negro */
     font-size: 0.9rem;
     font-weight: 600;
     transition: var(--transition-fast);
-    box-shadow: 0 2px 10px rgba(61, 95, 172, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
     opacity: 0.8;
 }
 
 .btn-admin-footer:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(61, 95, 172, 0.4);
-    background: linear-gradient(135deg, var(--secondary-dark-blue), var(--primary-blue));
+    background: var(--primary-black);
+    color: var(--primary-white);
     opacity: 1;
 }
 
@@ -1169,7 +1111,9 @@ body {
 
 /* ===== INDICADOR DE SESIÓN ACTIVA EN FOOTER ===== */
 .btn-admin-footer.logged-in {
-    background: linear-gradient(135deg, #10b981, #059669);
+    background: var(--primary-white);
+    color: #10b981;
+    border-color: #10b981;
     animation: adminGlow 2s ease-in-out infinite alternate;
 }
 
@@ -1209,20 +1153,22 @@ body {
     justify-content: center;
     padding: 8px;
     background: transparent;
-    border-radius: 8px;
+    border-radius: 0;
+    border: 2px solid transparent;
     transition: var(--transition-fast);
     text-decoration: none;
 }
 
 .btn-special:hover {
-    background: rgba(61, 95, 172, 0.1);
+    background: transparent;
+    border-color: var(--primary-blue);
     transform: scale(1.08);
 }
 
 .btn-icon {
     width: 80px;
     height: 50px;
-    border-radius: 4px;
+    border-radius: 0;
     object-fit: contain;
     filter: none;
 }
@@ -1236,7 +1182,7 @@ body {
     }
     
     .btn-mercadolibre span {
-        display: none; /* Ocultar texto en tablets */
+        display: none;
     }
     
     .btn-mercadolibre i {
@@ -1247,58 +1193,18 @@ body {
 @media (max-width: 768px) {
     .btn-mercadolibre {
         padding: 8px 12px;
-        border-radius: 50%;
+        border-radius: 0;
         width: 44px;
         height: 44px;
     }
     
     .btn-mercadolibre span {
-        display: none; /* Solo mostrar icono en móvil */
+        display: none;
     }
     
     .btn-mercadolibre i {
         font-size: 1.3rem;
     }
-}
-
-/* ===== VARIANTE ALTERNATIVA CON GRADIENTE ANIMADO ===== */
-.btn-mercadolibre-animated {
-    background: linear-gradient(45deg, #3483fa, #1259c3, #3483fa, #1259c3);
-    background-size: 300% 300%;
-    animation: mercadoLibreGradient 3s ease infinite;
-}
-
-@keyframes mercadoLibreGradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* ===== EFECTO ADICIONAL CON PARTÍCULAS (OPCIONAL) ===== */
-.btn-mercadolibre-particles::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.6) 0%, transparent 70%);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 0.3s ease;
-    pointer-events: none;
-}
-
-.btn-mercadolibre-particles:hover::after {
-    width: 100px;
-    height: 100px;
-    opacity: 0;
 }
 
 /* ===== CONEXIÓN VISUAL ENTRE SECCIONES ===== */
@@ -1319,7 +1225,7 @@ body {
 /* ===== RESPONSIVE DESIGN OPTIMIZADO ===== */
 @media (max-width: 1200px) {
     .nav-logo .logo {
-        height: 65px; /* Ajustado proporcionalmente */
+        height: 65px;
     }
     
     .btn-icon {
@@ -1356,26 +1262,27 @@ body {
     }
     
     .category-btn {
-        width: 140px;
-        height: 50px;
-        padding: 6px 20px;
+        width: 160px; /* MODIFICADO: Ajustado para tablet */
+        height: 65px;
+        padding: 8px 25px;
     }
     
     .category-icon {
-        width: 24px;
-        height: 24px;
+        width: 32px;
+        height: 28px;
     }
     
     .category-btn span {
-        font-size: 0.7rem;
+        font-size: 0.8rem;
     }
     
     .units-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 1.5rem;
+        margin-left: 0;
+        margin-right: auto;
     }
     
-    /* Espaciado responsive */
     .featured-units {
         padding: 30px 0 50px 0;
     }
@@ -1404,12 +1311,13 @@ body {
     }
     
     .randon-logo-overlay img {
-        height: 80px; /* Mantener tamaño en tablet */
+        height: 60px; /* MODIFICADO: Más pequeño en tablet */
     }
     
     .values-grid {
         gap: 2.5rem;
         max-width: 900px;
+        margin: 0 20px;
     }
     
     .value-image {
@@ -1491,12 +1399,16 @@ body {
     
     .category-btn {
         width: 100%;
-        max-width: 260px;
-        height: 50px;
+        max-width: 280px; /* MODIFICADO: Más ancho en móvil */
+        height: 60px;
         flex-direction: row;
         justify-content: flex-start;
-        padding: 8px 15px;
-        gap: 12px;
+        padding: 10px 20px;
+        gap: 15px;
+    }
+    
+    .category-btn::after {
+        right: 15px; /* MODIFICADO: Ajuste para móvil */
     }
     
     .category-btn:hover {
@@ -1504,13 +1416,13 @@ body {
     }
     
     .category-icon {
-        width: 24px;
-        height: 24px;
+        width: 30px;
+        height: 28px;
         margin-bottom: 0;
     }
     
     .category-btn span {
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         text-align: left;
         flex: 1;
     }
@@ -1520,6 +1432,8 @@ body {
         gap: 1rem;
         max-width: 500px;
         padding: 0 15px;
+        margin-left: 0;
+        margin-right: auto;
     }
     
     .section-title-special {
@@ -1548,7 +1462,6 @@ body {
         font-size: 0.8rem;
     }
     
-    /* Espaciado responsive */
     .featured-units {
         padding: 25px 0 40px 0;
     }
@@ -1560,12 +1473,12 @@ body {
     .randon-text-overlay {
         position: static;
         transform: none;
-        text-align: center;
+        text-align: left; /* MODIFICADO: Mantener alineación izquierda */
         max-width: none;
         background: rgba(255, 255, 255, 0.95);
         padding: 30px 20px;
         margin: -100px 20px 0 20px;
-        border-radius: 8px;
+        border-radius: 0; /* MODIFICADO: Sin border radius */
         position: relative;
         z-index: 4;
         color: var(--primary-black);
@@ -1576,6 +1489,7 @@ body {
         line-height: 1.4;
         text-shadow: none;
         color: var(--primary-black);
+        text-align: left; /* MODIFICADO: Alineación a la izquierda */
     }
     
     .randon-description {
@@ -1583,6 +1497,7 @@ body {
         margin-bottom: 1.2rem;
         text-shadow: none;
         color: var(--primary-black);
+        text-align: left; /* MODIFICADO: Alineación a la izquierda */
     }
     
     .btn-randon {
@@ -1592,7 +1507,7 @@ body {
     
     .randon-image-container {
         margin: 0 20px;
-        border-radius: 8px;
+        border-radius: 0; /* MODIFICADO: Sin border radius */
     }
     
     .randon-logo-overlay {
@@ -1601,13 +1516,14 @@ body {
     }
     
     .randon-logo-overlay img {
-        height: 70px; /* Ajustado para móvil */
+        height: 50px; /* MODIFICADO: Aún más pequeño en móvil */
     }
     
     .values-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
         max-width: 500px;
+        margin: 0 20px;
     }
     
     .value-card {
@@ -1618,6 +1534,7 @@ body {
         width: 100px;
         height: 75px;
         margin-bottom: 1.5rem;
+        justify-content: flex-start;
     }
     
     .value-title {
@@ -1635,6 +1552,7 @@ body {
     .testimonials-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+        margin: 0 20px;
     }
     
     .financing-title {
@@ -1644,7 +1562,8 @@ body {
     .brands-track {
         gap: 2rem;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: flex-start; /* MODIFICADO: Mantener alineación izquierda */
+        padding: 0 20px;
     }
     
     .brand-logo {
@@ -1652,7 +1571,6 @@ body {
         margin-bottom: 10px;
     }
     
-    /* Logo de Iveco en móvil */
     .brand-logo[alt*="Iveco"],
     .brand-logo[src*="iveco"],
     .brand-logo[src*="Iveco"] {
@@ -1699,24 +1617,26 @@ body {
     }
     
     .category-btn {
-        height: 45px;
-        padding: 6px 12px;
-        max-width: 240px;
+        height: 55px;
+        padding: 8px 15px;
+        max-width: 260px;
     }
     
     .category-icon {
-        width: 22px;
-        height: 22px;
+        width: 28px;
+        height: 25px;
     }
     
     .category-btn span {
-        font-size: 0.7rem;
+        font-size: 0.75rem;
     }
     
     .units-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
         max-width: 300px;
+        margin-left: 0;
+        margin-right: auto;
     }
     
     .section-title-special {
@@ -1729,7 +1649,6 @@ body {
         max-width: 100%;
     }
     
-    /* Espaciado responsive móvil pequeño */
     .featured-units {
         padding: 20px 0 35px 0;
     }
@@ -1772,7 +1691,7 @@ body {
     }
     
     .randon-logo-overlay img {
-        height: 60px; /* Más pequeño en móvil */
+        height: 40px; /* MODIFICADO: Muy pequeño en móvil pequeño */
     }
     
     .btn-view-all {
@@ -1819,7 +1738,6 @@ body {
         height: 35px;
     }
     
-    /* Logo de Iveco en móvil pequeño */
     .brand-logo[alt*="Iveco"],
     .brand-logo[src*="iveco"],
     .brand-logo[src*="Iveco"] {
