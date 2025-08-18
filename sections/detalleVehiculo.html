@@ -21,14 +21,17 @@
 <body>
     <!-- Header -->
     <header class="header">
+        <!-- Navegación fija -->
         <nav class="navbar">
             <div class="nav-container">
+                <!-- Logo -->
                 <div class="nav-logo">
                     <a href="../index.html">
                         <img src="../assets/Azul.pdf" alt="Larrosa Camiones" class="logo">
                     </a>
                 </div>
                 
+                <!-- Menú principal -->
                 <ul class="nav-menu">
                     <li class="nav-item">
                         <a href="../index.html" class="nav-link">Inicio</a>
@@ -44,7 +47,9 @@
                     </li>
                 </ul>
                 
+                <!-- Botón derecha - ACTUALIZADO -->
                 <div class="nav-button">
+                    <!-- Botón MercadoLibre -->
                     <a href="https://listado.mercadolibre.com.ar/larrosa-camiones" 
                        class="btn-mercadolibre" 
                        target="_blank" 
@@ -53,11 +58,13 @@
                         <span>MercadoLibre</span>
                     </a>
                     
+                    <!-- Botón Randon (opcional - mantener o quitar) -->
                     <a href="LarrosaCamiones.html#randon" class="btn-special">
                         <img src="../assets/Logo negro sin fondo.png" alt="Randon" class="btn-icon">
                     </a>
                 </div>
                 
+                <!-- Hamburger para móvil -->
                 <div class="hamburger">
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -269,28 +276,53 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <img src="../assets/logo-larrosa-white.png" alt="Larrosa Camiones" class="footer-logo">
-                    <p class="footer-description">40 años comercializando camiones. Tu socio confiable en el transporte de cargas.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h4 class="footer-title">Contacto</h4>
-                    <div class="footer-contact">
-                        <p><i class="fas fa-map-marker-alt"></i> Villa María, Córdoba</p>
-                        <p><i class="fas fa-phone"></i> +54 353 XXX-XXXX</p>
-                        <p><i class="fas fa-envelope"></i> info@larrosacamiones.com</p>
+                    <img src="../assets/Blanco fondo negro.pdf" alt="Larrosa Camiones" class="footer-logo">
+                    <p>40 años comercializando camiones. Tu socio confiable en el transporte de cargas.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
                 
                 <div class="footer-section">
-                    <h4 class="footer-title">Enlaces</h4>
-                    <ul class="footer-links">
+                    <h4>Navegación</h4>
+                    <ul>
                         <li><a href="../index.html">Inicio</a></li>
                         <li><a href="unidadesDisponibles.html">Unidades Disponibles</a></li>
                         <li><a href="LarrosaCamiones.html">Larrosa Camiones</a></li>
                         <li><a href="contacto.html">Contacto</a></li>
                     </ul>
                 </div>
+                
+                <div class="footer-section">
+                    <h4>La Empresa</h4>
+                    <ul>
+                        <li><a href="LarrosaCamiones.html#historia">Nuestra Historia</a></li>
+                        <li><a href="LarrosaCamiones.html#valores">Valores</a></li>
+                        <li><a href="LarrosaCamiones.html#randon">Concesión Randon</a></li>
+                        <li><a href="LarrosaCamiones.html#instalaciones">Instalaciones</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contacto</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> Villa María, Córdoba</p>
+                        <p><i class="fas fa-phone"></i> +54 353 XXX-XXXX</p>
+                        <p><i class="fas fa-envelope"></i> info@larrosacamiones.com</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Nueva sección admin -->
+            <div class="footer-admin">
+                <a href="../admin/login.html" 
+                   class="btn-admin-footer" 
+                   title="Panel de Administración">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Administración</span>
+                </a>
             </div>
             
             <div class="footer-bottom">
@@ -299,8 +331,64 @@
         </div>
     </footer>
 
+    <!-- JavaScript para funcionalidad adicional -->
+    <script>
+        // Actualizar scripts/nav-session.js para que funcione con el botón en footer
+        document.addEventListener('DOMContentLoaded', function() {
+            updateAdminButtonState();
+        });
+
+        function updateAdminButtonState() {
+            const adminButton = document.querySelector('.btn-admin-footer');
+            if (!adminButton) return;
+
+            // Verificar si hay token de admin almacenado
+            const hasAdminToken = localStorage.getItem('admin_token') || sessionStorage.getItem('admin_token');
+            
+            if (hasAdminToken) {
+                // Mostrar estado "logueado"
+                adminButton.classList.add('logged-in');
+                adminButton.title = 'Panel de Administración (Sesión activa)';
+                
+                // Cambiar el texto si existe
+                const buttonText = adminButton.querySelector('span');
+                if (buttonText) {
+                    buttonText.textContent = 'Panel Activo';
+                }
+                
+                // Cambiar destino a dashboard en lugar de login
+                adminButton.href = '../admin/dashboard.html';
+            } else {
+                // Estado normal - ir a login
+                adminButton.classList.remove('logged-in');
+                adminButton.title = 'Panel de Administración';
+                adminButton.href = '../admin/login.html';
+                
+                const buttonText = adminButton.querySelector('span');
+                if (buttonText) {
+                    buttonText.textContent = 'Administración';
+                }
+            }
+        }
+
+        // Tracking para el botón MercadoLibre
+        document.querySelector('.btn-mercadolibre')?.addEventListener('click', function() {
+            // Google Analytics tracking
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'click', {
+                    event_category: 'External Link',
+                    event_label: 'MercadoLibre',
+                    transport_type: 'beacon'
+                });
+            }
+            
+            console.log('🛒 Redirect to MercadoLibre');
+        });
+    </script>
+
     <!-- Scripts -->
     <script src="../scripts/main.js"></script>
     <script src="../scripts/detalleVehiculo.js"></script>
+    <script src="../scripts/nav-session.js"></script>
 </body>
 </html>

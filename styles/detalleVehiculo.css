@@ -779,3 +779,228 @@
     outline: 2px solid var(--primary-blue);
     outline-offset: 2px;
 }
+/* ===== CORRECCIÓN FORZADA DE NAVEGACIÓN - ELIMINAR TODOS LOS EFECTOS ===== */
+/* Agregar este CSS al final de unidadesDisponibles.css y detalleVehiculo.css */
+
+/* ===== RESETEAR COMPLETAMENTE LOS BOTONES DE NAVEGACIÓN ===== */
+.nav-button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* ===== BOTÓN MERCADOLIBRE - FORZAR ESTILO SIN RECUADROS ===== */
+.btn-mercadolibre {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 10px 20px !important;
+    background: linear-gradient(135deg, #3483fa, #1259c3) !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+}
+
+.btn-mercadolibre:hover {
+    background: #ffffff !important;
+    color: #1259c3 !important;
+    border: 2px solid #1259c3 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+.btn-mercadolibre:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    border: 2px solid #1259c3 !important;
+}
+
+.btn-mercadolibre:active {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* ===== BOTÓN RANDON - ELIMINAR CÍRCULO Y EFECTOS ===== */
+.btn-special {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+    transition: var(--transition-fast) !important;
+    text-decoration: none !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+.btn-special:hover {
+    background: transparent !important;
+    border: 2px solid var(--primary-blue) !important;
+    transform: scale(1.08) !important;
+    box-shadow: none !important;
+    outline: none !important;
+    border-radius: 0 !important;
+}
+
+.btn-special:focus {
+    box-shadow: none !important;
+    outline: none !important;
+    background: transparent !important;
+}
+
+.btn-special:active {
+    box-shadow: none !important;
+    outline: none !important;
+}
+
+/* ===== ICONO RANDON - SIN EFECTOS ===== */
+.btn-icon {
+    width: 80px !important;
+    height: 50px !important;
+    border-radius: 0 !important;
+    object-fit: contain !important;
+    filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    background: transparent !important;
+}
+
+/* ===== ELIMINAR TODOS LOS ESTILOS CONFLICTIVOS ===== */
+.nav-button a,
+.nav-button button {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    outline: none !important;
+}
+
+.nav-button a:before,
+.nav-button a:after,
+.nav-button button:before,
+.nav-button button:after {
+    display: none !important;
+}
+
+/* ===== SOBRESCRIBIR ESTILOS DEL TEMA ===== */
+.navbar .nav-button .btn-special {
+    background: transparent !important;
+    border-radius: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.navbar .nav-button .btn-special:hover {
+    background: transparent !important;
+    border: 2px solid var(--primary-blue) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+/* ===== RESPONSIVE SIN EFECTOS ===== */
+@media (max-width: 1024px) {
+    .btn-mercadolibre {
+        padding: 8px 16px !important;
+        font-size: 0.85rem !important;
+        gap: 6px !important;
+        box-shadow: none !important;
+    }
+    
+    .btn-mercadolibre span {
+        display: none !important;
+    }
+    
+    .btn-mercadolibre i {
+        font-size: 1.2rem !important;
+    }
+    
+    .btn-icon {
+        width: 70px !important;
+        height: 42px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .btn-mercadolibre {
+        padding: 8px 12px !important;
+        width: 44px !important;
+        height: 44px !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+    
+    .btn-mercadolibre span {
+        display: none !important;
+    }
+    
+    .btn-mercadolibre i {
+        font-size: 1.3rem !important;
+    }
+    
+    .btn-icon {
+        width: 60px !important;
+        height: 38px !important;
+    }
+    
+    .btn-special {
+        padding: 6px !important;
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-icon {
+        width: 55px !important;
+        height: 35px !important;
+    }
+    
+    .btn-special {
+        padding: 4px !important;
+    }
+}
+
+/* ===== ELIMINAR CUALQUIER ESTILO DE BOTÓN CIRCULAR ===== */
+.nav-button .btn-special,
+.navbar .btn-special,
+button.btn-special,
+a.btn-special {
+    background: transparent !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/* ===== FORZAR TRANSPARENCIA TOTAL EN RANDON ===== */
+.btn-special,
+.btn-special:link,
+.btn-special:visited,
+.btn-special:focus,
+.btn-special:active {
+    background-color: transparent !important;
+    background-image: none !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    outline: none !important;
+}

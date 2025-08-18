@@ -1888,3 +1888,243 @@ img:not([src]) {
 .units-grid {
     margin-top: 0;
 }
+/* ===== CORRECCIÓN DE ENLACES DEL FOOTER ===== */
+/* Agregar este CSS al final de main.css, unidadesDisponibles.css, detalleVehiculo.css y LarrosaCamiones.css */
+
+/* ===== FOOTER LINKS - ESTILO CONSISTENTE ===== */
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    color: var(--primary-blue) !important; /* Enlaces azules como en contacto */
+    text-decoration: none !important;
+    transition: var(--transition-fast) !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    display: inline-block !important;
+}
+
+.footer-links a:hover {
+    color: var(--secondary-dark-blue) !important;
+    text-decoration: underline !important;
+}
+
+.footer-links a:visited {
+    color: var(--primary-blue) !important;
+}
+
+.footer-links a:focus {
+    color: var(--primary-blue) !important;
+    outline: 2px solid var(--primary-blue) !important;
+    outline-offset: 2px !important;
+}
+
+/* ===== CORREGIR ESPECÍFICAMENTE LAS SECCIONES PROBLEMÁTICAS ===== */
+.footer-section h4 {
+    font-family: var(--font-primary) !important;
+    font-size: 1.2rem !important;
+    margin-bottom: 1rem !important;
+    color: var(--primary-blue) !important;
+    font-weight: 600 !important;
+}
+
+.footer-section ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem !important;
+}
+
+.footer-section ul li a {
+    color: var(--primary-blue) !important;
+    text-decoration: none !important;
+    transition: var(--transition-fast) !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+}
+
+.footer-section ul li a:hover {
+    color: var(--secondary-dark-blue) !important;
+    text-decoration: underline !important;
+}
+
+/* ===== INFORMACIÓN DE CONTACTO EN FOOTER ===== */
+.contact-info p,
+.footer-contact p {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    color: var(--primary-black) !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+}
+
+.contact-info i,
+.footer-contact i {
+    color: var(--primary-blue) !important;
+    width: 16px !important;
+    font-size: 0.9rem !important;
+}
+
+/* ===== DESCRIPCIÓN DEL FOOTER ===== */
+.footer-description,
+.footer-section p:first-of-type {
+    color: var(--primary-black) !important;
+    line-height: 1.6 !important;
+    margin-bottom: 1rem !important;
+    font-size: 0.95rem !important;
+}
+
+/* ===== REDES SOCIALES ===== */
+.social-links,
+.social-links a {
+    display: flex !important;
+    gap: 12px !important;
+    margin-top: 1rem !important;
+}
+
+.social-links a,
+.social-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 35px !important;
+    height: 35px !important;
+    background: var(--primary-blue) !important;
+    color: var(--primary-white) !important;
+    border-radius: 50% !important;
+    text-decoration: none !important;
+    transition: var(--transition-fast) !important;
+    font-size: 1rem !important;
+}
+
+.social-links a:hover,
+.social-link:hover {
+    background: var(--secondary-dark-blue) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* ===== BOTÓN ADMINISTRACIÓN EN FOOTER ===== */
+.btn-admin-footer {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 12px 24px !important;
+    background: var(--primary-white) !important;
+    color: var(--primary-black) !important;
+    text-decoration: none !important;
+    border-radius: 0 !important;
+    border: 2px solid var(--primary-black) !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    transition: var(--transition-fast) !important;
+    opacity: 0.8 !important;
+}
+
+.btn-admin-footer:hover {
+    transform: translateY(-2px) !important;
+    background: var(--primary-black) !important;
+    color: var(--primary-white) !important;
+    opacity: 1 !important;
+    text-decoration: none !important;
+}
+
+.btn-admin-footer i {
+    font-size: 1rem !important;
+}
+
+.btn-admin-footer span {
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* ===== FOOTER BOTTOM ===== */
+.footer-bottom {
+    text-align: left !important;
+    padding: 2rem 0 0 20px !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+    color: var(--primary-black) !important;
+    font-size: 0.9rem !important;
+    margin-top: 2rem !important;
+}
+
+.footer-admin {
+    margin-top: 20px !important;
+    padding-top: 20px !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.1) !important;
+    text-align: left !important;
+    padding-left: 20px !important;
+}
+
+/* ===== RESPONSIVE FOOTER ===== */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+        text-align: left !important;
+    }
+    
+    .footer-section {
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .footer-bottom {
+        text-align: center !important;
+        padding: 1.5rem 20px 0 !important;
+    }
+    
+    .footer-admin {
+        text-align: center !important;
+        padding-left: 0 !important;
+    }
+    
+    .btn-admin-footer {
+        width: 100% !important;
+        max-width: 250px !important;
+        justify-content: center !important;
+    }
+}
+
+/* ===== ASEGURAR COMPATIBILIDAD CON TODAS LAS SECCIONES ===== */
+.footer ul,
+.footer-section ul,
+footer ul {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.footer ul li,
+.footer-section ul li,
+footer ul li {
+    margin-bottom: 0.5rem !important;
+}
+
+.footer ul li a,
+.footer-section ul li a,
+footer ul li a {
+    color: var(--primary-blue) !important;
+    text-decoration: none !important;
+    transition: var(--transition-fast) !important;
+}
+
+.footer ul li a:hover,
+.footer-section ul li a:hover,
+footer ul li a:hover {
+    color: var(--secondary-dark-blue) !important;
+    text-decoration: underline !important;
+}
+
