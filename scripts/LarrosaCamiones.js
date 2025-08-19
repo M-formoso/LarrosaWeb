@@ -1,26 +1,702 @@
-// ===== LARROSA CAMIONES - EMPRESA JAVASCRIPT =====
+// ===== LARROSA CAMIONES - JAVASCRIPT COMPLETO =====
 
 // ===== VARIABLES GLOBALES =====
-let currentGalleryImage = 0;
-const galleryImages = [];
+let currentStep = 1;
+const totalSteps = 2;
+let formData = {};
 
 // ===== INICIALIZACIÓN =====
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚛 Iniciando página Larrosa Camiones actualizada...');
+    
     initializeScrollAnimations();
-    initializeTimeline();
-    initializeGallery();
-    initializeCounters();
-    initializeParallax();
+    initializeForm();
     initializeSmoothScroll();
     initializeIntersectionObserver();
-    initializeHoverEffects();
+    initializeNavigation();
+    initializeCTAButtons();
+    initializePerformanceMonitoring();
+    initializeAccessibility();
+    
+    console.log('✅ Larrosa Camiones inicializado correctamente');
 });
+
+// ===== NAVEGACIÓN MEJORADA =====
+function initializeNavigation() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const navbar = document.querySelector('.navbar');
+
+    // Toggle menú hamburguesa
+    if (hamburger) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            
+            // Prevenir scroll del body cuando el menú está abierto
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+            
+            // Accesibilidad
+            const isExpanded = navMenu.classList.contains('active');
+            hamburger.setAttribute('aria-expanded', isExpanded);
+            hamburger.setAttribute('aria-label', isExpanded ? 'Cerrar menú' : 'Abrir menú');
+        });
+    }
+
+    // Cerrar menú al hacer click en un link
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            hamburger?.classList.remove('active');
+            navMenu?.classList.remove('active');
+            document.body.style.overflow = '';
+            hamburger?.setAttribute('aria-expanded', 'false');
+        });
+    });
+
+    // Cerrar menú al presionar Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navMenu?.classList.contains('active')) {
+            hamburger?.classList.remove('active');
+            navMenu?.classList.remove('active');
+            document.body.style.overflow = '';
+            hamburger?.setAttribute('aria-expanded', 'false');
+            hamburger?.focus();
+        }
+    });
+
+    // Navbar scroll effects
+    let lastScrollTop = 0;
+    let ticking = false;
+
+    function updateNavbar() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (scrollTop > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        // Ocultar/mostrar navbar al hacer scroll
+        if (scrollTop > lastScrollTop && scrollTop > 200) {
+            navbar.style.transform = 'translateY(-100%)';
+        } else {
+            navbar.style.transform = 'translateY(0)';
+        }
+        lastScrollTop = scrollTop;
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(updateNavbar);
+            ticking = true;
+        }
+    });
+}
+
+// ===== FORMULARIO FINANCIERO =====
+function initializeForm() {
+    const form = document.getElementById('financial-form');
+    if (!form) return;
+
+    form.addEventListener('submit', handleFormSubmit);
+    
+    // Validación en tiempo real
+    const inputs = form.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('blur', () => validateField(input));
+        input.addEventListener('input', () => clearFieldError(input));
+        
+        // Formateo automático para campos específicos
+        if (input.type === 'tel') {
+            input.addEventListener('input', formatPhoneNumber);
+        }
+    });
+
+    // Inicializar pasos
+    updateStepDisplay();
+    
+    // Autoguardado
+    setupAutoSave();
+}
+
+function setupAutoSave() {
+    const form = document.getElementById('financial-form');
+    if (!form) return;
+
+    // Cargar datos guardados
+    loadSavedData();
+
+    // Guardar datos automáticamente
+    form.addEventListener('input', debounce(autoSaveData, 1000));
+}
+
+function loadSavedData() {
+    try {
+        const savedData = sessionStorage.getItem('larrosa_form_data');
+        if (savedData) {
+            const data = JSON.parse(savedData);
+            Object.keys(data).forEach(key => {
+                const field = document.querySelector(`[name="${key}"]`);
+                if (field) {
+                    field.value = data[key];
+                }
+            });
+            console.log('📂 Datos del formulario restaurados');
+        }
+    } catch (error) {
+        console.warn('Error al cargar datos guardados:', error);
+    }
+}
+
+function autoSaveData() {
+    try {
+        const form = document.getElementById('financial-form');
+        if (!form) return;
+
+        const formData = new FormData(form);
+        const data = {};
+        
+        for (let [key, value] of formData.entries()) {
+            data[key] = value;
+        }
+        
+        sessionStorage.setItem('larrosa_form_data', JSON.stringify(data));
+        console.log('💾 Datos autoguardados');
+    } catch (error) {
+        console.warn('Error al autoguardar:', error);
+    }
+}
+
+function formatPhoneNumber(event) {
+    let value = event.target.value.replace(/\D/g, '');
+    
+    // Formato argentino: +54 XXX XXX-XXXX
+    if (value.length >= 10) {
+        value = value.replace(/(\d{2})(\d{3})(\d{3})(\d{4})/, '+54 $2 $3-$4');
+    } else if (value.length >= 6) {
+        value = value.replace(/(\d{3})(\d{3})/, '$1 $2');
+    }
+    
+    event.target.value = value;
+}
+
+async function handleFormSubmit(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const currentFormData = new FormData(form);
+    
+    // Validar campos del paso actual
+    if (!validateCurrentStep()) {
+        showFormMessage('Por favor completa todos los campos requeridos', 'error');
+        focusFirstError();
+        return;
+    }
+    
+    // Guardar datos del paso actual
+    saveStepData(currentFormData);
+    
+    if (currentStep < totalSteps) {
+        // Tracking del paso
+        trackFormStep(currentStep);
+        
+        // Avanzar al siguiente paso
+        nextStep();
+    } else {
+        // Enviar formulario completo
+        await submitForm();
+    }
+}
+
+function validateCurrentStep() {
+    const currentInputs = document.querySelectorAll('.financial-form input[required], .financial-form select[required]');
+    let isValid = true;
+    
+    currentInputs.forEach(input => {
+        if (!validateField(input)) {
+            isValid = false;
+        }
+    });
+    
+    return isValid;
+}
+
+function validateField(field) {
+    const value = field.value.trim();
+    const fieldName = field.name;
+    
+    // Clear previous errors
+    clearFieldError(field);
+    
+    // Required field validation
+    if (field.required && !value) {
+        showFieldError(field, 'Este campo es obligatorio');
+        return false;
+    }
+    
+    // Email validation
+    if (field.type === 'email' && value) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            showFieldError(field, 'Ingresa un email válido');
+            return false;
+        }
+    }
+    
+    // Phone validation
+    if (field.type === 'tel' && value) {
+        const phoneRegex = /^[\d\s\-\+\(\)]+$/;
+        if (!phoneRegex.test(value) || value.length < 8) {
+            showFieldError(field, 'Ingresa un teléfono válido');
+            return false;
+        }
+    }
+    
+    // Company name validation
+    if (fieldName === 'company-name' && value) {
+        if (value.length < 2) {
+            showFieldError(field, 'El nombre debe tener al menos 2 caracteres');
+            return false;
+        }
+    }
+    
+    // Country validation
+    if (fieldName === 'country' && !value) {
+        showFieldError(field, 'Selecciona un país');
+        return false;
+    }
+    
+    // Address validation
+    if (fieldName === 'address' && value && value.length < 5) {
+        showFieldError(field, 'Ingresa una dirección válida');
+        return false;
+    }
+    
+    showFieldSuccess(field);
+    return true;
+}
+
+function showFieldError(field, message) {
+    const formGroup = field.closest('.form-group');
+    if (!formGroup) return;
+    
+    // Remove existing error
+    const existingError = formGroup.querySelector('.field-error');
+    if (existingError) existingError.remove();
+    
+    // Add error class
+    field.classList.add('error');
+    field.setAttribute('aria-invalid', 'true');
+    
+    // Create error message
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'field-error';
+    errorDiv.textContent = message;
+    errorDiv.id = `error-${field.name}`;
+    errorDiv.setAttribute('role', 'alert');
+    errorDiv.style.cssText = `
+        color: #dc3545;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        animation: fadeInUp 0.3s ease;
+    `;
+    
+    field.setAttribute('aria-describedby', errorDiv.id);
+    formGroup.appendChild(errorDiv);
+}
+
+function clearFieldError(field) {
+    const formGroup = field.closest('.form-group');
+    if (!formGroup) return;
+    
+    field.classList.remove('error', 'success');
+    field.removeAttribute('aria-invalid');
+    field.removeAttribute('aria-describedby');
+    
+    const errorDiv = formGroup.querySelector('.field-error');
+    if (errorDiv) errorDiv.remove();
+}
+
+function showFieldSuccess(field) {
+    field.classList.remove('error');
+    field.classList.add('success');
+    field.removeAttribute('aria-invalid');
+}
+
+function focusFirstError() {
+    const firstError = document.querySelector('.form-group input.error, .form-group select.error');
+    if (firstError) {
+        firstError.focus();
+        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+function saveStepData(currentFormData) {
+    for (let [key, value] of currentFormData.entries()) {
+        formData[key] = value;
+    }
+    console.log('📋 Datos guardados del paso', currentStep, formData);
+}
+
+function nextStep() {
+    if (currentStep < totalSteps) {
+        currentStep++;
+        updateStepDisplay();
+        updateFormFields();
+        scrollToForm();
+        announceStepChange();
+    }
+}
+
+function previousStep() {
+    if (currentStep > 1) {
+        currentStep--;
+        updateStepDisplay();
+        updateFormFields();
+        scrollToForm();
+        announceStepChange();
+    }
+}
+
+function announceStepChange() {
+    const announcement = document.createElement('div');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.setAttribute('aria-atomic', 'true');
+    announcement.style.cssText = 'position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;';
+    announcement.textContent = `Paso ${currentStep} de ${totalSteps}`;
+    
+    document.body.appendChild(announcement);
+    setTimeout(() => document.body.removeChild(announcement), 1000);
+}
+
+function updateStepDisplay() {
+    const steps = document.querySelectorAll('.step');
+    steps.forEach((step, index) => {
+        if (index + 1 <= currentStep) {
+            step.classList.add('active');
+        } else {
+            step.classList.remove('active');
+        }
+    });
+    
+    // Actualizar progress bar si existe
+    const progressBar = document.querySelector('.progress-bar');
+    if (progressBar) {
+        const progress = (currentStep / totalSteps) * 100;
+        progressBar.style.width = `${progress}%`;
+    }
+}
+
+function updateFormFields() {
+    const form = document.getElementById('financial-form');
+    if (!form) return;
+
+    if (currentStep === 1) {
+        // Paso 1: Información de la empresa
+        form.innerHTML = `
+            <div class="form-group">
+                <label for="company-name">
+                    Nombre de la compañía *
+                    <span class="required-indicator" aria-label="Campo obligatorio"></span>
+                </label>
+                <input type="text" 
+                       id="company-name" 
+                       name="company-name" 
+                       required 
+                       aria-describedby="company-name-hint"
+                       autocomplete="organization">
+                <small id="company-name-hint" class="field-hint">
+                    Ingresa el nombre legal de tu empresa
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="address">
+                    Dirección *
+                    <span class="required-indicator" aria-label="Campo obligatorio"></span>
+                </label>
+                <input type="text" 
+                       id="address" 
+                       name="address" 
+                       required 
+                       aria-describedby="address-hint"
+                       autocomplete="street-address">
+                <small id="address-hint" class="field-hint">
+                    Dirección completa de tu empresa
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="country">
+                    País *
+                    <span class="required-indicator" aria-label="Campo obligatorio"></span>
+                    <i class="fas fa-info-circle" title="Selecciona el país donde opera tu empresa"></i>
+                </label>
+                <select id="country" 
+                        name="country" 
+                        required 
+                        aria-describedby="country-hint"
+                        autocomplete="country">
+                    <option value="">Seleccionar país</option>
+                    <option value="argentina">Argentina</option>
+                    <option value="chile">Chile</option>
+                    <option value="uruguay">Uruguay</option>
+                    <option value="paraguay">Paraguay</option>
+                    <option value="bolivia">Bolivia</option>
+                    <option value="brasil">Brasil</option>
+                </select>
+                <small id="country-hint" class="field-hint">
+                    País principal de operaciones
+                </small>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-next">
+                    Siguiente
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </button>
+            </div>
+        `;
+    } else if (currentStep === 2) {
+        // Paso 2: Información de contacto
+        form.innerHTML = `
+            <div class="form-group">
+                <label for="contact-name">
+                    Nombre de contacto *
+                    <span class="required-indicator" aria-label="Campo obligatorio"></span>
+                </label>
+                <input type="text" 
+                       id="contact-name" 
+                       name="contact-name" 
+                       required 
+                       aria-describedby="contact-name-hint"
+                       autocomplete="name">
+                <small id="contact-name-hint" class="field-hint">
+                    Nombre de la persona de contacto
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="email">
+                    Email *
+                    <span class="required-indicator" aria-label="Campo obligatorio"></span>
+                </label>
+                <input type="email" 
+                       id="email" 
+                       name="email" 
+                       required 
+                       aria-describedby="email-hint"
+                       autocomplete="email">
+                <small id="email-hint" class="field-hint">
+                    Dirección de correo electrónico
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">
+                    Teléfono *
+                    <span class="required-indicator" aria-label="Campo obligatorio"></span>
+                </label>
+                <input type="tel" 
+                       id="phone" 
+                       name="phone" 
+                       required 
+                       aria-describedby="phone-hint"
+                       autocomplete="tel"
+                       placeholder="+54 XXX XXX-XXXX">
+                <small id="phone-hint" class="field-hint">
+                    Número de teléfono con código de área
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Mensaje (opcional)</label>
+                <textarea id="message" 
+                          name="message" 
+                          rows="4" 
+                          aria-describedby="message-hint"
+                          placeholder="Cuéntanos sobre tus necesidades de financiación..."></textarea>
+                <small id="message-hint" class="field-hint">
+                    Información adicional sobre tus necesidades
+                </small>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" class="btn-prev" onclick="previousStep()">
+                    <i class="fas fa-arrow-left" aria-hidden="true"></i>
+                    Anterior
+                </button>
+                <button type="submit" class="btn-submit">
+                    Enviar Solicitud
+                    <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                </button>
+            </div>
+        `;
+    }
+
+    // Restaurar datos guardados
+    Object.keys(formData).forEach(key => {
+        const field = form.querySelector(`[name="${key}"]`);
+        if (field) {
+            field.value = formData[key];
+        }
+    });
+
+    // Re-inicializar validación para los nuevos campos
+    const inputs = form.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('blur', () => validateField(input));
+        input.addEventListener('input', () => clearFieldError(input));
+        
+        if (input.type === 'tel') {
+            input.addEventListener('input', formatPhoneNumber);
+        }
+    });
+
+    // Re-inicializar autoguardado
+    form.addEventListener('input', debounce(autoSaveData, 1000));
+}
+
+function scrollToForm() {
+    const formSection = document.querySelector('.form-section');
+    if (formSection) {
+        formSection.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+        });
+    }
+}
+
+async function submitForm() {
+    const submitBtn = document.querySelector('.btn-submit');
+    const originalText = submitBtn?.textContent || 'Enviar Solicitud';
+    
+    if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+    }
+
+    try {
+        // Preparar datos completos
+        const completeData = {
+            ...formData,
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent,
+            language: navigator.language
+        };
+
+        // Simular envío (reemplazar con endpoint real)
+        const response = await simulateFormSubmission(completeData);
+        
+        if (response.success) {
+            showFormMessage('¡Solicitud enviada correctamente! Te contactaremos pronto.', 'success');
+            trackFormSubmission();
+            
+            // Limpiar datos guardados
+            sessionStorage.removeItem('larrosa_form_data');
+            
+            // Reset form after success
+            setTimeout(() => {
+                resetForm();
+            }, 3000);
+        } else {
+            throw new Error(response.message || 'Error desconocido');
+        }
+        
+    } catch (error) {
+        console.error('Error al enviar formulario:', error);
+        showFormMessage('Error al enviar la solicitud. Por favor intenta nuevamente.', 'error');
+        trackFormError(error.message);
+    } finally {
+        if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+        }
+    }
+}
+
+async function simulateFormSubmission(data) {
+    // Simular delay de red
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    
+    // Simular éxito/error aleatório (90% éxito)
+    if (Math.random() > 0.1) {
+        console.log('📤 Datos que se enviarían:', data);
+        return { success: true, id: generateId() };
+    } else {
+        throw new Error('Error de red simulado');
+    }
+}
+
+function generateId() {
+    return 'LR' + Date.now().toString(36).toUpperCase();
+}
+
+function showFormMessage(message, type) {
+    // Remove existing message
+    const existingMessage = document.querySelector('.form-message');
+    if (existingMessage) existingMessage.remove();
+    
+    // Create message element
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `form-message form-message-${type}`;
+    messageDiv.setAttribute('role', type === 'error' ? 'alert' : 'status');
+    messageDiv.setAttribute('aria-live', 'polite');
+    messageDiv.textContent = message;
+    messageDiv.style.cssText = `
+        padding: 15px 20px;
+        margin: 20px 0;
+        border-radius: 8px;
+        font-weight: 600;
+        text-align: center;
+        animation: fadeInUp 0.3s ease;
+        ${type === 'success' ? `
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        ` : `
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        `}
+    `;
+    
+    // Insert after form
+    const form = document.getElementById('financial-form');
+    form.parentNode.insertBefore(messageDiv, form.nextSibling);
+    
+    // Focus para accesibilidad
+    messageDiv.focus();
+    
+    // Auto-remove after delay
+    setTimeout(() => {
+        if (messageDiv.parentNode) {
+            messageDiv.style.animation = 'fadeOut 0.3s ease';
+            setTimeout(() => messageDiv.remove(), 300);
+        }
+    }, type === 'success' ? 5000 : 7000);
+}
+
+function resetForm() {
+    currentStep = 1;
+    formData = {};
+    updateStepDisplay();
+    updateFormFields();
+    
+    // Scroll al inicio del formulario
+    scrollToForm();
+    
+    console.log('🔄 Formulario reiniciado');
+}
 
 // ===== ANIMACIONES AL SCROLL =====
 function initializeScrollAnimations() {
     const observerOptions = {
-        threshold: 0.15,
-        rootMargin: '0px 0px -80px 0px'
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
     };
 
     const observer = new IntersectionObserver(function(entries) {
@@ -28,30 +704,35 @@ function initializeScrollAnimations() {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-in');
                 
-                // Animaciones específicas según el tipo de elemento
-                if (entry.target.classList.contains('timeline-item')) {
-                    animateTimelineItem(entry.target);
+                // Animaciones específicas con delay escalonado
+                if (entry.target.classList.contains('solution-content')) {
+                    animateSolutionContent(entry.target);
+                } else if (entry.target.classList.contains('solution-image')) {
+                    animateSolutionImage(entry.target);
+                } else if (entry.target.classList.contains('form-header')) {
+                    animateFormHeader(entry.target);
                 } else if (entry.target.classList.contains('valor-card')) {
                     animateValueCard(entry.target);
-                } else if (entry.target.classList.contains('marca-card')) {
-                    animateBrandCard(entry.target);
-                } else if (entry.target.classList.contains('stat-item')) {
-                    animateStatCounter(entry.target);
-                } else if (entry.target.classList.contains('benefit-item')) {
-                    animateBenefitItem(entry.target);
+                } else if (entry.target.classList.contains('timeline-item')) {
+                    animateTimelineItem(entry.target);
                 }
+                
+                // Desconectar observer para elementos que ya se animaron
+                observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
     // Observar elementos animables
     const elementsToAnimate = document.querySelectorAll(`
-        .timeline-item,
+        .solution-content,
+        .solution-image,
+        .form-header,
+        .form-steps,
+        .financial-form,
         .valor-card,
-        .marca-card,
-        .stat-item,
-        .benefit-item,
-        .instalaciones-features .feature-item
+        .timeline-item,
+        .cta-button
     `);
     
     elementsToAnimate.forEach(el => {
@@ -59,214 +740,76 @@ function initializeScrollAnimations() {
     });
 }
 
-// ===== FUNCIONES DE ANIMACIÓN =====
-function animateTimelineItem(item) {
-    item.style.opacity = '0';
-    item.style.transform = 'translateX(-30px)';
-    item.style.transition = 'all 0.8s ease';
+function animateSolutionContent(element) {
+    element.style.opacity = '0';
+    element.style.transform = 'translateX(-30px)';
+    element.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
     
     setTimeout(() => {
-        item.style.opacity = '1';
-        item.style.transform = 'translateX(0)';
-    }, Math.random() * 200);
+        element.style.opacity = '1';
+        element.style.transform = 'translateX(0)';
+    }, 100);
+}
+
+function animateSolutionImage(element) {
+    element.style.opacity = '0';
+    element.style.transform = 'translateX(30px) scale(0.95)';
+    element.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+    
+    setTimeout(() => {
+        element.style.opacity = '1';
+        element.style.transform = 'translateX(0) scale(1)';
+    }, 200);
+}
+
+function animateFormHeader(element) {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(40px)';
+    element.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+    
+    setTimeout(() => {
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+    }, 100);
 }
 
 function animateValueCard(card) {
+    const cards = document.querySelectorAll('.valor-card');
+    const index = Array.from(cards).indexOf(card);
+    const delay = index * 150;
+    
     card.style.opacity = '0';
-    card.style.transform = 'translateY(40px) scale(0.95)';
+    card.style.transform = 'scale(0.9) translateY(20px)';
     card.style.transition = 'all 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
     
     setTimeout(() => {
         card.style.opacity = '1';
-        card.style.transform = 'translateY(0) scale(1)';
-    }, Math.random() * 300);
+        card.style.transform = 'scale(1) translateY(0)';
+    }, delay);
 }
 
-function animateBrandCard(card) {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(20px)';
-    card.style.transition = 'all 0.6s ease';
+function animateTimelineItem(item) {
+    const items = document.querySelectorAll('.timeline-item');
+    const index = Array.from(items).indexOf(item);
+    const delay = index * 200;
     
-    setTimeout(() => {
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
-    }, Math.random() * 150);
-}
-
-function animateBenefitItem(item) {
     item.style.opacity = '0';
     item.style.transform = 'translateY(30px)';
-    item.style.transition = 'all 0.6s ease';
+    item.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
     
     setTimeout(() => {
         item.style.opacity = '1';
         item.style.transform = 'translateY(0)';
-    }, Math.random() * 200);
-}
-
-// ===== TIMELINE INTERACTIVO =====
-function initializeTimeline() {
-    const timelineItems = document.querySelectorAll('.timeline-item');
-    
-    timelineItems.forEach((item, index) => {
-        // Efecto hover en timeline items
-        item.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateX(10px)';
-            this.style.background = 'rgba(61, 95, 172, 0.05)';
-            this.style.borderRadius = '10px';
-            this.style.padding = '1rem';
-            this.style.transition = 'all 0.3s ease';
-        });
-
-        item.addEventListener('mouseleave', function() {
-            this.style.transform = '';
-            this.style.background = '';
-            this.style.borderRadius = '';
-            this.style.padding = '';
-        });
-
-        // Click para destacar timeline item
-        item.addEventListener('click', function() {
-            // Remover clase activa de otros items
-            timelineItems.forEach(el => el.classList.remove('timeline-active'));
-            
-            // Agregar clase activa al item clickeado
-            this.classList.add('timeline-active');
-            
-            // Scroll suave al item si es necesario
-            this.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center' 
-            });
-        });
-    });
-}
-
-// ===== GALERÍA DE INSTALACIONES =====
-function initializeGallery() {
-    const mainImage = document.querySelector('.gallery-main-image');
-    const thumbnails = document.querySelectorAll('.gallery-thumbnails img');
-    
-    if (!mainImage || thumbnails.length === 0) return;
-
-    // Inicializar array de imágenes
-    galleryImages.push(mainImage.src);
-    thumbnails.forEach(thumb => {
-        galleryImages.push(thumb.src);
-    });
-
-    // Event listeners para thumbnails
-    thumbnails.forEach((thumb, index) => {
-        thumb.addEventListener('click', function() {
-            changeGalleryImage(this.src);
-            
-            // Actualizar thumbnail activo
-            thumbnails.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-        });
-
-        // Precargar imágenes
-        const img = new Image();
-        img.src = thumb.src;
-    });
-
-    // Navegación con teclado
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowLeft') {
-            navigateGallery(-1);
-        } else if (e.key === 'ArrowRight') {
-            navigateGallery(1);
-        }
-    });
-}
-
-function changeGalleryImage(newSrc) {
-    const mainImage = document.querySelector('.gallery-main-image');
-    if (!mainImage) return;
-
-    // Efecto de transición
-    mainImage.style.opacity = '0.5';
-    mainImage.style.transform = 'scale(0.95)';
-    
-    setTimeout(() => {
-        mainImage.src = newSrc;
-        mainImage.style.opacity = '1';
-        mainImage.style.transform = 'scale(1)';
-    }, 200);
-    
-    // Actualizar índice actual
-    currentGalleryImage = galleryImages.findIndex(src => src === newSrc);
-}
-
-function navigateGallery(direction) {
-    currentGalleryImage += direction;
-    
-    if (currentGalleryImage >= galleryImages.length) {
-        currentGalleryImage = 0;
-    } else if (currentGalleryImage < 0) {
-        currentGalleryImage = galleryImages.length - 1;
-    }
-    
-    changeGalleryImage(galleryImages[currentGalleryImage]);
-}
-
-// ===== CONTADORES ANIMADOS =====
-function animateStatCounter(statItem) {
-    const numberElement = statItem.querySelector('.stat-number');
-    if (!numberElement) return;
-
-    const target = parseInt(numberElement.textContent.replace(/\D/g, ''));
-    const suffix = numberElement.textContent.replace(/[\d\s]/g, '');
-    let current = 0;
-    const increment = target / 50;
-    const duration = 2000;
-    const interval = duration / 50;
-
-    numberElement.textContent = '0' + suffix;
-
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) {
-            current = target;
-            clearInterval(timer);
-        }
-        numberElement.textContent = Math.floor(current) + suffix;
-    }, interval);
-}
-
-function initializeCounters() {
-    // Los contadores se inicializan cuando entran en viewport
-    // mediante la función animateStatCounter llamada desde el observer
-}
-
-// ===== EFECTO PARALLAX =====
-function initializeParallax() {
-    const parallaxElements = document.querySelectorAll('.historia-image img, .instalaciones-gallery img');
-    
-    if (parallaxElements.length === 0) return;
-
-    window.addEventListener('scroll', throttle(() => {
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-
-        parallaxElements.forEach(element => {
-            const rect = element.getBoundingClientRect();
-            const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
-            
-            if (isVisible) {
-                element.style.transform = `translate3d(0, ${rate * 0.1}px, 0)`;
-            }
-        });
-    }, 16));
+    }, delay);
 }
 
 // ===== SMOOTH SCROLL =====
 function initializeSmoothScroll() {
-    // Smooth scroll para enlaces internos
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const targetId = this.getAttribute('href').substring(1);
+            const target = document.getElementById(targetId);
             
             if (target) {
                 const offsetTop = target.getBoundingClientRect().top + window.pageYOffset - 100;
@@ -275,6 +818,12 @@ function initializeSmoothScroll() {
                     top: offsetTop,
                     behavior: 'smooth'
                 });
+                
+                // Gestionar foco para accesibilidad
+                setTimeout(() => {
+                    target.focus();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 500);
             }
         });
     });
@@ -288,12 +837,14 @@ function initializeIntersectionObserver() {
     const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Actualizar navegación activa
                 const id = entry.target.getAttribute('id');
                 navLinks.forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href').includes(id)) {
                         link.classList.add('active');
+                        link.setAttribute('aria-current', 'page');
+                    } else {
+                        link.removeAttribute('aria-current');
                     }
                 });
             }
@@ -308,234 +859,623 @@ function initializeIntersectionObserver() {
     });
 }
 
-// ===== EFECTOS HOVER MEJORADOS =====
-function initializeHoverEffects() {
-    // Efecto hover para cards de valores
-    const valueCards = document.querySelectorAll('.valor-card');
-    valueCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-8px) scale(1.02)';
-            this.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.15)';
-        });
-
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = '';
-            this.style.boxShadow = '';
-        });
-    });
-
-    // Efecto hover para cards de marcas
-    const brandCards = document.querySelectorAll('.marca-card');
-    brandCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            if (!this.classList.contains('featured')) {
-                this.style.borderColor = 'var(--primary-blue)';
-            }
-        });
-
-        card.addEventListener('mouseleave', function() {
-            if (!this.classList.contains('featured')) {
-                this.style.borderColor = 'transparent';
-            }
-        });
-    });
-
-    // Efecto para botones CTA
-    const ctaButtons = document.querySelectorAll('.cta-button, .cta-button-outline');
+// ===== CTA BUTTON INTERACTIONS =====
+function initializeCTAButtons() {
+    const ctaButtons = document.querySelectorAll('.cta-button, .btn-next, .btn-submit, .btn-prev');
+    
     ctaButtons.forEach(button => {
-        button.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-3px) scale(1.05)';
+        button.addEventListener('click', function(e) {
+            // Efecto de ripple
+            createRippleEffect(this, e);
         });
-
-        button.addEventListener('mouseleave', function() {
-            this.style.transform = '';
-        });
-    });
-}
-
-// ===== LAZY LOADING PARA IMÁGENES =====
-function initializeLazyLoading() {
-    const images = document.querySelectorAll('img[data-src]');
-    
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const img = entry.target;
-                img.src = img.dataset.src;
-                img.classList.remove('lazy');
-                observer.unobserve(img);
-                
-                // Efecto fade in
-                img.style.opacity = '0';
-                img.onload = () => {
-                    img.style.transition = 'opacity 0.5s ease';
-                    img.style.opacity = '1';
-                };
-            }
-        });
-    });
-    
-    images.forEach(img => imageObserver.observe(img));
-}
-
-// ===== BÚSQUEDA Y FILTRADO DE MARCAS =====
-function initializeBrandFilter() {
-    const brandCards = document.querySelectorAll('.marca-card');
-    const searchInput = document.querySelector('#brand-search');
-    
-    if (!searchInput) return;
-
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
         
-        brandCards.forEach(card => {
-            const brandName = card.querySelector('h4').textContent.toLowerCase();
-            const isVisible = brandName.includes(searchTerm);
-            
-            card.style.display = isVisible ? 'block' : 'none';
-            
-            if (isVisible) {
-                card.style.animation = 'fadeInUp 0.5s ease forwards';
+        // Mejorar accesibilidad
+        button.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                createRippleEffect(this, e);
+                this.click();
             }
         });
     });
 }
 
-// ===== MODAL DE INFORMACIÓN =====
-function showInfoModal(title, content) {
-    // Crear modal dinámicamente
-    const modal = document.createElement('div');
-    modal.className = 'info-modal';
-    modal.innerHTML = `
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>${title}</h3>
-                <span class="close" onclick="closeInfoModal()">&times;</span>
-            </div>
-            <div class="modal-body">
-                ${content}
-            </div>
-        </div>
+function createRippleEffect(button, event) {
+    const ripple = document.createElement('span');
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height);
+    const x = event.clientX - rect.left - size / 2;
+    const y = event.clientY - rect.top - size / 2;
+    
+    ripple.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}px;
+        top: ${y}px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple 0.6s ease-out;
+        pointer-events: none;
+        z-index: 1;
     `;
     
-    document.body.appendChild(modal);
-    modal.style.display = 'block';
+    button.style.position = 'relative';
+    button.style.overflow = 'hidden';
+    button.appendChild(ripple);
     
-    // Animar entrada
     setTimeout(() => {
-        modal.classList.add('show');
-    }, 10);
+        if (ripple.parentNode) {
+            ripple.remove();
+        }
+    }, 600);
 }
 
-function closeInfoModal() {
-    const modal = document.querySelector('.info-modal');
-    if (modal) {
-        modal.classList.remove('show');
+// ===== TRACKING Y ANALYTICS =====
+function trackFormStep(step) {
+    // Google Analytics 4
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'form_step_completed', {
+            event_category: 'Financial Form',
+            event_label: `Step ${step}`,
+            step_number: step,
+            form_type: 'financial_request'
+        });
+    }
+    
+    // Evento personalizado para tracking interno
+    const customEvent = new CustomEvent('formStepCompleted', {
+        detail: { step, timestamp: Date.now() }
+    });
+    document.dispatchEvent(customEvent);
+    
+    console.log(`📊 Form step ${step} tracked`);
+}
+
+function trackFormSubmission() {
+    // Google Analytics 4
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'form_submit', {
+            event_category: 'Financial Form',
+            event_label: 'Complete',
+            conversion: true,
+            form_type: 'financial_request',
+            value: 1
+        });
+    }
+    
+    // Facebook Pixel (si está disponible)
+    if (typeof fbq !== 'undefined') {
+        fbq('track', 'Lead', {
+            content_category: 'Financial Form',
+            content_name: 'Solicitud Financiera'
+        });
+    }
+    
+    // Evento personalizado
+    const customEvent = new CustomEvent('formSubmitted', {
+        detail: { timestamp: Date.now(), formData }
+    });
+    document.dispatchEvent(customEvent);
+    
+    console.log('📊 Form submission tracked');
+}
+
+function trackFormError(errorMessage) {
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'form_error', {
+            event_category: 'Financial Form',
+            event_label: errorMessage,
+            error_type: 'submission_error'
+        });
+    }
+    
+    console.log('📊 Form error tracked:', errorMessage);
+}
+
+// ===== PERFORMANCE MONITORING =====
+function initializePerformanceMonitoring() {
+    // Monitor loading performance
+    window.addEventListener('load', function() {
         setTimeout(() => {
-            modal.remove();
-        }, 300);
+            const perfData = performance.getEntriesByType('navigation')[0];
+            const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
+            const domContentLoaded = perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart;
+            
+            console.log('🚀 Performance metrics:', {
+                loadTime: `${loadTime}ms`,
+                domContentLoaded: `${domContentLoaded}ms`,
+                totalTime: `${perfData.loadEventEnd}ms`
+            });
+            
+            // Enviar métricas a analytics si es necesario
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'page_performance', {
+                    event_category: 'Performance',
+                    custom_parameter_1: loadTime,
+                    custom_parameter_2: domContentLoaded
+                });
+            }
+        }, 0);
+    });
+
+    // Monitor form performance
+    const formStartTime = performance.now();
+    document.addEventListener('formSubmitted', function() {
+        const formCompletionTime = performance.now() - formStartTime;
+        console.log(`📝 Form completion time: ${formCompletionTime.toFixed(2)}ms`);
+    });
+
+    // Monitor scroll performance
+    let scrollStartTime = null;
+    let scrollTimeout = null;
+
+    window.addEventListener('scroll', function() {
+        if (!scrollStartTime) {
+            scrollStartTime = performance.now();
+        }
+        
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            const scrollDuration = performance.now() - scrollStartTime;
+            if (scrollDuration > 100) {
+                console.log(`📜 Scroll performance warning: ${scrollDuration.toFixed(2)}ms`);
+            }
+            scrollStartTime = null;
+        }, 150);
+    }, { passive: true });
+
+    // Monitor memory usage (si está disponible)
+    if ('memory' in performance) {
+        setInterval(() => {
+            const memory = performance.memory;
+            if (memory.usedJSHeapSize > 50 * 1024 * 1024) { // 50MB
+                console.warn('⚠️ High memory usage detected:', {
+                    used: `${(memory.usedJSHeapSize / 1024 / 1024).toFixed(2)}MB`,
+                    total: `${(memory.totalJSHeapSize / 1024 / 1024).toFixed(2)}MB`
+                });
+            }
+        }, 30000); // Check every 30 seconds
     }
 }
 
-// ===== COMPARTIR EN REDES SOCIALES =====
-function shareOnSocial(platform) {
-    const url = encodeURIComponent(window.location.href);
-    const title = encodeURIComponent('Larrosa Camiones - 40 años comercializando camiones');
+// ===== ACCESSIBILITY ENHANCEMENTS =====
+function initializeAccessibility() {
+    // Skip to main content link
+    addSkipLink();
     
-    const shareUrls = {
-        facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
-        twitter: `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
-        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
-        whatsapp: `https://wa.me/?text=${title} ${url}`
+    // Keyboard navigation enhancements
+    setupKeyboardNavigation();
+    
+    // Screen reader announcements
+    setupScreenReaderAnnouncements();
+    
+    // High contrast mode detection
+    detectHighContrastMode();
+    
+    // Reduced motion preferences
+    detectReducedMotion();
+}
+
+function addSkipLink() {
+    const skipLink = document.createElement('a');
+    skipLink.href = '#main-content';
+    skipLink.textContent = 'Saltar al contenido principal';
+    skipLink.className = 'skip-link';
+    skipLink.style.cssText = `
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background: var(--primary-blue);
+        color: white;
+        padding: 8px;
+        text-decoration: none;
+        border-radius: 0 0 4px 4px;
+        z-index: 1000;
+        transition: top 0.3s;
+    `;
+    
+    skipLink.addEventListener('focus', function() {
+        this.style.top = '0';
+    });
+    
+    skipLink.addEventListener('blur', function() {
+        this.style.top = '-40px';
+    });
+    
+    document.body.insertBefore(skipLink, document.body.firstChild);
+}
+
+function setupKeyboardNavigation() {
+    // Tab trap for modal dialogs (si se implementan)
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Tab') {
+            const focusableElements = document.querySelectorAll(
+                'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+            );
+            
+            const firstElement = focusableElements[0];
+            const lastElement = focusableElements[focusableElements.length - 1];
+            
+            if (e.shiftKey && document.activeElement === firstElement) {
+                e.preventDefault();
+                lastElement.focus();
+            } else if (!e.shiftKey && document.activeElement === lastElement) {
+                e.preventDefault();
+                firstElement.focus();
+            }
+        }
+    });
+    
+    // Arrow key navigation for form steps
+    const steps = document.querySelectorAll('.step');
+    steps.forEach((step, index) => {
+        step.setAttribute('tabindex', '0');
+        step.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft' && index > 0) {
+                steps[index - 1].focus();
+            } else if (e.key === 'ArrowRight' && index < steps.length - 1) {
+                steps[index + 1].focus();
+            }
+        });
+    });
+}
+
+function setupScreenReaderAnnouncements() {
+    // Create live region for announcements
+    const liveRegion = document.createElement('div');
+    liveRegion.setAttribute('aria-live', 'polite');
+    liveRegion.setAttribute('aria-atomic', 'true');
+    liveRegion.className = 'sr-only';
+    liveRegion.style.cssText = `
+        position: absolute;
+        left: -10000px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+    `;
+    document.body.appendChild(liveRegion);
+    
+    // Function to announce messages
+    window.announceToScreenReader = function(message) {
+        liveRegion.textContent = message;
+        setTimeout(() => {
+            liveRegion.textContent = '';
+        }, 1000);
     };
-    
-    if (shareUrls[platform]) {
-        window.open(shareUrls[platform], '_blank', 'width=600,height=400');
-    }
 }
 
-// ===== UTILIDADES =====
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
+function detectHighContrastMode() {
+    // Detect Windows High Contrast mode
+    const highContrastMedia = window.matchMedia('(prefers-contrast: high)');
+    
+    function handleHighContrast(e) {
+        if (e.matches) {
+            document.documentElement.classList.add('high-contrast');
+            console.log('🎯 High contrast mode detected');
+        } else {
+            document.documentElement.classList.remove('high-contrast');
         }
     }
+    
+    handleHighContrast(highContrastMedia);
+    highContrastMedia.addListener(handleHighContrast);
 }
 
-function debounce(func, wait) {
+function detectReducedMotion() {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    
+    function handleReducedMotion(e) {
+        if (e.matches) {
+            document.documentElement.classList.add('reduced-motion');
+            console.log('🎭 Reduced motion preference detected');
+            
+            // Disable animations
+            const style = document.createElement('style');
+            style.textContent = `
+                .reduced-motion *,
+                .reduced-motion *::before,
+                .reduced-motion *::after {
+                    animation-duration: 0.01ms !important;
+                    animation-iteration-count: 1 !important;
+                    transition-duration: 0.01ms !important;
+                    scroll-behavior: auto !important;
+                }
+            `;
+            document.head.appendChild(style);
+        } else {
+            document.documentElement.classList.remove('reduced-motion');
+        }
+    }
+    
+    handleReducedMotion(prefersReducedMotion);
+    prefersReducedMotion.addListener(handleReducedMotion);
+}
+
+// ===== UTILITY FUNCTIONS =====
+function debounce(func, wait, immediate) {
     let timeout;
     return function executedFunction(...args) {
         const later = () => {
-            clearTimeout(timeout);
-            func(...args);
+            timeout = null;
+            if (!immediate) func.apply(this, args);
         };
+        const callNow = immediate && !timeout;
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
+        if (callNow) func.apply(this, args);
     };
 }
 
-// ===== EASTER EGG =====
-let clickCount = 0;
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('larrosa-card')) {
-        clickCount++;
-        if (clickCount === 5) {
-            showInfoModal(
-                '¡Felicitaciones!', 
-                '<p>Has descubierto el easter egg de Larrosa Camiones. 🚛</p><p>¡40 años no se cumplen todos los días!</p>'
-            );
-            clickCount = 0;
+function throttle(func, limit) {
+    let inThrottle;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
         }
-    }
-});
+    };
+}
 
-// ===== PERFORMANCE MONITORING =====
-window.addEventListener('load', function() {
-    console.log('🏢 Página Larrosa Camiones cargada correctamente');
-    console.log('⚡ Tiempo de carga:', performance.now().toFixed(2) + 'ms');
+// ===== ERROR HANDLING =====
+window.addEventListener('error', function(e) {
+    console.error('🚨 JavaScript Error:', {
+        message: e.message,
+        filename: e.filename,
+        line: e.lineno,
+        column: e.colno,
+        error: e.error
+    });
     
-    // Reportar métricas de rendimiento
-    if ('performance' in window && 'getEntriesByType' in performance) {
-        const perfData = performance.getEntriesByType('navigation')[0];
-        console.log('📊 Métricas de rendimiento:', {
-            'Tiempo de respuesta del servidor': perfData.responseEnd - perfData.requestStart + 'ms',
-            'Tiempo de carga del DOM': perfData.domContentLoadedEventEnd - perfData.requestStart + 'ms',
-            'Tiempo total': perfData.loadEventEnd - perfData.requestStart + 'ms'
+    // Track error in analytics
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'exception', {
+            description: e.message,
+            fatal: false
         });
     }
 });
 
-// ===== MANEJO DE ERRORES =====
-window.addEventListener('error', function(e) {
-    console.error('Error en la página:', e.error);
-});
-
-// ===== ACCESIBILIDAD =====
-document.addEventListener('keydown', function(e) {
-    // Navegación con tab mejorada
-    if (e.key === 'Tab') {
-        document.body.classList.add('keyboard-navigation');
+window.addEventListener('unhandledrejection', function(e) {
+    console.error('🚨 Unhandled Promise Rejection:', e.reason);
+    
+    // Track error in analytics
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'exception', {
+            description: `Unhandled Promise: ${e.reason}`,
+            fatal: false
+        });
     }
 });
 
-document.addEventListener('mousedown', function() {
-    document.body.classList.remove('keyboard-navigation');
-});
+// ===== CSS STYLES INJECTION =====
+const additionalStyles = document.createElement('style');
+additionalStyles.textContent = `
+    /* Ripple Animation */
+    @keyframes ripple {
+        to {
+            transform: scale(2);
+            opacity: 0;
+        }
+    }
+    
+    /* Field Animations */
+    .field-error {
+        animation: fadeInUp 0.3s ease;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        to {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+    }
+    
+    /* Field States */
+    .form-group input.success,
+    .form-group select.success {
+        border-color: #28a745;
+        box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+    }
+    
+    .form-group input.error,
+    .form-group select.error {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+    }
+    
+    /* Button Styles */
+    .btn-prev {
+        background: #6c757d;
+        color: var(--primary-white);
+        padding: 15px 30px;
+        border: none;
+        border-radius: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-fast);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-right: 15px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .btn-prev:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+    }
+    
+    .btn-prev:focus {
+        outline: 3px solid var(--primary-blue);
+        outline-offset: 2px;
+    }
+    
+    .btn-submit {
+        background: var(--primary-blue);
+        color: var(--primary-white);
+        padding: 15px 30px;
+        border: none;
+        border-radius: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-fast);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .btn-submit:hover {
+        background: var(--secondary-dark-blue);
+        transform: translateY(-2px);
+    }
+    
+    .btn-submit:disabled {
+        background: #6c757d;
+        cursor: not-allowed;
+        transform: none;
+    }
+    
+    .btn-submit:focus {
+        outline: 3px solid var(--primary-blue);
+        outline-offset: 2px;
+    }
+    
+    .btn-next {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    /* Field Hints */
+    .field-hint {
+        color: #6c757d;
+        font-size: 0.85rem;
+        margin-top: 4px;
+        display: block;
+    }
+    
+    .required-indicator::after {
+        content: '*';
+        color: #dc3545;
+        margin-left: 2px;
+    }
+    
+    /* Skip Link */
+    .skip-link:focus {
+        top: 0 !important;
+    }
+    
+    /* Screen Reader Only */
+    .sr-only {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0, 0, 0, 0) !important;
+        white-space: nowrap !important;
+        border: 0 !important;
+    }
+    
+    /* High Contrast Mode */
+    .high-contrast .form-group input,
+    .high-contrast .form-group select {
+        border-width: 2px;
+    }
+    
+    .high-contrast .btn-next,
+    .high-contrast .btn-submit,
+    .high-contrast .btn-prev {
+        border: 2px solid currentColor;
+    }
+    
+    /* Focus Indicators */
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: 3px solid var(--primary-blue);
+        outline-offset: 2px;
+    }
+    
+    /* Loading State */
+    .btn-submit .fa-spinner {
+        animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+    
+    /* Form Message */
+    .form-message {
+        border-radius: 8px;
+        font-weight: 600;
+        text-align: center;
+        animation: fadeInUp 0.3s ease;
+    }
+    
+    .form-message:focus {
+        outline: 2px solid currentColor;
+        outline-offset: 2px;
+    }
+    
+    /* Progress Bar (si se implementa) */
+    .progress-bar {
+        height: 4px;
+        background: var(--primary-blue);
+        transition: width 0.3s ease;
+    }
+    
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        .form-actions {
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .btn-prev {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+    }
+`;
 
-// ===== COMPATIBILIDAD CON NAVEGADORES ANTIGUOS =====
-if (!Element.prototype.closest) {
-    Element.prototype.closest = function(s) {
-        var el = this;
-        do {
-            if (el.matches(s)) return el;
-            el = el.parentElement || el.parentNode;
-        } while (el !== null && el.nodeType === 1);
-        return null;
-    };
-}
+document.head.appendChild(additionalStyles);
+
+// ===== INITIALIZATION COMPLETE =====
+console.log('🎉 Larrosa Camiones JavaScript completamente inicializado');
+
+// Exportar funciones globales para uso externo si es necesario
+window.LarrosaCamiones = {
+    resetForm,
+    nextStep,
+    previousStep,
+    validateField,
+    trackFormStep,
+    trackFormSubmission
+};

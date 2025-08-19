@@ -60,6 +60,334 @@
     color: var(--primary-white);
     transform: translateY(-2px);
 }
+/* ===== BANNER PRINCIPAL EMPRESA - ESTILO LIMPIO ===== */
+
+/* Imagen del banner - Solo la imagen */
+.empresa-image-banner {
+    margin-top: 80px; /* Offset para navbar fija */
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    display: block;
+}
+
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Sección de contenido - Texto debajo */
+.empresa-content-section {
+    background: var(--primary-white);
+    padding: 60px 0;
+}
+
+.empresa-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Título principal */
+.empresa-title {
+    font-family: var(--font-primary);
+    font-size: 2.5rem;
+    color: #6b7280; /* Color gris similar a la imagen */
+    margin-bottom: 30px;
+    font-weight: 400;
+    line-height: 1.3;
+}
+
+.empresa-title strong {
+    font-weight: 700;
+    color: var(--primary-black);
+}
+
+/* Línea decorativa */
+.empresa-divider {
+    width: 100px;
+    height: 3px;
+    background: var(--primary-blue);
+    margin: 0 auto 40px auto;
+}
+
+/* Descripción */
+.empresa-description {
+    text-align: center;
+}
+
+.empresa-description p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--secondary-gray);
+    margin: 0 auto;
+    max-width: 700px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+    .empresa-image-banner {
+        height: 350px;
+    }
+    
+    .empresa-title {
+        font-size: 2.2rem;
+    }
+    
+    .empresa-content-section {
+        padding: 50px 0;
+    }
+    
+    .empresa-description p {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .empresa-image-banner {
+        height: 300px;
+    }
+    
+    .empresa-title {
+        font-size: 1.9rem;
+        margin-bottom: 25px;
+    }
+    
+    .empresa-content-section {
+        padding: 40px 0;
+    }
+    
+    .empresa-content {
+        padding: 0 20px;
+    }
+    
+    .empresa-divider {
+        width: 80px;
+        margin-bottom: 30px;
+    }
+    
+    .empresa-description p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 480px) {
+    .empresa-image-banner {
+        height: 250px;
+    }
+    
+    .empresa-title {
+        font-size: 1.6rem;
+        line-height: 1.4;
+        margin-bottom: 20px;
+    }
+    
+    .empresa-content-section {
+        padding: 30px 0;
+    }
+    
+    .empresa-content {
+        padding: 0 15px;
+    }
+    
+    .empresa-divider {
+        width: 60px;
+        height: 2px;
+        margin-bottom: 25px;
+    }
+    
+    .empresa-description p {
+        font-size: 0.85rem;
+        line-height: 1.5;
+    }
+}
+
+/* ===== FIN DEL BANNER PRINCIPAL EMPRESA ===== */
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1024px) {
+    .empresa-hero-banner {
+        min-height: 70vh;
+    }
+    
+    .empresa-hero-title {
+        font-size: 2.8rem;
+    }
+    
+    .empresa-description p {
+        font-size: 1.1rem;
+    }
+    
+    .empresa-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .empresa-logo {
+        height: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .empresa-hero-banner {
+        min-height: 60vh;
+        padding: 20px 0;
+    }
+    
+    .empresa-hero-content {
+        padding: 20px 15px;
+    }
+    
+    .empresa-hero-title {
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+    }
+    
+    .empresa-description p {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    
+    .empresa-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 30px;
+        padding: 20px 0;
+    }
+    
+    .stat-item {
+        padding: 15px 10px;
+    }
+    
+    .stat-number {
+        font-size: 2rem;
+    }
+    
+    .stat-label {
+        font-size: 0.85rem;
+    }
+    
+    .empresa-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .btn-primary-empresa,
+    .btn-secondary-empresa {
+        padding: 14px 28px;
+        font-size: 1rem;
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+    }
+    
+    .empresa-logo {
+        height: 80px;
+    }
+}
+
+@media (max-width: 480px) {
+    .empresa-hero-banner {
+        min-height: 50vh;
+    }
+    
+    .empresa-hero-title {
+        font-size: 1.8rem;
+        line-height: 1.3;
+    }
+    
+    .empresa-description p {
+        font-size: 0.95rem;
+    }
+    
+    .empresa-stats {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 25px;
+    }
+    
+    .stat-item {
+        padding: 12px 8px;
+    }
+    
+    .stat-number {
+        font-size: 1.8rem;
+    }
+    
+    .stat-label {
+        font-size: 0.8rem;
+    }
+    
+    .btn-primary-empresa,
+    .btn-secondary-empresa {
+        padding: 12px 24px;
+        font-size: 0.95rem;
+    }
+    
+    .empresa-logo {
+        height: 70px;
+    }
+}
+
+/* ===== EFECTOS ADICIONALES ===== */
+.empresa-hero-banner::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: linear-gradient(transparent, rgba(248, 249, 250, 0.3));
+    pointer-events: none;
+}
+
+/* Parallax effect */
+@media (prefers-reduced-motion: no-preference) {
+    .empresa-hero-image {
+        transform: scale(1.1);
+        transition: transform 20s ease;
+    }
+    
+    .empresa-hero-banner:hover .empresa-hero-image {
+        transform: scale(1.05);
+    }
+}
+
+/* Focus states para accesibilidad */
+.btn-primary-empresa:focus,
+.btn-secondary-empresa:focus {
+    outline: 3px solid var(--primary-white);
+    outline-offset: 3px;
+}
+
+/* Print styles */
+@media print {
+    .empresa-hero-banner {
+        background: var(--primary-white) !important;
+        color: var(--primary-black) !important;
+        min-height: auto;
+        page-break-inside: avoid;
+    }
+    
+    .empresa-hero-background,
+    .empresa-hero-overlay {
+        display: none;
+    }
+    
+    .empresa-hero-content {
+        color: var(--primary-black) !important;
+    }
+    
+    .empresa-actions {
+        display: none;
+    }
+}
+
+/* ===== FIN DEL BANNER PRINCIPAL EMPRESA ===== */
 
 /* Títulos de sección */
 .solution-title {
