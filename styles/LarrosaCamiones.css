@@ -1,94 +1,259 @@
-.randon-text {
-    text-align: center;
+/* ===== LARROSA CAMIONES - CSS ACTUALIZADO ===== */
+
+/* ===== SECCIONES DE SOLUCIONES ESTILO VOLVO ===== */
+.solution-section {
+    padding: 80px 0;
+    background: #f8f9fa;
 }
 
-.randon-text .section-label {
-    display: inline-block;
-    background: var(--primary-blue);
-    color: var(--primary-white);
-    padding: 0.4rem 1.2rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 1.5rem;
-}/* ===== LARROSA CAMIONES - EMPRESA CSS ===== */
-
-/* ===== HERO SECTION ===== */
-.empresa-hero {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-top: 80px;
+.solution-section:nth-child(odd) {
+    background: var(--primary-white);
 }
 
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -2;
-}
-
-.hero-background img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(61, 95, 172, 0.4));
-    z-index: -1;
-}
-
-.empresa-hero .hero-content {
-    text-align: center;
-    color: var(--primary-white);
-    z-index: 1;
-    max-width: 800px;
+.solution-container {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
 }
 
-.empresa-hero h1 {
-    font-family: var(--font-primary);
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
-    line-height: 1.2;
+.solution-container.reverse {
+    grid-template-columns: 1fr 1fr;
 }
 
-.empresa-hero .hero-subtitle {
-    font-size: 1.3rem;
-    line-height: 1.6;
-    opacity: 0.95;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+.solution-container.reverse .solution-content {
+    order: 2;
 }
 
-/* ===== SECTION LABELS ===== */
-.section-label {
-    display: inline-block;
-    background: var(--primary-blue);
+.solution-container.reverse .solution-image {
+    order: 1;
+}
+
+/* Header de sección con botón */
+.solution-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 30px;
+}
+
+.cta-button {
+    background: var(--primary-black);
     color: var(--primary-white);
-    padding: 0.5rem 1.5rem;
-    border-radius: 25px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 0;
     font-size: 0.9rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    text-decoration: none;
+    display: inline-block;
 }
 
-/* ===== HISTORIA SECTION ===== */
+.cta-button:hover {
+    background: var(--primary-blue);
+    color: var(--primary-white);
+    transform: translateY(-2px);
+}
+
+/* Títulos de sección */
+.solution-title {
+    font-size: 2.5rem;
+    color: var(--primary-black);
+    margin-bottom: 30px;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+/* Texto de contenido */
+.solution-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--secondary-gray);
+}
+
+.solution-text p {
+    margin-bottom: 20px;
+}
+
+.solution-text strong {
+    color: var(--primary-black);
+    font-weight: 600;
+}
+
+/* Imágenes de sección */
+.solution-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: var(--shadow-medium);
+}
+
+.solution-image img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    transition: var(--transition-medium);
+}
+
+.solution-image:hover img {
+    transform: scale(1.05);
+}
+
+/* ===== SECCIÓN DE FORMULARIO ===== */
+.form-section {
+    background: #f5f5f5;
+    padding: 80px 0;
+}
+
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.form-header {
+    margin-bottom: 50px;
+}
+
+.form-title {
+    font-size: 2.5rem;
+    color: var(--primary-black);
+    margin-bottom: 20px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-subtitle {
+    font-size: 1.1rem;
+    color: var(--secondary-gray);
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Pasos del formulario */
+.form-steps {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-bottom: 50px;
+}
+
+.step {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--secondary-gray);
+    transition: var(--transition-fast);
+}
+
+.step.active {
+    color: var(--primary-black);
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #e5e7eb;
+    color: var(--primary-white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: var(--transition-fast);
+}
+
+.step.active .step-number {
+    background: var(--primary-black);
+}
+
+.step-label {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+/* Formulario */
+.financial-form {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1rem;
+    color: var(--primary-black);
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group label i {
+    color: var(--secondary-gray);
+    margin-left: 5px;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 15px 20px;
+    border: 2px solid #e5e7eb;
+    border-radius: 0;
+    font-size: 1rem;
+    background: var(--primary-white);
+    transition: var(--transition-fast);
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(61, 95, 172, 0.1);
+}
+
+/* Acciones del formulario */
+.form-actions {
+    text-align: center;
+    margin-top: 40px;
+}
+
+.btn-next {
+    background: #e5e7eb;
+    color: var(--primary-black);
+    padding: 15px 40px;
+    border: none;
+    border-radius: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-next:hover {
+    background: var(--primary-black);
+    color: var(--primary-white);
+}
+
+/* ===== SECCIONES MANTENIDAS - AJUSTES MENORES ===== */
+
+/* Historia Section */
 .historia-section {
     padding: var(--section-padding);
     background: var(--primary-white);
@@ -222,14 +387,6 @@
     margin-bottom: 1rem;
 }
 
-.valores-header p {
-    font-size: 1.1rem;
-    color: var(--secondary-gray);
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-}
-
 .valores-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -245,21 +402,6 @@
     transition: var(--transition-medium);
     position: relative;
     overflow: hidden;
-}
-
-.valor-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary-blue), var(--secondary-light-blue));
-    transition: var(--transition-medium);
-}
-
-.valor-card:hover::before {
-    left: 0;
 }
 
 .valor-card:hover {
@@ -279,11 +421,6 @@
     transition: var(--transition-medium);
 }
 
-.valor-card:hover .valor-icon {
-    background: var(--secondary-dark-blue);
-    transform: scale(1.1);
-}
-
 .valor-icon i {
     font-size: 2rem;
     color: var(--primary-white);
@@ -300,454 +437,6 @@
     color: var(--secondary-gray);
     line-height: 1.6;
     font-size: 1rem;
-}
-
-/* Larrosa Card Especial */
-.larrosa-card {
-    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-dark-blue));
-    color: var(--primary-white);
-}
-
-.larrosa-card::before {
-    background: linear-gradient(90deg, var(--primary-white), rgba(255, 255, 255, 0.5));
-}
-
-.larrosa-card .valor-logo {
-    width: 120px;
-    height: 80px;
-    margin: 0 auto 1.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--primary-white);
-    border-radius: 10px;
-    padding: 1rem;
-}
-
-.larrosa-card .valor-logo img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-}
-
-.larrosa-card h3 {
-    color: var(--primary-white);
-    font-size: 1.4rem;
-}
-
-.larrosa-card p {
-    color: rgba(255, 255, 255, 0.9);
-}
-
-/* ===== RANDON SECTION ===== */
-.randon-section {
-    padding: var(--section-padding);
-    background: var(--primary-white);
-    position: relative;
-}
-
-.randon-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #f8f9fa 0%, rgba(61, 95, 172, 0.02) 100%);
-    pointer-events: none;
-}
-
-.randon-content {
-    position: relative;
-    z-index: 1;
-    display: block;
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.randon-text h2 {
-    font-family: var(--font-secondary);
-    font-size: 1.8rem;
-    color: var(--primary-blue);
-    margin-bottom: 2rem;
-    line-height: 1.4;
-    text-align: center;
-    font-weight: 600;
-}
-
-.randon-text .lead {
-    font-size: 1.1rem;
-    color: var(--secondary-gray);
-    font-weight: 500;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.randon-text p {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--secondary-gray);
-    margin-bottom: 2rem;
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.randon-benefits {
-    margin: 3rem auto 2rem;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-    max-width: 800px;
-}
-
-.benefit-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1rem;
-    padding: 1.5rem;
-    background: var(--primary-white);
-    border-radius: 12px;
-    box-shadow: var(--shadow-light);
-    border: 1px solid #f0f0f0;
-    transition: var(--transition-medium);
-}
-
-.benefit-item:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-medium);
-    border-color: var(--primary-blue);
-}
-
-.benefit-item i {
-    color: var(--primary-blue);
-    font-size: 2rem;
-    flex-shrink: 0;
-}
-
-.benefit-content h4 {
-    font-weight: 600;
-    color: var(--primary-blue);
-    margin-bottom: 0.5rem;
-    font-size: 1.1rem;
-}
-
-.benefit-content p {
-    color: var(--secondary-gray);
-    font-size: 0.9rem;
-    margin: 0;
-    line-height: 1.5;
-}
-
-.randon-products {
-    background: #f8f9fa;
-    padding: 2rem;
-    border-radius: 12px;
-    margin: 3rem auto 2rem;
-    max-width: 600px;
-}
-
-.randon-products h4 {
-    color: var(--primary-blue);
-    margin-bottom: 1.5rem;
-    font-weight: 600;
-    text-align: center;
-    font-size: 1.1rem;
-}
-
-.randon-products ul {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0.8rem;
-}
-
-.randon-products li {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    color: var(--secondary-gray);
-    font-size: 0.95rem;
-}
-
-.randon-products li i {
-    color: var(--primary-blue);
-    font-size: 0.9rem;
-    flex-shrink: 0;
-}
-
-.randon-visual {
-    display: flex;
-    justify-content: center;
-    margin-top: 3rem;
-}
-
-.randon-logo-container {
-    text-align: center;
-    padding: 2rem;
-    background: var(--primary-white);
-    border-radius: 15px;
-    box-shadow: var(--shadow-light);
-    border: 1px solid #f0f0f0;
-}
-
-.randon-logo {
-    width: 180px;
-    height: auto;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
-}
-
-/* Eliminar la galería de imágenes */
-.randon-gallery {
-    display: none;
-}
-
-/* ===== INSTALACIONES SECTION ===== */
-.instalaciones-section {
-    padding: var(--section-padding);
-    background: #f8f9fa;
-}
-
-.instalaciones-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-    align-items: start;
-}
-
-.instalaciones-text h2 {
-    font-family: var(--font-primary);
-    font-size: 2.5rem;
-    color: var(--primary-blue);
-    margin-bottom: 2rem;
-}
-
-.instalaciones-text .lead {
-    font-size: 1.2rem;
-    color: var(--primary-blue);
-    font-weight: 600;
-    margin-bottom: 2rem;
-    line-height: 1.6;
-}
-
-.instalaciones-features {
-    margin: 2rem 0;
-}
-
-.feature-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.feature-icon {
-    width: 60px;
-    height: 60px;
-    background: var(--primary-blue);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.feature-icon i {
-    color: var(--primary-white);
-    font-size: 1.5rem;
-}
-
-.feature-content h4 {
-    font-weight: 600;
-    color: var(--primary-black);
-    margin-bottom: 0.5rem;
-}
-
-.feature-content p {
-    color: var(--secondary-gray);
-    line-height: 1.6;
-    margin: 0;
-}
-
-.instalaciones-gallery {
-    position: sticky;
-    top: 120px;
-}
-
-.gallery-main {
-    margin-bottom: 1rem;
-}
-
-.gallery-main-image {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 15px;
-    box-shadow: var(--shadow-medium);
-    transition: var(--transition-medium);
-}
-
-.gallery-thumbnails {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
-}
-
-.gallery-thumbnails img {
-    width: 100%;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: var(--transition-fast);
-    opacity: 0.7;
-}
-
-.gallery-thumbnails img:hover {
-    opacity: 1;
-    transform: scale(1.05);
-}
-
-/* ===== MARCAS SECTION ===== */
-.marcas-section {
-    padding: var(--section-padding);
-    background: var(--primary-white);
-}
-
-.marcas-header {
-    text-align: center;
-    margin-bottom: 4rem;
-}
-
-.marcas-header h2 {
-    font-family: var(--font-primary);
-    font-size: 2.5rem;
-    color: var(--primary-blue);
-    margin-bottom: 1rem;
-}
-
-.marcas-header p {
-    font-size: 1.1rem;
-    color: var(--secondary-gray);
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.marcas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
-}
-
-.marca-card {
-    background: var(--primary-white);
-    padding: 2rem;
-    border-radius: 15px;
-    text-align: center;
-    box-shadow: var(--shadow-light);
-    transition: var(--transition-medium);
-    position: relative;
-    border: 2px solid transparent;
-}
-
-.marca-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-strong);
-    border-color: var(--primary-blue);
-}
-
-.marca-card.featured {
-    background: linear-gradient(135deg, #f8f9fa, var(--primary-white));
-    border: 2px solid var(--primary-blue);
-    position: relative;
-    overflow: hidden;
-}
-
-.marca-card.featured::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--primary-blue), var(--secondary-light-blue));
-}
-
-.marca-logo {
-    width: 120px;
-    height: 60px;
-    object-fit: contain;
-    margin: 0 auto 1.5rem;
-    transition: var(--transition-medium);
-}
-
-.marca-card:hover .marca-logo {
-    transform: scale(1.1);
-}
-
-.marca-card h4 {
-    font-family: var(--font-primary);
-    font-size: 1.2rem;
-    color: var(--primary-blue);
-    margin-bottom: 1rem;
-}
-
-.marca-card p {
-    color: var(--secondary-gray);
-    line-height: 1.5;
-    font-size: 0.95rem;
-}
-
-.marca-badge {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: var(--primary-blue);
-    color: var(--primary-white);
-    padding: 0.3rem 0.8rem;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-/* ===== ESTADÍSTICAS SECTION ===== */
-.stats-section {
-    padding: 4rem 0;
-    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-dark-blue));
-    color: var(--primary-white);
-}
-
-.stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 2rem;
-}
-
-.stat-item {
-    text-align: center;
-    padding: 2rem 1rem;
-}
-
-.stat-number {
-    font-family: var(--font-primary);
-    font-size: 3rem;
-    color: var(--primary-white);
-    margin-bottom: 0.5rem;
-    display: block;
-}
-
-.stat-label {
-    font-size: 1.1rem;
-    opacity: 0.9;
-    text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
 /* ===== CTA SECTION ===== */
@@ -825,8 +514,27 @@
 
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1024px) {
-    .empresa-hero h1 {
-        font-size: 3rem;
+    .solution-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .solution-container.reverse .solution-content,
+    .solution-container.reverse .solution-image {
+        order: unset;
+    }
+    
+    .solution-image {
+        order: -1;
+    }
+    
+    .solution-title {
+        font-size: 2rem;
+    }
+    
+    .form-steps {
+        gap: 30px;
     }
     
     .historia-content {
@@ -838,34 +546,48 @@
         position: static;
         order: -1;
     }
-    
-    .randon-benefits {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-    
-    .instalaciones-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-    
-    .instalaciones-gallery {
-        position: static;
-        order: -1;
-    }
 }
 
 @media (max-width: 768px) {
-    .empresa-hero {
-        height: 80vh;
+    .solution-section {
+        padding: 60px 0;
     }
     
-    .empresa-hero h1 {
-        font-size: 2.5rem;
+    .solution-title {
+        font-size: 1.8rem;
     }
     
-    .empresa-hero .hero-subtitle {
-        font-size: 1.1rem;
+    .solution-text {
+        font-size: 0.95rem;
+    }
+    
+    .solution-image img {
+        height: 250px;
+    }
+    
+    .form-title {
+        font-size: 1.8rem;
+    }
+    
+    .form-steps {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    .step {
+        gap: 10px;
+    }
+    
+    .step-number {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+    
+    .form-group input,
+    .form-group select {
+        padding: 12px 15px;
     }
     
     .valores-grid {
@@ -873,41 +595,55 @@
         gap: 1.5rem;
     }
     
-    .valor-card {
-        padding: 2rem;
-    }
-    
-    .randon-benefits {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        margin: 2rem auto;
-    }
-    
-    .randon-products ul {
-        grid-template-columns: 1fr;
-    }
-    
-    .randon-logo {
-        width: 150px;
-    }
-    
-    .marcas-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.5rem;
-    }
-    
-    .stat-number {
-        font-size: 2.5rem;
-    }
-    
     .cta-buttons {
         flex-direction: column;
         align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .solution-section {
+        padding: 40px 0;
+    }
+    
+    .solution-container {
+        padding: 0 15px;
+        gap: 30px;
+    }
+    
+    .solution-title {
+        font-size: 1.5rem;
+    }
+    
+    .solution-header {
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    
+    .cta-button {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+    
+    .form-container {
+        padding: 0 15px;
+    }
+    
+    .form-title {
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+    
+    .form-subtitle {
+        font-size: 1rem;
+    }
+    
+    .financial-form {
+        max-width: 100%;
+    }
+    
+    .valor-card {
+        padding: 2rem 1.5rem;
     }
     
     .timeline {
@@ -919,34 +655,92 @@
     }
 }
 
-@media (max-width: 480px) {
-    .empresa-hero h1 {
-        font-size: 2rem;
-        line-height: 1.3;
+/* ===== ANIMACIONES ===== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Aplicar animaciones */
+.solution-content {
+    animation: slideInLeft 0.8s ease forwards;
+}
+
+.solution-image {
+    animation: slideInRight 0.8s ease 0.2s both;
+}
+
+.reverse .solution-content {
+    animation: slideInRight 0.8s ease forwards;
+}
+
+.reverse .solution-image {
+    animation: slideInLeft 0.8s ease 0.2s both;
+}
+
+.form-header {
+    animation: fadeInUp 0.8s ease forwards;
+}
+
+.form-steps {
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+.financial-form {
+    animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+/* ===== ACCESSIBILITY ===== */
+.cta-button:focus,
+.btn-next:focus,
+.form-group input:focus,
+.form-group select:focus {
+    outline: 3px solid var(--primary-blue);
+    outline-offset: 2px;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .solution-section,
+    .form-section {
+        page-break-inside: avoid;
     }
     
-    .section-padding {
-        padding: 60px 0;
+    .solution-image img {
+        height: auto;
+        max-height: 200px;
     }
     
-    .valor-card,
-    .marca-card {
-        padding: 1.5rem;
-    }
-    
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .randon-visual {
-        gap: 1rem;
-    }
-    
-    .randon-logo {
-        width: 150px;
-    }
-    
-    .gallery-thumbnails {
-        grid-template-columns: repeat(2, 1fr);
+    .cta-button,
+    .btn-next {
+        display: none;
     }
 }
