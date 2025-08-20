@@ -47,7 +47,7 @@
                     </li>
                 </ul>
                 
-                <!-- Botón derecha - ACTUALIZADO -->
+                <!-- Botón derecha -->
                 <div class="nav-button">
                     <!-- Botón MercadoLibre -->
                     <a href="https://listado.mercadolibre.com.ar/larrosa-camiones" 
@@ -58,7 +58,7 @@
                         <span>MercadoLibre</span>
                     </a>
                     
-                    <!-- Botón Randon (opcional - mantener o quitar) -->
+                    <!-- Botón Randon -->
                     <a href="LarrosaCamiones.html#randon" class="btn-special">
                         <img src="../assets/Logo negro sin fondo.png" alt="Randon" class="btn-icon">
                     </a>
@@ -76,7 +76,7 @@
 
     <!-- Main Content -->
     <main id="main-content">
-        <!-- Page Header with Categories -->
+        <!-- Page Header -->
         <section class="page-header">
             <div class="container-full">
                 <div class="breadcrumb">
@@ -85,9 +85,8 @@
                     <span class="current">Unidades Disponibles</span>
                 </div>
                 
-                
-                <!-- Vehicle Categories Bar -->
-                <div class="categories-container">
+                <!-- NUEVO: Vehicle Categories Bar - Ancho completo SIN espacios -->
+                <div class="categories-container-full">
                     <div class="category-item active" data-category="all">
                         <div class="category-image">
                             <img src="../assets/imagenes/IMG_8670(1).JPEG" alt="Todos los vehículos" class="category-photo">
@@ -151,35 +150,38 @@
             </div>
         </section>
 
-        <!-- Main Content with Sidebar -->
-        <section class="content-section">
-            <div class="container-full">
-                <div class="content-layout">
-                    <!-- Sidebar Filters -->
-                    <aside class="sidebar-filters">
-                        <!-- Search Box -->
-                        <div class="filter-search">
-                            <div class="search-input-container">
-                                <input type="text" placeholder="Buscar camiones..." id="filter-search" class="filter-search-input">
-                                <button class="clear-search-btn">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="filter-actions">
-                                <button class="clear-all-btn">
-                                    <span>Limpiar</span>
-                                    <i class="fas fa-redo"></i>
-                                </button>
-                                <button class="save-search-btn">
-                                    <span>Guardar</span>
-                                    <i class="fas fa-bookmark"></i>
-                                </button>
-                            </div>
+        <!-- Main Content with Sidebar - SIN espacios entre categorías y contenido -->
+        <section class="content-section-full">
+            <div class="content-layout-full">
+                <!-- ACTUALIZADO: Sidebar Filters con altura completa -->
+                <aside class="sidebar-filters-full">
+                    <!-- Filter Search -->
+                    <div class="filter-search">
+                        <div class="search-input-container">
+                            <input type="text" placeholder="Buscar camiones..." id="filter-search" class="filter-search-input">
+                            <button class="clear-search-btn">
+                                <i class="fas fa-times"></i>
+                            </button>
                         </div>
+                        <div class="filter-actions">
+                            <button class="clear-all-btn">
+                                <span>Limpiar</span>
+                                <i class="fas fa-redo"></i>
+                            </button>
+                            <button class="save-search-btn">
+                                <span>Guardar</span>
+                                <i class="fas fa-bookmark"></i>
+                            </button>
+                        </div>
+                    </div>
 
-                        <!-- Tipo Filter -->
-                        <div class="filter-group">
-                            <h3 class="filter-title">Tipo</h3>
+                    <!-- NUEVO: Tipo Filter - Colapsable por defecto -->
+                    <div class="filter-group collapsible collapsed">
+                        <h3 class="filter-title" onclick="toggleFilterGroup(this)">
+                            <span>Tipo</span>
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </h3>
+                        <div class="filter-content">
                             <div class="filter-options">
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="tipo" value="camion-tractor">
@@ -213,10 +215,15 @@
                                 </label>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Tracción Filter -->
-                        <div class="filter-group">
-                            <h3 class="filter-title">Tracción</h3>
+                    <!-- Tracción Filter - Colapsable -->
+                    <div class="filter-group collapsible collapsed">
+                        <h3 class="filter-title" onclick="toggleFilterGroup(this)">
+                            <span>Tracción</span>
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </h3>
+                        <div class="filter-content">
                             <div class="filter-options">
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="traccion" value="4x2">
@@ -230,10 +237,15 @@
                                 </label>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Marca Filter -->
-                        <div class="filter-group">
-                            <h3 class="filter-title">Marca</h3>
+                    <!-- Marca Filter - Colapsable -->
+                    <div class="filter-group collapsible collapsed">
+                        <h3 class="filter-title" onclick="toggleFilterGroup(this)">
+                            <span>Marca</span>
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </h3>
+                        <div class="filter-content">
                             <div class="filter-options">
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="marca" value="scania">
@@ -272,10 +284,15 @@
                                 </label>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Año Range -->
-                        <div class="filter-group">
-                            <h3 class="filter-title">Año</h3>
+                    <!-- Año Range - Colapsable -->
+                    <div class="filter-group collapsible collapsed">
+                        <h3 class="filter-title" onclick="toggleFilterGroup(this)">
+                            <span>Año</span>
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </h3>
+                        <div class="filter-content">
                             <div class="range-filter">
                                 <div class="range-inputs">
                                     <input type="number" placeholder="Desde" class="range-input" id="year-min" min="2000" max="2025">
@@ -287,10 +304,15 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Kilómetros Range -->
-                        <div class="filter-group">
-                            <h3 class="filter-title">Kilómetros</h3>
+                    <!-- Kilómetros Range - Colapsable -->
+                    <div class="filter-group collapsible collapsed">
+                        <h3 class="filter-title" onclick="toggleFilterGroup(this)">
+                            <span>Kilómetros</span>
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </h3>
+                        <div class="filter-content">
                             <div class="range-filter">
                                 <div class="range-inputs">
                                     <input type="number" placeholder="Desde" class="range-input" id="km-min" min="0" max="1000000">
@@ -303,10 +325,15 @@
                                 <div class="range-unit">km</div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Transmisión Filter -->
-                        <div class="filter-group">
-                            <h3 class="filter-title">Transmisión</h3>
+                    <!-- Transmisión Filter - Colapsable -->
+                    <div class="filter-group collapsible collapsed">
+                        <h3 class="filter-title" onclick="toggleFilterGroup(this)">
+                            <span>Transmisión</span>
+                            <i class="fas fa-chevron-down collapse-icon"></i>
+                        </h3>
+                        <div class="filter-content">
                             <div class="filter-options">
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="transmision" value="manual">
@@ -320,59 +347,59 @@
                                 </label>
                             </div>
                         </div>
-                    </aside>
+                    </div>
+                </aside>
 
-                    <!-- Main Content Area -->
-                    <div class="main-content">
-                        <!-- Results Header -->
-                        <div class="results-header">
-                            <div class="results-info">
-                                <div class="results-tabs">
-                                    <button class="tab-btn active">
-                                        <span>información</span>
-                                    </button>
-                                    <button class="tab-btn">
-                                        <span><strong><span id="total-vehicles">583</span> vehículos encontrados</strong></span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="results-controls">
-                                <div class="sort-dropdown">
-                                    <button class="sort-btn">
-                                        <span>Clasificar Por</span>
-                                        <i class="fas fa-chevron-down"></i>
-                                    </button>
-                                    <div class="sort-menu">
-                                        <button class="sort-option active" data-sort="relevance">Relevancia</button>
-                                        <button class="sort-option" data-sort="price-asc">Precio: menor a mayor</button>
-                                        <button class="sort-option" data-sort="price-desc">Precio: mayor a menor</button>
-                                        <button class="sort-option" data-sort="year-desc">Año: más nuevo</button>
-                                        <button class="sort-option" data-sort="year-asc">Año: más viejo</button>
-                                        <button class="sort-option" data-sort="km-asc">Menor kilometraje</button>
-                                        <button class="sort-option" data-sort="km-desc">Mayor kilometraje</button>
-                                    </div>
-                                </div>
+                <!-- Main Content Area -->
+                <div class="main-content-full">
+                    <!-- Results Header -->
+                    <div class="results-header">
+                        <div class="results-info">
+                            <div class="results-tabs">
+                                <button class="tab-btn active">
+                                    <span>información</span>
+                                </button>
+                                <button class="tab-btn">
+                                    <span><strong><span id="total-vehicles">583</span> vehículos encontrados</strong></span>
+                                </button>
                             </div>
                         </div>
-
-                        <!-- Loading State -->
-                        <div class="loading-state" id="loading-state" style="display: none;">
-                            <div class="loading-spinner"></div>
-                            <p>Cargando vehículos...</p>
+                        <div class="results-controls">
+                            <div class="sort-dropdown">
+                                <button class="sort-btn">
+                                    <span>Clasificar Por</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </button>
+                                <div class="sort-menu">
+                                    <button class="sort-option active" data-sort="relevance">Relevancia</button>
+                                    <button class="sort-option" data-sort="price-asc">Precio: menor a mayor</button>
+                                    <button class="sort-option" data-sort="price-desc">Precio: mayor a menor</button>
+                                    <button class="sort-option" data-sort="year-desc">Año: más nuevo</button>
+                                    <button class="sort-option" data-sort="year-asc">Año: más viejo</button>
+                                    <button class="sort-option" data-sort="km-asc">Menor kilometraje</button>
+                                    <button class="sort-option" data-sort="km-desc">Mayor kilometraje</button>
+                                </div>
+                            </div>
                         </div>
+                    </div>
 
-                        <!-- Vehicles Grid -->
-                        <div class="vehicles-grid" id="vehicles-grid">
-                            <!-- Vehicles will be loaded here dynamically -->
-                        </div>
+                    <!-- Loading State -->
+                    <div class="loading-state" id="loading-state" style="display: none;">
+                        <div class="loading-spinner"></div>
+                        <p>Cargando vehículos...</p>
+                    </div>
 
-                        <!-- Load More Button -->
-                        <div class="load-more-container">
-                            <button class="load-more-btn" id="load-more-btn">
-                                <span>Cargar más vehículos</span>
-                                <i class="fas fa-chevron-down"></i>
-                            </button>
-                        </div>
+                    <!-- ACTUALIZADO: Vehicles Grid SIN badges de "disponible" -->
+                    <div class="vehicles-grid-clean" id="vehicles-grid">
+                        <!-- Vehicles will be loaded here dynamically -->
+                    </div>
+
+                    <!-- Load More Button -->
+                    <div class="load-more-container">
+                        <button class="load-more-btn" id="load-more-btn">
+                            <span>Cargar más vehículos</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -439,64 +466,29 @@
         </div>
     </footer>
 
-    <!-- JavaScript para funcionalidad adicional -->
-    <script>
-        // Actualizar scripts/nav-session.js para que funcione con el botón en footer
-        document.addEventListener('DOMContentLoaded', function() {
-            updateAdminButtonState();
-        });
-
-        function updateAdminButtonState() {
-            const adminButton = document.querySelector('.btn-admin-footer');
-            if (!adminButton) return;
-
-            // Verificar si hay token de admin almacenado
-            const hasAdminToken = localStorage.getItem('admin_token') || sessionStorage.getItem('admin_token');
-            
-            if (hasAdminToken) {
-                // Mostrar estado "logueado"
-                adminButton.classList.add('logged-in');
-                adminButton.title = 'Panel de Administración (Sesión activa)';
-                
-                // Cambiar el texto si existe
-                const buttonText = adminButton.querySelector('span');
-                if (buttonText) {
-                    buttonText.textContent = 'Panel Activo';
-                }
-                
-                // Cambiar destino a dashboard en lugar de login
-                adminButton.href = '../admin/dashboard.html';
-            } else {
-                // Estado normal - ir a login
-                adminButton.classList.remove('logged-in');
-                adminButton.title = 'Panel de Administración';
-                adminButton.href = '../admin/login.html';
-                
-                const buttonText = adminButton.querySelector('span');
-                if (buttonText) {
-                    buttonText.textContent = 'Administración';
-                }
-            }
-        }
-
-        // Tracking para el botón MercadoLibre
-        document.querySelector('.btn-mercadolibre')?.addEventListener('click', function() {
-            // Google Analytics tracking
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'click', {
-                    event_category: 'External Link',
-                    event_label: 'MercadoLibre',
-                    transport_type: 'beacon'
-                });
-            }
-            
-            console.log('🛒 Redirect to MercadoLibre');
-        });
-    </script>
-
     <!-- Scripts -->
     <script src="../scripts/main.js"></script>
     <script src="../scripts/unidadesDisponibles.js"></script>
     <script src="../scripts/nav-session.js"></script>
+    
+    <!-- NUEVO: Script para filtros colapsables -->
+    <script>
+        // Función para alternar grupos de filtros
+        function toggleFilterGroup(titleElement) {
+            const filterGroup = titleElement.closest('.filter-group');
+            const filterContent = filterGroup.querySelector('.filter-content');
+            const icon = titleElement.querySelector('.collapse-icon');
+            
+            filterGroup.classList.toggle('collapsed');
+            
+            if (filterGroup.classList.contains('collapsed')) {
+                filterContent.style.maxHeight = '0';
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                filterContent.style.maxHeight = filterContent.scrollHeight + 'px';
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+    </script>
 </body>
 </html>
