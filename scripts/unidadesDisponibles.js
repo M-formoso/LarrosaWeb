@@ -272,36 +272,39 @@ function applyFilters() {
                 }
             }
             
-            // Category filter from nav
+            // ✅ CORRECCIÓN AQUÍ - Category filter from nav
             const activeCategory = document.querySelector('.category-item.active');
             if (activeCategory && activeCategory.dataset.category !== 'all') {
-                if (vehicle.type !== activeCategory.dataset.category) {
+                const selectedCategory = activeCategory.dataset.category;
+                
+                // Debug para verificar
+                console.log('Categoría activa:', selectedCategory);
+                console.log('Tipo de vehículo:', vehicle.type);
+                
+                if (vehicle.type !== selectedCategory) {
                     return false;
                 }
             }
             
-            // Type filter
+            // Resto de filtros...
             if (currentFilters.tipo && currentFilters.tipo.length > 0) {
                 if (!currentFilters.tipo.includes(vehicle.type)) {
                     return false;
                 }
             }
             
-            // Traccion filter
             if (currentFilters.traccion && currentFilters.traccion.length > 0) {
                 if (!currentFilters.traccion.includes(vehicle.traccion)) {
                     return false;
                 }
             }
             
-            // Brand filter
             if (currentFilters.marca && currentFilters.marca.length > 0) {
                 if (!currentFilters.marca.includes(vehicle.brand.toLowerCase())) {
                     return false;
                 }
             }
             
-            // Transmission filter
             if (currentFilters.transmision && currentFilters.transmision.length > 0) {
                 const transmissionMap = { 'manual': 'Manual', 'automatica': 'Automática' };
                 const hasMatchingTransmission = currentFilters.transmision.some(filter => 
@@ -312,7 +315,6 @@ function applyFilters() {
                 }
             }
             
-            // Year range filter
             if (currentFilters.year) {
                 if (currentFilters.year.min && vehicle.year < currentFilters.year.min) {
                     return false;
@@ -322,7 +324,6 @@ function applyFilters() {
                 }
             }
             
-            // Kilometers range filter
             if (currentFilters.kilometers) {
                 if (currentFilters.kilometers.min && vehicle.kilometers < currentFilters.kilometers.min) {
                     return false;
@@ -335,19 +336,15 @@ function applyFilters() {
             return true;
         });
         
-        // Apply sorting
         applySorting();
-        
-        // Reset pagination
         currentPage = 1;
-        
-        // Update UI
         updateResultsDisplay();
         showLoading(false);
         
+        console.log('Vehículos filtrados:', filteredVehicles.length);
+        
     }, 300);
 }
-
 function clearAllFilters() {
     currentFilters = {};
     
@@ -749,3 +746,18 @@ window.addEventListener('resize', debounce(function() {
 }, 250));
 
 console.log('🚛 Unidades Disponibles JavaScript cargado correctamente');
+
+function debugCategoryFilter() {
+    console.log('=== DEBUG CATEGORY FILTER ===');
+    const activeCategory = document.querySelector('.category-item.active');
+    console.log('Categoría activa:', activeCategory ? activeCategory.dataset.category : 'ninguna');
+    
+    const uniqueTypes = [...new Set(vehiclesData.map(v => v.type))];
+    console.log('Tipos únicos en datos:', uniqueTypes);
+    
+    console.log('Primeros 5 vehículos:', vehiclesData.slice(0, 5).map(v => ({
+        type: v.type,
+        typeName: v.typeName,
+        brand: v.brand
+    })));
+}
