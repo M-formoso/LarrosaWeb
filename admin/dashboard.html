@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Panel Administración | Larrosa Camiones</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/panel.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+</head>
+<body class="admin-dashboard-body">
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <div class="admin-logo">
+                <img src="../assets/Azul.pdf" alt="Larrosa Camiones" class="logo">
+                <h1>Panel de Administración</h1>
+            </div>
+            
+            <div class="admin-user-menu">
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">A</div>
+                    <div class="user-details">
+                        <span class="user-name" id="user-name">Administrador</span>
+                        <span class="user-role" id="user-role">Administrador</span>
+                    </div>
+                </div>
+                
+                <div class="user-menu-dropdown">
+                    <button class="dropdown-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user"></i>
+                            Mi Perfil
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            Configuración
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" data-action="logout">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Cerrar Sesión
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar">
+        <nav class="admin-nav">
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#dashboard" class="nav-link active">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#vehicles" class="nav-link">
+                        <i class="fas fa-truck"></i>
+                        <span>Vehículos</span>
+                        <span class="nav-badge" id="vehicles-count">0</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#add-vehicle" class="nav-link">
+                        <i class="fas fa-plus"></i>
+                        <span>Agregar Vehículo</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#images" class="nav-link">
+                        <i class="fas fa-images"></i>
+                        <span>Gestión de Imágenes</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#analytics" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Estadísticas</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#settings" class="nav-link">
+                        <i class="fas fa-cogs"></i>
+                        <span>Configuración</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="sidebar-footer">
+            <a href="../index.html" class="btn-back-to-site">
+                <i class="fas fa-arrow-left"></i>
+                <span>Volver al sitio</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="admin-section active">
+            <div class="section-header">
+                <h2>Dashboard</h2>
+                <p>Resumen general del sistema</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon vehicles">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="total-vehicles-stat">0</h3>
+                        <p>Total Vehículos</p>
+                        <span class="stat-change positive">+5 este mes</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon available">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="available-vehicles-stat">0</h3>
+                        <p>Disponibles</p>
+                        <span class="stat-change neutral">Sin cambios</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon reserved">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="reserved-vehicles-stat">0</h3>
+                        <p>Reservados</p>
+                        <span class="stat-change positive">+2 esta semana</span>
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon featured">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="featured-vehicles-stat">0</h3>
+                        <p>Destacados</p>
+                        <span class="stat-change neutral">Estable</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Acciones Rápidas</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="quick-actions">
+                            <button class="quick-action-btn" onclick="showSection('add-vehicle')">
+                                <i class="fas fa-plus"></i>
+                                <span>Agregar Vehículo</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="showSection('vehicles')">
+                                <i class="fas fa-edit"></i>
+                                <span>Gestionar Vehículos</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="showSection('images')">
+                                <i class="fas fa-images"></i>
+                                <span>Subir Imágenes</span>
+                            </button>
+                            <button class="quick-action-btn" onclick="exportData()">
+                                <i class="fas fa-download"></i>
+                                <span>Exportar Datos</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Vehículos Recientes</h3>
+                        <a href="#vehicles" class="card-action">Ver todos</a>
+                    </div>
+                    <div class="card-content">
+                        <div class="recent-vehicles" id="recent-vehicles">
+                            <div class="loading">Cargando vehículos...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h3>Actividad del Sistema</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="activity-log" id="activity-log">
+                            <div class="activity-item">
+                                <i class="fas fa-plus-circle"></i>
+                                <span>Nuevo vehículo agregado: Scania R450</span>
+                                <time>Hace 2 horas</time>
+                            </div>
+                            <div class="activity-item">
+                                <i class="fas fa-edit"></i>
+                                <span>Vehículo actualizado: Volvo FH 440</span>
+                                <time>Hace 5 horas</time>
+                            </div>
+                            <div class="activity-item">
+                                <i class="fas fa-image"></i>
+                                <span>Imágenes subidas: Mercedes Actros</span>
+                                <time>Ayer</time>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vehicles Section -->
+        <section id="vehicles-section" class="admin-section">
+            <div class="section-header">
+                <h2>Gestión de Vehículos</h2>
+                <div class="section-actions">
+                    <button class="btn-primary" onclick="showSection('add-vehicle')">
+                        <i class="fas fa-plus"></i>
+                        Agregar Vehículo
+                    </button>
+                </div>
+            </div>
+
+            <!-- Vehicle Filters -->
+            <div class="filters-bar">
+                <div class="filter-group">
+                    <label>Filtrar por:</label>
+                    <select id="status-filter">
+                        <option value="">Todos los estados</option>
+                        <option value="Disponible">Disponible</option>
+                        <option value="Reservado">Reservado</option>
+                        <option value="Vendido">Vendido</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <input type="text" id="search-vehicles" placeholder="Buscar vehículos...">
+                </div>
+                <div class="filter-group">
+                    <button class="btn-secondary" onclick="refreshVehicles()">
+                        <i class="fas fa-sync"></i>
+                        Actualizar
+                    </button>
+                </div>
+            </div>
+
+            <!-- Vehicles Table -->
+            <div class="table-container">
+                <table class="admin-table" id="vehicles-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Vehículo</th>
+                            <th>Año</th>
+                            <th>Kilómetros</th>
+                            <th>Estado</th>
+                            <th>Destacado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vehicles-table-body">
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                <div class="loading">Cargando vehículos...</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-container">
+                <div class="pagination-info">
+                    Mostrando <span id="showing-count">0</span> de <span id="total-count">0</span> vehículos
+                </div>
+                <div class="pagination-controls">
+                    <button class="btn-pagination" id="prev-page" disabled>
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span class="page-info">Página <span id="current-page">1</span> de <span id="total-pages">1</span></span>
+                    <button class="btn-pagination" id="next-page" disabled>
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Vehicle Section -->
+        <section id="add-vehicle-section" class="admin-section">
+            <div class="section-header">
+                <h2>Agregar Nuevo Vehículo</h2>
+            </div>
+
+            <form id="add-vehicle-form" class="vehicle-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="brand">Marca *</label>
+                        <select id="brand" name="brand" required>
+                            <option value="">Seleccionar marca</option>
+                            <option value="Scania">Scania</option>
+                            <option value="Volvo">Volvo</option>
+                            <option value="Mercedes">Mercedes</option>
+                            <option value="Iveco">Iveco</option>
+                            <option value="Volkswagen">Volkswagen</option>
+                            <option value="Renault">Renault</option>
+                            <option value="Ford">Ford</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="model">Modelo *</label>
+                        <input type="text" id="model" name="model" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="year">Año *</label>
+                        <input type="number" id="year" name="year" min="1990" max="2025" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kilometers">Kilómetros *</label>
+                        <input type="number" id="kilometers" name="kilometers" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="type">Tipo *</label>
+                        <select id="type" name="type" required>
+                            <option value="">Seleccionar tipo</option>
+                            <option value="camion-tractor">Camión Tractor</option>
+                            <option value="camion-chasis">Camión Chasis</option>
+                            <option value="remolques">Remolques</option>
+                            <option value="utilitarios">Utilitarios</option>
+                            <option value="varios">Varios</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="power">Potencia (HP)</label>
+                        <input type="number" id="power" name="power" min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="traccion">Tracción</label>
+                        <select id="traccion" name="traccion">
+                            <option value="">Seleccionar tracción</option>
+                            <option value="4x2">4x2</option>
+                            <option value="6x2">6x2</option>
+                            <option value="6x4">6x4</option>
+                            <option value="8x4">8x4</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="transmission">Transmisión</label>
+                        <select id="transmission" name="transmission">
+                            <option value="">Seleccionar transmisión</option>
+                            <option value="Manual">Manual</option>
+                            <option value="Automática">Automática</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="color">Color</label>
+                        <input type="text" id="color" name="color">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="status">Estado *</label>
+                        <select id="status" name="status" required>
+                            <option value="Disponible">Disponible</option>
+                            <option value="Reservado">Reservado</option>
+                            <option value="Vendido">Vendido</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="price">Precio (USD)</label>
+                        <input type="number" id="price" name="price" min="0" step="0.01">
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="is_featured" name="is_featured">
+                            <span class="checkmark"></span>
+                            Marcar como destacado
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="description">Descripción</label>
+                    <textarea id="description" name="description" rows="4"></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="observations">Observaciones</label>
+                    <textarea id="observations" name="observations" rows="3"></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="images">Imágenes del vehículo</label>
+                    <div class="file-upload-area" id="file-upload-area">
+                        <input type="file" id="images" name="images" multiple accept="image/*">
+                        <div class="upload-text">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Arrastra imágenes aquí o <span>haz clic para seleccionar</span></p>
+                            <small>Formatos admitidos: JPG, PNG, WebP (máx. 10MB por imagen)</small>
+                        </div>
+                    </div>
+                    <div id="selected-images" class="selected-images"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="resetForm()">
+                        <i class="fas fa-undo"></i>
+                        Limpiar
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i>
+                        Guardar Vehículo
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Other sections would go here -->
+        <section id="images-section" class="admin-section">
+            <div class="section-header">
+                <h2>Gestión de Imágenes</h2>
+            </div>
+            <p>Funcionalidad de gestión de imágenes en desarrollo...</p>
+        </section>
+
+        <section id="analytics-section" class="admin-section">
+            <div class="section-header">
+                <h2>Estadísticas</h2>
+            </div>
+            <p>Panel de estadísticas en desarrollo...</p>
+        </section>
+
+        <section id="settings-section" class="admin-section">
+            <div class="section-header">
+                <h2>Configuración</h2>
+            </div>
+            <p>Panel de configuración en desarrollo...</p>
+        </section>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner"></div>
+        <p>Procesando...</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../scripts/admin/auth.js"></script>
+    <script>
+        // Initialize admin panel
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check authentication
+            if (!requireAdmin()) return;
+            
+            initializeAdminPanel();
+            loadDashboardData();
+            setupEventListeners();
+        });
+
+        // Navigation between sections
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active from nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            const section = document.getElementById(sectionName + '-section');
+            if (section) {
+                section.classList.add('active');
+            }
+            
+            // Activate nav link
+            const navLink = document.querySelector(`[href="#${sectionName}"]`);
+            if (navLink) {
+                navLink.classList.add('active');
+            }
+        }
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                showLoadingOverlay('Cargando datos...');
+                
+                const stats = await makeAuthenticatedRequest('/vehicles/stats');
+                updateStatsCards(stats);
+                
+                const recentVehicles = await makeAuthenticatedRequest('/vehicles/?limit=5');
+                updateRecentVehicles(recentVehicles.vehicles);
+                
+                hideLoadingOverlay();
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showMessage('Error cargando datos del dashboard', 'error');
+                hideLoadingOverlay();
+            }
+        }
+
+        // Update stats cards
+        function updateStatsCards(stats) {
+            document.getElementById('total-vehicles-stat').textContent = stats.total || 0;
+            document.getElementById('available-vehicles-stat').textContent = stats.available || 0;
+            document.getElementById('reserved-vehicles-stat').textContent = stats.reserved || 0;
+            document.getElementById('featured-vehicles-stat').textContent = stats.featured || 0;
+            document.getElementById('vehicles-count').textContent = stats.total || 0;
+        }
+
+        // Update recent vehicles
+        function updateRecentVehicles(vehicles) {
+            const container = document.getElementById('recent-vehicles');
+            
+            if (!vehicles || vehicles.length === 0) {
+                container.innerHTML = '<p class="no-data">No hay vehículos recientes</p>';
+                return;
+            }
+            
+            container.innerHTML = vehicles.map(vehicle => `
+                <div class="recent-vehicle-item">
+                    <div class="vehicle-info">
+                        <h4>${vehicle.full_name || vehicle.fullName}</h4>
+                        <p>${vehicle.year} • ${vehicle.kilometers?.toLocaleString()} km</p>
+                    </div>
+                    <span class="vehicle-status ${vehicle.status.toLowerCase()}">${vehicle.status}</span>
+                </div>
+            `).join('');
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('href').substring(1);
+                    showSection(section);
+                });
+            });
+            
+            // User menu dropdown
+            const dropdownToggle = document.querySelector('.dropdown-toggle');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            
+            if (dropdownToggle && dropdownMenu) {
+                dropdownToggle.addEventListener('click', function() {
+                    dropdownMenu.classList.toggle('active');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.user-menu-dropdown')) {
+                        dropdownMenu.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Vehicle form functions
+        function resetForm() {
+            document.getElementById('add-vehicle-form').reset();
+            document.getElementById('selected-images').innerHTML = '';
+        }
+
+        // Export data function
+        function exportData() {
+            showMessage('Funcionalidad de exportación en desarrollo', 'info');
+        }
+
+        // Refresh vehicles
+        function refreshVehicles() {
+            showMessage('Actualizando lista de vehículos...', 'info');
+            // TODO: Implement refresh logic
+        }
+    </script>
+</body>
+</html>
