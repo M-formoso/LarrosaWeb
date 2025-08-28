@@ -1,3 +1,5 @@
+# app/main.py - ACTUALIZADO CON CORS CORREGIDO
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -15,13 +17,24 @@ app = FastAPI(
     redoc_url="/api/redoc"
 )
 
-# Configurar CORS
+# Configurar CORS - ACTUALIZADO
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.ALLOWED_HOSTS,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:8000", 
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:8000",
+        "http://127.0.0.1:5500",  # Live Server
+        "http://localhost:5500",   # Live Server  
+        "http://127.0.0.1:5501",  # Live Server alternativo
+        "http://localhost:5501",   # Live Server alternativo
+        "*"  # TEMPORAL - para desarrollo únicamente
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"]
 )
 
 # Montar archivos estáticos
@@ -38,15 +51,33 @@ async def root():
     return {
         "message": "Larrosa Camiones API",
         "version": settings.VERSION,
-        "docs": "/api/docs"
+        "docs": "/api/docs",
+        "status": "running"
     }
 
 @app.get("/health")
 async def health_check():
     return {
         "status": "healthy",
-        "environment": settings.ENVIRONMENT
+        "environment": settings.ENVIRONMENT,
+        "version": settings.VERSION,
+        "cors_enabled": True
     }
+
+# Middleware para debugging CORS en desarrollo
+@app.middleware("http")
+async def cors_debug_middleware(request, call_next):
+    if settings.ENVIRONMENT == "development":
+        print(f"🌐 Request from: {request.headers.get('origin', 'No origin')}")
+        print(f"🌐 Method: {request.method}")
+        print(f"🌐 URL: {request.url}")
+    
+    response = await call_next(request)
+    
+    if settings.ENVIRONMENT == "development":
+        print(f"🌐 Response status: {response.status_code}")
+    
+    return response
 
 # Ruta para servir el panel de administración
 @app.get("/admin/{path:path}")

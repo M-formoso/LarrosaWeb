@@ -1,3 +1,5 @@
+# app/core/config.py - ACTUALIZADO
+
 from pydantic_settings import BaseSettings
 from typing import List
 import os
@@ -16,8 +18,18 @@ class Settings(BaseSettings):
     # Database
     DATABASE_URL: str
     
-    # CORS
-    ALLOWED_HOSTS: List[str] = ["http://localhost:3000", "http://localhost"]
+    # CORS - ACTUALIZADO PARA INCLUIR LIVE SERVER
+    ALLOWED_HOSTS: List[str] = [
+        "http://localhost:3000", 
+        "http://localhost:8000",
+        "http://127.0.0.1:3000", 
+        "http://127.0.0.1:8000",
+        "http://127.0.0.1:5500",  # Live Server
+        "http://localhost:5500",   # Live Server
+        "http://127.0.0.1:5501",  # Live Server alternativo
+        "http://localhost:5501",   # Live Server alternativo
+        "*"  # TEMPORAL para desarrollo - REMOVER EN PRODUCCIÓN
+    ]
     
     # File Upload
     UPLOAD_DIR: str = "static/uploads"
@@ -27,7 +39,7 @@ class Settings(BaseSettings):
     # Environment
     ENVIRONMENT: str = "development"
     
-    # Admin Panel - NUEVAS VARIABLES
+    # Admin Panel
     ADMIN_EMAIL: str = "admin@larrosacamiones.com"
     ADMIN_USERNAME: str = "admin"
     ADMIN_PASSWORD: str = "admin123"

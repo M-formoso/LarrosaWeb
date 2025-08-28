@@ -1,6 +1,6 @@
-// ===== ADMIN AUTHENTICATION SYSTEM - CORREGIDO =====
+// ===== CORRECCIÓN COMPLETA DEL SISTEMA DE AUTENTICACIÓN =====
 
-// Configuration
+// Configuration - ACTUALIZADA
 const API_CONFIG = {
     baseURL: 'http://localhost:8000/api/v1',
     endpoints: {
@@ -11,14 +11,7 @@ const API_CONFIG = {
     }
 };
 
-// Storage keys
-const STORAGE_KEYS = {
-    token: 'admin_token',
-    user: 'admin_user',
-    remember: 'admin_remember'
-};
-
-// Auth manager class
+// Auth manager class - CORREGIDA
 class AuthManager {
     constructor() {
         this.token = null;
@@ -28,55 +21,54 @@ class AuthManager {
     }
 
     init() {
-        // Check for existing session
+        console.log('🔐 Initializing AuthManager...');
         const savedToken = this.getStoredToken();
         if (savedToken) {
             this.token = savedToken;
-            // Verificar token en background, no bloquear la carga
-            this.verifyToken().catch(err => {
-                console.warn('Token verification failed:', err);
-                this.clearStorage();
-            });
+            console.log('✅ Found saved token');
         }
     }
 
-    // Storage methods
+    // Storage methods - CORREGIDAS
     getStoredToken() {
-        return localStorage.getItem(STORAGE_KEYS.token) || 
-               sessionStorage.getItem(STORAGE_KEYS.token);
+        return localStorage.getItem('admin_token') || 
+               sessionStorage.getItem('admin_token');
     }
 
     storeToken(token, remember = false) {
         if (remember) {
-            localStorage.setItem(STORAGE_KEYS.token, token);
-            localStorage.setItem(STORAGE_KEYS.remember, 'true');
+            localStorage.setItem('admin_token', token);
+            localStorage.setItem('admin_remember', 'true');
         } else {
-            sessionStorage.setItem(STORAGE_KEYS.token, token);
+            sessionStorage.setItem('admin_token', token);
         }
         this.token = token;
+        console.log('💾 Token stored successfully');
     }
 
     storeUser(user, remember = false) {
         const userData = JSON.stringify(user);
         if (remember) {
-            localStorage.setItem(STORAGE_KEYS.user, userData);
+            localStorage.setItem('admin_user', userData);
         } else {
-            sessionStorage.setItem(STORAGE_KEYS.user, userData);
+            sessionStorage.setItem('admin_user', userData);
         }
         this.user = user;
+        console.log('👤 User data stored successfully');
     }
 
     clearStorage() {
-        localStorage.removeItem(STORAGE_KEYS.token);
-        localStorage.removeItem(STORAGE_KEYS.user);
-        localStorage.removeItem(STORAGE_KEYS.remember);
-        sessionStorage.removeItem(STORAGE_KEYS.token);
-        sessionStorage.removeItem(STORAGE_KEYS.user);
+        localStorage.removeItem('admin_token');
+        localStorage.removeItem('admin_user');
+        localStorage.removeItem('admin_remember');
+        sessionStorage.removeItem('admin_token');
+        sessionStorage.removeItem('admin_user');
         this.token = null;
         this.user = null;
+        console.log('🗑️ Storage cleared');
     }
 
-    // API methods - CORREGIDO
+    // API methods - MEJORADAS
     async makeRequest(endpoint, options = {}) {
         const url = `${API_CONFIG.baseURL}${endpoint}`;
         const config = {
@@ -92,51 +84,61 @@ class AuthManager {
         }
 
         try {
-            console.log(`🌐 Making request to: ${url}`);
+            console.log(`🌐 Making request to: ${url}`, {
+                method: config.method || 'GET',
+                hasAuth: !!this.token
+            });
+
             const response = await fetch(url, config);
             
-            // Verificar si la respuesta es JSON
-            const contentType = response.headers.get('content-type');
+            // Manejar respuestas no-JSON
             let data;
+            const contentType = response.headers.get('content-type');
             
             if (contentType && contentType.includes('application/json')) {
                 data = await response.json();
             } else {
                 const text = await response.text();
-                console.warn('Non-JSON response:', text);
+                console.warn('⚠️ Non-JSON response:', text);
                 throw new Error('Respuesta del servidor no válida');
             }
 
             if (!response.ok) {
+                console.error('❌ HTTP Error:', response.status, data);
                 throw new Error(data.detail || `HTTP ${response.status}: ${response.statusText}`);
             }
 
             console.log(`✅ Request successful:`, data);
             return data;
+
         } catch (error) {
             console.error('❌ API Request failed:', error);
             
-            // Si es error de red, mostrar mensaje más amigable
+            // Errores de red más específicos
             if (error.name === 'TypeError' && error.message.includes('fetch')) {
-                throw new Error('No se puede conectar al servidor. Verifique que el backend esté funcionando.');
+                throw new Error('❌ No se puede conectar al servidor. ¿Está el backend funcionando en localhost:8000?');
             }
             
             throw error;
         }
     }
 
-    // Authentication methods - CORREGIDO
+    // Login method - COMPLETAMENTE REESCRITA
     async login(username, password, remember = false) {
         try {
             console.log(`🔐 Attempting login for user: ${username}`);
             
             const response = await this.makeRequest(API_CONFIG.endpoints.login, {
                 method: 'POST',
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ 
+                    username: username.trim(), 
+                    password: password 
+                })
             });
 
             if (response.access_token && response.user) {
-                console.log('✅ Login successful');
+                console.log('✅ Login successful:', response.user);
+                
                 this.storeToken(response.access_token, remember);
                 this.storeUser(response.user, remember);
                 this.setupTokenRefresh();
@@ -147,19 +149,38 @@ class AuthManager {
                     token: response.access_token
                 };
             } else {
-                throw new Error('Respuesta de login inválida');
+                console.error('❌ Invalid login response:', response);
+                throw new Error('Respuesta de login inválida del servidor');
             }
         } catch (error) {
             console.error('❌ Login failed:', error);
             return {
                 success: false,
-                error: error.message || 'Error al iniciar sesión'
+                error: this.getErrorMessage(error)
             };
         }
     }
 
+    // Helper para mensajes de error más claros
+    getErrorMessage(error) {
+        if (error.message.includes('No se puede conectar')) {
+            return 'No se puede conectar al servidor. Verifique que el backend esté funcionando.';
+        }
+        if (error.message.includes('401') || error.message.includes('Unauthorized')) {
+            return 'Usuario o contraseña incorrectos';
+        }
+        if (error.message.includes('403') || error.message.includes('Forbidden')) {
+            return 'Acceso denegado. Contacte al administrador.';
+        }
+        return error.message || 'Error al iniciar sesión';
+    }
+
+    // Token verification - MEJORADA
     async verifyToken() {
-        if (!this.token) return false;
+        if (!this.token) {
+            console.log('❌ No token to verify');
+            return false;
+        }
 
         try {
             console.log('🔍 Verifying token...');
@@ -169,10 +190,12 @@ class AuthManager {
 
             if (response.valid) {
                 console.log('✅ Token is valid');
-                // Get user info if not stored
+                
+                // Obtener datos del usuario si no los tenemos
                 if (!this.user) {
                     await this.getCurrentUser();
                 }
+                
                 this.setupTokenRefresh();
                 return true;
             } else {
@@ -192,14 +215,27 @@ class AuthManager {
             const response = await this.makeRequest(API_CONFIG.endpoints.me);
             this.user = response;
             
-            const remember = localStorage.getItem(STORAGE_KEYS.remember) === 'true';
+            const remember = localStorage.getItem('admin_remember') === 'true';
             this.storeUser(response, remember);
             
             return response;
         } catch (error) {
-            console.error('Failed to get current user:', error);
+            console.error('❌ Failed to get current user:', error);
             return null;
         }
+    }
+
+    setupTokenRefresh() {
+        if (this.refreshTimer) {
+            clearTimeout(this.refreshTimer);
+        }
+
+        // Refrescar token cada 25 minutos (antes de que expire a los 30)
+        const refreshTime = 25 * 60 * 1000;
+        this.refreshTimer = setTimeout(async () => {
+            console.log('🔄 Auto-refreshing token...');
+            await this.refreshToken();
+        }, refreshTime);
     }
 
     async refreshToken() {
@@ -211,39 +247,28 @@ class AuthManager {
             });
 
             if (response.access_token) {
-                const remember = localStorage.getItem(STORAGE_KEYS.remember) === 'true';
+                const remember = localStorage.getItem('admin_remember') === 'true';
                 this.storeToken(response.access_token, remember);
                 this.setupTokenRefresh();
+                console.log('✅ Token refreshed successfully');
                 return true;
             }
             return false;
         } catch (error) {
-            console.error('Token refresh failed:', error);
+            console.error('❌ Token refresh failed:', error);
             this.logout();
             return false;
         }
     }
 
-    setupTokenRefresh() {
-        // Clear existing timer
-        if (this.refreshTimer) {
-            clearTimeout(this.refreshTimer);
-        }
-
-        // Set up refresh timer (refresh 5 minutes before expiry)
-        const refreshTime = 25 * 60 * 1000; // 25 minutes in milliseconds
-        this.refreshTimer = setTimeout(() => {
-            this.refreshToken();
-        }, refreshTime);
-    }
-
     logout() {
+        console.log('🚪 Logging out...');
         if (this.refreshTimer) {
             clearTimeout(this.refreshTimer);
         }
         this.clearStorage();
         
-        // Redirect to login if not already there
+        // Redirect solo si no estamos ya en login
         if (!window.location.pathname.includes('login.html')) {
             window.location.href = './login.html';
         }
@@ -251,7 +276,7 @@ class AuthManager {
 
     // Utility methods
     isAuthenticated() {
-        return !!this.token && !!this.user;
+        return !!this.token;
     }
 
     isAdmin() {
@@ -267,22 +292,26 @@ class AuthManager {
     }
 }
 
+// ===== LOGIN PAGE FUNCTIONS - COMPLETAMENTE REESCRITAS =====
+
 // Global auth instance
 const authManager = new AuthManager();
-
-// ===== LOGIN PAGE FUNCTIONS - MEJORADO =====
 
 function initializeLoginPage() {
     console.log('🔑 Initializing login page...');
     
-    // Check if already authenticated
+    // Verificar si ya está autenticado
     if (authManager.isAuthenticated()) {
-        console.log('✅ User already authenticated, redirecting...');
-        redirectToDashboard();
+        console.log('✅ User already authenticated, verifying token...');
+        authManager.verifyToken().then(valid => {
+            if (valid) {
+                redirectToDashboard();
+            }
+        });
         return;
     }
 
-    // Setup form submission
+    // Setup del formulario
     const loginForm = document.getElementById('admin-login-form');
     if (loginForm) {
         loginForm.addEventListener('submit', handleLoginSubmit);
@@ -291,64 +320,65 @@ function initializeLoginPage() {
         console.error('❌ Login form not found');
     }
 
-    // Setup enter key handling
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter' && document.activeElement.closest('.login-form')) {
-            e.preventDefault();
-            const form = document.getElementById('admin-login-form');
-            if (form) {
-                handleLoginSubmit({ target: form, preventDefault: () => {} });
-            }
+    // Autocompletado si hay usuario recordado
+    const savedUsername = localStorage.getItem('admin_last_username');
+    if (savedUsername) {
+        const usernameField = document.getElementById('username');
+        if (usernameField) {
+            usernameField.value = savedUsername;
+            document.getElementById('password')?.focus();
         }
-    });
-
-    // Focus on username field
-    const usernameField = document.getElementById('username');
-    if (usernameField) {
-        usernameField.focus();
+    } else {
+        document.getElementById('username')?.focus();
     }
 
-    // Test backend connection
+    // Test de conexión al backend
     testBackendConnection();
 }
 
 async function testBackendConnection() {
     try {
         console.log('🔍 Testing backend connection...');
-        const response = await fetch(`${API_CONFIG.baseURL.replace('/api/v1', '')}/health`);
+        const healthURL = API_CONFIG.baseURL.replace('/api/v1', '') + '/health';
+        const response = await fetch(healthURL);
         
         if (response.ok) {
             const data = await response.json();
             console.log('✅ Backend connection successful:', data);
-            showLoginMessage('Conexión con servidor establecida', 'success');
+            showLoginMessage('✅ Conectado al servidor', 'success');
+            
+            // Ocultar mensaje de éxito después de 2 segundos
+            setTimeout(() => {
+                clearLoginMessage();
+            }, 2000);
         } else {
             throw new Error(`HTTP ${response.status}`);
         }
     } catch (error) {
         console.error('❌ Backend connection failed:', error);
-        showLoginMessage('Error de conexión con el servidor. Verifique que el backend esté funcionando.', 'error');
+        showLoginMessage('❌ Error de conexión con el servidor. Verifique que el backend esté funcionando en localhost:8000', 'error');
     }
 }
 
 async function handleLoginSubmit(event) {
     event.preventDefault();
-    console.log('📝 Form submitted');
+    console.log('📝 Login form submitted');
     
     const form = event.target;
     const formData = new FormData(form);
-    const username = formData.get('username');
+    const username = formData.get('username')?.trim();
     const password = formData.get('password');
     const remember = formData.get('remember') === 'on';
 
-    console.log(`🔐 Login attempt - Username: ${username}, Remember: ${remember}`);
+    console.log(`🔐 Login attempt:`, { username, remember });
 
-    // Validation
+    // Validación
     if (!username || !password) {
-        showLoginMessage('Por favor completa todos los campos', 'error');
+        showLoginMessage('❌ Por favor completa todos los campos', 'error');
         return;
     }
 
-    // Show loading state
+    // Estado de carga
     setLoginLoading(true);
     clearLoginMessage();
 
@@ -356,25 +386,29 @@ async function handleLoginSubmit(event) {
         const result = await authManager.login(username, password, remember);
 
         if (result.success) {
-            console.log('✅ Login successful');
-            showLoginMessage('¡Acceso correcto! Redirigiendo...', 'success');
+            console.log('✅ Login successful', result.user);
             
-            // Update navigation state
+            // Guardar último username usado
+            localStorage.setItem('admin_last_username', username);
+            
+            showLoginMessage('✅ ¡Acceso correcto! Redirigiendo...', 'success');
+            
+            // Actualizar estado de navegación
             if (window.updateAdminButtonState) {
                 window.updateAdminButtonState();
             }
             
-            // Redirect after short delay
+            // Redirect con delay para mostrar mensaje
             setTimeout(() => {
                 redirectToDashboard();
-            }, 1000);
+            }, 1500);
         } else {
             console.error('❌ Login failed:', result.error);
-            showLoginMessage(result.error || 'Credenciales incorrectas', 'error');
+            showLoginMessage(result.error, 'error');
         }
     } catch (error) {
         console.error('❌ Login error:', error);
-        showLoginMessage('Error de conexión. Inténtalo de nuevo.', 'error');
+        showLoginMessage('❌ Error inesperado. Inténtalo de nuevo.', 'error');
     } finally {
         setLoginLoading(false);
     }
@@ -409,7 +443,7 @@ function showLoginMessage(message, type) {
         if (type === 'success') {
             setTimeout(() => {
                 clearLoginMessage();
-            }, 3000);
+            }, 4000);
         }
     }
 }
@@ -428,12 +462,131 @@ function redirectToDashboard() {
     window.location.href = './dashboard.html';
 }
 
-// ===== RESTO DE FUNCIONES MANTENIDAS =====
-// [El resto del código permanece igual...]
+// ===== ADMIN PANEL FUNCTIONS =====
+
+function initializeAdminPanel() {
+    console.log('📊 Initializing admin panel...');
+    
+    // Verificar autenticación
+    if (!authManager.isAuthenticated()) {
+        console.log('❌ Not authenticated, redirecting to login...');
+        window.location.href = './login.html';
+        return;
+    }
+
+    // Verificar token
+    authManager.verifyToken().then(valid => {
+        if (!valid) {
+            console.log('❌ Invalid token, redirecting to login...');
+            window.location.href = './login.html';
+            return;
+        }
+
+        // Cargar datos del dashboard
+        loadDashboardData();
+        setupEventListeners();
+        updateUserInfo();
+    });
+}
+
+function updateUserInfo() {
+    const user = authManager.getUser();
+    if (user) {
+        // Actualizar avatar
+        const userAvatar = document.getElementById('user-avatar');
+        if (userAvatar) {
+            userAvatar.textContent = user.username.charAt(0).toUpperCase();
+        }
+
+        // Actualizar nombre y rol
+        const userName = document.getElementById('user-name');
+        const userRole = document.getElementById('user-role');
+        
+        if (userName) userName.textContent = user.full_name || user.username;
+        if (userRole) userRole.textContent = user.is_superuser ? 'Administrador' : 'Usuario';
+    }
+}
+
+async function loadDashboardData() {
+    try {
+        showLoadingOverlay('Cargando datos del dashboard...');
+        
+        // Cargar estadísticas
+        const stats = await authManager.makeRequest('/vehicles/stats');
+        updateStatsCards(stats);
+        
+        // Cargar vehículos recientes
+        const recentVehicles = await authManager.makeRequest('/vehicles/?limit=5');
+        updateRecentVehicles(recentVehicles.vehicles);
+        
+        hideLoadingOverlay();
+        console.log('✅ Dashboard data loaded successfully');
+        
+    } catch (error) {
+        console.error('❌ Error loading dashboard data:', error);
+        showMessage('Error cargando datos del dashboard: ' + error.message, 'error');
+        hideLoadingOverlay();
+    }
+}
+
+// ===== UTILITY FUNCTIONS =====
+
+function requireAdmin() {
+    if (!authManager.isAuthenticated()) {
+        console.log('❌ Authentication required, redirecting...');
+        window.location.href = './login.html';
+        return false;
+    }
+    return true;
+}
+
+async function makeAuthenticatedRequest(endpoint, options = {}) {
+    return await authManager.makeRequest(endpoint, options);
+}
+
+function showLoadingOverlay(message = 'Cargando...') {
+    const overlay = document.getElementById('loading-overlay');
+    if (overlay) {
+        overlay.style.display = 'flex';
+        const text = overlay.querySelector('p');
+        if (text) text.textContent = message;
+    }
+}
+
+function hideLoadingOverlay() {
+    const overlay = document.getElementById('loading-overlay');
+    if (overlay) {
+        overlay.style.display = 'none';
+    }
+}
+
+function showMessage(message, type = 'info') {
+    console.log(`📢 Message (${type}): ${message}`);
+    
+    // Crear o mostrar notificación
+    let notification = document.getElementById('notification');
+    if (!notification) {
+        notification = document.createElement('div');
+        notification.id = 'notification';
+        notification.className = 'notification';
+        document.body.appendChild(notification);
+    }
+    
+    notification.textContent = message;
+    notification.className = `notification ${type} show`;
+    
+    // Auto-hide después de 5 segundos
+    setTimeout(() => {
+        notification.classList.remove('show');
+    }, 5000);
+}
 
 // ===== GLOBAL EXPORTS =====
 window.authManager = authManager;
 window.initializeLoginPage = initializeLoginPage;
+window.initializeAdminPanel = initializeAdminPanel;
+window.requireAdmin = requireAdmin;
+window.makeAuthenticatedRequest = makeAuthenticatedRequest;
 window.testBackendConnection = testBackendConnection;
 
 // ===== AUTO-INITIALIZATION =====
@@ -445,7 +598,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (currentPage === 'login.html') {
         initializeLoginPage();
+    } else if (currentPage === 'dashboard.html') {
+        initializeAdminPanel();
     }
 });
 
-console.log('🔐 Admin Auth System loaded successfully');
+console.log('🔐 Admin Auth System loaded successfully - v2.0');
