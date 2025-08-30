@@ -1004,3 +1004,417 @@ a.btn-special {
     box-shadow: none !important;
     outline: none !important;
 }
+/* ===== SECCIÓN MARCAS - CSS UNIVERSAL ===== */
+/* Este CSS funciona para todas las secciones del sitio */
+
+.brands {
+    padding: 60px 0;
+    background: #f8f9fa;
+    border-top: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+    margin: 40px 0 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.brands-carousel {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    mask: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.brands-track {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 60px;
+    padding: 20px 0;
+    animation: brandCarousel 25s linear infinite;
+    width: calc(200% + 60px);
+}
+
+.brand-logo {
+    height: 50px;
+    width: auto;
+    max-width: 120px;
+    min-width: 80px;
+    object-fit: contain;
+    opacity: 0.6;
+    transition: all 0.3s ease;
+    filter: grayscale(100%) brightness(0.8);
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.brand-logo:hover {
+    opacity: 1;
+    filter: grayscale(0%) brightness(1);
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Configuración específica para cada marca */
+.brand-logo[alt="Scania"] {
+    max-width: 100px;
+}
+
+.brand-logo[alt="Volvo"] {
+    max-width: 90px;
+}
+
+.brand-logo[alt="Mercedes-Benz"] {
+    max-width: 110px;
+}
+
+.brand-logo[alt="Iveco"] {
+    max-width: 100px;
+}
+
+.brand-logo[alt="Volkswagen"] {
+    max-width: 110px;
+}
+
+.brand-logo[alt="Renault"] {
+    max-width: 100px;
+}
+
+.brand-logo[alt="Ford"] {
+    max-width: 90px;
+}
+
+.brand-logo[alt="DAF"] {
+    max-width: 80px;
+}
+
+/* NUEVA MARCA: Randon - Ajuste específico para que quede igual que las demás */
+.brand-logo[alt="Randon"] {
+    max-width: 100px;
+    height: 45px; /* Ajuste específico para Randon */
+}
+
+/* Animación de carrusel infinito */
+@keyframes brandCarousel {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Duplicar contenido para efecto infinito */
+.brands-track::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 100%;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/* Pausa la animación al hover sobre la sección completa */
+.brands:hover .brands-track {
+    animation-play-state: paused;
+}
+
+/* Estados adicionales */
+.brands.with-title {
+    padding-top: 80px;
+}
+
+.brands.with-title::before {
+    content: 'Trabajamos con las mejores marcas';
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    text-align: center;
+    width: 100%;
+}
+
+.brands.compact {
+    padding: 40px 0;
+}
+
+.brands.compact .brand-logo {
+    height: 40px;
+    max-width: 100px;
+}
+
+.brands.white-bg {
+    background: #ffffff;
+}
+
+.brands.dark-bg {
+    background: #2c3e50;
+    border-color: #34495e;
+}
+
+.brands.dark-bg .brand-logo {
+    filter: grayscale(100%) brightness(1.2) invert(1);
+}
+
+.brands.dark-bg .brand-logo:hover {
+    filter: grayscale(0%) brightness(1) invert(1);
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 1200px) {
+    .brands-track {
+        gap: 50px;
+        animation-duration: 22s;
+    }
+    
+    .brand-logo {
+        height: 45px;
+        max-width: 110px;
+    }
+}
+
+@media (max-width: 992px) {
+    .brands {
+        padding: 50px 0;
+    }
+    
+    .brands-track {
+        gap: 40px;
+        animation-duration: 20s;
+    }
+    
+    .brand-logo {
+        height: 42px;
+        max-width: 100px;
+    }
+    
+    .brand-logo[alt="Randon"] {
+        height: 38px;
+        max-width: 90px;
+    }
+}
+
+@media (max-width: 768px) {
+    .brands {
+        padding: 40px 0;
+    }
+    
+    .brands-track {
+        gap: 35px;
+        animation-duration: 18s;
+    }
+    
+    .brand-logo {
+        height: 38px;
+        max-width: 90px;
+        min-width: 60px;
+    }
+    
+    .brand-logo[alt="Randon"] {
+        height: 35px;
+        max-width: 80px;
+    }
+    
+    /* Ajustes específicos para móviles */
+    .brand-logo[alt="Mercedes-Benz"],
+    .brand-logo[alt="Volkswagen"] {
+        max-width: 85px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brands {
+        padding: 30px 0;
+        margin: 20px 0 0 0;
+    }
+    
+    .brands-track {
+        gap: 25px;
+        animation-duration: 15s;
+    }
+    
+    .brand-logo {
+        height: 35px;
+        max-width: 80px;
+        min-width: 50px;
+    }
+    
+    .brand-logo[alt="Randon"] {
+        height: 32px;
+        max-width: 70px;
+    }
+    
+    .brands-carousel {
+        mask: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
+        -webkit-mask: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
+    }
+}
+
+/* ===== EFECTOS ADICIONALES ===== */
+/* Efecto de resplandor suave */
+.brand-logo:hover {
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.1),
+        0 0 20px rgba(61, 95, 172, 0.1);
+    border-radius: 8px;
+}
+
+/* Animación de entrada */
+.brands.animate-in .brand-logo {
+    animation: fadeInBrand 0.6s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInBrand {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+    }
+    to {
+        opacity: 0.6;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Delay escalonado para las marcas */
+.brands.animate-in .brand-logo:nth-child(1) { animation-delay: 0.1s; }
+.brands.animate-in .brand-logo:nth-child(2) { animation-delay: 0.2s; }
+.brands.animate-in .brand-logo:nth-child(3) { animation-delay: 0.3s; }
+.brands.animate-in .brand-logo:nth-child(4) { animation-delay: 0.4s; }
+.brands.animate-in .brand-logo:nth-child(5) { animation-delay: 0.5s; }
+.brands.animate-in .brand-logo:nth-child(6) { animation-delay: 0.6s; }
+.brands.animate-in .brand-logo:nth-child(7) { animation-delay: 0.7s; }
+.brands.animate-in .brand-logo:nth-child(8) { animation-delay: 0.8s; }
+
+/* Accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+    .brands-track {
+        animation: none;
+    }
+    
+    .brand-logo {
+        transition: none;
+    }
+}
+
+/* Focus para accesibilidad */
+.brand-logo:focus {
+    outline: 3px solid #3D5FAC;
+    outline-offset: 3px;
+    opacity: 1;
+    filter: grayscale(0%) brightness(1);
+}
+
+/* ===== VARIANTES ESPECÍFICAS POR PÁGINA ===== */
+
+/* Para página de inicio */
+.page-inicio .brands {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+/* Para página de unidades disponibles */
+.page-unidades .brands {
+    background: #ffffff;
+    border-top: 2px solid #3D5FAC;
+}
+
+/* Para página de la empresa */
+.page-empresa .brands {
+    background: #f8f9fa;
+}
+
+/* Para página de contacto */
+.page-contacto .brands {
+    background: #ffffff;
+    margin-top: 60px;
+}
+
+/* Para página de detalle de vehículo */
+.page-detalle .brands {
+    background: #f8f9fa;
+    margin-top: 40px;
+}
+
+/* ===== JAVASCRIPT HELPERS (para incluir en cada página) ===== */
+/*
+// Agregar este JavaScript en cada página después del CSS:
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Duplicar marcas para efecto infinito
+    const brandsTrack = document.querySelector('.brands-track');
+    if (brandsTrack) {
+        const originalContent = brandsTrack.innerHTML;
+        brandsTrack.innerHTML = originalContent + originalContent;
+    }
+    
+    // Agregar animación de entrada
+    const brandsSection = document.querySelector('.brands');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+            }
+        });
+    }, { threshold: 0.3 });
+    
+    if (brandsSection) {
+        observer.observe(brandsSection);
+    }
+    
+    // Tracking de clicks en marcas
+    const brandLogos = document.querySelectorAll('.brand-logo');
+    brandLogos.forEach(logo => {
+        logo.addEventListener('click', function() {
+            const brandName = this.alt;
+            console.log(`🚛 Brand clicked: ${brandName}`);
+            
+            // Google Analytics tracking
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'click', {
+                    event_category: 'Brand Logo',
+                    event_label: brandName,
+                    transport_type: 'beacon'
+                });
+            }
+        });
+        
+        // Agregar tabindex para accesibilidad
+        logo.setAttribute('tabindex', '0');
+        logo.setAttribute('role', 'button');
+        logo.setAttribute('aria-label', `Ver vehículos ${logo.alt}`);
+        
+        // Navegación con teclado
+        logo.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+    });
+    
+    // Pausa automática en hover y focus
+    const brandsCarousel = document.querySelector('.brands-carousel');
+    if (brandsCarousel) {
+        brandsCarousel.addEventListener('mouseenter', () => {
+            brandsTrack.style.animationPlayState = 'paused';
+        });
+        
+        brandsCarousel.addEventListener('mouseleave', () => {
+            brandsTrack.style.animationPlayState = 'running';
+        });
+        
+        brandsCarousel.addEventListener('focusin', () => {
+            brandsTrack.style.animationPlayState = 'paused';
+        });
+        
+        brandsCarousel.addEventListener('focusout', () => {
+            brandsTrack.style.animationPlayState = 'running';
+        });
+    }
+});
+*/
