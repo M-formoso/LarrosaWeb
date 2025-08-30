@@ -1047,8 +1047,8 @@
 .financial-form {
     animation: fadeInUp 0.8s ease 0.4s both;
 }
-/* ===== SECCIÓN MARCAS - CSS UNIVERSAL ===== */
-/* Este CSS funciona para todas las secciones del sitio */
+/* ===== SECCIÓN MARCAS - VERSION ESTÁTICA ===== */
+/* Reemplaza el CSS del carrusel en todos tus archivos CSS */
 
 .brands {
     padding: 60px 0;
@@ -1061,21 +1061,21 @@
 }
 
 .brands-carousel {
-    overflow: hidden;
+    overflow: visible; /* CAMBIADO: de hidden a visible */
     position: relative;
     width: 100%;
-    mask: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
-    -webkit-mask: linear-gradient(90deg, transparent 0%, black 10%, black 90%, transparent 100%);
+    /* ELIMINADO: mask y -webkit-mask para que se vean todos los logos */
 }
 
 .brands-track {
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    gap: 60px;
+    justify-content: center; /* CAMBIADO: de flex-start a center */
+    gap: 40px; /* REDUCIDO: de 60px a 40px para mejor distribución */
     padding: 20px 0;
-    animation: brandCarousel 25s linear infinite;
-    width: calc(200% + 60px);
+    /* ELIMINADO: animation para que sea estático */
+    width: 100%; /* CAMBIADO: de calc(200% + 60px) a 100% */
+    flex-wrap: wrap; /* AGREGADO: para que se ajuste en pantallas pequeñas */
 }
 
 .brand-logo {
@@ -1084,11 +1084,12 @@
     max-width: 120px;
     min-width: 80px;
     object-fit: contain;
-    opacity: 0.6;
+    opacity: 0.7; /* CAMBIADO: de 0.6 a 0.7 para mejor visibilidad */
     transition: all 0.3s ease;
-    filter: grayscale(100%) brightness(0.8);
+    filter: grayscale(50%) brightness(0.9); /* REDUCIDO: de 100% a 50% grayscale */
     flex-shrink: 0;
     cursor: pointer;
+    margin: 10px; /* AGREGADO: margen para separación cuando se ajusta */
 }
 
 .brand-logo:hover {
@@ -1098,7 +1099,7 @@
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Configuración específica para cada marca */
+/* Configuración específica para cada marca - MANTENER IGUAL */
 .brand-logo[alt="Scania"] {
     max-width: 100px;
 }
@@ -1131,40 +1132,18 @@
     max-width: 80px;
 }
 
-/* NUEVA MARCA: Randon - Ajuste específico para que quede igual que las demás */
 .brand-logo[alt="Randon"] {
     max-width: 100px;
-    height: 45px; /* Ajuste específico para Randon */
+    height: 45px;
 }
 
-/* Animación de carrusel infinito */
-@keyframes brandCarousel {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
-}
+/* ELIMINADO: @keyframes brandCarousel - Ya no es necesario */
 
-/* Duplicar contenido para efecto infinito */
-.brands-track::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 100%;
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
+/* ELIMINADO: .brands-track::after - Ya no necesitamos duplicar contenido */
 
-/* Pausa la animación al hover sobre la sección completa */
-.brands:hover .brands-track {
-    animation-play-state: paused;
-}
+/* ELIMINADO: Pausa de animación - Ya no hay animación que pausar */
 
-/* Estados adicionales */
+/* Estados adicionales - MANTENER */
 .brands.with-title {
     padding-top: 80px;
 }
@@ -1201,23 +1180,23 @@
 }
 
 .brands.dark-bg .brand-logo {
-    filter: grayscale(100%) brightness(1.2) invert(1);
+    filter: grayscale(50%) brightness(1.2) invert(1);
 }
 
 .brands.dark-bg .brand-logo:hover {
     filter: grayscale(0%) brightness(1) invert(1);
 }
 
-/* ===== RESPONSIVE DESIGN ===== */
+/* ===== RESPONSIVE DESIGN - ACTUALIZADO ===== */
 @media (max-width: 1200px) {
     .brands-track {
-        gap: 50px;
-        animation-duration: 22s;
+        gap: 35px;
     }
     
     .brand-logo {
         height: 45px;
         max-width: 110px;
+        margin: 8px;
     }
 }
 
@@ -1227,13 +1206,13 @@
     }
     
     .brands-track {
-        gap: 40px;
-        animation-duration: 20s;
+        gap: 30px;
     }
     
     .brand-logo {
         height: 42px;
         max-width: 100px;
+        margin: 6px;
     }
     
     .brand-logo[alt="Randon"] {
@@ -1248,14 +1227,15 @@
     }
     
     .brands-track {
-        gap: 35px;
-        animation-duration: 18s;
+        gap: 25px;
+        justify-content: center; /* Mantener centrado en móviles */
     }
     
     .brand-logo {
         height: 38px;
         max-width: 90px;
         min-width: 60px;
+        margin: 5px;
     }
     
     .brand-logo[alt="Randon"] {
@@ -1277,29 +1257,26 @@
     }
     
     .brands-track {
-        gap: 25px;
-        animation-duration: 15s;
+        gap: 20px;
+        /* Permitir múltiples filas en pantallas muy pequeñas */
+        justify-content: center;
+        max-width: 100%;
     }
     
     .brand-logo {
         height: 35px;
         max-width: 80px;
         min-width: 50px;
+        margin: 4px;
     }
     
     .brand-logo[alt="Randon"] {
         height: 32px;
         max-width: 70px;
     }
-    
-    .brands-carousel {
-        mask: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
-        -webkit-mask: linear-gradient(90deg, transparent 0%, black 5%, black 95%, transparent 100%);
-    }
 }
 
-/* ===== EFECTOS ADICIONALES ===== */
-/* Efecto de resplandor suave */
+/* ===== EFECTOS ADICIONALES - MANTENER ===== */
 .brand-logo:hover {
     box-shadow: 
         0 8px 25px rgba(0, 0, 0, 0.1),
@@ -1307,7 +1284,7 @@
     border-radius: 8px;
 }
 
-/* Animación de entrada */
+/* Animación de entrada - MANTENER */
 .brands.animate-in .brand-logo {
     animation: fadeInBrand 0.6s ease forwards;
     opacity: 0;
@@ -1319,12 +1296,12 @@
         transform: translateY(20px) scale(0.8);
     }
     to {
-        opacity: 0.6;
+        opacity: 0.7; /* CAMBIADO: de 0.6 a 0.7 */
         transform: translateY(0) scale(1);
     }
 }
 
-/* Delay escalonado para las marcas */
+/* Delay escalonado para las marcas - MANTENER */
 .brands.animate-in .brand-logo:nth-child(1) { animation-delay: 0.1s; }
 .brands.animate-in .brand-logo:nth-child(2) { animation-delay: 0.2s; }
 .brands.animate-in .brand-logo:nth-child(3) { animation-delay: 0.3s; }
@@ -1334,18 +1311,14 @@
 .brands.animate-in .brand-logo:nth-child(7) { animation-delay: 0.7s; }
 .brands.animate-in .brand-logo:nth-child(8) { animation-delay: 0.8s; }
 
-/* Accesibilidad */
+/* Accesibilidad - MANTENER */
 @media (prefers-reduced-motion: reduce) {
-    .brands-track {
-        animation: none;
-    }
-    
     .brand-logo {
         transition: none;
     }
 }
 
-/* Focus para accesibilidad */
+/* Focus para accesibilidad - MANTENER */
 .brand-logo:focus {
     outline: 3px solid #3D5FAC;
     outline-offset: 3px;
@@ -1353,114 +1326,29 @@
     filter: grayscale(0%) brightness(1);
 }
 
-/* ===== VARIANTES ESPECÍFICAS POR PÁGINA ===== */
-
-/* Para página de inicio */
+/* ===== VARIANTES ESPECÍFICAS POR PÁGINA - MANTENER ===== */
 .page-inicio .brands {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
 
-/* Para página de unidades disponibles */
 .page-unidades .brands {
     background: #ffffff;
     border-top: 2px solid #3D5FAC;
 }
 
-/* Para página de la empresa */
 .page-empresa .brands {
     background: #f8f9fa;
 }
 
-/* Para página de contacto */
 .page-contacto .brands {
     background: #ffffff;
     margin-top: 60px;
 }
 
-/* Para página de detalle de vehículo */
 .page-detalle .brands {
     background: #f8f9fa;
     margin-top: 40px;
 }
-
-/* ===== JAVASCRIPT HELPERS (para incluir en cada página) ===== */
-/*
-// Agregar este JavaScript en cada página después del CSS:
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Duplicar marcas para efecto infinito
-    const brandsTrack = document.querySelector('.brands-track');
-    if (brandsTrack) {
-        const originalContent = brandsTrack.innerHTML;
-        brandsTrack.innerHTML = originalContent + originalContent;
-    }
-    
-    // Agregar animación de entrada
-    const brandsSection = document.querySelector('.brands');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-            }
-        });
-    }, { threshold: 0.3 });
-    
-    if (brandsSection) {
-        observer.observe(brandsSection);
-    }
-    
-    // Tracking de clicks en marcas
-    const brandLogos = document.querySelectorAll('.brand-logo');
-    brandLogos.forEach(logo => {
-        logo.addEventListener('click', function() {
-            const brandName = this.alt;
-            console.log(`🚛 Brand clicked: ${brandName}`);
-            
-            // Google Analytics tracking
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'click', {
-                    event_category: 'Brand Logo',
-                    event_label: brandName,
-                    transport_type: 'beacon'
-                });
-            }
-        });
-        
-        // Agregar tabindex para accesibilidad
-        logo.setAttribute('tabindex', '0');
-        logo.setAttribute('role', 'button');
-        logo.setAttribute('aria-label', `Ver vehículos ${logo.alt}`);
-        
-        // Navegación con teclado
-        logo.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                this.click();
-            }
-        });
-    });
-    
-    // Pausa automática en hover y focus
-    const brandsCarousel = document.querySelector('.brands-carousel');
-    if (brandsCarousel) {
-        brandsCarousel.addEventListener('mouseenter', () => {
-            brandsTrack.style.animationPlayState = 'paused';
-        });
-        
-        brandsCarousel.addEventListener('mouseleave', () => {
-            brandsTrack.style.animationPlayState = 'running';
-        });
-        
-        brandsCarousel.addEventListener('focusin', () => {
-            brandsTrack.style.animationPlayState = 'paused';
-        });
-        
-        brandsCarousel.addEventListener('focusout', () => {
-            brandsTrack.style.animationPlayState = 'running';
-        });
-    }
-});
-*/
 
 /* ===== ACCESSIBILITY ===== */
 .cta-button:focus,

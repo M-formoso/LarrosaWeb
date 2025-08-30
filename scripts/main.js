@@ -504,4 +504,474 @@ handleResize(); // Ejecutar inmediatamente
 window.addEventListener('load', function() {
     console.log('🚛 Larrosa Camiones - Sitio web cargado correctamente');
     console.log('⚡ Tiempo de carga:', performance.now().toFixed(2) + 'ms');
+})// ===== JAVASCRIPT ACTUALIZADO PARA MARCAS ESTÁTICAS =====
+// Reemplaza o modifica el JavaScript existente
+
+document.addEventListener('DOMContentLoaded', function() {
+    // ===== INICIALIZACIÓN DE MARCAS ESTÁTICAS =====
+    initializeBrandsStatic();
 });
+
+function initializeBrandsStatic() {
+    console.log('🏢 Inicializando marcas estáticas...');
+    
+    // Ya NO duplicamos el contenido porque es estático
+    // const brandsTrack = document.querySelector('.brands-track');
+    // if (brandsTrack) {
+    //     const originalContent = brandsTrack.innerHTML;
+    //     brandsTrack.innerHTML = originalContent + originalContent;
+    // }
+    
+    // Agregar animación de entrada
+    const brandsSection = document.querySelector('.brands');
+    if (brandsSection) {
+        // Observer para la animación de entrada
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    console.log('🎯 Animando entrada de marcas');
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        observer.observe(brandsSection);
+    }
+    
+    // Tracking de clicks en marcas
+    const brandLogos = document.querySelectorAll('.brand-logo');
+    brandLogos.forEach((logo, index) => {
+        // Agregar eventos de click
+        logo.addEventListener('click', function() {
+            const brandName = this.alt;
+            console.log(`🚛 Brand clicked: ${brandName}`);
+            
+            // Google Analytics tracking
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'click', {
+                    event_category: 'Brand Logo',
+                    event_label: brandName,
+                    transport_type: 'beacon'
+                });
+            }
+            
+            // Ejemplo de acción al hacer click (puedes modificar)
+            // window.open(`https://ejemplo.com/marca/${brandName.toLowerCase()}`, '_blank');
+        });
+        
+        // Mejorar accesibilidad
+        logo.setAttribute('tabindex', '0');
+        logo.setAttribute('role', 'button');
+        logo.setAttribute('aria-label', `Ver información de ${logo.alt}`);
+        
+        // Navegación con teclado
+        logo.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+            }
+        });
+        
+        // Animación escalonada de entrada
+        logo.style.animationDelay = `${index * 0.1}s`;
+    });
+    
+    // ===== ELIMINADO: Funcionalidad de pausa =====
+    // Ya no necesitamos pausar/reanudar porque no hay animación
+    
+    console.log('✅ Marcas estáticas inicializadas correctamente');
+}
+
+// ===== FUNCIÓN PARA DESTACAR UNA MARCA ESPECÍFICA (OPCIONAL) =====
+function highlightBrand(brandName) {
+    const brandLogos = document.querySelectorAll('.brand-logo');
+    
+    brandLogos.forEach(logo => {
+        if (logo.alt.toLowerCase().includes(brandName.toLowerCase())) {
+            // Destacar la marca
+            logo.style.transform = 'scale(1.2)';
+            logo.style.opacity = '1';
+            logo.style.filter = 'grayscale(0%) brightness(1)';
+            logo.style.boxShadow = '0 8px 25px rgba(61, 95, 172, 0.3)';
+            logo.style.zIndex = '10';
+            
+            // Quitar el destacado después de 3 segundos
+            setTimeout(() => {
+                logo.style.transform = '';
+                logo.style.opacity = '';
+                logo.style.filter = '';
+                logo.style.boxShadow = '';
+                logo.style.zIndex = '';
+            }, 3000);
+            
+            console.log(`🎯 Destacando marca: ${brandName}`);
+        }
+    });
+}
+
+// ===== FUNCIÓN PARA FILTRAR MARCAS (OPCIONAL) =====
+function filterBrands(brandNames = []) {
+    const brandLogos = document.querySelectorAll('.brand-logo');
+    
+    if (brandNames.length === 0) {
+        // Mostrar todas las marcas
+        brandLogos.forEach(logo => {
+            logo.style.display = 'block';
+            logo.style.opacity = '0.7';
+        });
+        console.log('🔄 Mostrando todas las marcas');
+        return;
+    }
+    
+    brandLogos.forEach(logo => {
+        const brandName = logo.alt.toLowerCase();
+        const shouldShow = brandNames.some(name => 
+            brandName.includes(name.toLowerCase())
+        );
+        
+        if (shouldShow) {
+            logo.style.display = 'block';
+            logo.style.opacity = '1';
+            logo.style.filter = 'grayscale(0%) brightness(1)';
+        } else {
+            logo.style.display = 'none';
+        }
+    });
+    
+    console.log(`🎯 Filtrando marcas: ${brandNames.join(', ')}`);
+}
+
+// ===== FUNCIÓN PARA REORGANIZAR MARCAS (OPCIONAL) =====
+function reorderBrands(newOrder = []) {
+    const brandsTrack = document.querySelector('.brands-track');
+    if (!brandsTrack) return;
+    
+    const brandLogos = Array.from(document.querySelectorAll('.brand-logo'));
+    
+    if (newOrder.length === 0) {
+        console.log('ℹ️ No se especificó nuevo orden de marcas');
+        return;
+    }
+    
+    // Crear nuevo orden basado en los nombres proporcionados
+    const reorderedLogos = [];
+    
+    newOrder.forEach(brandName => {
+        const logo = brandLogos.find(logo => 
+            logo.alt.toLowerCase().includes(brandName.toLowerCase())
+        );
+        if (logo) {
+            reorderedLogos.push(logo);
+        }
+    });
+    
+    // Agregar las marcas restantes que no estaban en la lista
+    brandLogos.forEach(logo => {
+        if (!reorderedLogos.includes(logo)) {
+            reorderedLogos.push(logo);
+        }
+    });
+    
+    // Limpiar el contenedor y agregar en el nuevo orden
+    brandsTrack.innerHTML = '';
+    reorderedLogos.forEach(logo => {
+        brandsTrack.appendChild(logo);
+    });
+    
+    console.log('🔄 Marcas reorganizadas:', newOrder);
+}
+
+// ===== EXPORTAR FUNCIONES GLOBALES =====
+window.BrandsStatic = {
+    highlight: highlightBrand,
+    filter: filterBrands,
+    reorder: reorderBrands,
+    reinitialize: initializeBrandsStatic
+};
+
+// ===== EJEMPLOS DE USO =====
+/*
+// Destacar una marca específica
+// BrandsStatic.highlight('Scania');
+
+// Filtrar solo ciertas marcas
+// BrandsStatic.filter(['Scania', 'Volvo', 'Mercedes']);
+
+// Mostrar todas las marcas nuevamente
+// BrandsStatic.filter([]);
+
+// Reorganizar marcas en un orden específico
+// BrandsStatic.reorder(['Randon', 'Scania', 'Volvo', 'Mercedes', 'Iveco']);
+
+// Reinicializar si es necesario
+// BrandsStatic.reinitialize();
+*/
+
+// ===== REEMPLAZAR LA SECCIÓN DEL CARRUSEL EN TU scripts/main.js CON ESTE CÓDIGO =====
+
+// Variables globales del carrusel
+let carouselCurrentSlide = 0;
+let carouselTotalSlides = 0;
+let carouselCardsPerView = 4;
+let carouselInitialized = false;
+
+// Inicializar carrusel - versión simplificada y robusta
+function initializeCarousel() {
+    console.log('🎠 Iniciando carrusel...');
+    
+    // Buscar elementos
+    const track = document.getElementById('unitsTrack');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const carousel = document.getElementById('unitsCarousel');
+    
+    // Verificar que existen los elementos
+    if (!track || !prevBtn || !nextBtn || !carousel) {
+        console.log('❌ Elementos del carrusel no encontrados');
+        console.log('Track:', !!track, 'PrevBtn:', !!prevBtn, 'NextBtn:', !!nextBtn, 'Carousel:', !!carousel);
+        return;
+    }
+    
+    // Evitar inicialización múltiple
+    if (carouselInitialized) {
+        console.log('⚠️ Carrusel ya inicializado');
+        return;
+    }
+    
+    const cards = track.querySelectorAll('.unit-card');
+    carouselTotalSlides = cards.length;
+    
+    console.log(`📊 Total de cards encontradas: ${carouselTotalSlides}`);
+    
+    if (carouselTotalSlides === 0) {
+        console.log('❌ No se encontraron cards');
+        return;
+    }
+    
+    // Calcular cards por vista
+    updateCardsPerView();
+    
+    // Configurar event listeners
+    prevBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('⬅️ Click en botón anterior');
+        moveToPrevious();
+    });
+    
+    nextBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('➡️ Click en botón siguiente');
+        moveToNext();
+    });
+    
+    // Crear indicadores
+    createCarouselIndicators();
+    
+    // Actualizar estado inicial
+    updateCarouselDisplay();
+    
+    // Marcar como inicializado
+    carouselInitialized = true;
+    
+    console.log('✅ Carrusel inicializado correctamente');
+    console.log(`📱 Cards por vista: ${carouselCardsPerView}`);
+    
+    // Redimensionar ventana
+    window.addEventListener('resize', function() {
+        updateCardsPerView();
+        updateCarouselDisplay();
+        createCarouselIndicators();
+    });
+}
+
+// Calcular cuántas cards mostrar según pantalla
+function updateCardsPerView() {
+    const width = window.innerWidth;
+    
+    if (width <= 480) {
+        carouselCardsPerView = 1;
+    } else if (width <= 768) {
+        carouselCardsPerView = 2;
+    } else if (width <= 1024) {
+        carouselCardsPerView = 3;
+    } else {
+        carouselCardsPerView = 4;
+    }
+    
+    console.log(`📏 Ancho: ${width}px, Cards por vista: ${carouselCardsPerView}`);
+}
+
+// Mover a slide anterior
+function moveToPrevious() {
+    if (carouselCurrentSlide > 0) {
+        carouselCurrentSlide--;
+        updateCarouselDisplay();
+        console.log(`⬅️ Moviendo a slide: ${carouselCurrentSlide}`);
+    } else {
+        console.log('⚠️ Ya está en el primer slide');
+    }
+}
+
+// Mover a slide siguiente
+function moveToNext() {
+    const maxSlide = Math.max(0, carouselTotalSlides - carouselCardsPerView);
+    
+    if (carouselCurrentSlide < maxSlide) {
+        carouselCurrentSlide++;
+        updateCarouselDisplay();
+        console.log(`➡️ Moviendo a slide: ${carouselCurrentSlide}`);
+    } else {
+        console.log('⚠️ Ya está en el último slide');
+    }
+}
+
+// Actualizar la visualización del carrusel
+function updateCarouselDisplay() {
+    const track = document.getElementById('unitsTrack');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    if (!track) return;
+    
+    // Calcular desplazamiento
+    const cardWidth = 270; // Ancho fijo de cada card
+    const gap = 40; // Gap en pixels
+    const moveDistance = (cardWidth + gap) * carouselCurrentSlide;
+    
+    // Aplicar transformación
+    track.style.transform = `translateX(-${moveDistance}px)`;
+    track.style.transition = 'transform 0.5s ease';
+    
+    console.log(`🎯 Desplazamiento: -${moveDistance}px`);
+    
+    // Actualizar botones
+    if (prevBtn) {
+        prevBtn.disabled = carouselCurrentSlide === 0;
+        prevBtn.style.opacity = carouselCurrentSlide === 0 ? '0.4' : '1';
+    }
+    
+    if (nextBtn) {
+        const maxSlide = Math.max(0, carouselTotalSlides - carouselCardsPerView);
+        nextBtn.disabled = carouselCurrentSlide >= maxSlide;
+        nextBtn.style.opacity = carouselCurrentSlide >= maxSlide ? '0.4' : '1';
+    }
+    
+    // Actualizar indicadores
+    updateCarouselIndicators();
+}
+
+// Crear indicadores
+function createCarouselIndicators() {
+    const indicatorsContainer = document.getElementById('carouselIndicators');
+    if (!indicatorsContainer) return;
+    
+    indicatorsContainer.innerHTML = '';
+    
+    const maxSlide = Math.max(0, carouselTotalSlides - carouselCardsPerView);
+    const totalPages = maxSlide + 1;
+    
+    for (let i = 0; i <= maxSlide; i++) {
+        const indicator = document.createElement('button');
+        indicator.className = 'carousel-indicator';
+        indicator.addEventListener('click', function() {
+            carouselCurrentSlide = i;
+            updateCarouselDisplay();
+        });
+        indicatorsContainer.appendChild(indicator);
+    }
+    
+    console.log(`📍 Creados ${totalPages} indicadores`);
+}
+
+// Actualizar indicadores activos
+function updateCarouselIndicators() {
+    const indicators = document.querySelectorAll('.carousel-indicator');
+    
+    indicators.forEach((indicator, index) => {
+        if (index === carouselCurrentSlide) {
+            indicator.classList.add('active');
+        } else {
+            indicator.classList.remove('active');
+        }
+    });
+}
+
+// ===== ACTUALIZAR TU FUNCIÓN initializeScrollAnimations() =====
+// Modifica tu función existente para incluir esto:
+
+// Función para inicializar todo cuando la página carga
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 DOM cargado, inicializando...');
+    
+    // Tus funciones existentes
+    initializeNavigation();
+    initializeHeroAnimations();
+    initializeCategoryButtons();
+    initializeScrollAnimations();
+    initializeTestimonials();
+    initializeContactForms();
+    initializeLazyLoading();
+    initializeScrollToTop();
+    
+    // NUEVO: Inicializar carrusel con delay para asegurar que el DOM esté listo
+    setTimeout(function() {
+        console.log('⏰ Inicializando carrusel tras delay...');
+        initializeCarousel();
+    }, 1000);
+});
+
+// También inicializar cuando la ventana termine de cargar completamente
+window.addEventListener('load', function() {
+    console.log('🏁 Window loaded, verificando carrusel...');
+    if (!carouselInitialized) {
+        setTimeout(initializeCarousel, 500);
+    }
+});
+
+// ===== FUNCIONES DE DEBUG =====
+// Funciones útiles para verificar el estado (usar en consola del navegador)
+
+function debugCarousel() {
+    console.log('🔍 DEBUG CARRUSEL:');
+    console.log('Inicializado:', carouselInitialized);
+    console.log('Slide actual:', carouselCurrentSlide);
+    console.log('Total slides:', carouselTotalSlides);
+    console.log('Cards por vista:', carouselCardsPerView);
+    
+    const track = document.getElementById('unitsTrack');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    console.log('Elementos encontrados:');
+    console.log('- Track:', !!track);
+    console.log('- Botón Prev:', !!prevBtn);
+    console.log('- Botón Next:', !!nextBtn);
+    
+    if (track) {
+        console.log('- Transform actual:', track.style.transform);
+        console.log('- Cards en track:', track.querySelectorAll('.unit-card').length);
+    }
+}
+
+// Funciones de control manual (usar en consola)
+function forceNext() {
+    console.log('🔧 Forzando siguiente...');
+    moveToNext();
+}
+
+function forcePrev() {
+    console.log('🔧 Forzando anterior...');
+    moveToPrevious();
+}
+
+function resetCarousel() {
+    console.log('🔄 Reseteando carrusel...');
+    carouselCurrentSlide = 0;
+    updateCarouselDisplay();
+}
+
+// Hacer funciones disponibles globalmente para debugging
+window.debugCarousel = debugCarousel;
+window.forceNext = forceNext;
+window.forcePrev = forcePrev;
+window.resetCarousel = resetCarousel;

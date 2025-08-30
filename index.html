@@ -7,6 +7,9 @@
     <title>Larrosa Camiones - 40 años comercializando camiones</title>
     <link rel="stylesheet" href="styles/main.css">
     <script src="scripts/main.js"></script>
+    <script src="scripts/carousel.js"></script> <!-- NUEVO -->
+
+
     <script src="../scripts/nav-session.js"></script>
 </head>
 <body>
@@ -85,7 +88,10 @@
     </section>
 
    <!-- Sección Unidades Destacadas -->
-   <section class="featured-units">
+   <!-- Reemplaza la sección "Unidades Destacadas" en tu index.html con este código -->
+
+<!-- Sección Unidades Destacadas CON CARRUSEL -->
+<section class="featured-units">
     <div class="container">
         <!-- Título azul con efecto especial -->
         <h2 class="section-title-special">
@@ -93,74 +99,154 @@
             <span class="word-large">destacadas</span>
         </h2>
         
-        <div class="units-grid">
-            <!-- Unidad 1 - SIN badge de estado -->
-            <div class="unit-card">
-                <div class="unit-image">
-                    <img src="assets/imagenes/camiones prodcutos/IMG_2273.HEIC" alt="Volkswagen 17-280">
-                    <!-- NO hay span de status aquí -->
-                </div>
-                <div class="unit-info">
-                    <h3 class="unit-title">VOLKSWAGEN 17-280</h3>
-                    <div class="unit-details">
-                        <span class="unit-year">2017</span> - 6X2 - 660.000 Km
+        <!-- NUEVO: Contenedor del carrusel -->
+        <div class="carousel-container">
+            <!-- Flecha izquierda -->
+            <button class="carousel-btn carousel-btn-prev" id="prevBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            
+            <!-- Flecha derecha -->
+            <button class="carousel-btn carousel-btn-next" id="nextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <!-- Carrusel -->
+            <div class="units-carousel" id="unitsCarousel">
+                <div class="units-track" id="unitsTrack">
+                    <!-- Unidad 1 -->
+                    <div class="unit-card">
+                        <div class="unit-image">
+                            <img src="assets/imagenes/camiones prodcutos/IMG_2273.HEIC" alt="Volkswagen 17-280">
+                        </div>
+                        <div class="unit-info">
+                            <h3 class="unit-title">VOLKSWAGEN 17-280</h3>
+                            <div class="unit-details">
+                                <span class="unit-year">2017</span> - 6X2 - 660.000 Km
+                            </div>
+                            <div class="unit-footer">
+                                <button class="btn-view-unit">VER UNIDAD</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="unit-footer">
-                        <button class="btn-view-unit">VER UNIDAD</button>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Unidad 2 - SIN badge de estado -->
-            <div class="unit-card">
-                <div class="unit-image">
-                    <img src="assets/iveco-hi-way-440.jpg" alt="Iveco Hi-Way 440">
-                    <!-- NO hay span de status aquí -->
-                </div>
-                <div class="unit-info">
-                    <h3 class="unit-title">IVECO HI-WAY 440</h3>
-                    <div class="unit-details">
-                        <span class="unit-year">2017</span> - 6X2 - 660.000 Km
+                    <!-- Unidad 2 -->
+                    <div class="unit-card">
+                        <div class="unit-image">
+                            <img src="assets/iveco-hi-way-440.jpg" alt="Iveco Hi-Way 440">
+                        </div>
+                        <div class="unit-info">
+                            <h3 class="unit-title">IVECO HI-WAY 440</h3>
+                            <div class="unit-details">
+                                <span class="unit-year">2017</span> - 6X2 - 660.000 Km
+                            </div>
+                            <div class="unit-footer">
+                                <button class="btn-view-unit">VER UNIDAD</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="unit-footer">
-                        <button class="btn-view-unit">VER UNIDAD</button>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Unidad 3 - SIN badge de estado -->
-            <div class="unit-card">
-                <div class="unit-image">
-                    <img src="assets/scania-r450.jpg" alt="Scania R450">
-                    <!-- NO hay span de status aquí -->
-                </div>
-                <div class="unit-info">
-                    <h3 class="unit-title">SCANIA R450</h3>
-                    <div class="unit-details">
-                        <span class="unit-year">2017</span> - 6X2 - 660.000 Km
+                    <!-- Unidad 3 -->
+                    <div class="unit-card">
+                        <div class="unit-image">
+                            <img src="assets/scania-r450.jpg" alt="Scania R450">
+                        </div>
+                        <div class="unit-info">
+                            <h3 class="unit-title">SCANIA R450</h3>
+                            <div class="unit-details">
+                                <span class="unit-year">2017</span> - 6X2 - 660.000 Km
+                            </div>
+                            <div class="unit-footer">
+                                <button class="btn-view-unit">VER UNIDAD</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="unit-footer">
-                        <button class="btn-view-unit">VER UNIDAD</button>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Unidad 4 - SIN badge de estado -->
-            <div class="unit-card">
-                <div class="unit-image">
-                    <img src="assets/volvo-fh-440.jpg" alt="Volvo FH 440">
-                    <!-- NO hay span de status aquí -->
-                </div>
-                <div class="unit-info">
-                    <h3 class="unit-title">VOLVO FH 440</h3>
-                    <div class="unit-details">
-                        <span class="unit-year">2017</span> - 6X2 - 660.000 Km
+                    <!-- Unidad 4 -->
+                    <div class="unit-card">
+                        <div class="unit-image">
+                            <img src="assets/volvo-fh-440.jpg" alt="Volvo FH 440">
+                        </div>
+                        <div class="unit-info">
+                            <h3 class="unit-title">VOLVO FH 440</h3>
+                            <div class="unit-details">
+                                <span class="unit-year">2017</span> - 6X2 - 660.000 Km
+                            </div>
+                            <div class="unit-footer">
+                                <button class="btn-view-unit">VER UNIDAD</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="unit-footer">
-                        <button class="btn-view-unit">VER UNIDAD</button>
+
+                    <!-- NUEVAS UNIDADES 5-8 -->
+                    <!-- Unidad 5 -->
+                    <div class="unit-card">
+                        <div class="unit-image">
+                            <img src="assets/mercedes-actros.jpg" alt="Mercedes Actros">
+                        </div>
+                        <div class="unit-info">
+                            <h3 class="unit-title">MERCEDES ACTROS</h3>
+                            <div class="unit-details">
+                                <span class="unit-year">2018</span> - 6X4 - 580.000 Km
+                            </div>
+                            <div class="unit-footer">
+                                <button class="btn-view-unit">VER UNIDAD</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Unidad 6 -->
+                    <div class="unit-card">
+                        <div class="unit-image">
+                            <img src="assets/daf-xf.jpg" alt="DAF XF">
+                        </div>
+                        <div class="unit-info">
+                            <h3 class="unit-title">DAF XF 480</h3>
+                            <div class="unit-details">
+                                <span class="unit-year">2019</span> - 4X2 - 420.000 Km
+                            </div>
+                            <div class="unit-footer">
+                                <button class="btn-view-unit">VER UNIDAD</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Unidad 7 -->
+                    <div class="unit-card">
+                        <div class="unit-image">
+                            <img src="assets/ford-cargo.jpg" alt="Ford Cargo">
+                        </div>
+                        <div class="unit-info">
+                            <h3 class="unit-title">FORD CARGO 1722</h3>
+                            <div class="unit-details">
+                                <span class="unit-year">2016</span> - 4X2 - 750.000 Km
+                            </div>
+                            <div class="unit-footer">
+                                <button class="btn-view-unit">VER UNIDAD</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Unidad 8 -->
+                    <div class="unit-card">
+                        <div class="unit-image">
+                            <img src="assets/renault-premium.jpg" alt="Renault Premium">
+                        </div>
+                        <div class="unit-info">
+                            <h3 class="unit-title">RENAULT PREMIUM</h3>
+                            <div class="unit-details">
+                                <span class="unit-year">2017</span> - 6X2 - 620.000 Km
+                            </div>
+                            <div class="unit-footer">
+                                <button class="btn-view-unit">VER UNIDAD</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            
+            <!-- Indicadores de página -->
+            <div class="carousel-indicators" id="carouselIndicators"></div>
         </div>
 
         <!-- Botón ver todas las unidades -->
@@ -169,7 +255,6 @@
         </div>
     </div>
 </section>
-
    <!-- Sección RANDON Rediseñada -->
 <section class="randon-section">
     <div class="randon-content">
