@@ -1,49 +1,69 @@
+# app/core/auth.py - SISTEMA DE AUTENTICACIÓN CORREGIDO
+
 from typing import Optional
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from app.core.database import get_db
-from app.services.auth_service import auth_service
+from app.core.security import verify_token
 from app.models.user import User
 
 # Configurar esquema de seguridad
-security = HTTPBearer()
+security = HTTPBearer(auto_error=False)
 
-class AuthMiddleware:
-    def __init__(self):
-        self.auth_service = auth_service
-
-# Dependencias de autenticación
 async def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security),
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
     db: Session = Depends(get_db)
-) -> User:
+) -> Optional[User]:
     """
     Dependencia para obtener el usuario actual autenticado
     """
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="No se pudieron validar las credenciales",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
+    if not credentials:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Token de acceso requerido",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     
     try:
         # Verificar token
-        token_data = auth_service.verify_token(credentials.credentials)
-        if token_data is None:
-            raise credentials_exception
+        payload = verify_token(credentials.credentials)
+        if payload is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token inválido o expirado",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
         
-        username = token_data.get("username")
+        # Obtener username del token
+        username = payload.get("sub")
+        user_id = payload.get("user_id")
+        
         if username is None:
-            raise credentials_exception
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Token inválido - falta información de usuario",
+                headers={"WWW-Authenticate": "Bearer"},
+            )
             
-    except Exception:
-        raise credentials_exception
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Error verificando token: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Error verificando credenciales",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     
     # Obtener usuario de la base de datos
-    user = auth_service.get_user_by_username(db, username=username)
+    user = db.query(User).filter(User.username == username).first()
     if user is None:
-        raise credentials_exception
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Usuario no encontrado",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
     
     if not user.is_active:
         raise HTTPException(
@@ -75,7 +95,7 @@ async def get_current_superuser(
     if not current_user.is_superuser:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="No tienes permisos suficientes"
+            detail="No tienes permisos de administrador"
         )
     return current_user
 
@@ -91,15 +111,15 @@ async def get_current_user_optional(
         return None
     
     try:
-        token_data = auth_service.verify_token(credentials.credentials)
-        if token_data is None:
+        payload = verify_token(credentials.credentials)
+        if payload is None:
             return None
         
-        username = token_data.get("username")
+        username = payload.get("sub")
         if username is None:
             return None
         
-        user = auth_service.get_user_by_username(db, username=username)
+        user = db.query(User).filter(User.username == username).first()
         if user is None or not user.is_active:
             return None
         
