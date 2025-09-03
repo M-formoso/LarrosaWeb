@@ -480,7 +480,126 @@
             loadDashboardData();
             setupEventListeners();
         });
-
+        
+        // NUEVA FUNCIÓN: Setup event listeners
+        function setupEventListeners() {
+            // Navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('href').substring(1);
+                    showSection(section);
+                });
+            });
+            
+            // CRÍTICO: Event listener para el formulario de vehículos
+            const addVehicleForm = document.getElementById('add-vehicle-form');
+            if (addVehicleForm) {
+                addVehicleForm.addEventListener('submit', handleVehicleFormSubmit);
+                console.log('✅ Formulario de vehículos conectado');
+            }
+            
+            // User menu dropdown
+            const dropdownToggle = document.querySelector('.dropdown-toggle');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            
+            if (dropdownToggle && dropdownMenu) {
+                dropdownToggle.addEventListener('click', function() {
+                    dropdownMenu.classList.toggle('active');
+                });
+                
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function(e) {
+                    if (!e.target.closest('.user-menu-dropdown')) {
+                        dropdownMenu.classList.remove('active');
+                    }
+                });
+            }
+        }
+        
+        // NUEVA FUNCIÓN: Manejar envío del formulario
+        async function handleVehicleFormSubmit(event) {
+            event.preventDefault();
+            console.log('📝 Formulario enviado');
+            
+            const form = event.target;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            // Mostrar loading
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+            
+            try {
+                // Obtener datos del formulario
+                const formData = new FormData(form);
+                
+                // Crear objeto del vehículo
+                const vehicleData = {
+                    brand: formData.get('brand'),
+                    model: formData.get('model'),
+                    full_name: `${formData.get('brand')} ${formData.get('model')}`,
+                    type: formData.get('type'),
+                    type_name: getTypeName(formData.get('type')),
+                    year: parseInt(formData.get('year')),
+                    kilometers: parseInt(formData.get('kilometers')),
+                    power: parseInt(formData.get('power')) || null,
+                    traccion: formData.get('traccion') || null,
+                    transmission: formData.get('transmission') || null,
+                    color: formData.get('color') || null,
+                    status: formData.get('status'),
+                    price: parseFloat(formData.get('price')) || null,
+                    is_featured: formData.get('is_featured') === 'on',
+                    location: 'Villa María, Córdoba',
+                    description: formData.get('description') || null,
+                    observations: formData.get('observations') || null,
+                    date_registered: new Date().toLocaleDateString('es-AR')
+                };
+        
+                console.log('Datos a enviar:', vehicleData);
+        
+                // Enviar al backend
+                const response = await makeAuthenticatedRequest('/vehicles/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(vehicleData)
+                });
+        
+                console.log('✅ Respuesta del servidor:', response);
+        
+                // Mostrar éxito
+                showMessage('¡Vehículo creado exitosamente!', 'success');
+                
+                // Limpiar formulario
+                form.reset();
+                
+                // Actualizar dashboard
+                await loadDashboardData();
+        
+            } catch (error) {
+                console.error('❌ Error:', error);
+                showMessage(`Error: ${error.message}`, 'error');
+            } finally {
+                // Restaurar botón
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
+        }
+        
+        // Función helper
+        function getTypeName(type) {
+            const types = {
+                'camion-tractor': 'Camión Tractor',
+                'camion-chasis': 'Camión Chasis',
+                'remolques': 'Remolques',
+                'utilitarios': 'Utilitarios',
+                'varios': 'Varios'
+            };
+            return types[type] || type;
+        }
+        
         // Navigation between sections
         function showSection(sectionName) {
             // Hide all sections
@@ -505,7 +624,7 @@
                 navLink.classList.add('active');
             }
         }
-
+        
         // Load dashboard data
         async function loadDashboardData() {
             try {
@@ -515,7 +634,7 @@
                 updateStatsCards(stats);
                 
                 const recentVehicles = await makeAuthenticatedRequest('/vehicles/?limit=5');
-                updateRecentVehicles(recentVehicles.vehicles);
+                updateRecentVehicles(recentVehicles.vehicles || recentVehicles);
                 
                 hideLoadingOverlay();
             } catch (error) {
@@ -524,7 +643,7 @@
                 hideLoadingOverlay();
             }
         }
-
+        
         // Update stats cards
         function updateStatsCards(stats) {
             document.getElementById('total-vehicles-stat').textContent = stats.total || 0;
@@ -533,7 +652,7 @@
             document.getElementById('featured-vehicles-stat').textContent = stats.featured || 0;
             document.getElementById('vehicles-count').textContent = stats.total || 0;
         }
-
+        
         // Update recent vehicles
         function updateRecentVehicles(vehicles) {
             const container = document.getElementById('recent-vehicles');
@@ -553,52 +672,48 @@
                 </div>
             `).join('');
         }
-
-        // Setup event listeners
-        function setupEventListeners() {
-            // Navigation
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const section = this.getAttribute('href').substring(1);
-                    showSection(section);
-                });
-            });
-            
-            // User menu dropdown
-            const dropdownToggle = document.querySelector('.dropdown-toggle');
-            const dropdownMenu = document.querySelector('.dropdown-menu');
-            
-            if (dropdownToggle && dropdownMenu) {
-                dropdownToggle.addEventListener('click', function() {
-                    dropdownMenu.classList.toggle('active');
-                });
-                
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!e.target.closest('.user-menu-dropdown')) {
-                        dropdownMenu.classList.remove('active');
-                    }
-                });
-            }
-        }
-
+        
         // Vehicle form functions
         function resetForm() {
             document.getElementById('add-vehicle-form').reset();
             document.getElementById('selected-images').innerHTML = '';
         }
-
+        
         // Export data function
         function exportData() {
             showMessage('Funcionalidad de exportación en desarrollo', 'info');
         }
-
+        
         // Refresh vehicles
         function refreshVehicles() {
             showMessage('Actualizando lista de vehículos...', 'info');
-            // TODO: Implement refresh logic
+            loadDashboardData();
         }
-    </script>
+        
+        // Test function - NUEVA
+        function createTestVehicle() {
+            console.log('🧪 Creando vehículo de prueba...');
+            
+            // Llenar el formulario automáticamente
+            document.getElementById('brand').value = 'Scania';
+            document.getElementById('model').value = 'R450 Test';
+            document.getElementById('year').value = '2020';
+            document.getElementById('kilometers').value = '450000';
+            document.getElementById('type').value = 'camion-tractor';
+            document.getElementById('power').value = '450';
+            document.getElementById('traccion').value = '6x2';
+            document.getElementById('transmission').value = 'Manual';
+            document.getElementById('color').value = 'Blanco';
+            document.getElementById('status').value = 'Disponible';
+            document.getElementById('is_featured').checked = true;
+            document.getElementById('description').value = 'Vehículo de prueba creado desde el panel';
+            
+            // Enviar formulario
+            document.getElementById('add-vehicle-form').dispatchEvent(new Event('submit'));
+        }
+        
+        // Hacer función disponible globalmente
+        window.createTestVehicle = createTestVehicle;
+        </script>
 </body>
 </html>

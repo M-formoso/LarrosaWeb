@@ -314,94 +314,110 @@ body {
     text-align: left;
 }
 
-/* ===== BOTONES DE CATEGORÍAS MEJORADOS ===== */
+/* ===== BOTONES DE CATEGORÍAS - LAYOUT HORIZONTAL CORREGIDO ===== */
 .category-buttons {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: var(--primary-blue);
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-    padding: 22px;
-    margin: 0;
-    box-sizing: border-box;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    background: var(--primary-blue) !important;
+    display: flex !important;
+    gap: 20px !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 10 !important;
+    padding: 22px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
 }
 
 .category-btn {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255, 255, 255, 0.505);
-    color: var(--primary-black);
-    border: none;
-    padding: 15px 35px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    width: 200px;
-    height: 55px;
-    border-radius: 0;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    position: relative;
-    flex-shrink: 0;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    background: #9ca3af !important;
+    color: white !important;
+    border: none !important;
+    padding: 15px 18px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    width: 200px !important;
+    height: 55px !important;
+    border-radius: 0 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+    position: relative !important;
+    flex-shrink: 0 !important;
+    gap: 10px !important;
 }
 
 .category-btn:hover {
-    background: rgba(255, 255, 255, 1);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    background: rgba(255, 255, 255, 1) !important;
+    color: var(--primary-black) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
 }
 
 .category-btn::after {
-    content: '→';
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: var(--primary-black);
-    font-weight: bold;
+    content: '→' !important;
+    position: absolute !important;
+    right: 15px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    font-size: 18px !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.category-btn:hover::after {
+    color: var(--primary-black) !important;
 }
 
 .category-icon {
-    width: 40px;
-    height: 35px;
-    margin-bottom: 8px;
-    transition: var(--transition-fast);
-    filter: none;
-    opacity: 0.8;
-    object-fit: contain;
+    width: 45px !important;
+    height: 40px !important;
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
+    transition: var(--transition-fast) !important;
+    filter: none !important;
+    opacity: 1 !important;
+    object-fit: contain !important;
+    flex-shrink: 0 !important;
 }
 
 .category-btn:hover .category-icon {
-    opacity: 1;
-    transform: scale(1.05);
+    opacity: 1 !important;
+    transform: scale(1.08) !important;
 }
 
 .category-btn span {
-    font-family: var(--font-secondary);
-    font-size: 0.9rem;
-    color: var(--primary-black);
-    transition: var(--transition-fast);
-    font-weight: 600;
-    text-align: center;
-    line-height: 1.1;
+    font-family: var(--font-secondary) !important;
+    font-size: 0.75rem !important;
+    color: white !important;
+    transition: var(--transition-fast) !important;
+    font-weight: 500 !important;
+    text-align: left !important;
+    line-height: 1.1 !important;
+    flex: 1 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+.category-btn:hover span {
+    color: var(--primary-black) !important;
 }
 
 /* ===== ANIMACIÓN DE ENTRADA ===== */
 .category-btn {
-    animation: fadeInUp 0.6s ease forwards;
+    animation: fadeInUp 0.6s ease forwards !important;
 }
 
-.category-btn:nth-child(1) { animation-delay: 0.1s; }
-.category-btn:nth-child(2) { animation-delay: 0.2s; }
-.category-btn:nth-child(3) { animation-delay: 0.3s; }
-.category-btn:nth-child(4) { animation-delay: 0.4s; }
-.category-btn:nth-child(5) { animation-delay: 0.5s; }
+.category-btn:nth-child(1) { animation-delay: 0.1s !important; }
+.category-btn:nth-child(2) { animation-delay: 0.2s !important; }
+.category-btn:nth-child(3) { animation-delay: 0.3s !important; }
+.category-btn:nth-child(4) { animation-delay: 0.4s !important; }
+.category-btn:nth-child(5) { animation-delay: 0.5s !important; }
 
 @keyframes fadeInUp {
     from {
@@ -414,6 +430,98 @@ body {
     }
 }
 
+/* ===== RESPONSIVE PARA BOTONES CATEGORÍAS ===== */
+@media (max-width: 1024px) {
+    .category-buttons {
+        gap: 15px !important;
+        padding: 18px !important;
+    }
+    
+    .category-btn {
+        width: 160px !important;
+        height: 55px !important;
+        padding: 12px 15px !important;
+        gap: 10px !important;
+    }
+    
+    .category-icon {
+        width: 38px !important;
+        height: 34px !important;
+    }
+    
+    .category-btn span {
+        font-size: 0.7rem !important;
+    }
+    
+    .category-btn::after {
+        right: 12px !important;
+        font-size: 16px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .category-buttons {
+        position: static !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        margin-top: 0 !important;
+        padding: 15px !important;
+        gap: 10px !important;
+    }
+    
+    .category-btn {
+        width: 100% !important;
+        max-width: 280px !important;
+        height: 60px !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        padding: 10px 20px !important;
+        gap: 15px !important;
+    }
+    
+    .category-btn::after {
+        right: 15px !important;
+    }
+    
+    .category-icon {
+        width: 35px !important;
+        height: 32px !important;
+        margin-bottom: 0 !important;
+    }
+    
+    .category-btn span {
+        font-size: 0.75rem !important;
+        text-align: left !important;
+        flex: 1 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-buttons {
+        padding: 12px !important;
+        gap: 8px !important;
+    }
+    
+    .category-btn {
+        height: 55px !important;
+        padding: 8px 15px !important;
+        max-width: 260px !important;
+        gap: 12px !important;
+    }
+    
+    .category-icon {
+        width: 32px !important;
+        height: 28px !important;
+    }
+    
+    .category-btn span {
+        font-size: 0.7rem !important;
+    }
+    
+    .category-btn::after {
+        font-size: 16px !important;
+    }
+}
 /* ===== SECCIÓN UNIDADES DESTACADAS - CENTRADO Y ESPACIADO CORREGIDO ===== */
 .featured-units {
     padding: 40px 0 60px 0;
@@ -423,31 +531,101 @@ body {
 }
 
 /* CORREGIDO: Título centrado y sin cambios de tamaño innecesarios */
+/* ===== TÍTULO "UNIDADES DESTACADAS" - ESTILO MEJORADO ===== */
+/* Reemplaza en tu styles/main.css la sección .section-title-special con este código */
+
 .section-title-special {
-    font-family: var(--font-primary);
-    font-size: 2.8rem;
-    color: #9ca3af;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    margin-top: 0;
-    text-transform: none;
-    font-weight: 400;
-    letter-spacing: 2px;
-    line-height: 1.2;
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 3.2rem !important; /* AUMENTADO: más grande como en la imagen */
+    color: #6b7280 !important; /* CAMBIADO: gris más oscuro y definido */
+    text-align: center !important;
+    margin-bottom: 2.5rem !important;
+    margin-top: 0 !important;
+    text-transform: lowercase !important; /* AGREGADO: minúsculas como en la imagen */
+    font-weight: 400 !important; /* CAMBIADO: peso normal para "unidades" */
+    letter-spacing: 1px !important; /* REDUCIDO: menos espaciado */
+    line-height: 1.1 !important;
+    position: relative !important;
 }
 
 .section-title-special .word-normal {
-    font-size: 1em;
-    display: inline-block;
-    font-weight: 400;
+    font-size: 1em !important;
+    display: inline-block !important;
+    font-weight: 400 !important; /* Normal weight para "unidades" */
+    color: #6b7280 !important; /* Mismo gris que el contenedor */
 }
 
 .section-title-special .word-large {
-    font-size: 1.3em;
-    display: inline-block;
-    margin-left: 0.3em;
-    font-weight: 900;
-    font-family: 'Roboto', sans-serif;
+    font-size: 1em !important; /* CAMBIADO: mismo tamaño que "unidades" */
+    display: inline-block !important;
+    margin-left: 0.4em !important; /* AJUSTADO: más espacio entre palabras */
+    font-weight: 700 !important; /* CAMBIADO: más bold para "destacadas" */
+    font-family: 'Roboto', sans-serif !important;
+    color: #4b5563 !important; /* CAMBIADO: gris ligeramente más oscuro para destacar */
+}
+
+/* ===== ALTERNATIVA: Si quieres que sea exactamente como la imagen ===== */
+/* Descomenta estas líneas y comenta las de arriba si prefieres este estilo */
+
+/*
+.section-title-special {
+    font-family: 'Roboto', sans-serif !important;
+    font-size: 3.5rem !important;
+    color: #9ca3af !important;
+    text-align: center !important;
+    margin-bottom: 3rem !important;
+    margin-top: 0 !important;
+    text-transform: none !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.5px !important;
+    line-height: 1.2 !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+.section-title-special .word-normal {
+    font-size: 1em !important;
+    display: inline !important;
+    font-weight: 300 !important;
+    color: #9ca3af !important;
+}
+
+.section-title-special .word-large {
+    font-size: 1em !important;
+    display: inline !important;
+    margin-left: 0.3em !important;
+    font-weight: 600 !important;
+    font-family: 'Roboto', sans-serif !important;
+    color: #6b7280 !important;
+}
+*/
+
+/* ===== RESPONSIVE PARA EL TÍTULO ===== */
+@media (max-width: 1024px) {
+    .section-title-special {
+        font-size: 2.8rem !important;
+        margin-bottom: 2.2rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-title-special {
+        font-size: 2.4rem !important;
+        margin-bottom: 2rem !important;
+        letter-spacing: 0.5px !important;
+    }
+    
+    .section-title-special .word-large {
+        display: block !important;
+        margin-left: 0 !important;
+        margin-top: -0.1em !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title-special {
+        font-size: 2rem !important;
+        margin-bottom: 1.5rem !important;
+    }
 }
 
 /* CORREGIDO: Grid centrado con más espacio entre cards */
