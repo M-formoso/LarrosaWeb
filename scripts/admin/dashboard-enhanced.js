@@ -841,3 +841,398 @@ window.deleteVehicle = deleteVehicle;
 window.removeSelectedImage = removeSelectedImage;
 
 console.log('🔧 Panel de administración mejorado cargado correctamente');
+// ===== CORRECCIÓN COMPLETA - RECOLECCIÓN DE DATOS DEL FORMULARIO =====
+// Este código debe reemplazar la función collectFormData y relacionadas
+
+// Función corregida para recopilar datos del formulario
+function collectVehicleFormData(form) {
+    console.log('📋 Recopilando datos del formulario...');
+    
+    // Obtener todos los elementos del formulario
+    const formElements = {
+        brand: form.querySelector('[name="brand"]'),
+        model: form.querySelector('[name="model"]'),
+        year: form.querySelector('[name="year"]'),
+        kilometers: form.querySelector('[name="kilometers"]'),
+        type: form.querySelector('[name="type"]'),
+        power: form.querySelector('[name="power"]'),
+        traccion: form.querySelector('[name="traccion"]'),
+        transmission: form.querySelector('[name="transmission"]'),
+        color: form.querySelector('[name="color"]'),
+        status: form.querySelector('[name="status"]'),
+        price: form.querySelector('[name="price"]'),
+        is_featured: form.querySelector('[name="is_featured"]'),
+        description: form.querySelector('[name="description"]'),
+        observations: form.querySelector('[name="observations"]')
+    };
+
+    // Debug: verificar que encontramos todos los elementos
+    console.log('🔍 Elementos del formulario encontrados:');
+    Object.entries(formElements).forEach(([key, element]) => {
+        console.log(`${key}: ${element ? '✅' : '❌'} - Valor: ${element ? element.value : 'NO ENCONTRADO'}`);
+    });
+
+    // Validar elementos críticos
+    const requiredElements = ['brand', 'model', 'year', 'kilometers', 'type', 'status'];
+    const missingElements = requiredElements.filter(key => !formElements[key]);
+    
+    if (missingElements.length > 0) {
+        throw new Error(`Elementos del formulario no encontrados: ${missingElements.join(', ')}`);
+    }
+
+    // Recopilar valores
+    const vehicleData = {
+        brand: formElements.brand.value.trim(),
+        model: formElements.model.value.trim(),
+        full_name: `${formElements.brand.value.trim()} ${formElements.model.value.trim()}`,
+        type: formElements.type.value,
+        type_name: getVehicleTypeName(formElements.type.value),
+        year: parseInt(formElements.year.value),
+        kilometers: parseInt(formElements.kilometers.value),
+        power: formElements.power.value ? parseInt(formElements.power.value) : null,
+        traccion: formElements.traccion.value || null,
+        transmission: formElements.transmission.value || null,
+        color: formElements.color.value || null,
+        status: formElements.status.value,
+        price: formElements.price.value ? parseFloat(formElements.price.value) : null,
+        is_featured: formElements.is_featured.checked,
+        location: 'Villa María, Córdoba',
+        description: formElements.description.value || null,
+        observations: formElements.observations.value || null,
+        date_registered: new Date().toLocaleDateString('es-AR'),
+        is_active: true
+    };
+
+    // Debug: mostrar datos recopilados
+    console.log('📦 Datos recopilados:', vehicleData);
+
+    // Validar datos críticos
+    if (!vehicleData.brand || !vehicleData.model || !vehicleData.type || !vehicleData.status) {
+        console.error('❌ Datos faltantes:', {
+            brand: vehicleData.brand,
+            model: vehicleData.model,
+            type: vehicleData.type,
+            status: vehicleData.status
+        });
+        throw new Error('Faltan datos obligatorios del formulario');
+    }
+
+    return vehicleData;
+}
+
+// Función helper para nombres de tipos
+function getVehicleTypeName(type) {
+    const typeNames = {
+        'camion-tractor': 'Camión Tractor',
+        'camion-chasis': 'Camión Chasis',
+        'remolques': 'Remolques',
+        'utilitarios': 'Utilitarios',
+        'varios': 'Varios'
+    };
+    return typeNames[type] || type;
+}
+
+// Función corregida para manejar el envío del formulario
+async function handleVehicleFormSubmitFixed(event) {
+    event.preventDefault();
+    console.log('📝 Iniciando envío de formulario (CORREGIDO)...');
+    
+    const form = event.target;
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    try {
+        // Validar que tenemos el formulario correcto
+        if (!form || form.id !== 'add-vehicle-form') {
+            throw new Error('Formulario no válido');
+        }
+
+        // Mostrar estado de carga
+        setFormLoadingState(true, submitBtn);
+        
+        // Recopilar datos usando la función corregida
+        const vehicleData = collectVehicleFormData(form);
+        
+        // Obtener imágenes
+        const imageFiles = getFormImages();
+        
+        console.log('📤 Enviando al servidor...');
+        console.log('🚛 Datos del vehículo:', vehicleData);
+        console.log('📸 Imágenes:', imageFiles.length);
+        
+        // Crear FormData para el envío
+        const formData = new FormData();
+        formData.append('vehicle_data', JSON.stringify(vehicleData));
+        
+        // Agregar imágenes
+        imageFiles.forEach((file, index) => {
+            formData.append('images', file, file.name);
+            console.log(`📷 Imagen ${index + 1}: ${file.name} (${file.size} bytes)`);
+        });
+        
+        // Obtener token de autenticación
+        const token = getAuthToken();
+        if (!token) {
+            throw new Error('No se encontró token de autenticación. Por favor, inicia sesión nuevamente.');
+        }
+        
+        // Enviar al backend
+        const response = await fetch('http://localhost:8000/api/v1/vehicles/', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+                // NO agregar Content-Type para FormData
+            },
+            body: formData
+        });
+        
+        console.log(`📡 Respuesta del servidor: ${response.status}`);
+        
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            console.error('❌ Error del servidor:', errorData);
+            throw new Error(errorData.detail || `Error ${response.status}: ${response.statusText}`);
+        }
+        
+        const result = await response.json();
+        console.log('✅ Vehículo creado exitosamente:', result);
+        
+        // Mostrar mensaje de éxito
+        showSuccessMessage('¡Vehículo creado exitosamente!');
+        
+        // Limpiar formulario
+        resetVehicleForm(form);
+        
+        // Recargar datos del dashboard
+        if (typeof loadDashboardData === 'function') {
+            await loadDashboardData();
+        }
+        
+        // Cambiar a sección de vehículos después de 2 segundos
+        setTimeout(() => {
+            if (typeof showSection === 'function') {
+                showSection('vehicles');
+            }
+        }, 2000);
+        
+    } catch (error) {
+        console.error('❌ Error en envío del formulario:', error);
+        showErrorMessage(`Error: ${error.message}`);
+    } finally {
+        setFormLoadingState(false, submitBtn, originalText);
+    }
+}
+
+// Función para obtener imágenes del formulario
+function getFormImages() {
+    const fileInput = document.getElementById('images');
+    if (!fileInput || !fileInput.files) {
+        console.log('📷 No se encontraron imágenes');
+        return [];
+    }
+    
+    const files = Array.from(fileInput.files);
+    console.log(`📷 Encontradas ${files.length} imágenes`);
+    return files;
+}
+
+// Función para obtener token de autenticación
+function getAuthToken() {
+    const token = localStorage.getItem('admin_token') || sessionStorage.getItem('admin_token');
+    console.log(`🔑 Token encontrado: ${token ? 'SÍ' : 'NO'}`);
+    return token;
+}
+
+// Función para controlar el estado de carga del formulario
+function setFormLoadingState(loading, submitBtn, originalText = null) {
+    const form = document.getElementById('add-vehicle-form');
+    
+    if (loading) {
+        // Deshabilitar todos los elementos del formulario
+        if (form) {
+            form.querySelectorAll('input, select, textarea, button').forEach(el => {
+                el.disabled = true;
+            });
+        }
+        
+        // Cambiar texto del botón
+        if (submitBtn) {
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+        }
+        
+        // Mostrar overlay si existe
+        const overlay = document.getElementById('loading-overlay');
+        if (overlay) {
+            overlay.style.display = 'flex';
+        }
+        
+    } else {
+        // Habilitar elementos del formulario
+        if (form) {
+            form.querySelectorAll('input, select, textarea, button').forEach(el => {
+                el.disabled = false;
+            });
+        }
+        
+        // Restaurar texto del botón
+        if (submitBtn && originalText) {
+            submitBtn.innerHTML = originalText;
+        }
+        
+        // Ocultar overlay
+        const overlay = document.getElementById('loading-overlay');
+        if (overlay) {
+            overlay.style.display = 'none';
+        }
+    }
+}
+
+// Función para resetear el formulario
+function resetVehicleForm(form) {
+    if (!form) return;
+    
+    // Reset del formulario
+    form.reset();
+    
+    // Limpiar contenedor de imágenes
+    const imagesContainer = document.getElementById('selected-images');
+    if (imagesContainer) {
+        imagesContainer.innerHTML = '';
+    }
+    
+    // Limpiar errores de validación
+    form.querySelectorAll('.error').forEach(el => {
+        el.classList.remove('error');
+    });
+    
+    form.querySelectorAll('.field-error').forEach(el => {
+        el.remove();
+    });
+    
+    console.log('🔄 Formulario limpiado');
+}
+
+// Funciones para mostrar mensajes
+function showSuccessMessage(message) {
+    showNotificationMessage(message, 'success');
+}
+
+function showErrorMessage(message) {
+    showNotificationMessage(message, 'error');
+}
+
+function showNotificationMessage(message, type = 'info') {
+    console.log(`📢 ${type.toUpperCase()}: ${message}`);
+    
+    // Remover notificaciones existentes
+    document.querySelectorAll('.admin-notification').forEach(n => n.remove());
+    
+    // Crear nueva notificación
+    const notification = document.createElement('div');
+    notification.className = `admin-notification notification-${type}`;
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#3D5FAC'};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        z-index: 10001;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 350px;
+        font-weight: 600;
+        word-wrap: break-word;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Animar entrada
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Animar salida
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 300);
+    }, 5000);
+}
+
+// CONFIGURACIÓN AUTOMÁTICA AL CARGAR LA PÁGINA
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔧 Configurando manejo corregido del formulario...');
+    
+    // Buscar el formulario
+    const vehicleForm = document.getElementById('add-vehicle-form');
+    
+    if (vehicleForm) {
+        // Remover event listeners existentes
+        const newForm = vehicleForm.cloneNode(true);
+        vehicleForm.parentNode.replaceChild(newForm, vehicleForm);
+        
+        // Agregar el event listener corregido
+        newForm.addEventListener('submit', handleVehicleFormSubmitFixed);
+        
+        console.log('✅ Formulario configurado con manejo corregido');
+        
+        // Verificar que todos los campos existen
+        const requiredFields = ['brand', 'model', 'year', 'kilometers', 'type', 'status'];
+        const missingFields = requiredFields.filter(field => !newForm.querySelector(`[name="${field}"]`));
+        
+        if (missingFields.length > 0) {
+            console.error('❌ Campos faltantes en el formulario:', missingFields);
+        } else {
+            console.log('✅ Todos los campos requeridos están presentes');
+        }
+    } else {
+        console.error('❌ No se encontró el formulario add-vehicle-form');
+    }
+});
+
+// Función de debug para verificar el formulario
+function debugVehicleForm() {
+    console.log('🔍 DEBUG - Estado del formulario de vehículos');
+    
+    const form = document.getElementById('add-vehicle-form');
+    if (!form) {
+        console.error('❌ Formulario no encontrado');
+        return;
+    }
+    
+    console.log('✅ Formulario encontrado');
+    
+    const fields = ['brand', 'model', 'year', 'kilometers', 'type', 'status', 'power', 'traccion', 'transmission', 'color', 'price', 'description', 'observations'];
+    
+    console.log('📋 Estado de los campos:');
+    fields.forEach(fieldName => {
+        const field = form.querySelector(`[name="${fieldName}"]`);
+        if (field) {
+            console.log(`  ${fieldName}: "${field.value}" (${field.tagName})`);
+        } else {
+            console.error(`  ${fieldName}: ❌ NO ENCONTRADO`);
+        }
+    });
+    
+    const isFeatureField = form.querySelector('[name="is_featured"]');
+    if (isFeatureField) {
+        console.log(`  is_featured: ${isFeatureField.checked} (checkbox)`);
+    }
+    
+    const imagesField = form.querySelector('#images');
+    if (imagesField) {
+        console.log(`  images: ${imagesField.files.length} archivos seleccionados`);
+    }
+}
+
+// Hacer la función de debug disponible globalmente
+window.debugVehicleForm = debugVehicleForm;
+
+console.log('🔧 Corrección de formulario cargada. Usa debugVehicleForm() para verificar el estado.');
