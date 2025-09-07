@@ -49,9 +49,6 @@
                 
                 <!-- Botón derecha -->
                 <div class="nav-button">
-                    <!-- Botón MercadoLibre -->
-        
-                    <!-- Botón Randon -->
                     <a href="LarrosaCamiones.html#randon" class="btn-special">
                         <img src="../assets/Logo negro sin fondo.png" alt="Randon" class="btn-icon">
                     </a>
@@ -78,7 +75,7 @@
                     <span class="current">Unidades Disponibles</span>
                 </div>
                 
-                <!-- NUEVO: Vehicle Categories Bar - Ancho completo SIN espacios -->
+                <!-- Vehicle Categories Bar -->
                 <div class="categories-container-full">
                     <div class="category-item active" data-category="all">
                         <div class="category-image">
@@ -86,7 +83,7 @@
                         </div>
                         <div class="category-info">
                             <span class="category-name">Todos</span>
-                            <span class="category-count">(583)</span>
+                            <span class="category-count">(0)</span>
                         </div>
                     </div>
                     
@@ -96,7 +93,7 @@
                         </div>
                         <div class="category-info">
                             <span class="category-name">Camión Tractor</span>
-                            <span class="category-count">(234)</span>
+                            <span class="category-count">(0)</span>
                         </div>
                     </div>
                     
@@ -106,7 +103,7 @@
                         </div>
                         <div class="category-info">
                             <span class="category-name">Camión Chasis</span>
-                            <span class="category-count">(156)</span>
+                            <span class="category-count">(0)</span>
                         </div>
                     </div>
                     
@@ -116,7 +113,7 @@
                         </div>
                         <div class="category-info">
                             <span class="category-name">Remolques</span>
-                            <span class="category-count">(89)</span>
+                            <span class="category-count">(0)</span>
                         </div>
                     </div>
                     
@@ -126,7 +123,7 @@
                         </div>
                         <div class="category-info">
                             <span class="category-name">Utilitarios</span>
-                            <span class="category-count">(67)</span>
+                            <span class="category-count">(0)</span>
                         </div>
                     </div>
                     
@@ -136,17 +133,17 @@
                         </div>
                         <div class="category-info">
                             <span class="category-name">Varios</span>
-                            <span class="category-count">(37)</span>
+                            <span class="category-count">(0)</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Main Content with Sidebar - SIN espacios entre categorías y contenido -->
+        <!-- Main Content with Sidebar -->
         <section class="content-section-full">
             <div class="content-layout-full">
-                <!-- ACTUALIZADO: Sidebar Filters con altura completa -->
+                <!-- Sidebar Filters -->
                 <aside class="sidebar-filters-full">
                     <!-- Filter Search -->
                     <div class="filter-search">
@@ -168,7 +165,7 @@
                         </div>
                     </div>
 
-                    <!-- NUEVO: Tipo Filter - Colapsable por defecto -->
+                    <!-- Tipo Filter -->
                     <div class="filter-group collapsible collapsed">
                         <h3 class="filter-title" onclick="toggleFilterGroup(this)">
                             <span>Tipo</span>
@@ -210,29 +207,7 @@
                         </div>
                     </div>
 
-                    <!-- Tracción Filter - Colapsable -->
-                    <div class="filter-group collapsible collapsed">
-                        <h3 class="filter-title" onclick="toggleFilterGroup(this)">
-                            <span>Tracción</span>
-                            <i class="fas fa-chevron-down collapse-icon"></i>
-                        </h3>
-                        <div class="filter-content">
-                            <div class="filter-options">
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="traccion" value="4x2">
-                                    <span class="checkmark"></span>
-                                    <span class="option-text">4x2</span>
-                                </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="traccion" value="6x2">
-                                    <span class="checkmark"></span>
-                                    <span class="option-text">6x2</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Marca Filter - Colapsable -->
+                    <!-- Marca Filter -->
                     <div class="filter-group collapsible collapsed">
                         <h3 class="filter-title" onclick="toggleFilterGroup(this)">
                             <span>Marca</span>
@@ -265,21 +240,11 @@
                                     <span class="checkmark"></span>
                                     <span class="option-text">Volkswagen</span>
                                 </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="marca" value="renault">
-                                    <span class="checkmark"></span>
-                                    <span class="option-text">Renault</span>
-                                </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="marca" value="ford">
-                                    <span class="checkmark"></span>
-                                    <span class="option-text">Ford</span>
-                                </label>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Año Range - Colapsable -->
+                    <!-- Año Range -->
                     <div class="filter-group collapsible collapsed">
                         <h3 class="filter-title" onclick="toggleFilterGroup(this)">
                             <span>Año</span>
@@ -292,14 +257,11 @@
                                     <span class="range-separator">-</span>
                                     <input type="number" placeholder="Hasta" class="range-input" id="year-max" min="2000" max="2025">
                                 </div>
-                                <div class="range-slider">
-                                    <input type="range" class="slider" id="year-slider" min="2000" max="2025" value="2015">
-                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Kilómetros Range - Colapsable -->
+                    <!-- Kilómetros Range -->
                     <div class="filter-group collapsible collapsed">
                         <h3 class="filter-title" onclick="toggleFilterGroup(this)">
                             <span>Kilómetros</span>
@@ -312,32 +274,6 @@
                                     <span class="range-separator">-</span>
                                     <input type="number" placeholder="Hasta" class="range-input" id="km-max" min="0" max="1000000">
                                 </div>
-                                <div class="range-slider">
-                                    <input type="range" class="slider" id="km-slider" min="0" max="1000000" value="500000">
-                                </div>
-                                <div class="range-unit">km</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Transmisión Filter - Colapsable -->
-                    <div class="filter-group collapsible collapsed">
-                        <h3 class="filter-title" onclick="toggleFilterGroup(this)">
-                            <span>Transmisión</span>
-                            <i class="fas fa-chevron-down collapse-icon"></i>
-                        </h3>
-                        <div class="filter-content">
-                            <div class="filter-options">
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="transmision" value="manual">
-                                    <span class="checkmark"></span>
-                                    <span class="option-text">Manual</span>
-                                </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="transmision" value="automatica">
-                                    <span class="checkmark"></span>
-                                    <span class="option-text">Automática</span>
-                                </label>
                             </div>
                         </div>
                     </div>
@@ -359,7 +295,7 @@
                                     <span>información</span>
                                 </button>
                                 <button class="tab-btn">
-                                    <span><strong><span id="total-vehicles">583</span> vehículos encontrados</strong></span>
+                                    <span><strong><span id="total-vehicles">0</span> vehículos encontrados</strong></span>
                                 </button>
                             </div>
                         </div>
@@ -371,8 +307,6 @@
                                 </button>
                                 <div class="sort-menu">
                                     <button class="sort-option active" data-sort="relevance">Relevancia</button>
-                                    <button class="sort-option" data-sort="price-asc">Precio: menor a mayor</button>
-                                    <button class="sort-option" data-sort="price-desc">Precio: mayor a menor</button>
                                     <button class="sort-option" data-sort="year-desc">Año: más nuevo</button>
                                     <button class="sort-option" data-sort="year-asc">Año: más viejo</button>
                                     <button class="sort-option" data-sort="km-asc">Menor kilometraje</button>
@@ -382,17 +316,19 @@
                         </div>
                     </div>
 
-                    <!-- Loading State -->
-                    <div class="loading-state" id="loading-state" style="display: none;">
-                        <div class="loading-spinner"></div>
-                        <p>Cargando vehículos...</p>
+                    <!-- Grid de Vehículos -->
+                    <div class="vehicles-grid" id="vehicles-grid">
+                        <!-- Los vehículos se cargarán aquí desde la API -->
+                        <div class="loading-state">
+                            <div class="loading-spinner"></div>
+                            <h3>🔄 Cargando vehículos</h3>
+                            <p>Conectando con la base de datos...</p>
+                        </div>
                     </div>
-
-
 
                     <!-- Load More Button -->
                     <div class="load-more-container">
-                        <button class="load-more-btn" id="load-more-btn">
+                        <button class="load-more-btn" id="load-more-btn" style="display: none;">
                             <span>Cargar más vehículos</span>
                             <i class="fas fa-chevron-down"></i>
                         </button>
@@ -404,6 +340,8 @@
 
     <!-- Overlay para móvil -->
     <div class="filter-overlay" id="filter-overlay"></div>
+    
+    <!-- Brands Section -->
     <section class="brands">
         <div class="container">
             <div class="brands-carousel">
@@ -465,7 +403,7 @@
                 </div>
             </div>
             
-            <!-- Nueva sección admin -->
+            <!-- Admin section -->
             <div class="footer-admin">
                 <a href="../admin/login.html" 
                    class="btn-admin-footer" 
@@ -481,340 +419,397 @@
         </div>
     </footer>
 
-   <!-- ===== SCRIPTS - SOLO API ===== -->
-   <script>
-    // Verificar que no hay conflictos
-    console.log('🔧 Limpiando scripts anteriores...');
+    <!-- Scripts -->
+    <script src="../scripts/nav-session.js"></script>
     
-    // Remover variables globales conflictivas si existen
-    if (window.vehiclesData) delete window.vehiclesData;
-    if (window.filteredVehicles) delete window.filteredVehicles;
-    if (window.isLoading) delete window.isLoading;
+    <!-- SOLO EL SCRIPT DE LA API - SIN CONFLICTOS -->
+    <script>
+        // Limpiar variables globales anteriores para evitar conflictos
+        console.log('🧹 Limpiando scripts previos...');
+        
+        // Remover cualquier implementación anterior
+        if (window.vehiclesData) delete window.vehiclesData;
+        if (window.filteredVehicles) delete window.filteredVehicles;
+        if (window.unidadesAPILoaded) delete window.unidadesAPILoaded;
+        
+        console.log('✅ Scripts limpiados, cargando implementación API...');
+    </script>
     
-    console.log('✅ Scripts limpiados');
-</script>
+    <!-- Cargar SOLO el sistema API -->
+    <script>
+        // ===== SISTEMA UNIDADES DISPONIBLES - API INTEGRACIÓN COMPLETA =====
 
-<!-- API Client -->
-<script src="../scripts/api.js"></script>
+        // Configuración
+        const API_CONFIG = {
+            baseURL: 'http://localhost:8000/api/v1',
+            timeout: 10000
+        };
 
-<!-- SOLO EL ARCHIVO DE API -->
-<script>
-    // ===== IMPLEMENTACIÓN DIRECTA PARA EVITAR CONFLICTOS =====
-    console.log('🚛 Iniciando Unidades Disponibles - API Direct...');
-    
-    let apiVehicles = [];
-    let apiFiltered = [];
-    let apiLoading = false;
-    
-    // Inicializar cuando el DOM esté listo
-    document.addEventListener('DOMContentLoaded', async function() {
-        console.log('📋 DOM cargado, conectando a API...');
-        
-        // Verificar API Client
-        if (!window.APIClient) {
-            console.error('❌ APIClient no disponible');
-            showError('Sistema API no disponible');
-            return;
-        }
-        
-        // Crear instancia del cliente API
-        const apiClient = new APIClient();
-        window.apiClient = apiClient;
-        
-        // Cargar vehículos
-        await loadVehiclesFromAPI();
-        
-        // Configurar categorías
-        setupCategories();
-        
-        console.log('✅ Sistema inicializado correctamente');
-    });
-    
-    // Cargar vehículos desde API
-    async function loadVehiclesFromAPI() {
-        try {
-            console.log('🔄 Cargando vehículos desde API...');
-            showLoading(true);
-            
-            // Test de conexión primero
-            const healthResponse = await fetch('http://localhost:8000/health');
-            if (!healthResponse.ok) {
-                throw new Error('Backend no disponible');
+        // Variables globales
+        let vehiclesData = [];
+        let filteredVehicles = [];
+        let currentFilters = { category: 'all', search: '' };
+        let isLoading = false;
+
+        // ===== CLASE PRINCIPAL =====
+        class UnidadesAPI {
+            constructor() {
+                this.init();
             }
-            
-            console.log('✅ Backend conectado');
-            
-            // Obtener vehículos
-            const vehiclesResponse = await fetch('http://localhost:8000/api/v1/vehicles?limit=100');
-            
-            if (!vehiclesResponse.ok) {
-                throw new Error(`HTTP ${vehiclesResponse.status}: ${vehiclesResponse.statusText}`);
+
+            async init() {
+                console.log('🚛 Iniciando Unidades Disponibles con API...');
+                
+                // Verificar conexión
+                const connected = await this.testConnection();
+                
+                if (connected) {
+                    console.log('✅ Conectado a la API');
+                    await this.loadVehicles();
+                } else {
+                    console.warn('⚠️ API no disponible');
+                    this.showConnectionError();
+                }
+                
+                // Inicializar componentes
+                this.setupCategories();
+                this.setupFilters();
+                this.setupUI();
             }
-            
-            const data = await vehiclesResponse.json();
-            console.log('📊 Respuesta de API:', data);
-            
-            if (data.vehicles && data.vehicles.length > 0) {
-                apiVehicles = data.vehicles;
-                apiFiltered = [...apiVehicles];
-                
-                console.log(`✅ ${apiVehicles.length} vehículos cargados`);
-                
-                // Actualizar contador
-                updateVehicleCount(apiVehicles.length);
-                
-                // Renderizar
-                renderVehicles();
-                
-            } else {
-                console.warn('⚠️ No se encontraron vehículos');
-                showEmpty();
+
+            async testConnection() {
+                try {
+                    const response = await fetch(`${API_CONFIG.baseURL.replace('/api/v1', '')}/health`, {
+                        method: 'GET',
+                        timeout: 5000
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('🔗 Backend status:', data.status);
+                        return true;
+                    }
+                    return false;
+                } catch (error) {
+                    console.error('❌ Error de conexión:', error.message);
+                    return false;
+                }
             }
-            
-        } catch (error) {
-            console.error('❌ Error cargando vehículos:', error);
-            showError(`Error: ${error.message}`);
-        } finally {
-            showLoading(false);
-        }
-    }
-    
-    // Renderizar vehículos
-    function renderVehicles() {
-        const grid = document.getElementById('vehicles-grid');
-        if (!grid) {
-            console.error('❌ Grid no encontrado');
-            return;
-        }
-        
-        console.log(`🎨 Renderizando ${apiFiltered.length} vehículos...`);
-        
-        if (apiFiltered.length === 0) {
-            showEmpty();
-            return;
-        }
-        
-        // Limpiar grid
-        grid.innerHTML = '';
-        
-        // Crear cards
-        apiFiltered.forEach((vehicle, index) => {
-            const card = createVehicleCard(vehicle);
-            card.style.animationDelay = `${index * 0.1}s`;
-            card.classList.add('fade-in');
-            grid.appendChild(card);
-        });
-        
-        console.log(`✅ ${apiFiltered.length} tarjetas renderizadas`);
-    }
-    
-    // Crear tarjeta de vehículo
-    function createVehicleCard(vehicle) {
-        const card = document.createElement('div');
-        card.className = 'vehicle-card';
-        card.dataset.vehicleId = vehicle.id;
-        
-        // Imagen segura
-        const imageUrl = getVehicleImage(vehicle);
-        
-        card.innerHTML = `
-            <div class="vehicle-image">
-                <img src="${imageUrl}" alt="${vehicle.full_name}" loading="lazy"
-                     onerror="this.src='../assets/imagenes/placeholder-vehicle.jpg'">
-                <div class="vehicle-status available">${vehicle.status || 'Disponible'}</div>
-            </div>
-            <div class="vehicle-content">
-                <h3 class="vehicle-title">${vehicle.full_name}</h3>
-                <p class="vehicle-subtitle">${vehicle.type_name || 'Vehículo comercial'}</p>
-                <div class="vehicle-specs">
-                    <div class="vehicle-spec">
-                        <span class="vehicle-spec-icon">📅</span>
-                        <span class="vehicle-spec-value">${vehicle.year}</span>
+
+            async loadVehicles() {
+                try {
+                    this.showLoading(true);
+                    console.log('📦 Cargando vehículos desde API...');
+                    
+                    const response = await fetch(`${API_CONFIG.baseURL}/vehicles?limit=1000`, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('📊 Datos recibidos:', data);
+
+                    if (data.vehicles && Array.isArray(data.vehicles)) {
+                        vehiclesData = data.vehicles;
+                        filteredVehicles = [...vehiclesData];
+                        
+                        console.log(`✅ ${vehiclesData.length} vehículos cargados`);
+                        
+                        this.updateVehicleCount(vehiclesData.length);
+                        this.updateCategoryCounters();
+                        this.renderVehicles();
+                        
+                    } else {
+                        console.warn('⚠️ Estructura de datos inesperada:', data);
+                        this.showEmptyState('Estructura de datos inesperada');
+                    }
+
+                } catch (error) {
+                    console.error('❌ Error cargando vehículos:', error);
+                    this.showError(`Error cargando vehículos: ${error.message}`);
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+
+            renderVehicles() {
+                const grid = document.getElementById('vehicles-grid');
+                if (!grid) {
+                    console.error('❌ Grid de vehículos no encontrado');
+                    return;
+                }
+
+                console.log(`🎨 Renderizando ${filteredVehicles.length} vehículos...`);
+
+                if (filteredVehicles.length === 0) {
+                    this.showEmptyState('No se encontraron vehículos con los filtros seleccionados');
+                    return;
+                }
+
+                // Limpiar grid
+                grid.innerHTML = '';
+
+                // Crear cards
+                filteredVehicles.forEach((vehicle, index) => {
+                    const card = this.createVehicleCard(vehicle);
+                    if (card) {
+                        card.style.animationDelay = `${index * 0.05}s`;
+                        card.classList.add('fade-in');
+                        grid.appendChild(card);
+                    }
+                });
+
+                console.log(`✅ ${filteredVehicles.length} tarjetas renderizadas`);
+            }
+
+            createVehicleCard(vehicle) {
+                if (!vehicle) return null;
+
+                const card = document.createElement('div');
+                card.className = 'vehicle-card';
+                card.dataset.vehicleId = vehicle.id;
+                card.dataset.vehicleData = JSON.stringify(vehicle);
+
+                const imageUrl = this.getVehicleImageUrl(vehicle);
+                const statusClass = this.getStatusClass(vehicle.status);
+
+                card.innerHTML = `
+                    <div class="vehicle-image">
+                        <img src="${imageUrl}" 
+                             alt="${vehicle.full_name || vehicle.fullName || 'Vehículo'}" 
+                             loading="lazy"
+                             onerror="this.src='../assets/imagenes/placeholder-vehicle.jpg'">
+                        <div class="vehicle-status ${statusClass}">
+                            ${vehicle.status || 'Disponible'}
+                        </div>
+                        ${vehicle.is_featured ? '<div class="vehicle-featured">⭐ Destacado</div>' : ''}
                     </div>
-                    <div class="vehicle-spec">
-                        <span class="vehicle-spec-icon">🛣️</span>
-                        <span class="vehicle-spec-value">${formatKilometers(vehicle.kilometers)} km</span>
+                    <div class="vehicle-content">
+                        <h3 class="vehicle-title">${vehicle.full_name || vehicle.fullName || 'Vehículo sin nombre'}</h3>
+                        <p class="vehicle-subtitle">${vehicle.description || vehicle.type_name || vehicle.typeName || 'Vehículo comercial'}</p>
+                        <div class="vehicle-specs">
+                            <div class="vehicle-spec">
+                                <span class="vehicle-spec-icon">📅</span>
+                                <span class="vehicle-spec-value">${vehicle.year || 'N/A'}</span>
+                            </div>
+                            <div class="vehicle-spec">
+                                <span class="vehicle-spec-icon">🛣️</span>
+                                <span class="vehicle-spec-value">${this.formatNumber(vehicle.kilometers || 0)} km</span>
+                            </div>
+                            <div class="vehicle-spec">
+                                <span class="vehicle-spec-icon">⚙️</span>
+                                <span class="vehicle-spec-value">${vehicle.transmission || 'Manual'}</span>
+                            </div>
+                            <div class="vehicle-spec">
+                                <span class="vehicle-spec-icon">🔋</span>
+                                <span class="vehicle-spec-value">${vehicle.power || 0} HP</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="vehicle-spec">
-                        <span class="vehicle-spec-icon">⚙️</span>
-                        <span class="vehicle-spec-value">${vehicle.transmission || 'Manual'}</span>
+                    <div class="vehicle-footer">
+                        <div class="vehicle-location">
+                            <span>🇦🇷</span>
+                            <span>${vehicle.location || 'Villa María, Córdoba'}</span>
+                        </div>
                     </div>
-                    <div class="vehicle-spec">
-                        <span class="vehicle-spec-icon">🔋</span>
-                        <span class="vehicle-spec-value">${vehicle.power || 0} HP</span>
-                    </div>
-                </div>
-            </div>
-            <div class="vehicle-footer">
-                <div class="vehicle-location">
-                    <span>🇦🇷</span>
-                    <span>${vehicle.location || 'Villa María, Córdoba'}</span>
-                </div>
-            </div>
-        `;
-        
-        // Click handler
-        card.addEventListener('click', function() {
-            sessionStorage.setItem('currentVehicle', JSON.stringify(vehicle));
-            window.location.href = `detalleVehiculo.html?id=${vehicle.id}`;
-        });
-        
-        return card;
-    }
-    
-    // Configurar categorías
-    function setupCategories() {
-        const categoryItems = document.querySelectorAll('.category-item');
-        
-        categoryItems.forEach(item => {
-            item.addEventListener('click', function() {
-                // Remover active de todas
-                categoryItems.forEach(cat => cat.classList.remove('active'));
-                // Activar actual
-                this.classList.add('active');
+                `;
+
+                card.addEventListener('click', () => {
+                    this.goToVehicleDetail(vehicle);
+                });
+
+                return card;
+            }
+
+            setupCategories() {
+                const categoryItems = document.querySelectorAll('.category-item');
                 
-                // Filtrar
-                const category = this.dataset.category;
-                filterByCategory(category);
-            });
-        });
-    }
-    
-    // Filtrar por categoría
-    function filterByCategory(category) {
-        console.log(`🏷️ Filtrando por categoría: ${category}`);
-        
-        if (category === 'all') {
-            apiFiltered = [...apiVehicles];
-        } else {
-            apiFiltered = apiVehicles.filter(v => v.type === category);
-        }
-        
-        console.log(`📊 ${apiFiltered.length} vehículos después del filtro`);
-        
-        // Actualizar contador
-        updateVehicleCount(apiFiltered.length);
-        
-        // Re-renderizar
-        renderVehicles();
-    }
-    
-    // Utilidades
-    function getVehicleImage(vehicle) {
-        if (vehicle.images && vehicle.images.length > 0) {
-            // Si tiene imágenes, usar la primera
-            const imagePath = vehicle.images[0];
-            if (imagePath.startsWith('http')) {
-                return imagePath;
-            } else if (imagePath.startsWith('/static')) {
-                return `http://localhost:8000${imagePath}`;
+                categoryItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        categoryItems.forEach(cat => cat.classList.remove('active'));
+                        item.classList.add('active');
+                        
+                        const category = item.dataset.category;
+                        this.filterByCategory(category);
+                    });
+                });
             }
-        }
-        return '../assets/imagenes/placeholder-vehicle.jpg';
-    }
-    
-    function formatKilometers(km) {
-        if (!km) return '0';
-        return new Intl.NumberFormat('es-AR').format(km);
-    }
-    
-    function updateVehicleCount(count) {
-        const totalElement = document.getElementById('total-vehicles');
-        if (totalElement) {
-            totalElement.textContent = count;
-        }
-    }
-    
-    function showLoading(show) {
-        const grid = document.getElementById('vehicles-grid');
-        if (!grid) return;
-        
-        if (show) {
-            grid.innerHTML = '<div class="loading">🔄 Cargando vehículos desde API...</div>';
-        }
-    }
-    
-    function showEmpty() {
-        const grid = document.getElementById('vehicles-grid');
-        if (grid) {
-            grid.innerHTML = `
-                <div class="empty-state">
-                    <h3>🚛 No hay vehículos disponibles</h3>
-                    <p>No se encontraron vehículos en la base de datos.</p>
-                    <button onclick="loadVehiclesFromAPI()" class="btn-retry">
-                        🔄 Reintentar
-                    </button>
-                </div>
-            `;
-        }
-    }
-    
-    function showError(message) {
-        const grid = document.getElementById('vehicles-grid');
-        if (grid) {
-            grid.innerHTML = `
-                <div class="error-state">
-                    <h3>❌ Error al cargar vehículos</h3>
-                    <p>${message}</p>
-                    <p>Asegúrate de que el backend esté funcionando en <code>localhost:8000</code></p>
-                    <button onclick="loadVehiclesFromAPI()" class="btn-retry">
-                        🔄 Reintentar
-                    </button>
-                </div>
-            `;
-        }
-    }
-    
-    // CSS para estados
-    const style = document.createElement('style');
-    style.textContent = `
-        .loading, .empty-state, .error-state {
-            padding: 60px 20px;
-            text-align: center;
-            color: #666;
-            grid-column: 1 / -1;
-        }
-        
-        .btn-retry {
-            background: #3D5FAC;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        
-        .vehicle-spec-icon {
-            margin-right: 8px;
-            font-size: 14px;
-        }
-        
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
+
+            setupFilters() {
+                const searchInput = document.getElementById('filter-search');
+                if (searchInput) {
+                    searchInput.addEventListener('input', this.debounce((e) => {
+                        currentFilters.search = e.target.value.toLowerCase();
+                        this.applyFilters();
+                    }, 300));
+                }
+
+                const clearBtn = document.querySelector('.clear-all-btn');
+                if (clearBtn) {
+                    clearBtn.addEventListener('click', () => {
+                        this.clearAllFilters();
+                    });
+                }
             }
-        }
-    `;
-    document.head.appendChild(style);
-    
-    // Exponer funciones para debug
-    window.loadVehiclesFromAPI = loadVehiclesFromAPI;
-    window.apiVehicles = () => apiVehicles;
-    window.apiFiltered = () => apiFiltered;
-    
-    console.log('🚛 Sistema de vehículos API cargado');
-</script>
 
-<!-- Nav session script -->
-<script src="../scripts/nav-session.js"></script>
+            setupUI() {
+                this.setupMobileToggle();
+                this.setupSorting();
+            }
 
+            setupMobileToggle() {
+                const toggleBtn = document.querySelector('.mobile-filter-toggle');
+                const sidebar = document.querySelector('.sidebar-filters-full');
+                const overlay = document.getElementById('filter-overlay');
 
-</html>
+                if (toggleBtn && sidebar && overlay) {
+                    toggleBtn.addEventListener('click', () => {
+                        sidebar.classList.toggle('active');
+                        overlay.classList.toggle('active');
+                        document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : 'auto';
+                    });
+
+                    overlay.addEventListener('click', () => {
+                        sidebar.classList.remove('active');
+                        overlay.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    });
+                }
+            }
+
+            setupSorting() {
+                const sortBtn = document.querySelector('.sort-btn');
+                const sortMenu = document.querySelector('.sort-menu');
+                const sortOptions = document.querySelectorAll('.sort-option');
+
+                if (sortBtn && sortMenu) {
+                    sortBtn.addEventListener('click', () => {
+                        sortMenu.style.display = sortMenu.style.display === 'block' ? 'none' : 'block';
+                    });
+                }
+
+                sortOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        const sortType = option.dataset.sort;
+                        this.sortVehicles(sortType);
+                        sortMenu.style.display = 'none';
+                    });
+                });
+            }
+
+            filterByCategory(category) {
+                console.log(`🏷️ Filtrando por categoría: ${category}`);
+                currentFilters.category = category;
+                this.applyFilters();
+            }
+
+            applyFilters() {
+                console.log('🔍 Aplicando filtros:', currentFilters);
+                
+                filteredVehicles = vehiclesData.filter(vehicle => {
+                    if (currentFilters.category && currentFilters.category !== 'all') {
+                        if (vehicle.type !== currentFilters.category) {
+                            return false;
+                        }
+                    }
+                    
+                    if (currentFilters.search) {
+                        const searchText = `${vehicle.brand} ${vehicle.model} ${vehicle.full_name || vehicle.fullName}`.toLowerCase();
+                        if (!searchText.includes(currentFilters.search)) {
+                            return false;
+                        }
+                    }
+                    
+                    return true;
+                });
+                
+                console.log(`📊 ${filteredVehicles.length} vehículos después del filtro`);
+                
+                this.updateVehicleCount(filteredVehicles.length);
+                this.renderVehicles();
+            }
+
+            clearAllFilters() {
+                currentFilters = { category: 'all', search: '' };
+                
+                const searchInput = document.getElementById('filter-search');
+                if (searchInput) searchInput.value = '';
+                
+                document.querySelectorAll('.category-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelector('[data-category="all"]')?.classList.add('active');
+                
+                this.applyFilters();
+            }
+
+            sortVehicles(sortType) {
+                console.log(`📊 Ordenando por: ${sortType}`);
+                
+                filteredVehicles.sort((a, b) => {
+                    switch (sortType) {
+                        case 'year-desc':
+                            return (b.year || 0) - (a.year || 0);
+                        case 'year-asc':
+                            return (a.year || 0) - (b.year || 0);
+                        case 'km-asc':
+                            return (a.kilometers || 0) - (b.kilometers || 0);
+                        case 'km-desc':
+                            return (b.kilometers || 0) - (a.kilometers || 0);
+                        case 'relevance':
+                        default:
+                            if (a.is_featured && !b.is_featured) return -1;
+                            if (!a.is_featured && b.is_featured) return 1;
+                            return new Date(b.created_at || b.date_added || 0) - new Date(a.created_at || a.date_added || 0);
+                    }
+                });
+                
+                this.renderVehicles();
+            }
+
+            getVehicleImageUrl(vehicle) {
+                if (vehicle.images && vehicle.images.length > 0) {
+                    const imagePath = vehicle.images[0];
+                    
+                    if (imagePath.startsWith('http')) {
+                        return imagePath;
+                    }
+                    
+                    if (imagePath.startsWith('/static') || imagePath.startsWith('static')) {
+                        return `http://localhost:8000/${imagePath.replace(/^\//, '')}`;
+                    }
+                    
+                    return imagePath;
+                }
+                
+                return '../assets/imagenes/placeholder-vehicle.jpg';
+            }
+
+            getStatusClass(status) {
+                if (!status) return 'available';
+                
+                const statusLower = status.toLowerCase();
+                if (statusLower.includes('disponible')) return 'available';
+                if (statusLower.includes('reservado')) return 'reserved';
+                if (statusLower.includes('vendido')) return 'sold';
+                return 'available';
+            }
+
+            formatNumber(num) {
+                if (!num) return '0';
+                return new Intl.NumberFormat('es-AR').format(num);
+            }
+
+            updateVehicleCount(count) {
+                const totalElement = document.getElementById('total-vehicles');
+                if (totalElement) {
+                    totalElement.textContent = count;
+                }
+            }
+
+            updateCategoryCounters() {
+                const categoryCounts = {
