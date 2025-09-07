@@ -1611,3 +1611,77 @@
         }
     }
 }
+/* AGREGAR AL FINAL DE styles/unidadesDisponibles.css */
+
+/* ===== ARREGLO PARA IMÁGENES FALTANTES ===== */
+.vehicle-spec-icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Reemplazar iconos faltantes con emojis */
+.icon-calendar::before {
+    content: "📅";
+}
+
+.icon-road::before {
+    content: "🛣️";
+}
+
+.icon-gear::before {
+    content: "⚙️";
+}
+
+.icon-power::before {
+    content: "🔋";
+}
+
+/* Estados de carga y error */
+.empty-state, .error-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+    color: #666;
+}
+
+.empty-icon, .error-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+.btn-retry {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s ease;
+}
+
+.btn-retry:hover {
+    background: var(--primary-blue-dark);
+}
+
+/* Placeholder para imágenes de vehículos */
+.vehicle-image img[src*="placeholder-vehicle.jpg"] {
+    background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vehicle-image img[src*="placeholder-vehicle.jpg"]::before {
+    content: "🚛";
+    font-size: 48px;
+    color: #999;
+}
