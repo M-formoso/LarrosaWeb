@@ -240,6 +240,16 @@
                                     <span class="checkmark"></span>
                                     <span class="option-text">Volkswagen</span>
                                 </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="marca" value="renault">
+                                    <span class="checkmark"></span>
+                                    <span class="option-text">Renault</span>
+                                </label>
+                                <label class="filter-checkbox">
+                                    <input type="checkbox" name="marca" value="ford">
+                                    <span class="checkmark"></span>
+                                    <span class="option-text">Ford</span>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -421,395 +431,115 @@
 
     <!-- Scripts -->
     <script src="../scripts/nav-session.js"></script>
-    
-    <!-- SOLO EL SCRIPT DE LA API - SIN CONFLICTOS -->
-    <script>
-        // Limpiar variables globales anteriores para evitar conflictos
-        console.log('🧹 Limpiando scripts previos...');
+    <script src="../scripts/unidadesDisponibles-final.js"></script>
+    <script src="../scripts/main.js"></script>
+
+    <!-- CSS adicional para estilos específicos de la página -->
+    <style>
+        .loading-state, .empty-state, .error-state, .connection-error {
+            grid-column: 1 / -1;
+            padding: 60px 20px;
+            text-align: center;
+            color: #666;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
         
-        // Remover cualquier implementación anterior
-        if (window.vehiclesData) delete window.vehiclesData;
-        if (window.filteredVehicles) delete window.filteredVehicles;
-        if (window.unidadesAPILoaded) delete window.unidadesAPILoaded;
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3D5FAC;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
         
-        console.log('✅ Scripts limpiados, cargando implementación API...');
-    </script>
-    
-    <!-- Cargar SOLO el sistema API -->
-    <script>
-        // ===== SISTEMA UNIDADES DISPONIBLES - API INTEGRACIÓN COMPLETA =====
-
-        // Configuración
-        const API_CONFIG = {
-            baseURL: 'http://localhost:8000/api/v1',
-            timeout: 10000
-        };
-
-        // Variables globales
-        let vehiclesData = [];
-        let filteredVehicles = [];
-        let currentFilters = { category: 'all', search: '' };
-        let isLoading = false;
-
-        // ===== CLASE PRINCIPAL =====
-        class UnidadesAPI {
-            constructor() {
-                this.init();
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .btn-retry {
+            background: #3D5FAC;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-retry:hover {
+            background: #2a4490;
+            transform: translateY(-2px);
+        }
+        
+        .btn-retry.secondary {
+            background: #6c757d;
+        }
+        
+        .error-details {
+            margin: 20px 0;
+            text-align: left;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .error-details code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .vehicle-featured {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 193, 7, 0.9);
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
+        }
+        
+        .vehicle-spec-icon {
+            margin-right: 6px;
+            font-size: 14px;
+        }
 
-            async init() {
-                console.log('🚛 Iniciando Unidades Disponibles con API...');
-                
-                // Verificar conexión
-                const connected = await this.testConnection();
-                
-                if (connected) {
-                    console.log('✅ Conectado a la API');
-                    await this.loadVehicles();
-                } else {
-                    console.warn('⚠️ API no disponible');
-                    this.showConnectionError();
-                }
-                
-                // Inicializar componentes
-                this.setupCategories();
-                this.setupFilters();
-                this.setupUI();
-            }
-
-            async testConnection() {
-                try {
-                    const response = await fetch(`${API_CONFIG.baseURL.replace('/api/v1', '')}/health`, {
-                        method: 'GET',
-                        timeout: 5000
-                    });
-                    
-                    if (response.ok) {
-                        const data = await response.json();
-                        console.log('🔗 Backend status:', data.status);
-                        return true;
-                    }
-                    return false;
-                } catch (error) {
-                    console.error('❌ Error de conexión:', error.message);
-                    return false;
-                }
-            }
-
-            async loadVehicles() {
-                try {
-                    this.showLoading(true);
-                    console.log('📦 Cargando vehículos desde API...');
-                    
-                    const response = await fetch(`${API_CONFIG.baseURL}/vehicles?limit=1000`, {
-                        method: 'GET',
-                        headers: { 'Content-Type': 'application/json' }
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-
-                    const data = await response.json();
-                    console.log('📊 Datos recibidos:', data);
-
-                    if (data.vehicles && Array.isArray(data.vehicles)) {
-                        vehiclesData = data.vehicles;
-                        filteredVehicles = [...vehiclesData];
-                        
-                        console.log(`✅ ${vehiclesData.length} vehículos cargados`);
-                        
-                        this.updateVehicleCount(vehiclesData.length);
-                        this.updateCategoryCounters();
-                        this.renderVehicles();
-                        
-                    } else {
-                        console.warn('⚠️ Estructura de datos inesperada:', data);
-                        this.showEmptyState('Estructura de datos inesperada');
-                    }
-
-                } catch (error) {
-                    console.error('❌ Error cargando vehículos:', error);
-                    this.showError(`Error cargando vehículos: ${error.message}`);
-                } finally {
-                    this.showLoading(false);
-                }
-            }
-
-            renderVehicles() {
-                const grid = document.getElementById('vehicles-grid');
-                if (!grid) {
-                    console.error('❌ Grid de vehículos no encontrado');
-                    return;
-                }
-
-                console.log(`🎨 Renderizando ${filteredVehicles.length} vehículos...`);
-
-                if (filteredVehicles.length === 0) {
-                    this.showEmptyState('No se encontraron vehículos con los filtros seleccionados');
-                    return;
-                }
-
-                // Limpiar grid
-                grid.innerHTML = '';
-
-                // Crear cards
-                filteredVehicles.forEach((vehicle, index) => {
-                    const card = this.createVehicleCard(vehicle);
-                    if (card) {
-                        card.style.animationDelay = `${index * 0.05}s`;
-                        card.classList.add('fade-in');
-                        grid.appendChild(card);
-                    }
-                });
-
-                console.log(`✅ ${filteredVehicles.length} tarjetas renderizadas`);
-            }
-
-            createVehicleCard(vehicle) {
-                if (!vehicle) return null;
-
-                const card = document.createElement('div');
-                card.className = 'vehicle-card';
-                card.dataset.vehicleId = vehicle.id;
-                card.dataset.vehicleData = JSON.stringify(vehicle);
-
-                const imageUrl = this.getVehicleImageUrl(vehicle);
-                const statusClass = this.getStatusClass(vehicle.status);
-
-                card.innerHTML = `
-                    <div class="vehicle-image">
-                        <img src="${imageUrl}" 
-                             alt="${vehicle.full_name || vehicle.fullName || 'Vehículo'}" 
-                             loading="lazy"
-                             onerror="this.src='../assets/imagenes/placeholder-vehicle.jpg'">
-                        <div class="vehicle-status ${statusClass}">
-                            ${vehicle.status || 'Disponible'}
-                        </div>
-                        ${vehicle.is_featured ? '<div class="vehicle-featured">⭐ Destacado</div>' : ''}
-                    </div>
-                    <div class="vehicle-content">
-                        <h3 class="vehicle-title">${vehicle.full_name || vehicle.fullName || 'Vehículo sin nombre'}</h3>
-                        <p class="vehicle-subtitle">${vehicle.description || vehicle.type_name || vehicle.typeName || 'Vehículo comercial'}</p>
-                        <div class="vehicle-specs">
-                            <div class="vehicle-spec">
-                                <span class="vehicle-spec-icon">📅</span>
-                                <span class="vehicle-spec-value">${vehicle.year || 'N/A'}</span>
-                            </div>
-                            <div class="vehicle-spec">
-                                <span class="vehicle-spec-icon">🛣️</span>
-                                <span class="vehicle-spec-value">${this.formatNumber(vehicle.kilometers || 0)} km</span>
-                            </div>
-                            <div class="vehicle-spec">
-                                <span class="vehicle-spec-icon">⚙️</span>
-                                <span class="vehicle-spec-value">${vehicle.transmission || 'Manual'}</span>
-                            </div>
-                            <div class="vehicle-spec">
-                                <span class="vehicle-spec-icon">🔋</span>
-                                <span class="vehicle-spec-value">${vehicle.power || 0} HP</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="vehicle-footer">
-                        <div class="vehicle-location">
-                            <span>🇦🇷</span>
-                            <span>${vehicle.location || 'Villa María, Córdoba'}</span>
-                        </div>
-                    </div>
-                `;
-
-                card.addEventListener('click', () => {
-                    this.goToVehicleDetail(vehicle);
-                });
-
-                return card;
-            }
-
-            setupCategories() {
-                const categoryItems = document.querySelectorAll('.category-item');
-                
-                categoryItems.forEach(item => {
-                    item.addEventListener('click', () => {
-                        categoryItems.forEach(cat => cat.classList.remove('active'));
-                        item.classList.add('active');
-                        
-                        const category = item.dataset.category;
-                        this.filterByCategory(category);
-                    });
-                });
-            }
-
-            setupFilters() {
-                const searchInput = document.getElementById('filter-search');
-                if (searchInput) {
-                    searchInput.addEventListener('input', this.debounce((e) => {
-                        currentFilters.search = e.target.value.toLowerCase();
-                        this.applyFilters();
-                    }, 300));
-                }
-
-                const clearBtn = document.querySelector('.clear-all-btn');
-                if (clearBtn) {
-                    clearBtn.addEventListener('click', () => {
-                        this.clearAllFilters();
-                    });
-                }
-            }
-
-            setupUI() {
-                this.setupMobileToggle();
-                this.setupSorting();
-            }
-
-            setupMobileToggle() {
-                const toggleBtn = document.querySelector('.mobile-filter-toggle');
-                const sidebar = document.querySelector('.sidebar-filters-full');
-                const overlay = document.getElementById('filter-overlay');
-
-                if (toggleBtn && sidebar && overlay) {
-                    toggleBtn.addEventListener('click', () => {
-                        sidebar.classList.toggle('active');
-                        overlay.classList.toggle('active');
-                        document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : 'auto';
-                    });
-
-                    overlay.addEventListener('click', () => {
-                        sidebar.classList.remove('active');
-                        overlay.classList.remove('active');
-                        document.body.style.overflow = 'auto';
-                    });
-                }
-            }
-
-            setupSorting() {
-                const sortBtn = document.querySelector('.sort-btn');
-                const sortMenu = document.querySelector('.sort-menu');
-                const sortOptions = document.querySelectorAll('.sort-option');
-
-                if (sortBtn && sortMenu) {
-                    sortBtn.addEventListener('click', () => {
-                        sortMenu.style.display = sortMenu.style.display === 'block' ? 'none' : 'block';
-                    });
-                }
-
-                sortOptions.forEach(option => {
-                    option.addEventListener('click', () => {
-                        const sortType = option.dataset.sort;
-                        this.sortVehicles(sortType);
-                        sortMenu.style.display = 'none';
-                    });
-                });
-            }
-
-            filterByCategory(category) {
-                console.log(`🏷️ Filtrando por categoría: ${category}`);
-                currentFilters.category = category;
-                this.applyFilters();
-            }
-
-            applyFilters() {
-                console.log('🔍 Aplicando filtros:', currentFilters);
-                
-                filteredVehicles = vehiclesData.filter(vehicle => {
-                    if (currentFilters.category && currentFilters.category !== 'all') {
-                        if (vehicle.type !== currentFilters.category) {
-                            return false;
-                        }
-                    }
-                    
-                    if (currentFilters.search) {
-                        const searchText = `${vehicle.brand} ${vehicle.model} ${vehicle.full_name || vehicle.fullName}`.toLowerCase();
-                        if (!searchText.includes(currentFilters.search)) {
-                            return false;
-                        }
-                    }
-                    
-                    return true;
-                });
-                
-                console.log(`📊 ${filteredVehicles.length} vehículos después del filtro`);
-                
-                this.updateVehicleCount(filteredVehicles.length);
-                this.renderVehicles();
-            }
-
-            clearAllFilters() {
-                currentFilters = { category: 'all', search: '' };
-                
-                const searchInput = document.getElementById('filter-search');
-                if (searchInput) searchInput.value = '';
-                
-                document.querySelectorAll('.category-item').forEach(item => {
-                    item.classList.remove('active');
-                });
-                document.querySelector('[data-category="all"]')?.classList.add('active');
-                
-                this.applyFilters();
-            }
-
-            sortVehicles(sortType) {
-                console.log(`📊 Ordenando por: ${sortType}`);
-                
-                filteredVehicles.sort((a, b) => {
-                    switch (sortType) {
-                        case 'year-desc':
-                            return (b.year || 0) - (a.year || 0);
-                        case 'year-asc':
-                            return (a.year || 0) - (b.year || 0);
-                        case 'km-asc':
-                            return (a.kilometers || 0) - (b.kilometers || 0);
-                        case 'km-desc':
-                            return (b.kilometers || 0) - (a.kilometers || 0);
-                        case 'relevance':
-                        default:
-                            if (a.is_featured && !b.is_featured) return -1;
-                            if (!a.is_featured && b.is_featured) return 1;
-                            return new Date(b.created_at || b.date_added || 0) - new Date(a.created_at || a.date_added || 0);
-                    }
-                });
-                
-                this.renderVehicles();
-            }
-
-            getVehicleImageUrl(vehicle) {
-                if (vehicle.images && vehicle.images.length > 0) {
-                    const imagePath = vehicle.images[0];
-                    
-                    if (imagePath.startsWith('http')) {
-                        return imagePath;
-                    }
-                    
-                    if (imagePath.startsWith('/static') || imagePath.startsWith('static')) {
-                        return `http://localhost:8000/${imagePath.replace(/^\//, '')}`;
-                    }
-                    
-                    return imagePath;
-                }
-                
-                return '../assets/imagenes/placeholder-vehicle.jpg';
-            }
-
-            getStatusClass(status) {
-                if (!status) return 'available';
-                
-                const statusLower = status.toLowerCase();
-                if (statusLower.includes('disponible')) return 'available';
-                if (statusLower.includes('reservado')) return 'reserved';
-                if (statusLower.includes('vendido')) return 'sold';
-                return 'available';
-            }
-
-            formatNumber(num) {
-                if (!num) return '0';
-                return new Intl.NumberFormat('es-AR').format(num);
-            }
-
-            updateVehicleCount(count) {
-                const totalElement = document.getElementById('total-vehicles');
-                if (totalElement) {
-                    totalElement.textContent = count;
-                }
-            }
-
-            updateCategoryCounters() {
-                const categoryCounts = {
+        .connection-status {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 10000;
+            transition: all 0.3s ease;
+        }
+    </style>
+</body>
+</html>

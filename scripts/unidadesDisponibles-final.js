@@ -1,4 +1,4 @@
-// ===== UNIDADES DISPONIBLES - INTEGRACIÓN API COMPLETA =====
+// ===== UNIDADES DISPONIBLES - INTEGRACIÓN API FINAL =====
 // Archivo: scripts/unidadesDisponibles-final.js
 
 // ===== CONFIGURACIÓN GLOBAL =====
@@ -24,6 +24,7 @@ let currentFilters = {
 let isLoading = false;
 let currentPage = 1;
 let vehiclesPerPage = 24;
+let currentSort = 'relevance';
 
 // ===== CLASE PRINCIPAL =====
 class UnidadesAPI {
@@ -49,6 +50,7 @@ class UnidadesAPI {
         this.setupCategories();
         this.setupFilters();
         this.setupUI();
+        this.checkURLFilters();
     }
 
     // ===== TEST DE CONEXIÓN =====
@@ -62,11 +64,13 @@ class UnidadesAPI {
             if (response.ok) {
                 const data = await response.json();
                 console.log('🔗 Backend status:', data.status);
+                this.showConnectionStatus(true);
                 return true;
             }
             return false;
         } catch (error) {
             console.error('❌ Error de conexión:', error.message);
+            this.showConnectionStatus(false);
             return false;
         }
     }
@@ -112,6 +116,41 @@ class UnidadesAPI {
             this.showError(`Error cargando vehículos: ${error.message}`);
         } finally {
             this.showLoading(false);
+        }
+    }
+
+    // ===== VERIFICAR FILTROS DESDE URL =====
+    checkURLFilters() {
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // Verificar si hay filtro de categoría
+        const category = urlParams.get('category') || urlParams.get('filter');
+        if (category && category !== 'all') {
+            console.log(`🏷️ Filtro de categoría desde URL: ${category}`);
+            
+            // Activar categoría correspondiente
+            const categoryItems = document.querySelectorAll('.category-item');
+            categoryItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.category === category) {
+                    item.classList.add('active');
+                }
+            });
+            
+            // Aplicar filtro
+            currentFilters.category = category;
+            this.applyFilters();
+        }
+        
+        // Verificar otros filtros desde URL
+        const search = urlParams.get('search');
+        if (search) {
+            currentFilters.search = search;
+            const searchInput = document.getElementById('filter-search');
+            if (searchInput) {
+                searchInput.value = search;
+            }
+            this.applyFilters();
         }
     }
 
@@ -254,13 +293,37 @@ class UnidadesAPI {
                 this.clearAllFilters();
             });
         }
+
+        // Filtros de tipo
+        const typeCheckboxes = document.querySelectorAll('input[name="tipo"]');
+        typeCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                this.handleCheckboxFilter('tipo', checkbox);
+            });
+        });
+
+        // Filtros de marca
+        const brandCheckboxes = document.querySelectorAll('input[name="marca"]');
+        brandCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                this.handleCheckboxFilter('marca', checkbox);
+            });
+        });
+
+        // Filtros de rango
+        const rangeInputs = document.querySelectorAll('.range-input');
+        rangeInputs.forEach(input => {
+            input.addEventListener('blur', () => {
+                this.handleRangeFilter();
+            });
+        });
     }
 
     // ===== CONFIGURAR UI =====
     setupUI() {
-        // Configurar botones móviles, sorting, etc.
         this.setupMobileToggle();
         this.setupSorting();
+        this.setupCollapsibleFilters();
     }
 
     setupMobileToggle() {
@@ -299,15 +362,61 @@ class UnidadesAPI {
                 const sortType = option.dataset.sort;
                 this.sortVehicles(sortType);
                 sortMenu.style.display = 'none';
+                
+                // Actualizar UI del botón
+                sortOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                sortBtn.querySelector('span').textContent = option.textContent;
             });
+        });
+
+        // Cerrar dropdown al hacer click fuera
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.sort-dropdown')) {
+                sortMenu.style.display = 'none';
+            }
         });
     }
 
-    // ===== FILTROS =====
+    setupCollapsibleFilters() {
+        // Los filtros colapsables ya están configurados con toggleFilterGroup
+        console.log('🔧 Filtros colapsables configurados');
+    }
+
+    // ===== MANEJO DE FILTROS =====
     filterByCategory(category) {
         console.log(`🏷️ Filtrando por categoría: ${category}`);
-        
         currentFilters.category = category;
+        this.applyFilters();
+    }
+
+    handleCheckboxFilter(filterName, checkbox) {
+        if (!currentFilters[filterName]) {
+            currentFilters[filterName] = [];
+        }
+
+        if (checkbox.checked) {
+            if (!currentFilters[filterName].includes(checkbox.value)) {
+                currentFilters[filterName].push(checkbox.value);
+            }
+        } else {
+            currentFilters[filterName] = currentFilters[filterName].filter(val => val !== checkbox.value);
+        }
+
+        this.applyFilters();
+    }
+
+    handleRangeFilter() {
+        const yearMin = document.getElementById('year-min')?.value;
+        const yearMax = document.getElementById('year-max')?.value;
+        const kmMin = document.getElementById('km-min')?.value;
+        const kmMax = document.getElementById('km-max')?.value;
+
+        currentFilters.yearMin = yearMin ? parseInt(yearMin) : null;
+        currentFilters.yearMax = yearMax ? parseInt(yearMax) : null;
+        currentFilters.kmMin = kmMin ? parseInt(kmMin) : null;
+        currentFilters.kmMax = kmMax ? parseInt(kmMax) : null;
+
         this.applyFilters();
     }
 
@@ -328,6 +437,36 @@ class UnidadesAPI {
                 if (!searchText.includes(currentFilters.search)) {
                     return false;
                 }
+            }
+
+            // Filtro por tipo
+            if (currentFilters.tipo && currentFilters.tipo.length > 0) {
+                if (!currentFilters.tipo.includes(vehicle.type)) {
+                    return false;
+                }
+            }
+
+            // Filtro por marca
+            if (currentFilters.marca && currentFilters.marca.length > 0) {
+                if (!currentFilters.marca.some(marca => vehicle.brand.toLowerCase().includes(marca))) {
+                    return false;
+                }
+            }
+
+            // Filtro por año
+            if (currentFilters.yearMin && vehicle.year < currentFilters.yearMin) {
+                return false;
+            }
+            if (currentFilters.yearMax && vehicle.year > currentFilters.yearMax) {
+                return false;
+            }
+
+            // Filtro por kilómetros
+            if (currentFilters.kmMin && vehicle.kilometers < currentFilters.kmMin) {
+                return false;
+            }
+            if (currentFilters.kmMax && vehicle.kilometers > currentFilters.kmMax) {
+                return false;
             }
             
             return true;
@@ -356,6 +495,16 @@ class UnidadesAPI {
         const searchInput = document.getElementById('filter-search');
         if (searchInput) searchInput.value = '';
         
+        // Limpiar checkboxes
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            cb.checked = false;
+        });
+
+        // Limpiar rangos
+        document.querySelectorAll('.range-input').forEach(input => {
+            input.value = '';
+        });
+        
         // Activar categoría "all"
         document.querySelectorAll('.category-item').forEach(item => {
             item.classList.remove('active');
@@ -368,6 +517,7 @@ class UnidadesAPI {
 
     sortVehicles(sortType) {
         console.log(`📊 Ordenando por: ${sortType}`);
+        currentSort = sortType;
         
         filteredVehicles.sort((a, b) => {
             switch (sortType) {
@@ -566,6 +716,45 @@ class UnidadesAPI {
         }
     }
 
+    showConnectionStatus(connected) {
+        const indicator = document.createElement('div');
+        indicator.className = 'connection-status';
+        indicator.style.cssText = `
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 10000;
+            transition: all 0.3s ease;
+            ${connected ? `
+                background: rgba(40, 167, 69, 0.9);
+                color: white;
+            ` : `
+                background: rgba(220, 53, 69, 0.9);
+                color: white;
+            `}
+        `;
+        
+        indicator.innerHTML = `
+            <i class="fas fa-${connected ? 'wifi' : 'wifi-slash'}"></i>
+            ${connected ? 'API Conectada' : 'Sin Conexión'}
+        `;
+        
+        document.body.appendChild(indicator);
+        
+        if (connected) {
+            setTimeout(() => {
+                if (indicator.parentNode) {
+                    indicator.style.opacity = '0';
+                    setTimeout(() => indicator.remove(), 300);
+                }
+            }, 3000);
+        }
+    }
+
     // ===== UTILIDAD DEBOUNCE =====
     debounce(func, wait) {
         let timeout;
@@ -577,6 +766,20 @@ class UnidadesAPI {
             clearTimeout(timeout);
             timeout = setTimeout(later, wait);
         };
+    }
+}
+
+// ===== FUNCIÓN PARA COLAPSAR FILTROS =====
+function toggleFilterGroup(titleElement) {
+    const filterGroup = titleElement.closest('.filter-group');
+    const icon = titleElement.querySelector('.collapse-icon');
+    
+    filterGroup.classList.toggle('collapsed');
+    
+    if (filterGroup.classList.contains('collapsed')) {
+        icon.style.transform = 'rotate(0deg)';
+    } else {
+        icon.style.transform = 'rotate(180deg)';
     }
 }
 
@@ -600,114 +803,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ Sistema Unidades Disponibles inicializado');
 });
 
-// ===== FUNCIÓN PARA COLAPSAR FILTROS =====
-function toggleFilterGroup(titleElement) {
-    const filterGroup = titleElement.closest('.filter-group');
-    const icon = titleElement.querySelector('.collapse-icon');
-    
-    filterGroup.classList.toggle('collapsed');
-    
-    if (filterGroup.classList.contains('collapsed')) {
-        icon.style.transform = 'rotate(0deg)';
-    } else {
-        icon.style.transform = 'rotate(180deg)';
-    }
-}
-
-// ===== CSS ADICIONAL =====
-const additionalCSS = `
-    .loading-state, .empty-state, .error-state, .connection-error {
-        grid-column: 1 / -1;
-        padding: 60px 20px;
-        text-align: center;
-        color: #666;
-    }
-    
-    .loading-spinner {
-        width: 40px;
-        height: 40px;
-        border: 3px solid #f3f3f3;
-        border-top: 3px solid #3D5FAC;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 0 auto 20px;
-    }
-    
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    
-    .btn-retry {
-        background: #3D5FAC;
-        color: white;
-        border: none;
-        padding: 12px 24px;
-        border-radius: 8px;
-        cursor: pointer;
-        margin: 10px 5px;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-    
-    .btn-retry:hover {
-        background: #2a4490;
-        transform: translateY(-2px);
-    }
-    
-    .btn-retry.secondary {
-        background: #6c757d;
-    }
-    
-    .error-details {
-        margin: 20px 0;
-        text-align: left;
-        max-width: 500px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .error-details code {
-        background: #f8f9fa;
-        padding: 2px 6px;
-        border-radius: 4px;
-        font-family: monospace;
-    }
-    
-    .vehicle-featured {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: rgba(255, 193, 7, 0.9);
-        color: #000;
-        padding: 4px 8px;
-        border-radius: 12px;
-        font-size: 12px;
-        font-weight: 600;
-    }
-    
-    .fade-in {
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInUp 0.6s ease forwards;
-    }
-    
-    @keyframes fadeInUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .vehicle-spec-icon {
-        margin-right: 6px;
-        font-size: 14px;
-    }
-`;
-
-// Agregar CSS al documento
-const styleSheet = document.createElement('style');
-styleSheet.textContent = additionalCSS;
-document.head.appendChild(styleSheet);
+// Hacer función disponible globalmente
+window.toggleFilterGroup = toggleFilterGroup;
 
 console.log('🚛 Unidades Disponibles API - Sistema completo cargado');
