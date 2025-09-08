@@ -4,34 +4,569 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unidades Disponibles - Larrosa Camiones</title>
-    <meta name="description" content="Explora nuestra amplia selección de camiones usados. Filtra por marca, año, kilómetros y más. Más de 40 años de experiencia en el sector.">
-    <meta name="keywords" content="camiones usados, venta camiones, Larrosa, Córdoba, Scania, Volvo, Mercedes, tractoras, rígidos">
     
     <!-- CSS Files -->
     <link rel="stylesheet" href="../styles/main.css">
-    <link rel="stylesheet" href="../styles/unidadesDisponibles.css">
     
     <!-- External Libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    <!-- CSS CORREGIDO INLINE -->
+    <style>
+        /* ===== VARIABLES CSS ===== */
+        :root {
+            --primary-blue: #3D5FAC;
+            --primary-white: #ffffff;
+            --primary-black: #1a1a1a;
+            --secondary-gray: #666666;
+            --secondary-dark-blue: #2a4490;
+            --transition-fast: all 0.3s ease;
+            --shadow-medium: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* ===== CATEGORÍAS STICKY ===== */
+        .page-header {
+            background: #f8f9fa;
+            padding: 20px 0 0;
+            margin-top: 80px;
+            border-bottom: none;
+            position: relative;
+            z-index: 100;
+        }
+
+        .categories-container-full {
+            display: grid !important;
+            grid-template-columns: repeat(6, 1fr) !important;
+            gap: 0 !important;
+            margin: 0 !important;
+            padding: 10px 0 !important;
+            background: var(--primary-white) !important;
+            position: sticky !important;
+            top: 80px !important;
+            z-index: 998 !important;
+            width: 100vw !important;
+            margin-left: calc(-50vw + 50%) !important;
+            border-top: 1px solid #e5e7eb !important;
+            border-bottom: 2px solid #e5e7eb !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+        }
+
+        .category-item {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 6px 4px !important;
+            background: var(--primary-white) !important;
+            border-right: 1px solid #e5e7eb !important;
+            cursor: pointer !important;
+            transition: all 0.3s ease !important;
+            text-align: center !important;
+            min-height: 50px !important;
+        }
+
+        .category-item:hover {
+            background: #f8f9fa !important;
+            transform: translateY(-1px) !important;
+        }
+
+        .category-item.active {
+            background: var(--primary-white) !important;
+            border: 2px solid var(--primary-blue) !important;
+            box-shadow: 0 0 0 1px var(--primary-blue) !important;
+        }
+
+        .category-image {
+            width: 28px !important;
+            height: 22px !important;
+            margin-bottom: 4px !important;
+        }
+
+        .category-photo {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: contain !important;
+        }
+
+        .category-name {
+            font-size: 0.7rem !important;
+            font-weight: 600 !important;
+            color: var(--primary-black) !important;
+        }
+
+        .category-count {
+            font-size: 0.6rem !important;
+            color: var(--secondary-gray) !important;
+        }
+
+        /* ===== LAYOUT PRINCIPAL ===== */
+        .content-section-full {
+            padding: 0 !important;
+            background: var(--primary-white) !important;
+            margin-top: 0 !important;
+        }
+
+        .content-layout-full {
+            display: grid !important;
+            grid-template-columns: 280px 1fr !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            gap: 0 !important;
+        }
+
+        .sidebar-filters-full {
+            background: #f8f9fa !important;
+            border-right: 1px solid #e5e7eb !important;
+            padding: 20px !important;
+            overflow-y: auto !important;
+            height: calc(100vh - 160px) !important;
+            position: sticky !important;
+            top: 150px !important;
+        }
+
+        .main-content-full {
+            padding: 20px !important;
+            background: var(--primary-white) !important;
+        }
+
+        /* ===== GRID DE VEHÍCULOS - CORREGIDO ===== */
+        .vehicles-grid {
+            display: grid !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            gap: 1px !important;
+            margin-bottom: 30px !important;
+            padding: 0 !important;
+            background: #e5e7eb !important;
+            border: 1px solid #e5e7eb !important;
+        }
+
+        /* ===== VEHICLE CARD - CORREGIDO ===== */
+        .vehicle-card {
+            background: var(--primary-white) !important;
+            border: none !important;
+            border-radius: 0 !important;
+            overflow: hidden !important;
+            transition: all 0.2s ease !important;
+            cursor: pointer !important;
+            position: relative !important;
+            box-shadow: none !important;
+            display: flex !important;
+            flex-direction: column !important;
+            min-height: 300px !important;
+        }
+
+        .vehicle-card:hover {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+            transform: translateY(-2px) scale(1.02) !important;
+            z-index: 10 !important;
+            border-radius: 8px !important;
+        }
+
+        /* ===== IMAGEN DEL VEHÍCULO ===== */
+        .vehicle-image {
+            position: relative !important;
+            height: 160px !important;
+            overflow: hidden !important;
+            background: #f8f9fa !important;
+            flex-shrink: 0 !important;
+        }
+
+        .vehicle-image img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            transition: transform 0.3s ease !important;
+        }
+
+        .vehicle-card:hover .vehicle-image img {
+            transform: scale(1.05) !important;
+        }
+
+        /* ===== STATUS BADGE ===== */
+        .vehicle-status {
+            position: absolute !important;
+            top: 8px !important;
+            left: 8px !important;
+            background: rgba(40, 167, 69, 0.9) !important;
+            color: white !important;
+            padding: 4px 8px !important;
+            border-radius: 12px !important;
+            font-size: 0.7rem !important;
+            font-weight: 600 !important;
+            text-transform: uppercase !important;
+        }
+
+        .vehicle-status.reserved {
+            background: rgba(255, 193, 7, 0.9) !important;
+            color: #000 !important;
+        }
+
+        .vehicle-status.sold {
+            background: rgba(220, 53, 69, 0.9) !important;
+        }
+
+        .vehicle-featured {
+            position: absolute !important;
+            top: 8px !important;
+            right: 8px !important;
+            background: rgba(255, 193, 7, 0.9) !important;
+            color: #000 !important;
+            padding: 4px 8px !important;
+            border-radius: 12px !important;
+            font-size: 0.65rem !important;
+            font-weight: 600 !important;
+        }
+
+        /* ===== CONTENIDO DEL VEHÍCULO ===== */
+        .vehicle-content {
+            padding: 15px !important;
+            flex: 1 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: space-between !important;
+        }
+
+        .vehicle-title {
+            font-size: 1rem !important;
+            font-weight: 700 !important;
+            color: var(--primary-black) !important;
+            margin-bottom: 8px !important;
+            line-height: 1.2 !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.3px !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            display: -webkit-box !important;
+            -webkit-line-clamp: 2 !important;
+            -webkit-box-orient: vertical !important;
+        }
+
+        .vehicle-subtitle {
+            font-size: 0.8rem !important;
+            color: var(--secondary-gray) !important;
+            margin-bottom: 12px !important;
+            line-height: 1.3 !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            display: -webkit-box !important;
+            -webkit-line-clamp: 2 !important;
+            -webkit-box-orient: vertical !important;
+        }
+
+        /* ===== ESPECIFICACIONES ===== */
+        .vehicle-specs {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            gap: 8px !important;
+            margin-bottom: 12px !important;
+        }
+
+        .vehicle-spec {
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            font-size: 0.75rem !important;
+            color: var(--secondary-gray) !important;
+            padding: 2px 0 !important;
+        }
+
+        .vehicle-spec-icon {
+            width: 16px !important;
+            height: 16px !important;
+            font-size: 14px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex-shrink: 0 !important;
+        }
+
+        .vehicle-spec-value {
+            font-weight: 600 !important;
+            color: var(--primary-black) !important;
+            font-size: 0.75rem !important;
+        }
+
+        /* ===== FOOTER DEL VEHÍCULO ===== */
+        .vehicle-footer {
+            padding: 10px 15px !important;
+            background: #f8f9fa !important;
+            border-top: 1px solid #e5e7eb !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            margin-top: auto !important;
+        }
+
+        .vehicle-location {
+            display: flex !important;
+            align-items: center !important;
+            gap: 6px !important;
+            font-size: 0.75rem !important;
+            color: var(--secondary-gray) !important;
+            text-align: center !important;
+        }
+
+        /* ===== ESTADOS DE CARGA ===== */
+        .loading-state, .empty-state, .error-state, .connection-error {
+            grid-column: 1 / -1;
+            padding: 60px 20px;
+            text-align: center;
+            color: #666;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-retry {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-retry:hover {
+            background: var(--secondary-dark-blue);
+            transform: translateY(-2px);
+        }
+
+        /* ===== ANIMACIONES ===== */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1200px) {
+            .vehicles-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .vehicles-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            
+            .content-layout-full {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .sidebar-filters-full {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .vehicles-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        /* ===== FILTROS (mantengo solo lo esencial) ===== */
+        .filter-group {
+            margin-bottom: 15px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            overflow: hidden;
+        }
+
+        .filter-title {
+            padding: 15px;
+            background: #f8f9fa;
+            cursor: pointer;
+            font-weight: 600;
+            border: none;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .filter-content {
+            padding: 15px;
+        }
+
+        .filter-checkbox {
+            display: flex;
+            align-items: center;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+
+        .filter-checkbox input {
+            margin-right: 10px;
+        }
+
+        /* ===== RESULTS HEADER ===== */
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .results-tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            padding: 10px 16px;
+            background: #f8f9fa;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .tab-btn.active {
+            background: white;
+            border-bottom: 2px solid var(--primary-blue);
+        }
+
+        .sort-dropdown {
+            position: relative;
+        }
+
+        .sort-btn {
+            padding: 10px 16px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sort-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 100;
+            min-width: 180px;
+            display: none;
+        }
+
+        .sort-option {
+            display: block;
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            background: none;
+            text-align: left;
+            cursor: pointer;
+        }
+
+        .sort-option:hover {
+            background: #f8f9fa;
+        }
+
+        .sort-option.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* ===== FILTROS MÓVILES ===== */
+        .mobile-filter-toggle {
+            display: none;
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 15px;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-filter-toggle {
+                display: flex;
+            }
+        }
+
+        .filter-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .filter-overlay.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar-filters-full {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                height: 100vh;
+                z-index: 1000;
+                transition: left 0.3s ease;
+                display: block;
+            }
+
+            .sidebar-filters-full.active {
+                left: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
-        <!-- Navegación fija -->
         <nav class="navbar">
             <div class="nav-container">
-                <!-- Logo -->
                 <div class="nav-logo">
                     <a href="../index.html">
                         <img src="../assets/Original.pdf" alt="Larrosa Camiones" class="logo">
                     </a>
                 </div>
-                
-                <!-- Menú principal -->
                 <ul class="nav-menu">
                     <li class="nav-item">
                         <a href="../index.html" class="nav-link">Inicio</a>
@@ -46,15 +581,11 @@
                         <a href="contacto.html" class="nav-link">Contacto</a>
                     </li>
                 </ul>
-                
-                <!-- Botón derecha -->
                 <div class="nav-button">
                     <a href="LarrosaCamiones.html#randon" class="btn-special">
                         <img src="../assets/Logo negro sin fondo.png" alt="Randon" class="btn-icon">
                     </a>
                 </div>
-                
-                <!-- Hamburger para móvil -->
                 <div class="hamburger">
                     <span class="bar"></span>
                     <span class="bar"></span>
@@ -64,7 +595,6 @@
         </nav>
     </header>
 
-    <!-- Main Content -->
     <main id="main-content">
         <!-- Page Header -->
         <section class="page-header">
@@ -158,49 +688,35 @@
                                 <span>Limpiar</span>
                                 <i class="fas fa-redo"></i>
                             </button>
-                            <button class="save-search-btn">
-                                <span>Guardar</span>
-                                <i class="fas fa-bookmark"></i>
-                            </button>
                         </div>
                     </div>
 
                     <!-- Tipo Filter -->
-                    <div class="filter-group collapsible collapsed">
-                        <h3 class="filter-title" onclick="toggleFilterGroup(this)">
+                    <div class="filter-group">
+                        <button class="filter-title" onclick="toggleFilterGroup(this)">
                             <span>Tipo</span>
-                            <i class="fas fa-chevron-down collapse-icon"></i>
-                        </h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
                         <div class="filter-content">
                             <div class="filter-options">
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="tipo" value="camion-tractor">
-                                    <span class="checkmark"></span>
-                                    <img src="../assets/Camion Tractor.png" alt="Camión Tractor" class="filter-icon">
                                     <span class="option-text">Camión Tractor</span>
                                 </label>
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="tipo" value="camion-chasis">
-                                    <span class="checkmark"></span>
-                                    <img src="../assets/Camion Chasis.png" alt="Camión Chasis" class="filter-icon">
                                     <span class="option-text">Camión Chasis</span>
                                 </label>
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="tipo" value="remolques">
-                                    <span class="checkmark"></span>
-                                    <img src="../assets/Remolques.png" alt="Remolques" class="filter-icon">
                                     <span class="option-text">Remolques</span>
                                 </label>
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="tipo" value="utilitarios">
-                                    <span class="checkmark"></span>
-                                    <img src="../assets/Utilitarios.png" alt="Utilitarios" class="filter-icon">
                                     <span class="option-text">Utilitarios</span>
                                 </label>
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="tipo" value="varios">
-                                    <span class="checkmark"></span>
-                                    <img src="../assets/Varios.png" alt="Varios" class="filter-icon">
                                     <span class="option-text">Varios</span>
                                 </label>
                             </div>
@@ -208,82 +724,29 @@
                     </div>
 
                     <!-- Marca Filter -->
-                    <div class="filter-group collapsible collapsed">
-                        <h3 class="filter-title" onclick="toggleFilterGroup(this)">
+                    <div class="filter-group">
+                        <button class="filter-title" onclick="toggleFilterGroup(this)">
                             <span>Marca</span>
-                            <i class="fas fa-chevron-down collapse-icon"></i>
-                        </h3>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
                         <div class="filter-content">
                             <div class="filter-options">
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="marca" value="scania">
-                                    <span class="checkmark"></span>
                                     <span class="option-text">Scania</span>
                                 </label>
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="marca" value="volvo">
-                                    <span class="checkmark"></span>
                                     <span class="option-text">Volvo</span>
                                 </label>
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="marca" value="mercedes">
-                                    <span class="checkmark"></span>
                                     <span class="option-text">Mercedes</span>
                                 </label>
                                 <label class="filter-checkbox">
                                     <input type="checkbox" name="marca" value="iveco">
-                                    <span class="checkmark"></span>
                                     <span class="option-text">Iveco</span>
                                 </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="marca" value="volkswagen">
-                                    <span class="checkmark"></span>
-                                    <span class="option-text">Volkswagen</span>
-                                </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="marca" value="renault">
-                                    <span class="checkmark"></span>
-                                    <span class="option-text">Renault</span>
-                                </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="marca" value="ford">
-                                    <span class="checkmark"></span>
-                                    <span class="option-text">Ford</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Año Range -->
-                    <div class="filter-group collapsible collapsed">
-                        <h3 class="filter-title" onclick="toggleFilterGroup(this)">
-                            <span>Año</span>
-                            <i class="fas fa-chevron-down collapse-icon"></i>
-                        </h3>
-                        <div class="filter-content">
-                            <div class="range-filter">
-                                <div class="range-inputs">
-                                    <input type="number" placeholder="Desde" class="range-input" id="year-min" min="2000" max="2025">
-                                    <span class="range-separator">-</span>
-                                    <input type="number" placeholder="Hasta" class="range-input" id="year-max" min="2000" max="2025">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Kilómetros Range -->
-                    <div class="filter-group collapsible collapsed">
-                        <h3 class="filter-title" onclick="toggleFilterGroup(this)">
-                            <span>Kilómetros</span>
-                            <i class="fas fa-chevron-down collapse-icon"></i>
-                        </h3>
-                        <div class="filter-content">
-                            <div class="range-filter">
-                                <div class="range-inputs">
-                                    <input type="number" placeholder="Desde" class="range-input" id="km-min" min="0" max="1000000">
-                                    <span class="range-separator">-</span>
-                                    <input type="number" placeholder="Hasta" class="range-input" id="km-max" min="0" max="1000000">
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -326,22 +789,13 @@
                         </div>
                     </div>
 
-                    <!-- Grid de Vehículos -->
+                    <!-- Grid de Vehículos - CORREGIDO -->
                     <div class="vehicles-grid" id="vehicles-grid">
-                        <!-- Los vehículos se cargarán aquí desde la API -->
                         <div class="loading-state" id="loading-state">
                             <div class="loading-spinner"></div>
                             <h3>🔄 Cargando vehículos</h3>
                             <p>Conectando con la base de datos...</p>
                         </div>
-                    </div>
-
-                    <!-- Load More Button -->
-                    <div class="load-more-container">
-                        <button class="load-more-btn" id="load-more-btn" style="display: none;">
-                            <span>Cargar más vehículos</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -351,95 +805,22 @@
     <!-- Overlay para móvil -->
     <div class="filter-overlay" id="filter-overlay"></div>
     
-    <!-- Brands Section -->
-    <section class="brands">
-        <div class="container">
-            <div class="brands-carousel">
-                <div class="brands-track">
-                    <img src="../assets/Scania.png" alt="Scania" class="brand-logo">
-                    <img src="../assets/Volvo.png" alt="Volvo" class="brand-logo">
-                    <img src="../assets/Mercedez.png" alt="Mercedes-Benz" class="brand-logo">
-                    <img src="../assets/Iveco.png" alt="Iveco" class="brand-logo">
-                    <img src="../assets/Volkswagen.png" alt="Volkswagen" class="brand-logo">
-                    <img src="../assets/Renault.png" alt="Renault" class="brand-logo">
-                    <img src="../assets/Ford.png" alt="Ford" class="brand-logo">
-                    <img src="../assets/Logo negro sin fondo.png" alt="Randon" class="brand-logo">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <img src="../assets/Blanco fondo negro.pdf" alt="Larrosa Camiones" class="footer-logo">
-                    <p>40 años comercializando camiones. Tu socio confiable en el transporte de cargas.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
-                    </div>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Navegación</h4>
-                    <ul>
-                        <li><a href="../index.html">Inicio</a></li>
-                        <li><a href="unidadesDisponibles.html">Unidades Disponibles</a></li>
-                        <li><a href="LarrosaCamiones.html">Larrosa Camiones</a></li>
-                        <li><a href="contacto.html">Contacto</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>La Empresa</h4>
-                    <ul>
-                        <li><a href="LarrosaCamiones.html#historia">Nuestra Historia</a></li>
-                        <li><a href="LarrosaCamiones.html#valores">Valores</a></li>
-                        <li><a href="LarrosaCamiones.html#randon">Concesión Randon</a></li>
-                        <li><a href="LarrosaCamiones.html#instalaciones">Instalaciones</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-section">
-                    <h4>Contacto</h4>
-                    <div class="contact-info">
-                        <p><i class="fas fa-map-marker-alt"></i> Villa María, Córdoba</p>
-                        <p><i class="fas fa-phone"></i> +54 353 XXX-XXXX</p>
-                        <p><i class="fas fa-envelope"></i> info@larrosacamiones.com</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Admin section -->
-            <div class="footer-admin">
-                <a href="../admin/login.html" 
-                   class="btn-admin-footer" 
-                   title="Panel de Administración">
-                    <i class="fas fa-user-shield"></i>
-                    <span>Administración</span>
-                </a>
-            </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2025 Larrosa Camiones. Todos los derechos reservados.</p>
-            </div>
+    <!-- Footer básico -->
+    <footer style="padding: 40px 0; background: #f8f9fa; text-align: center;">
+        <div style="container">
+            <p>&copy; 2025 Larrosa Camiones. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <!-- SCRIPTS CORREGIDOS PARA ERROR 422 -->
+    <!-- JAVASCRIPT CORREGIDO -->
     <script>
-        // ===== API CLIENT CORREGIDO PARA ERROR 422 =====
+        // ===== API CLIENT CORREGIDO =====
         class APIClient {
             constructor() {
                 this.baseURL = 'http://localhost:8000/api/v1';
                 this.timeout = 10000;
-                this.retries = 3;
             }
 
-            // CORREGIDO: Método request actualizado
             async request(endpoint, options = {}) {
                 const url = `${this.baseURL}${endpoint}`;
                 const config = {
@@ -485,14 +866,11 @@
                 }
             }
 
-            // CORREGIDO: getVehicles con parámetros válidos
             async getVehicles(params = {}) {
-                // Filtrar parámetros válidos según tu backend
                 const validParams = {};
                 
-                // Solo incluir parámetros que tu backend acepta
                 if (params.skip !== undefined) validParams.skip = params.skip;
-                if (params.limit !== undefined) validParams.limit = Math.min(params.limit, 100); // Max 100
+                if (params.limit !== undefined) validParams.limit = Math.min(params.limit, 100);
                 if (params.search) validParams.search = params.search;
                 if (params.vehicle_type) validParams.vehicle_type = params.vehicle_type;
                 if (params.brand) validParams.brand = params.brand;
@@ -506,18 +884,6 @@
                 const queryString = new URLSearchParams(validParams).toString();
                 const endpoint = `/vehicles${queryString ? `?${queryString}` : ''}`;
                 return await this.request(endpoint);
-            }
-
-            async getVehicle(id) {
-                return await this.request(`/vehicles/${id}`);
-            }
-
-            async getVehicleStats() {
-                return await this.request('/vehicles/stats');
-            }
-
-            async getFeaturedVehicles(limit = 4) {
-                return await this.request(`/vehicles/featured?limit=${Math.min(limit, 10)}`);
             }
 
             getImageUrl(imageData) {
@@ -539,46 +905,30 @@
                 
                 if (typeof imageData === 'object') {
                     const imagePath = imageData.file_path || imageData.filename || imageData.url || imageData.path;
-                    
                     if (imagePath) {
                         return this.getImageUrl(imagePath);
                     }
                 }
                 
-                console.warn('⚠️ No se pudo determinar la URL de la imagen:', imageData);
                 return '../assets/imagenes/placeholder-vehicle.jpg';
-            }
-
-            handleImageError(imgElement) {
-                if (imgElement && imgElement.src !== '../assets/imagenes/placeholder-vehicle.jpg') {
-                    imgElement.src = '../assets/imagenes/placeholder-vehicle.jpg';
-                    imgElement.alt = 'Imagen no disponible';
-                    console.log('🖼️ Imagen de fallback cargada');
-                }
             }
         }
 
-        // ===== UNIDADES DISPONIBLES CORREGIDO =====
-        
-        // Variables globales
+        // ===== VARIABLES GLOBALES =====
         let vehiclesData = [];
         let filteredVehicles = [];
         let currentFilters = {
             category: 'all',
             search: '',
             tipo: [],
-            marca: [],
-            yearMin: null,
-            yearMax: null,
-            kmMin: null,
-            kmMax: null
+            marca: []
         };
         let isLoading = false;
         let currentPage = 1;
         let vehiclesPerPage = 24;
         let currentSort = 'relevance';
 
-        // Clase principal
+        // ===== CLASE PRINCIPAL =====
         class UnidadesDisponiblesAPI {
             constructor() {
                 this.apiClient = new APIClient();
@@ -588,7 +938,6 @@
             async init() {
                 console.log('🚛 Iniciando Unidades Disponibles con API...');
                 
-                // Verificar conexión PRIMERO
                 const connected = await this.testConnection();
                 
                 if (connected) {
@@ -599,7 +948,6 @@
                     this.showConnectionError();
                 }
                 
-                // Inicializar componentes
                 this.setupCategories();
                 this.setupFilters();
                 this.setupUI();
@@ -608,7 +956,6 @@
 
             async testConnection() {
                 try {
-                    // Probar con endpoint simple
                     const response = await fetch('http://localhost:8000/health');
                     if (response.ok) {
                         this.showConnectionStatus(true);
@@ -627,10 +974,9 @@
                     this.showLoading(true);
                     console.log('📦 Cargando vehículos desde API...');
                     
-                    // CORREGIDO: usar parámetros válidos
                     const response = await this.apiClient.getVehicles({ 
                         skip: 0, 
-                        limit: 100  // Cambiar de 1000 a 100
+                        limit: 100
                     });
                     
                     console.log('📊 Respuesta de la API:', response);
@@ -641,13 +987,11 @@
                         
                         console.log(`✅ ${vehiclesData.length} vehículos cargados`);
                         
-                        // Actualizar UI
                         this.updateVehicleCount(vehiclesData.length);
                         this.updateCategoryCounters();
                         this.renderVehicles();
                         
                     } else if (response && Array.isArray(response)) {
-                        // Si la respuesta es directamente un array
                         vehiclesData = response;
                         filteredVehicles = [...vehiclesData];
                         
@@ -670,6 +1014,7 @@
                 }
             }
 
+            // ===== RENDERIZAR VEHÍCULOS - CORREGIDO =====
             renderVehicles() {
                 const grid = document.getElementById('vehicles-grid');
                 if (!grid) {
@@ -684,8 +1029,9 @@
                     return;
                 }
 
-                // Limpiar grid
+                // Limpiar grid y asegurar que tenga la clase correcta
                 grid.innerHTML = '';
+                grid.className = 'vehicles-grid'; // FORZAR CLASE CORRECTA
 
                 // Crear cards
                 const vehiclesToShow = filteredVehicles.slice(0, currentPage * vehiclesPerPage);
@@ -701,6 +1047,7 @@
                 console.log(`✅ ${vehiclesToShow.length} tarjetas renderizadas`);
             }
 
+            // ===== CREAR TARJETA DE VEHÍCULO - CORREGIDO =====
             createVehicleCard(vehicle) {
                 if (!vehicle) {
                     console.warn('⚠️ Vehículo inválido:', vehicle);
@@ -712,56 +1059,75 @@
                 card.dataset.vehicleId = vehicle.id;
                 card.dataset.vehicleData = JSON.stringify(vehicle);
 
+                // MAPEAR PROPIEDADES DEL BACKEND A LO QUE ESPERA EL FRONTEND
+                const vehicleData = {
+                    id: vehicle.id,
+                    // Manejar diferentes nombres de propiedades
+                    fullName: vehicle.full_name || vehicle.fullName || `${vehicle.brand || ''} ${vehicle.model || ''}`.trim(),
+                    brand: vehicle.brand || 'Marca no especificada',
+                    model: vehicle.model || 'Modelo no especificado',
+                    year: vehicle.year || 'N/A',
+                    kilometers: vehicle.kilometers || vehicle.km || 0,
+                    power: vehicle.power || vehicle.hp || 0,
+                    transmission: vehicle.transmission || 'Manual',
+                    type: vehicle.type || vehicle.vehicle_type || 'varios',
+                    status: vehicle.status || 'Disponible',
+                    location: vehicle.location || 'Villa María, Córdoba',
+                    description: vehicle.description || vehicle.type_name || vehicle.typeName || 'Vehículo comercial',
+                    images: vehicle.images || [],
+                    is_featured: vehicle.is_featured || false
+                };
+
                 // Imagen del vehículo
-                const imageUrl = this.getVehicleImageUrl(vehicle);
+                const imageUrl = this.getVehicleImageUrl(vehicleData);
                 
                 // Estado del vehículo
-                const statusClass = this.getStatusClass(vehicle.status);
+                const statusClass = this.getStatusClass(vehicleData.status);
 
                 card.innerHTML = `
                     <div class="vehicle-image">
                         <img src="${imageUrl}" 
-                             alt="${vehicle.full_name || vehicle.fullName || 'Vehículo'}" 
+                             alt="${vehicleData.fullName}" 
                              loading="lazy"
                              onerror="this.src='../assets/imagenes/placeholder-vehicle.jpg'">
                         <div class="vehicle-status ${statusClass}">
-                            ${vehicle.status || 'Disponible'}
+                            ${vehicleData.status}
                         </div>
-                        ${vehicle.is_featured ? '<div class="vehicle-featured">⭐ Destacado</div>' : ''}
+                        ${vehicleData.is_featured ? '<div class="vehicle-featured">⭐ Destacado</div>' : ''}
                     </div>
                     <div class="vehicle-content">
-                        <h3 class="vehicle-title">${vehicle.full_name || vehicle.fullName || 'Vehículo sin nombre'}</h3>
-                        <p class="vehicle-subtitle">${vehicle.description || vehicle.type_name || vehicle.typeName || 'Vehículo comercial'}</p>
+                        <h3 class="vehicle-title">${vehicleData.fullName}</h3>
+                        <p class="vehicle-subtitle">${vehicleData.description}</p>
                         <div class="vehicle-specs">
                             <div class="vehicle-spec">
                                 <span class="vehicle-spec-icon">📅</span>
-                                <span class="vehicle-spec-value">${vehicle.year || 'N/A'}</span>
+                                <span class="vehicle-spec-value">${vehicleData.year}</span>
                             </div>
                             <div class="vehicle-spec">
                                 <span class="vehicle-spec-icon">🛣️</span>
-                                <span class="vehicle-spec-value">${this.formatNumber(vehicle.kilometers || 0)} km</span>
+                                <span class="vehicle-spec-value">${this.formatNumber(vehicleData.kilometers)} km</span>
                             </div>
                             <div class="vehicle-spec">
                                 <span class="vehicle-spec-icon">⚙️</span>
-                                <span class="vehicle-spec-value">${vehicle.transmission || 'Manual'}</span>
+                                <span class="vehicle-spec-value">${vehicleData.transmission}</span>
                             </div>
                             <div class="vehicle-spec">
                                 <span class="vehicle-spec-icon">🔋</span>
-                                <span class="vehicle-spec-value">${vehicle.power || 0} HP</span>
+                                <span class="vehicle-spec-value">${vehicleData.power} HP</span>
                             </div>
                         </div>
                     </div>
                     <div class="vehicle-footer">
                         <div class="vehicle-location">
                             <span>🇦🇷</span>
-                            <span>${vehicle.location || 'Villa María, Córdoba'}</span>
+                            <span>${vehicleData.location}</span>
                         </div>
                     </div>
                 `;
 
                 // Event listener para click
                 card.addEventListener('click', () => {
-                    this.goToVehicleDetail(vehicle);
+                    this.goToVehicleDetail(vehicleData);
                 });
 
                 return card;
@@ -772,12 +1138,9 @@
                 
                 categoryItems.forEach(item => {
                     item.addEventListener('click', () => {
-                        // Remover active de todas
                         categoryItems.forEach(cat => cat.classList.remove('active'));
-                        // Activar actual
                         item.classList.add('active');
                         
-                        // Aplicar filtro
                         const category = item.dataset.category;
                         this.filterByCategory(category);
                     });
@@ -785,7 +1148,6 @@
             }
 
             setupFilters() {
-                // Buscador
                 const searchInput = document.getElementById('filter-search');
                 if (searchInput) {
                     searchInput.addEventListener('input', this.debounce((e) => {
@@ -794,7 +1156,6 @@
                     }, 300));
                 }
 
-                // Botón limpiar
                 const clearBtn = document.querySelector('.clear-all-btn');
                 if (clearBtn) {
                     clearBtn.addEventListener('click', () => {
@@ -802,7 +1163,6 @@
                     });
                 }
 
-                // Filtros de tipo
                 const typeCheckboxes = document.querySelectorAll('input[name="tipo"]');
                 typeCheckboxes.forEach(checkbox => {
                     checkbox.addEventListener('change', () => {
@@ -810,7 +1170,6 @@
                     });
                 });
 
-                // Filtros de marca
                 const brandCheckboxes = document.querySelectorAll('input[name="marca"]');
                 brandCheckboxes.forEach(checkbox => {
                     checkbox.addEventListener('change', () => {
@@ -820,7 +1179,6 @@
             }
 
             setupUI() {
-                // Configurar sorting
                 const sortBtn = document.querySelector('.sort-btn');
                 const sortMenu = document.querySelector('.sort-menu');
                 const sortOptions = document.querySelectorAll('.sort-option');
@@ -837,14 +1195,12 @@
                         this.sortVehicles(sortType);
                         sortMenu.style.display = 'none';
                         
-                        // Actualizar UI del botón
                         sortOptions.forEach(opt => opt.classList.remove('active'));
                         option.classList.add('active');
                         sortBtn.querySelector('span').textContent = option.textContent;
                     });
                 });
 
-                // Configurar mobile filters
                 this.setupMobileToggle();
             }
 
@@ -871,12 +1227,10 @@
             checkURLFilters() {
                 const urlParams = new URLSearchParams(window.location.search);
                 
-                // Verificar filtro de categoría
                 const category = urlParams.get('category') || urlParams.get('filter');
                 if (category && category !== 'all') {
                     console.log(`🏷️ Filtro de categoría desde URL: ${category}`);
                     
-                    // Activar categoría correspondiente
                     const categoryItems = document.querySelectorAll('.category-item');
                     categoryItems.forEach(item => {
                         item.classList.remove('active');
@@ -889,7 +1243,6 @@
                     this.applyFilters();
                 }
                 
-                // Verificar búsqueda
                 const search = urlParams.get('search');
                 if (search) {
                     currentFilters.search = search;
@@ -927,16 +1280,21 @@
                 console.log('🔍 Aplicando filtros:', currentFilters);
                 
                 filteredVehicles = vehiclesData.filter(vehicle => {
+                    // Mapear propiedades para compatibilidad
+                    const vehicleType = vehicle.type || vehicle.vehicle_type || 'varios';
+                    const vehicleBrand = vehicle.brand || '';
+                    const vehicleName = vehicle.full_name || vehicle.fullName || `${vehicleBrand} ${vehicle.model || ''}`;
+                    
                     // Filtro por categoría
                     if (currentFilters.category && currentFilters.category !== 'all') {
-                        if (vehicle.type !== currentFilters.category) {
+                        if (vehicleType !== currentFilters.category) {
                             return false;
                         }
                     }
                     
                     // Filtro por búsqueda
                     if (currentFilters.search) {
-                        const searchText = `${vehicle.brand} ${vehicle.model} ${vehicle.full_name || vehicle.fullName}`.toLowerCase();
+                        const searchText = `${vehicleBrand} ${vehicle.model} ${vehicleName}`.toLowerCase();
                         if (!searchText.includes(currentFilters.search)) {
                             return false;
                         }
@@ -944,7 +1302,7 @@
 
                     // Filtro por tipo
                     if (currentFilters.tipo && currentFilters.tipo.length > 0) {
-                        if (!currentFilters.tipo.includes(vehicle.type)) {
+                        if (!currentFilters.tipo.includes(vehicleType)) {
                             return false;
                         }
                     }
@@ -952,7 +1310,7 @@
                     // Filtro por marca
                     if (currentFilters.marca && currentFilters.marca.length > 0) {
                         const brandMatches = currentFilters.marca.some(marca => 
-                            vehicle.brand.toLowerCase().includes(marca.toLowerCase())
+                            vehicleBrand.toLowerCase().includes(marca.toLowerCase())
                         );
                         if (!brandMatches) {
                             return false;
@@ -974,23 +1332,16 @@
                     category: 'all',
                     search: '',
                     tipo: [],
-                    marca: [],
-                    yearMin: null,
-                    yearMax: null,
-                    kmMin: null,
-                    kmMax: null
+                    marca: []
                 };
                 
-                // Limpiar UI
                 const searchInput = document.getElementById('filter-search');
                 if (searchInput) searchInput.value = '';
                 
-                // Limpiar checkboxes
                 document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
                     cb.checked = false;
                 });
                 
-                // Activar categoría "all"
                 document.querySelectorAll('.category-item').forEach(item => {
                     item.classList.remove('active');
                 });
@@ -1010,12 +1361,11 @@
                         case 'year-asc':
                             return (a.year || 0) - (b.year || 0);
                         case 'km-asc':
-                            return (a.kilometers || 0) - (b.kilometers || 0);
+                            return (a.kilometers || a.km || 0) - (b.kilometers || b.km || 0);
                         case 'km-desc':
-                            return (b.kilometers || 0) - (a.kilometers || 0);
+                            return (b.kilometers || b.km || 0) - (a.kilometers || a.km || 0);
                         case 'relevance':
                         default:
-                            // Destacados primero, luego por fecha de creación
                             if (a.is_featured && !b.is_featured) return -1;
                             if (!a.is_featured && b.is_featured) return 1;
                             return new Date(b.created_at || b.date_added || 0) - new Date(a.created_at || a.date_added || 0);
@@ -1025,7 +1375,7 @@
                 this.renderVehicles();
             }
 
-            // Utilidades
+            // ===== UTILIDADES =====
             getVehicleImageUrl(vehicle) {
                 if (vehicle.images && vehicle.images.length > 0) {
                     return this.apiClient.getImageUrl(vehicle.images[0]);
@@ -1056,19 +1406,15 @@
             }
 
             updateCategoryCounters() {
-                // Contar vehículos por categoría
                 const categoryCounts = {
                     'all': vehiclesData.length
                 };
                 
                 vehiclesData.forEach(vehicle => {
-                    const type = vehicle.type;
-                    if (type) {
-                        categoryCounts[type] = (categoryCounts[type] || 0) + 1;
-                    }
+                    const type = vehicle.type || vehicle.vehicle_type || 'varios';
+                    categoryCounts[type] = (categoryCounts[type] || 0) + 1;
                 });
                 
-                // Actualizar contadores en la UI
                 document.querySelectorAll('.category-item').forEach(item => {
                     const category = item.dataset.category;
                     const countElement = item.querySelector('.category-count');
@@ -1082,36 +1428,24 @@
             }
 
             goToVehicleDetail(vehicle) {
-                console.log(`🔗 Navegando al detalle del vehículo: ${vehicle.full_name || vehicle.fullName}`);
+                console.log(`🔗 Navegando al detalle del vehículo: ${vehicle.fullName}`);
                 
-                // Guardar datos del vehículo en sessionStorage
                 sessionStorage.setItem('currentVehicle', JSON.stringify(vehicle));
-                
-                // Redirigir a página de detalle
                 window.location.href = `detalleVehiculo.html?id=${vehicle.id}`;
             }
 
-            // Estados de UI
+            // ===== ESTADOS DE UI =====
             showLoading(show) {
-                const loadingState = document.getElementById('loading-state');
                 const grid = document.getElementById('vehicles-grid');
                 
                 if (show) {
-                    if (loadingState) {
-                        loadingState.style.display = 'flex';
-                    } else {
-                        grid.innerHTML = `
-                            <div class="loading-state">
-                                <div class="loading-spinner"></div>
-                                <h3>🔄 Cargando vehículos</h3>
-                                <p>Conectando con la base de datos...</p>
-                            </div>
-                        `;
-                    }
-                } else {
-                    if (loadingState) {
-                        loadingState.style.display = 'none';
-                    }
+                    grid.innerHTML = `
+                        <div class="loading-state">
+                            <div class="loading-spinner"></div>
+                            <h3>🔄 Cargando vehículos</h3>
+                            <p>Conectando con la base de datos...</p>
+                        </div>
+                    `;
                 }
                 
                 isLoading = show;
@@ -1241,200 +1575,34 @@
             }
         }
 
-        // Función para colapsar filtros
+        // ===== FUNCIÓN PARA COLAPSAR FILTROS =====
         function toggleFilterGroup(titleElement) {
             const filterGroup = titleElement.closest('.filter-group');
-            const icon = titleElement.querySelector('.collapse-icon');
+            const content = filterGroup.querySelector('.filter-content');
+            const icon = titleElement.querySelector('i');
             
-            filterGroup.classList.toggle('collapsed');
-            
-            if (filterGroup.classList.contains('collapsed')) {
-                icon.style.transform = 'rotate(0deg)';
-            } else {
+            if (content.style.display === 'none' || !content.style.display) {
+                content.style.display = 'block';
                 icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.style.display = 'none';
+                icon.style.transform = 'rotate(0deg)';
             }
         }
 
-        // Inicialización
+        // ===== INICIALIZACIÓN =====
         let unidadesAPI;
 
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 Inicializando Unidades Disponibles API (CORREGIDO)...');
             
-            // Crear nueva instancia
             unidadesAPI = new UnidadesDisponiblesAPI();
             
-            // Hacer disponible globalmente
             window.unidadesAPI = unidadesAPI;
             window.toggleFilterGroup = toggleFilterGroup;
             
             console.log('✅ Sistema Unidades Disponibles inicializado');
         });
     </script>
-
-    <!-- CSS adicional -->
-    <style>
-        .loading-state, .empty-state, .error-state, .connection-error {
-            grid-column: 1 / -1;
-            padding: 60px 20px;
-            text-align: center;
-            color: #666;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 400px;
-        }
-        
-        .loading-spinner {
-            width: 40px;
-            height: 40px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #3D5FAC;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .btn-retry {
-            background: #3D5FAC;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 10px 5px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-retry:hover {
-            background: #2a4490;
-            transform: translateY(-2px);
-        }
-        
-        .error-details {
-            margin: 20px 0;
-            text-align: left;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .error-details code {
-            background: #f8f9fa;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: monospace;
-        }
-        
-        .vehicle-featured {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(255, 193, 7, 0.9);
-            color: #000;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 0.6s ease forwards;
-        }
-        
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .vehicle-spec-icon {
-            margin-right: 6px;
-            font-size: 14px;
-        }
-
-        .sort-menu {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            z-index: 100;
-            min-width: 180px;
-        }
-
-        .sort-option {
-            display: block;
-            width: 100%;
-            padding: 12px 16px;
-            border: none;
-            background: none;
-            text-align: left;
-            cursor: pointer;
-            border-bottom: 1px solid #eee;
-        }
-
-        .sort-option:hover {
-            background: #f8f9fa;
-        }
-
-        .sort-option.active {
-            background: #3D5FAC;
-            color: white;
-        }
-
-        .sort-option:last-child {
-            border-bottom: none;
-        }
-
-        .sidebar-filters-full.active {
-            transform: translateX(0);
-        }
-
-        .filter-overlay.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .filter-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        @media (max-width: 768px) {
-            .sidebar-filters-full {
-                position: fixed;
-                top: 0;
-                left: 0;
-                height: 100vh;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                z-index: 1000;
-                background: white;
-                overflow-y: auto;
-            }
-        }
-    </style>
 </body>
 </html>
