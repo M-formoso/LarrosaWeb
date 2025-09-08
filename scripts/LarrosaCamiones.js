@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeCTAButtons();
     initializePerformanceMonitoring();
     initializeAccessibility();
+    initializeBannerCarousel();
     
     console.log('✅ Larrosa Camiones inicializado correctamente');
 });
@@ -1479,3 +1480,259 @@ window.LarrosaCamiones = {
     trackFormStep,
     trackFormSubmission
 };
+// ===== CARRUSEL MÁS LENTO - REEMPLAZA LA FUNCIÓN initializeBannerCarousel() EXISTENTE =====
+
+function initializeBannerCarousel() {
+    const carousel = document.querySelector('.banner-carousel');
+    if (!carousel) return; // Si no existe el carrusel, salir
+    
+    const slides = document.querySelector('.banner-slides');
+    const indicators = document.querySelectorAll('.indicator');
+    const prevBtn = document.querySelector('.banner-nav.prev');
+    const nextBtn = document.querySelector('.banner-nav.next');
+    
+    let currentSlide = 0;
+    const totalSlides = 2; // Solo contamos las 2 imágenes originales
+    let isAnimationPaused = false;
+    
+    // Configuración de tiempos (en milisegundos)
+    const ANIMATION_DURATION = 8000; // 8 segundos total
+    const IMAGE_DISPLAY_TIME = 3000; // 3 segundos mostrando cada imagen
+    const TRANSITION_TIME = 1000; // 1 segundo de transición
+    
+    // Función para cambiar slide manualmente con transición suave
+    function goToSlide(slideIndex) {
+        currentSlide = slideIndex;
+        
+        // Actualizar indicadores
+        updateIndicators();
+        
+        // Calcular el momento exacto en la animación donde debe estar cada imagen
+        // Imagen 0: 0% a 37.5% (3s de display)
+        // Imagen 1: 50% a 87.5% (3s de display)
+        let targetTime;
+        if (slideIndex === 0) {
+            targetTime = 0; // Mostrar al inicio del ciclo
+        } else {
+            targetTime = ANIMATION_DURATION * 0.5; // Mostrar en el 50% del ciclo
+        }
+        
+        // Reiniciar animación con el delay apropiado
+        slides.style.animation = 'none';
+        slides.offsetHeight; // Trigger reflow
+        
+        slides.style.animation = `bannerSlideSlowInfinite ${ANIMATION_DURATION}ms infinite ease-in-out`;
+        slides.style.animationDelay = `-${targetTime}ms`;
+        
+        // Anunciar cambio para lectores de pantalla
+        announceSlideChange(currentSlide);
+    }
+    
+    // Función para actualizar indicadores
+    function updateIndicators() {
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentSlide);
+            indicator.setAttribute('aria-current', index === currentSlide ? 'true' : 'false');
+        });
+    }
+    
+    // Función para anunciar cambios a lectores de pantalla
+    function announceSlideChange(slideIndex) {
+        const announcement = document.createElement('div');
+        announcement.setAttribute('aria-live', 'polite');
+        announcement.setAttribute('aria-atomic', 'true');
+        announcement.style.cssText = 'position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden;';
+        announcement.textContent = `Imagen ${slideIndex + 1} de ${totalSlides}`;
+        
+        document.body.appendChild(announcement);
+        setTimeout(() => document.body.removeChild(announcement), 1000);
+    }
+    
+    // Event listeners para indicadores
+    indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+            goToSlide(index);
+        });
+        
+        // Soporte para teclado en indicadores
+        indicator.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                goToSlide(index);
+            }
+        });
+    });
+    
+    // Event listeners para botones de navegación
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            const newSlide = currentSlide === 0 ? totalSlides - 1 : currentSlide - 1;
+            goToSlide(newSlide);
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            const newSlide = currentSlide === totalSlides - 1 ? 0 : currentSlide + 1;
+            goToSlide(newSlide);
+        });
+    }
+    
+    // Seguimiento del slide actual para el carrusel con nuevos tiempos
+    function trackCurrentSlide() {
+        setInterval(() => {
+            if (isAnimationPaused) return;
+            
+            // Obtener el tiempo transcurrido en el ciclo actual
+            const currentTime = Date.now();
+            const elapsed = currentTime % ANIMATION_DURATION;
+            
+            // Determinar qué slide debería estar visible basado en los nuevos tiempos
+            let newCurrentSlide;
+            
+            // Imagen 1: 0ms a 3000ms (0% a 37.5%)
+            // Transición: 3000ms a 4000ms (37.5% a 50%)
+            // Imagen 2: 4000ms a 7000ms (50% a 87.5%)
+            // Transición: 7000ms a 8000ms (87.5% a 100%)
+            
+            if (elapsed < 3000) {
+                newCurrentSlide = 0; // Primera imagen
+            } else if (elapsed < 4000) {
+                // En transición, mantener el slide anterior para indicadores
+                newCurrentSlide = 0;
+            } else if (elapsed < 7000) {
+                newCurrentSlide = 1; // Segunda imagen
+            } else {
+                // En transición, mantener el slide anterior para indicadores
+                newCurrentSlide = 1;
+            }
+            
+            // Actualizar indicadores si cambió el slide
+            if (newCurrentSlide !== currentSlide) {
+                currentSlide = newCurrentSlide;
+                updateIndicators();
+            }
+        }, 100); // Verificar cada 100ms para precisión
+    }
+    
+    // Iniciar seguimiento de slides
+    trackCurrentSlide();
+    
+    // Pausa/reanuda animación en hover
+    carousel.addEventListener('mouseenter', () => {
+        slides.style.animationPlayState = 'paused';
+        isAnimationPaused = true;
+        
+        // También pausar animación de indicadores
+        const activeIndicator = document.querySelector('.indicator.active::after');
+        if (activeIndicator) {
+            activeIndicator.style.animationPlayState = 'paused';
+        }
+    });
+    
+    carousel.addEventListener('mouseleave', () => {
+        slides.style.animationPlayState = 'running';
+        isAnimationPaused = false;
+        
+        // Reanudar animación de indicadores
+        const activeIndicator = document.querySelector('.indicator.active::after');
+        if (activeIndicator) {
+            activeIndicator.style.animationPlayState = 'running';
+        }
+    });
+    
+    // Soporte para navegación con teclado
+    document.addEventListener('keydown', (e) => {
+        // Solo funcionar si el carrusel está visible
+        const carouselRect = carousel.getBoundingClientRect();
+        const isVisible = carouselRect.top < window.innerHeight && carouselRect.bottom > 0;
+        
+        if (!isVisible) return;
+        
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevBtn?.click();
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextBtn?.click();
+        }
+    });
+    
+    // Soporte para touch/swipe en dispositivos móviles
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let touchStartY = 0;
+    let touchEndY = 0;
+    
+    carousel.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+    
+    carousel.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        touchEndY = e.changedTouches[0].screenY;
+        handleSwipe();
+    }, { passive: true });
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diffX = touchStartX - touchEndX;
+        const diffY = touchStartY - touchEndY;
+        
+        // Solo procesar swipes horizontales (evitar conflicto con scroll vertical)
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > swipeThreshold) {
+            if (diffX > 0) {
+                nextBtn?.click(); // Swipe left = next
+            } else {
+                prevBtn?.click(); // Swipe right = prev
+            }
+        }
+    }
+    
+    // Pausar animación cuando la página no está visible (Performance)
+    document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+            slides.style.animationPlayState = 'paused';
+            isAnimationPaused = true;
+        } else {
+            slides.style.animationPlayState = 'running';
+            isAnimationPaused = false;
+        }
+    });
+    
+    // Intersection Observer para pausar cuando no está visible
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                slides.style.animationPlayState = 'running';
+                isAnimationPaused = false;
+            } else {
+                slides.style.animationPlayState = 'paused';
+                isAnimationPaused = true;
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+    
+    observer.observe(carousel);
+    
+    // Función para ajustar velocidad dinámicamente (opcional)
+    window.setBannerSpeed = function(newDuration) {
+        ANIMATION_DURATION = newDuration;
+        IMAGE_DISPLAY_TIME = newDuration * 0.375; // 37.5% del tiempo total
+        TRANSITION_TIME = newDuration * 0.125; // 12.5% del tiempo total
+        
+        slides.style.animationDuration = `${newDuration}ms`;
+        console.log(`🎠 Velocidad del carrusel actualizada: ${newDuration}ms`);
+    };
+    
+    // Limpieza al descargar la página
+    window.addEventListener('beforeunload', () => {
+        observer.disconnect();
+    });
+    
+    console.log('🎠 Banner carousel lento inicializado correctamente');
+    console.log(`⏱️ Configuración: ${IMAGE_DISPLAY_TIME}ms display, ${TRANSITION_TIME}ms transition`);
+}

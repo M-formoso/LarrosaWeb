@@ -56,10 +56,60 @@
         
         <!-- ===== NUEVO BANNER PRINCIPAL ===== -->
         <!-- Imagen del banner -->
-        <section class="empresa-image-banner">
-            <img src="../assets/imagenes/3578050b-6d1e-426f-aa26-3589643ef132 (1).jpg" alt="Instalaciones Larrosa Camiones" class="banner-image">
-        </section>
+        <!-- ===== NUEVO BANNER PRINCIPAL CON CARRUSEL ===== -->
+<!-- Reemplaza la sección .empresa-image-banner existente con este código -->
+<!-- ===== NUEVO BANNER INFINITO - REEMPLAZA LA SECCIÓN EXISTENTE ===== -->
+<section class="empresa-image-banner">
+    <div class="banner-carousel">
+        <!-- Overlay opcional para mejorar legibilidad -->
+        <div class="banner-overlay"></div>
         
+        <!-- Slides del carrusel - AHORA CON 4 SLIDES (2 originales + 2 duplicadas) -->
+        <div class="banner-slides">
+            <!-- Imagen 1 - Original -->
+            <div class="banner-slide">
+                <img src="../assets/01.jpg" 
+                     alt="Instalaciones Larrosa Camiones" 
+                     class="banner-image">
+            </div>
+            
+            <!-- Imagen 2 - Original -->
+            <div class="banner-slide">
+                <img src="../assets/02.jpg" 
+                     alt="Taller de servicios Larrosa Camiones" 
+                     class="banner-image">
+            </div>
+            
+            <!-- Imagen 1 - Duplicada (para efecto infinito) -->
+            <div class="banner-slide">
+                <img src="../assets/01.jpg" 
+                     alt="Instalaciones Larrosa Camiones" 
+                     class="banner-image">
+            </div>
+            
+            <!-- Imagen 2 - Duplicada (para efecto infinito) -->
+            <div class="banner-slide">
+                <img src="../assets/02.jpg" 
+                     alt="Taller de servicios Larrosa Camiones" 
+                     class="banner-image">
+            </div>
+        </div>
+        
+        <!-- Indicadores - Solo 2 porque conceptualmente son 2 imágenes -->
+        <div class="banner-indicators">
+            <div class="indicator active" data-slide="0" tabindex="0" aria-label="Ir a imagen 1"></div>
+            <div class="indicator" data-slide="1" tabindex="0" aria-label="Ir a imagen 2"></div>
+        </div>
+        
+        <!-- Controles de navegación -->
+        <button class="banner-nav prev" aria-label="Imagen anterior" tabindex="0">
+            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+        </button>
+        <button class="banner-nav next" aria-label="Siguiente imagen" tabindex="0">
+            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+        </button>
+    </div>
+</section>
         <!-- Contenido del texto separado -->
         <section class="empresa-content-section">
             <div class="container">
