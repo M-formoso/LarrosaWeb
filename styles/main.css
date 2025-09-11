@@ -163,14 +163,16 @@ body {
     gap: 2rem;
 }
 
-/* EFECTO HOVER EN NAVEGACIÓN CON RAYA DEBAJO */
+/* ===== NAVEGACIÓN CORREGIDA - REEMPLAZAR EN styles/main.css ===== */
+
+/* EFECTO HOVER EN NAVEGACIÓN CON RAYA DEBAJO POSICIONADA MÁS ABAJO */
 .nav-link {
     text-decoration: none;
     color: var(--primary-black);
     font-weight: 600;
     font-size: 1rem;
     transition: var(--transition-fast);
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem 0.8rem 1rem; /* AUMENTADO: más padding inferior para bajar la raya */
     border-radius: 0;
     position: relative;
     overflow: hidden;
@@ -188,10 +190,11 @@ body {
     background: transparent;
 }
 
+/* BARRA AZUL POSICIONADA MÁS ABAJO */
 .nav-link::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: 1px; /* CAMBIADO: era 0, ahora 4px más abajo */
     left: 50%;
     width: 0;
     height: 3px;
@@ -203,6 +206,17 @@ body {
 .nav-link:hover::after,
 .nav-link.active::after {
     width: 80%;
+}
+
+/* ===== ASEGURAR QUE LA BARRA SE MANTENGA EN MOBILE ===== */
+@media (max-width: 768px) {
+    .nav-link {
+        padding: 1rem 1rem 1.2rem 1rem; /* Más espacio en móvil */
+    }
+    
+    .nav-link::after {
+        bottom: 8px; /* Más separación en móvil */
+    }
 }
 
 /* LOGO RANDON - MANTENER ESTILO ORIGINAL */
@@ -248,6 +262,7 @@ body {
 }
 
 /* ===== SECCIÓN HERO - AJUSTADA PARA NUEVA ALTURA DEL NAV ===== */
+
 .hero-section {
     position: relative;
     height: 70vh;
@@ -273,6 +288,41 @@ body {
     height: 100%;
     object-fit: cover;
     object-position: center 90%;
+}
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* OPCIÓN 2: Si prefieres que cubra todo con menos zoom (descomenta estas líneas y comenta las de arriba) */
+    object-fit: cover; 
+    object-position: center center; 
+    transform: scale(1.0); 
+    z-index: -2;
+    
+    /* Evitar interacción con el video */
+    pointer-events: none;
+    user-select: none;
+}
+
+/* ===== MANTENER TU CÓDIGO EXISTENTE PARA COMPATIBILIDAD CON IMÁGENES ===== */
+/* (No elimines .hero-image, por si necesitas volver a usar imágenes) */
+
+/* ===== RESPONSIVE PARA VIDEO ===== */
+@media (max-width: 768px) {
+    .hero-video {
+        /* En móviles, puedes ajustar el encuadre si es necesario */
+        object-position: center center;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-video {
+        /* Para pantallas muy pequeñas */
+        object-position: center center;
+    }
 }
 
 .hero-section::before {
@@ -314,8 +364,11 @@ body {
     text-align: left;
 }
 
-/* ===== BOTONES DE CATEGORÍAS - LAYOUT HORIZONTAL CORREGIDO ===== */
-.category-buttons {
+/* ===== BOTONES DE CATEGORÍAS - CORREGIDO SIN CONFLICTOS ===== */
+/* Reemplazar en styles/main.css SOLO la sección de .category-buttons */
+
+/* Contenedor de botones de categorías - MÁS ESPECÍFICO */
+.hero-section .category-buttons {
     position: absolute !important;
     bottom: 0 !important;
     left: 0 !important;
@@ -326,56 +379,58 @@ body {
     justify-content: center !important;
     align-items: center !important;
     z-index: 10 !important;
-    padding: 22px !important;
+    padding: 25px !important;
     margin: 0 !important;
     box-sizing: border-box !important;
 }
 
-.category-btn {
+/* Botones individuales - MÁS ESPECÍFICO */
+.hero-section .category-btn {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: flex-start !important;
     background: #9ca3af !important;
-    color: white !important;
+    color: #000000 !important;
     border: none !important;
-    padding: 15px 18px !important;
+    padding: 18px 22px !important;
     cursor: pointer !important;
     transition: all 0.2s ease !important;
-    width: 200px !important;
-    height: 55px !important;
+    width: 220px !important;
+    height: 70px !important;
     border-radius: 0 !important;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
     position: relative !important;
     flex-shrink: 0 !important;
-    gap: 10px !important;
+    gap: 15px !important;
 }
 
-.category-btn:hover {
+.hero-section .category-btn:hover {
     background: rgba(255, 255, 255, 1) !important;
     color: var(--primary-black) !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
 }
 
-.category-btn::after {
+.hero-section .category-btn::after {
     content: '→' !important;
     position: absolute !important;
-    right: 15px !important;
+    right: 18px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
-    font-size: 18px !important;
-    color: white !important;
+    font-size: 20px !important;
+    color: #000000 !important;
     font-weight: bold !important;
 }
 
-.category-btn:hover::after {
+.hero-section .category-btn:hover::after {
     color: var(--primary-black) !important;
 }
 
-.category-icon {
-    width: 45px !important;
-    height: 40px !important;
+/* IMÁGENES MÁS GRANDES - MÁS ESPECÍFICO */
+.hero-section .category-icon {
+    width: 60px !important;
+    height: 55px !important;
     margin-bottom: 0 !important;
     margin-right: 0 !important;
     transition: var(--transition-fast) !important;
@@ -385,17 +440,18 @@ body {
     flex-shrink: 0 !important;
 }
 
-.category-btn:hover .category-icon {
+.hero-section .category-btn:hover .category-icon {
     opacity: 1 !important;
     transform: scale(1.08) !important;
 }
 
-.category-btn span {
+/* TEXTO EN NEGRO Y MÁS GRANDE - MÁS ESPECÍFICO */
+.hero-section .category-btn span {
     font-family: var(--font-secondary) !important;
-    font-size: 0.75rem !important;
-    color: white !important;
+    font-size: 0.85rem !important;
+    color: #000000 !important;
     transition: var(--transition-fast) !important;
-    font-weight: 500 !important;
+    font-weight: 600 !important;
     text-align: left !important;
     line-height: 1.1 !important;
     flex: 1 !important;
@@ -404,123 +460,148 @@ body {
     text-overflow: ellipsis !important;
 }
 
-.category-btn:hover span {
+.hero-section .category-btn:hover span {
     color: var(--primary-black) !important;
 }
 
-/* ===== ANIMACIÓN DE ENTRADA ===== */
-.category-btn {
-    animation: fadeInUp 0.6s ease forwards !important;
-}
-
-.category-btn:nth-child(1) { animation-delay: 0.1s !important; }
-.category-btn:nth-child(2) { animation-delay: 0.2s !important; }
-.category-btn:nth-child(3) { animation-delay: 0.3s !important; }
-.category-btn:nth-child(4) { animation-delay: 0.4s !important; }
-.category-btn:nth-child(5) { animation-delay: 0.5s !important; }
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* ===== RESPONSIVE PARA BOTONES CATEGORÍAS ===== */
+/* ===== RESPONSIVE ACTUALIZADO - MÁS ESPECÍFICO ===== */
 @media (max-width: 1024px) {
-    .category-buttons {
-        gap: 15px !important;
-        padding: 18px !important;
+    .hero-section .category-buttons {
+        gap: 18px !important;
+        padding: 22px !important;
     }
     
-    .category-btn {
-        width: 160px !important;
-        height: 55px !important;
-        padding: 12px 15px !important;
-        gap: 10px !important;
+    .hero-section .category-btn {
+        width: 180px !important;
+        height: 68px !important;
+        padding: 15px 18px !important;
+        gap: 12px !important;
     }
     
-    .category-icon {
-        width: 38px !important;
-        height: 34px !important;
+    .hero-section .category-icon {
+        width: 50px !important;
+        height: 45px !important;
     }
     
-    .category-btn span {
-        font-size: 0.7rem !important;
+    .hero-section .category-btn span {
+        font-size: 0.8rem !important;
     }
     
-    .category-btn::after {
-        right: 12px !important;
-        font-size: 16px !important;
+    .hero-section .category-btn::after {
+        right: 15px !important;
+        font-size: 18px !important;
     }
 }
 
 @media (max-width: 768px) {
-    .category-buttons {
+    .hero-section .category-buttons {
         position: static !important;
         flex-direction: column !important;
         width: 100% !important;
         margin-top: 0 !important;
-        padding: 15px !important;
-        gap: 10px !important;
+        padding: 18px !important;
+        gap: 12px !important;
     }
     
-    .category-btn {
+    .hero-section .category-btn {
         width: 100% !important;
-        max-width: 280px !important;
-        height: 60px !important;
+        max-width: 320px !important;
+        height: 75px !important;
         flex-direction: row !important;
         justify-content: flex-start !important;
-        padding: 10px 20px !important;
-        gap: 15px !important;
+        padding: 15px 25px !important;
+        gap: 18px !important;
     }
     
-    .category-btn::after {
-        right: 15px !important;
+    .hero-section .category-btn::after {
+        right: 18px !important;
     }
     
-    .category-icon {
-        width: 35px !important;
-        height: 32px !important;
+    .hero-section .category-icon {
+        width: 45px !important;
+        height: 42px !important;
         margin-bottom: 0 !important;
     }
     
-    .category-btn span {
-        font-size: 0.75rem !important;
+    .hero-section .category-btn span {
+        font-size: 0.85rem !important;
         text-align: left !important;
         flex: 1 !important;
+        color: #000000 !important;
     }
 }
 
 @media (max-width: 480px) {
-    .category-buttons {
-        padding: 12px !important;
-        gap: 8px !important;
+    .hero-section .category-buttons {
+        padding: 15px !important;
+        gap: 10px !important;
     }
     
-    .category-btn {
-        height: 55px !important;
-        padding: 8px 15px !important;
-        max-width: 260px !important;
-        gap: 12px !important;
+    .hero-section .category-btn {
+        height: 70px !important;
+        padding: 12px 20px !important;
+        max-width: 300px !important;
+        gap: 15px !important;
     }
     
-    .category-icon {
-        width: 32px !important;
-        height: 28px !important;
+    .hero-section .category-icon {
+        width: 40px !important;
+        height: 38px !important;
     }
     
-    .category-btn span {
-        font-size: 0.7rem !important;
+    .hero-section .category-btn span {
+        font-size: 0.8rem !important;
+        color: #000000 !important;
     }
     
-    .category-btn::after {
-        font-size: 16px !important;
+    .hero-section .category-btn::after {
+        font-size: 18px !important;
+        color: #000000 !important;
     }
+}
+
+/* ===== MEJORAS ADICIONALES - MÁS ESPECÍFICO ===== */
+
+/* Mejor contraste para el texto negro */
+.hero-section .category-btn {
+    text-shadow: none !important;
+}
+
+/* Asegurar que el texto se vea bien en todos los estados */
+.hero-section .category-btn span,
+.hero-section .category-btn::after {
+    color: #000000 !important;
+    text-shadow: none !important;
+}
+
+/* Estado hover mejorado */
+.hero-section .category-btn:hover {
+    background: rgba(255, 255, 255, 0.95) !important;
+}
+
+.hero-section .category-btn:hover span,
+.hero-section .category-btn:hover::after {
+    color: var(--primary-black) !important;
+}
+
+/* ===== ASEGURAR QUE NO AFECTE OTRAS SECCIONES ===== */
+
+/* Proteger la sección RANDON de interferencias */
+.randon-section,
+.randon-section * {
+    /* Resetear cualquier interferencia de los estilos de categorías */
+}
+
+/* Asegurar que otros botones no se vean afectados */
+.btn-randon,
+.btn-view-unit,
+.btn-view-all,
+.btn-financing {
+    /* Estos botones mantienen sus estilos originales */
+    background: var(--primary-white) !important;
+    color: var(--primary-black) !important;
+    border: 2px solid var(--primary-black) !important;
+    text-decoration: none !important;
 }
 /* ===== SECCIÓN UNIDADES DESTACADAS - CENTRADO Y ESPACIADO CORREGIDO ===== */
 .featured-units {
@@ -534,40 +615,12 @@ body {
 /* ===== TÍTULO "UNIDADES DESTACADAS" - ESTILO MEJORADO ===== */
 /* Reemplaza en tu styles/main.css la sección .section-title-special con este código */
 
-.section-title-special {
-    font-family: 'Roboto', sans-serif !important;
-    font-size: 3.2rem !important; /* AUMENTADO: más grande como en la imagen */
-    color: #6b7280 !important; /* CAMBIADO: gris más oscuro y definido */
-    text-align: center !important;
-    margin-bottom: 2.5rem !important;
-    margin-top: 0 !important;
-    text-transform: lowercase !important; /* AGREGADO: minúsculas como en la imagen */
-    font-weight: 400 !important; /* CAMBIADO: peso normal para "unidades" */
-    letter-spacing: 1px !important; /* REDUCIDO: menos espaciado */
-    line-height: 1.1 !important;
-    position: relative !important;
-}
 
-.section-title-special .word-normal {
-    font-size: 1em !important;
-    display: inline-block !important;
-    font-weight: 400 !important; /* Normal weight para "unidades" */
-    color: #6b7280 !important; /* Mismo gris que el contenedor */
-}
-
-.section-title-special .word-large {
-    font-size: 1em !important; /* CAMBIADO: mismo tamaño que "unidades" */
-    display: inline-block !important;
-    margin-left: 0.4em !important; /* AJUSTADO: más espacio entre palabras */
-    font-weight: 700 !important; /* CAMBIADO: más bold para "destacadas" */
-    font-family: 'Roboto', sans-serif !important;
-    color: #4b5563 !important; /* CAMBIADO: gris ligeramente más oscuro para destacar */
-}
 
 /* ===== ALTERNATIVA: Si quieres que sea exactamente como la imagen ===== */
 /* Descomenta estas líneas y comenta las de arriba si prefieres este estilo */
 
-/*
+
 .section-title-special {
     font-family: 'Roboto', sans-serif !important;
     font-size: 3.5rem !important;
@@ -599,34 +652,7 @@ body {
 }
 */
 
-/* ===== RESPONSIVE PARA EL TÍTULO ===== */
-@media (max-width: 1024px) {
-    .section-title-special {
-        font-size: 2.8rem !important;
-        margin-bottom: 2.2rem !important;
-    }
-}
 
-@media (max-width: 768px) {
-    .section-title-special {
-        font-size: 2.4rem !important;
-        margin-bottom: 2rem !important;
-        letter-spacing: 0.5px !important;
-    }
-    
-    .section-title-special .word-large {
-        display: block !important;
-        margin-left: 0 !important;
-        margin-top: -0.1em !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .section-title-special {
-        font-size: 2rem !important;
-        margin-bottom: 1.5rem !important;
-    }
-}
 
 /* CORREGIDO: Grid centrado con más espacio entre cards */
 .units-grid {
@@ -2608,45 +2634,46 @@ img:not([src]) {
     transform: translateY(-1px);
 }
 
-/* ===== AGREGAR/REEMPLAZAR ESTOS ESTILOS EN styles/main.css ===== */
-
-/* ===== CARRUSEL SIMPLE - SIN COMPLICACIONES ===== */
+/* ===== CARRUSEL DE ANCHO COMPLETO - HASTA LOS BORDES ===== */
+/* Reemplazar en styles/main.css la sección del carrusel */
 
 /* Ocultar grid original */
 .featured-units .units-grid {
     display: none !important;
 }
 
-/* Contenedor con espacio fijo para flechas */
+/* Contenedor principal SIN padding - ancho completo */
 .carousel-container {
     position: relative;
-    margin: 0 auto;
-    padding: 0 80px; /* Espacio fijo para flechas */
-    max-width: 1360px; /* 1200px + 160px para flechas */
+    margin: 0;
+    padding: 0 !important; /* ELIMINADO: padding para que llegue a los bordes */
+    max-width: 100vw !important; /* CAMBIADO: ancho completo de la ventana */
+    width: 100% !important;
+    overflow: hidden; /* Para ocultar el desbordamiento */
 }
 
-/* Viewport del carrusel - ancho fijo */
+/* Viewport del carrusel - ancho completo */
 .units-carousel {
     overflow: hidden;
-    width: 1200px; /* Ancho fijo para 4 cards */
-    margin: 0 auto;
+    width: 100vw !important; /* CAMBIADO: ancho completo de la ventana */
+    margin: 0;
     position: relative;
 }
 
-/* Track con ancho calculado */
+/* Track con tarjetas pegadas - ancho calculado dinámicamente */
 .units-track {
     display: flex !important;
-    gap: 40px !important;
+    gap: 0px !important;
     transition: transform 0.5s ease !important;
-    width: 2480px !important; /* 8 cards × 270px + 7 gaps × 40px = 2160px + 320px = 2480px */
+    width: 200vw !important; /* CAMBIADO: ancho para 8 tarjetas (2x el viewport) */
 }
 
-/* Cards con tamaño fijo */
+/* Cards que se adaptan al ancho de la pantalla */
 .units-track .unit-card {
     flex: none !important;
-    width: 270px !important;
-    min-width: 270px !important;
-    max-width: 270px !important;
+    width: 25vw !important; /* CAMBIADO: cada tarjeta ocupa 25% del viewport width */
+    min-width: 25vw !important;
+    max-width: 25vw !important;
     background: var(--primary-white);
     border-radius: 0;
     overflow: hidden;
@@ -2657,25 +2684,102 @@ img:not([src]) {
     border: 1px solid #e5e7eb;
     min-height: 320px;
     
-    /* Sin animaciones automáticas */
-    animation: none !important;
-    opacity: 1 !important;
-    transform: translateY(0) !important;
+    /* Borde para separar visualmente las tarjetas pegadas */
+    border-right: 2px solid #f3f4f6;
+}
+
+/* Quitar borde derecho de la última tarjeta visible */
+.units-track .unit-card:nth-child(4n) {
+    border-right: none;
 }
 
 .units-track .unit-card:hover {
     transform: translateY(-4px) !important;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12) !important;
+    z-index: 5;
 }
 
-/* Flechas más visibles */
+/* Imagen de la unidad */
+.units-track .unit-card .unit-image {
+    position: relative;
+    height: 60%;
+    overflow: hidden;
+    background: #f8f9fa;
+}
+
+.units-track .unit-card .unit-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.units-track .unit-card:hover .unit-image img {
+    transform: scale(1.03);
+}
+
+/* Información de la unidad */
+.units-track .unit-card .unit-info {
+    padding: 1.5rem 1.2rem;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.units-track .unit-card .unit-title {
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    color: var(--primary-black);
+    margin-bottom: 0.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+.units-track .unit-card .unit-details {
+    font-size: 0.85rem;
+    color: var(--secondary-gray);
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+}
+
+.units-track .unit-card .unit-details .unit-year {
+    font-weight: 600;
+    color: var(--primary-black);
+}
+
+.units-track .unit-card .btn-view-unit {
+    width: 100%;
+    background: var(--primary-white);
+    color: var(--primary-black);
+    border: 2px solid var(--primary-black);
+    padding: 0.7rem 1rem;
+    border-radius: 0;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.units-track .unit-card .btn-view-unit:hover {
+    background: var(--primary-black);
+    color: var(--primary-white);
+    transform: translateY(-1px);
+}
+
+/* Flechas posicionadas sobre las tarjetas */
 .carousel-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     width: 55px;
     height: 55px;
-    background: var(--primary-white);
+    background: rgba(255, 255, 255, 0.95); /* CAMBIADO: fondo semi-transparente */
     border: 3px solid var(--primary-blue);
     border-radius: 50%;
     display: flex;
@@ -2694,14 +2798,13 @@ img:not([src]) {
 }
 
 .carousel-btn-prev {
-    left: 15px;
+    left: 20px; /* CAMBIADO: más cerca del borde */
 }
 
 .carousel-btn-next {
-    right: 15px;
+    right: 20px; /* CAMBIADO: más cerca del borde */
 }
 
-/* Iconos de flechas más grandes */
 .carousel-btn::before {
     font-size: 2rem;
     font-weight: bold;
@@ -2721,16 +2824,14 @@ img:not([src]) {
     color: var(--primary-white);
 }
 
-/* Ocultar iconos FontAwesome si existen */
 .carousel-btn i {
     display: none;
 }
 
-/* Estados deshabilitados */
 .carousel-btn:disabled {
     opacity: 0.3 !important;
     cursor: not-allowed !important;
-    background: #f3f4f6 !important;
+    background: rgba(243, 244, 246, 0.95) !important;
     border-color: #d1d5db !important;
 }
 
@@ -2739,7 +2840,7 @@ img:not([src]) {
 }
 
 .carousel-btn:disabled:hover {
-    background: #f3f4f6 !important;
+    background: rgba(243, 244, 246, 0.95) !important;
     transform: translateY(-50%) !important;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
 }
@@ -2772,96 +2873,103 @@ img:not([src]) {
     opacity: 0.7;
 }
 
-/* ===== RESPONSIVE - SIMPLIFICADO ===== */
+/* Botón "VER TODAS LAS UNIDADES" más pequeño */
+.view-all-container {
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    padding: 0 20px; /* AGREGADO: padding para que no toque los bordes */
+}
 
-/* Tablet grande */
-@media (max-width: 1400px) {
-    .carousel-container {
-        max-width: 1160px; /* 1000px + 160px */
-        padding: 0 70px;
+.btn-view-all {
+    background: var(--primary-white);
+    color: var(--primary-black);
+    border: 2px solid var(--primary-black);
+    padding: 0.7rem 1.8rem !important;
+    font-family: var(--font-primary);
+    font-size: 0.8rem !important;
+    border-radius: 0;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    text-transform: uppercase;
+    font-weight: 600 !important;
+    letter-spacing: 0.8px !important;
+}
+
+.btn-view-all:hover {
+    background: var(--primary-black);
+    color: var(--primary-white);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* ===== RESPONSIVE PARA ANCHO COMPLETO ===== */
+
+/* Pantallas grandes (Desktop) */
+@media (min-width: 1400px) {
+    .units-track .unit-card .unit-title {
+        font-size: 1.1rem; /* Texto más grande en pantallas grandes */
     }
     
-    .units-carousel {
-        width: 1020px; /* Para 4 cards de 235px */
-    }
-    
-    .units-track .unit-card {
-        width: 235px !important;
-        min-width: 235px !important;
-        max-width: 235px !important;
-    }
-    
-    .units-track {
-        width: 2080px !important; /* Recalcular para 8 cards */
+    .units-track .unit-card .unit-info {
+        padding: 2rem 1.5rem; /* Más padding en pantallas grandes */
     }
 }
 
-/* Tablet */
+/* Tablets grandes */
 @media (max-width: 1200px) {
-    .carousel-container {
-        max-width: 900px;
-        padding: 0 60px;
+    .units-track .unit-card .unit-title {
+        font-size: 0.95rem;
     }
     
-    .units-carousel {
-        width: 780px; /* Para 3 cards */
+    .units-track .unit-card .unit-info {
+        padding: 1.3rem 1rem;
     }
     
-    .units-track .unit-card {
-        width: 240px !important;
-        min-width: 240px !important;
-        max-width: 240px !important;
+    .carousel-btn {
+        width: 50px;
+        height: 50px;
     }
     
-    .units-track {
-        gap: 30px !important;
-        width: 2130px !important; /* 8 × 240 + 7 × 30 */
+    .carousel-btn::before {
+        font-size: 1.8rem;
     }
 }
 
-/* Tablet pequeño */
+/* Tablets */
 @media (max-width: 900px) {
-    .carousel-container {
-        max-width: 620px;
-        padding: 0 50px;
-    }
-    
-    .units-carousel {
-        width: 520px; /* Para 2 cards */
-    }
-    
+    /* En tablets, mostrar 2 tarjetas por vista */
     .units-track .unit-card {
-        width: 240px !important;
-        min-width: 240px !important;
-        max-width: 240px !important;
+        width: 50vw !important;
+        min-width: 50vw !important;
+        max-width: 50vw !important;
     }
     
     .units-track {
-        gap: 25px !important;
-        width: 2095px !important; /* 8 × 240 + 7 × 25 */
+        width: 400vw !important; /* 8 cards × 50vw = 400vw */
+    }
+    
+    .carousel-btn-prev {
+        left: 15px;
+    }
+    
+    .carousel-btn-next {
+        right: 15px;
     }
 }
 
-/* Móvil */
+/* Móviles */
 @media (max-width: 600px) {
-    .carousel-container {
-        max-width: 360px;
-        padding: 0 40px;
-    }
-    
-    .units-carousel {
-        width: 280px; /* Para 1 card */
-    }
-    
+    /* En móviles, mostrar 1 tarjeta por vista */
     .units-track .unit-card {
-        width: 280px !important;
-        min-width: 280px !important;
-        max-width: 280px !important;
+        width: 100vw !important;
+        min-width: 100vw !important;
+        max-width: 100vw !important;
+        border-right: none; /* Sin bordes en móvil */
     }
     
     .units-track {
-        gap: 20px !important;
-        width: 2380px !important; /* 8 × 280 + 7 × 20 */
+        width: 800vw !important; /* 8 cards × 100vw = 800vw */
     }
     
     .carousel-btn {
@@ -2872,8 +2980,35 @@ img:not([src]) {
     .carousel-btn::before {
         font-size: 1.5rem;
     }
+    
+    .carousel-btn-prev {
+        left: 10px;
+    }
+    
+    .carousel-btn-next {
+        right: 10px;
+    }
+    
+    .btn-view-all {
+        padding: 0.6rem 1.5rem !important;
+        font-size: 0.75rem !important;
+    }
 }
 
+/* Móviles pequeños */
+@media (max-width: 480px) {
+    .units-track .unit-card .unit-info {
+        padding: 1rem 0.8rem;
+    }
+    
+    .units-track .unit-card .unit-title {
+        font-size: 0.85rem;
+    }
+    
+    .units-track .unit-card .unit-details {
+        font-size: 0.8rem;
+    }
+}
 /* ===== FALLBACK ===== */
 /* Si algo falla, al menos las cards se ven */
 .units-track .unit-card {
@@ -2881,3 +3016,241 @@ img:not([src]) {
     float: left !important;
     margin-right: 40px !important;
 }
+
+/* ===== RESTAURAR SECCIÓN RANDON - AGREGAR AL FINAL DEL CSS ===== */
+/* Si la sección RANDON está en blanco, agrega esto al final de tu CSS */
+
+/* Forzar visibilidad de la sección RANDON */
+.randon-section {
+    padding: 40px 0 !important;
+    background: var(--primary-white) !important;
+    position: relative !important;
+    overflow: hidden !important;
+    margin-top: 0 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.randon-content {
+    position: relative !important;
+    z-index: 1 !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Restaurar contenedor de imagen */
+.randon-image-container {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    border-radius: 6px !important;
+    overflow: hidden !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12) !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Restaurar imagen principal */
+.randon-main-image {
+    width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    object-fit: cover !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Restaurar degradado */
+.randon-image-container::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 30%, transparent 60%) !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+}
+
+/* Restaurar logo RANDON */
+.randon-logo-overlay {
+    position: absolute !important;
+    top: 30px !important;
+    left: 30px !important;
+    z-index: 3 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.randon-logo-overlay img {
+    height: 75px !important;
+    width: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+    filter: none !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Restaurar texto superpuesto */
+.randon-text-overlay {
+    position: absolute !important;
+    top: 30px !important;
+    right: 40px !important;
+    z-index: 3 !important;
+    color: var(--primary-black) !important;
+    text-align: left !important;
+    max-width: 600px !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.randon-question {
+    font-size: 1.8rem !important;
+    font-weight: 700 !important;
+    color: var(--primary-black) !important;
+    margin-bottom: 1rem !important;
+    line-height: 1.3 !important;
+    text-shadow: none !important;
+    text-align: left !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.randon-description {
+    font-size: 1.1rem !important;
+    color: var(--primary-black) !important;
+    line-height: 1.6 !important;
+    margin-bottom: 1.5rem !important;
+    text-shadow: none !important;
+    opacity: 1 !important;
+    text-align: left !important;
+    display: block !important;
+    visibility: visible !important;
+}
+
+.randon-description strong {
+    color: var(--primary-black) !important;
+    font-weight: 700 !important;
+}
+
+/* Restaurar botón RANDON */
+.btn-randon {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    background: var(--primary-white) !important;
+    color: var(--primary-black) !important;
+    border: 2px solid var(--primary-black) !important;
+    padding: 12px 24px !important;
+    font-weight: 600 !important;
+    font-size: 1rem !important;
+    border-radius: 0 !important;
+    cursor: pointer !important;
+    transition: var(--transition-fast) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.btn-randon:hover {
+    background: var(--primary-black) !important;
+    color: var(--primary-white) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ===== RESPONSIVE PARA RANDON ===== */
+@media (max-width: 768px) {
+    .randon-text-overlay {
+        position: static !important;
+        transform: none !important;
+        text-align: left !important;
+        max-width: none !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        padding: 30px 20px !important;
+        margin: -100px 20px 0 20px !important;
+        border-radius: 0 !important;
+        position: relative !important;
+        z-index: 4 !important;
+        color: var(--primary-black) !important;
+    }
+    
+    .randon-question {
+        font-size: 1.4rem !important;
+        line-height: 1.4 !important;
+        text-shadow: none !important;
+        color: var(--primary-black) !important;
+        text-align: left !important;
+    }
+    
+    .randon-description {
+        font-size: 0.95rem !important;
+        margin-bottom: 1.2rem !important;
+        text-shadow: none !important;
+        color: var(--primary-black) !important;
+        text-align: left !important;
+    }
+    
+    .btn-randon {
+        padding: 10px 20px !important;
+        font-size: 0.9rem !important;
+    }
+    
+    .randon-image-container {
+        margin: 0 20px !important;
+        border-radius: 0 !important;
+    }
+    
+    .randon-logo-overlay {
+        top: 20px !important;
+        left: 20px !important;
+    }
+    
+    .randon-logo-overlay img {
+        height: 50px !important;
+    }
+}
+
+/* ===== DEBUG: FORZAR VISIBILIDAD DE TODO ===== */
+/* Descomenta estas líneas si sigues teniendo problemas */
+
+/*
+.randon-section,
+.randon-section *,
+.randon-content,
+.randon-image-container,
+.randon-main-image,
+.randon-logo-overlay,
+.randon-text-overlay,
+.btn-randon {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+}
+
+.randon-main-image {
+    position: static !important;
+}
+
+.randon-logo-overlay,
+.randon-text-overlay {
+    position: absolute !important;
+}
+*/

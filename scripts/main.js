@@ -975,3 +975,190 @@ window.debugCarousel = debugCarousel;
 window.forceNext = forceNext;
 window.forcePrev = forcePrev;
 window.resetCarousel = resetCarousel;
+
+// ===== AGREGAR ESTE CÓDIGO AL FINAL DE scripts/main.js ===== 
+
+// ===== NAVEGACIÓN ACTIVA MEJORADA =====
+function initializeActiveNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const currentPage = getCurrentPageName();
+    
+    console.log('🧭 Página actual detectada:', currentPage);
+    
+    // Remover todas las clases active
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    // Agregar clase active según la página actual
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        const linkPage = getPageFromHref(href);
+        
+        console.log('🔗 Comparando:', linkPage, 'vs', currentPage);
+        
+        if (linkPage === currentPage) {
+            link.classList.add('active');
+            console.log('✅ Marcando como activo:', href);
+        }
+    });
+}
+
+// Detectar el nombre de la página actual
+function getCurrentPageName() {
+    const path = window.location.pathname;
+    const fileName = path.split('/').pop();
+    
+    // Mapear archivos a nombres de página
+    const pageMap = {
+        'index.html': 'inicio',
+        '': 'inicio', // Para cuando está en la raíz
+        'unidadesDisponibles.html': 'unidades',
+        'LarrosaCamiones.html': 'empresa', 
+        'contacto.html': 'contacto'
+    };
+    
+    return pageMap[fileName] || 'inicio';
+}
+
+// Extraer página desde el href del link
+function getPageFromHref(href) {
+    if (!href) return 'inicio';
+    
+    // Mapear hrefs a nombres de página
+    if (href.includes('#inicio') || href === 'index.html' || href === '/') {
+        return 'inicio';
+    } else if (href.includes('unidadesDisponibles.html')) {
+        return 'unidades';
+    } else if (href.includes('LarrosaCamiones.html')) {
+        return 'empresa';
+    } else if (href.includes('contacto.html')) {
+        return 'contacto';
+    }
+    
+    return 'inicio';
+}
+
+// Actualizar navegación cuando cambia la página
+function updateNavigationOnScroll() {
+    // Solo en la página de inicio (con secciones)
+    if (getCurrentPageName() !== 'inicio') return;
+    
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    let current = 'inicio';
+    
+    sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const sectionHeight = section.offsetHeight;
+        
+        if (sectionTop <= 100 && sectionTop + sectionHeight > 100) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        const href = link.getAttribute('href');
+        
+        if (href && href.includes(`#${current}`)) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// ===== ACTUALIZAR TU FUNCIÓN initializeNavigation() EXISTENTE =====
+// Reemplaza tu función initializeNavigation() con esta versión mejorada:
+
+function initializeNavigation() {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const navbar = document.querySelector('.navbar');
+
+    // Inicializar navegación activa al cargar
+    initializeActiveNavigation();
+
+    // Toggle menú hamburguesa
+    if (hamburger) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            
+            // Prevenir scroll del body cuando el menú está abierto
+            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
+        });
+    }
+
+    // Cerrar menú al hacer click en un link
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            hamburger?.classList.remove('active');
+            navMenu?.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Navbar transparente/sólido al hacer scroll
+    let lastScrollTop = 0;
+    window.addEventListener('scroll', function() {
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        
+        if (scrollTop > 100) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+
+        // Ocultar/mostrar navbar al hacer scroll
+        if (scrollTop > lastScrollTop && scrollTop > 200) {
+            navbar.style.transform = 'translateY(-100%)';
+        } else {
+            navbar.style.transform = 'translateY(0)';
+        }
+        lastScrollTop = scrollTop;
+        
+        // Actualizar navegación activa solo en inicio
+        updateNavigationOnScroll();
+    });
+}
+
+// ===== AGREGAR AL FINAL DE TU DOMContentLoaded ===== 
+// En tu evento DOMContentLoaded existente, agrega esto:
+
+document.addEventListener('DOMContentLoaded', function() {
+    // ... tus funciones existentes ...
+    
+    // NUEVO: Reinicializar navegación activa después de un pequeño delay
+    setTimeout(() => {
+        initializeActiveNavigation();
+    }, 100);
+    
+    // NUEVO: Actualizar navegación cuando se navega con el botón atrás/adelante
+    window.addEventListener('popstate', function() {
+        setTimeout(() => {
+            initializeActiveNavigation();
+        }, 50);
+    });
+});
+
+// ===== DEBUGGING (OPCIONAL - REMOVER EN PRODUCCIÓN) =====
+// Función para debug - puedes llamarla en la consola del navegador
+function debugNavigation() {
+    console.log('🔍 DEBUG NAVEGACIÓN:');
+    console.log('Página actual:', getCurrentPageName());
+    console.log('URL actual:', window.location.pathname);
+    
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach((link, index) => {
+        console.log(`Link ${index}:`, {
+            href: link.getAttribute('href'),
+            texto: link.textContent.trim(),
+            activo: link.classList.contains('active')
+        });
+    });
+}
+
+// Hacer función disponible globalmente para debugging
+window.debugNavigation = debugNavigation;
