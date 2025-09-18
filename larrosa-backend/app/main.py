@@ -1,11 +1,17 @@
-# app/main.py - ACTUALIZADO CON CORS CORREGIDO
+# app/main.py - VERSIÓN CORREGIDA PARA SERVIR IMÁGENES
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from app.core.config import settings
 from app.api.v1 import auth, vehicles
 import os
+import logging
+
+# Configurar logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Crear la aplicación FastAPI
 app = FastAPI(
@@ -17,7 +23,7 @@ app = FastAPI(
     redoc_url="/api/redoc"
 )
 
-# Configurar CORS - ACTUALIZADO
+# Configurar CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -37,9 +43,69 @@ app.add_middleware(
     expose_headers=["*"]
 )
 
-# Montar archivos estáticos
+# CREAR DIRECTORIOS NECESARIOS AL INICIO
+def ensure_directories():
+    """Crear directorios necesarios para archivos estáticos"""
+    directories = [
+        "static",
+        "static/uploads", 
+        "static/uploads/vehicles",
+        "static/uploads/vehicles/thumbnails"
+    ]
+    
+    for directory in directories:
+        if not os.path.exists(directory):
+            os.makedirs(directory, exist_ok=True)
+            logger.info(f"📁 Directory created: {directory}")
+        else:
+            logger.info(f"📁 Directory exists: {directory}")
+
+# Crear directorios al iniciar la aplicación
+ensure_directories()
+
+# CONFIGURAR ARCHIVOS ESTÁTICOS CORRECTAMENTE
 if os.path.exists("static"):
     app.mount("/static", StaticFiles(directory="static"), name="static")
+    logger.info("✅ Static files mounted at /static")
+else:
+    logger.error("❌ Static directory not found!")
+
+# RUTA PERSONALIZADA PARA SERVIR IMÁGENES
+@app.get("/images/{file_path:path}")
+async def serve_images(file_path: str):
+    """Servir imágenes con manejo de errores mejorado"""
+    
+    # Construir la ruta completa del archivo
+    full_path = os.path.join("static", "uploads", "vehicles", file_path)
+    
+    logger.info(f"🖼️ Serving image: {full_path}")
+    
+    # Verificar que el archivo existe y es un archivo
+    if not os.path.exists(full_path):
+        logger.error(f"❌ File not found: {full_path}")
+        raise HTTPException(status_code=404, detail="Image not found")
+    
+    if not os.path.isfile(full_path):
+        logger.error(f"❌ Path is not a file: {full_path}")
+        raise HTTPException(status_code=404, detail="Invalid file path")
+    
+    # Servir el archivo
+    return FileResponse(
+        full_path,
+        media_type="image/jpeg",  # Ajustar según el tipo de archivo
+        headers={"Cache-Control": "max-age=86400"}  # Cache por 24 horas
+    )
+
+# RUTA ALTERNATIVA PARA COMPATIBILIDAD
+@app.get("/media/{file_path:path}")
+async def serve_media(file_path: str):
+    """Ruta alternativa para servir medios"""
+    return await serve_images(file_path)
+
+@app.get("/uploads/{file_path:path}")
+async def serve_uploads(file_path: str):
+    """Ruta alternativa para uploads"""
+    return await serve_images(file_path)
 
 # INCLUIR LAS RUTAS DE LA API
 app.include_router(auth.router, prefix="/api/v1/auth", tags=["authentication"])
@@ -57,30 +123,61 @@ async def root():
 
 @app.get("/health")
 async def health_check():
+    static_exists = os.path.exists("static")
+    uploads_exists = os.path.exists("static/uploads/vehicles")
+    
     return {
         "status": "healthy",
         "environment": settings.ENVIRONMENT,
         "version": settings.VERSION,
-        "cors_enabled": True
+        "cors_enabled": True,
+        "static_files": {
+            "static_dir": static_exists,
+            "uploads_dir": uploads_exists,
+            "static_path": os.path.abspath("static") if static_exists else "Not found"
+        }
     }
 
-# Middleware para debugging CORS en desarrollo
+# RUTA DE DEBUG PARA LISTAR ARCHIVOS
+@app.get("/debug/files")
+async def debug_files():
+    """Listar archivos en el directorio de uploads para debugging"""
+    try:
+        uploads_dir = "static/uploads/vehicles"
+        if not os.path.exists(uploads_dir):
+            return {"error": "Uploads directory not found", "path": uploads_dir}
+        
+        files = []
+        for file in os.listdir(uploads_dir):
+            file_path = os.path.join(uploads_dir, file)
+            if os.path.isfile(file_path):
+                files.append({
+                    "name": file,
+                    "path": file_path,
+                    "size": os.path.getsize(file_path),
+                    "url": f"/images/{file}"
+                })
+        
+        return {
+            "uploads_directory": uploads_dir,
+            "total_files": len(files),
+            "files": files[:10]  # Primeros 10 archivos
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+# Middleware para debugging en desarrollo
 @app.middleware("http")
-async def cors_debug_middleware(request, call_next):
+async def debug_middleware(request, call_next):
     if settings.ENVIRONMENT == "development":
-        print(f"🌐 Request from: {request.headers.get('origin', 'No origin')}")
-        print(f"🌐 Method: {request.method}")
-        print(f"🌐 URL: {request.url}")
+        # Log de todas las requests de archivos estáticos
+        if "/static/" in str(request.url) or "/images/" in str(request.url):
+            logger.info(f"📁 Static request: {request.method} {request.url}")
     
     response = await call_next(request)
     
     if settings.ENVIRONMENT == "development":
-        print(f"🌐 Response status: {response.status_code}")
+        if "/static/" in str(request.url) or "/images/" in str(request.url):
+            logger.info(f"📁 Static response: {response.status_code}")
     
     return response
-
-# Ruta para servir el panel de administración
-@app.get("/admin/{path:path}")
-async def serve_admin(path: str = ""):
-    """Servir archivos del panel de administración"""
-    return {"message": "Panel de administración - Por implementar"}

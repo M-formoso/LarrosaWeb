@@ -8,10 +8,22 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeHeroAnimations();
     initializeCategoryButtons();
     initializeScrollAnimations();
-    initializeTestimonials();
+   // initializeTestimonials();//
     initializeContactForms();
     initializeLazyLoading();
     initializeScrollToTop();
+
+   
+    setTimeout(function() {
+        console.log('⏰ Inicializando testimonios tras delay...');
+        initializeTestimonialsComplete();
+    }, 1500); // Aumentar delay a 1.5 segundos
+    
+    // Tu carrusel de unidades existente
+    setTimeout(function() {
+        console.log('⏰ Inicializando carrusel tras delay...');
+        initializeCarousel();
+    }, 1000);
 });
 
 // ===== NAVEGACIÓN =====
@@ -1162,3 +1174,383 @@ function debugNavigation() {
 
 // Hacer función disponible globalmente para debugging
 window.debugNavigation = debugNavigation;
+// ===== JAVASCRIPT CORREGIDO PARA TESTIMONIOS - REEMPLAZAR EN scripts/main.js =====
+
+// Variables globales para testimonios
+let testimonialsCurrentSlide = 0;
+let testimonialsTotalSlides = 0;
+let testimonialsCardsPerView = 1; // Cambiar a 1 para mostrar una tarjeta a la vez
+let testimonialsInitialized = false;
+let testimonialsAutoPlayInterval = null;
+
+// Inicializar carrusel de testimonios
+function initializeTestimonialsCarousel() {
+    console.log('🎭 Iniciando carrusel de testimonios...');
+    
+    // Buscar elementos con IDs correctos
+    const track = document.getElementById('testimonialsTrack');
+    const prevBtn = document.getElementById('testimonialsePrevBtn'); // Nota: hay una 'e' extra en el ID
+    const nextBtn = document.getElementById('testimonialsNextBtn');
+    const carousel = document.getElementById('testimonialsCarousel');
+    
+    // Verificar que existen los elementos
+    if (!track || !prevBtn || !nextBtn || !carousel) {
+        console.log('❌ Elementos del carrusel de testimonios no encontrados');
+        console.log('Track:', !!track, 'PrevBtn:', !!prevBtn, 'NextBtn:', !!nextBtn, 'Carousel:', !!carousel);
+        return;
+    }
+    
+    // Evitar inicialización múltiple
+    if (testimonialsInitialized) {
+        console.log('⚠️ Carrusel de testimonios ya inicializado');
+        return;
+    }
+    
+    const cards = track.querySelectorAll('.testimonial-card-new');
+    testimonialsTotalSlides = cards.length;
+    
+    console.log(`📊 Total de testimonios encontrados: ${testimonialsTotalSlides}`);
+    
+    if (testimonialsTotalSlides === 0) {
+        console.log('❌ No se encontraron testimonios');
+        return;
+    }
+    
+    // Calcular cards por vista según tamaño de pantalla
+    updateTestimonialsCardsPerView();
+    
+    // Configurar event listeners
+    prevBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('⬅️ Click en botón anterior testimonios');
+        moveTestimonialsToPrevious();
+    });
+    
+    nextBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        console.log('➡️ Click en botón siguiente testimonios');
+        moveTestimonialsToNext();
+    });
+    
+    // Actualizar estado inicial
+    updateTestimonialsDisplay();
+    
+    // Marcar como inicializado
+    testimonialsInitialized = true;
+    
+    console.log('✅ Carrusel de testimonios inicializado correctamente');
+    console.log(`📱 Cards por vista: ${testimonialsCardsPerView}`);
+    
+    // Redimensionar ventana
+    window.addEventListener('resize', function() {
+        updateTestimonialsCardsPerView();
+        updateTestimonialsDisplay();
+    });
+    
+    // Iniciar auto-play
+    startTestimonialsAutoPlay();
+}
+
+// Calcular cuántas cards mostrar según pantalla
+function updateTestimonialsCardsPerView() {
+    const width = window.innerWidth;
+    
+    if (width <= 768) {
+        testimonialsCardsPerView = 1; // 1 tarjeta en móvil
+    } else if (width <= 1024) {
+        testimonialsCardsPerView = 1; // 1 tarjeta en tablet
+    } else {
+        testimonialsCardsPerView = 2; // 2 tarjetas en desktop
+    }
+    
+    console.log(`📏 Ancho: ${width}px, Cards por vista: ${testimonialsCardsPerView}`);
+}
+
+// Obtener el slide máximo
+function getTestimonialsMaxSlide() {
+    return Math.max(0, testimonialsTotalSlides - testimonialsCardsPerView);
+}
+
+// Mover a slide anterior
+function moveTestimonialsToPrevious() {
+    if (testimonialsCurrentSlide > 0) {
+        testimonialsCurrentSlide--;
+        updateTestimonialsDisplay();
+        console.log(`⬅️ Moviendo a testimonio: ${testimonialsCurrentSlide}`);
+    } else {
+        console.log('⚠️ Ya está en el primer testimonio');
+    }
+    
+    // Reiniciar auto-play
+    restartTestimonialsAutoPlay();
+}
+
+// Mover a slide siguiente
+function moveTestimonialsToNext() {
+    const maxSlide = getTestimonialsMaxSlide();
+    
+    if (testimonialsCurrentSlide < maxSlide) {
+        testimonialsCurrentSlide++;
+        updateTestimonialsDisplay();
+        console.log(`➡️ Moviendo a testimonio: ${testimonialsCurrentSlide}`);
+    } else {
+        // Volver al inicio cuando llega al final
+        testimonialsCurrentSlide = 0;
+        updateTestimonialsDisplay();
+        console.log('🔄 Volviendo al primer testimonio');
+    }
+    
+    // Reiniciar auto-play
+    restartTestimonialsAutoPlay();
+}
+
+// Actualizar la visualización del carrusel
+function updateTestimonialsDisplay() {
+    const track = document.getElementById('testimonialsTrack');
+    const prevBtn = document.getElementById('testimonialsePrevBtn');
+    const nextBtn = document.getElementById('testimonialsNextBtn');
+    
+    if (!track) return;
+    
+    // Calcular desplazamiento
+    const cardWidth = 320; // Ancho de cada tarjeta
+    const gap = 30; // Gap entre tarjetas
+    const moveDistance = (cardWidth + gap) * testimonialsCurrentSlide;
+    
+    // Aplicar transformación
+    track.style.transform = `translateX(-${moveDistance}px)`;
+    track.style.transition = 'transform 0.5s ease';
+    
+    console.log(`🎯 Desplazamiento testimonios: -${moveDistance}px, Slide: ${testimonialsCurrentSlide}`);
+    
+    // Actualizar botones
+    if (prevBtn) {
+        prevBtn.disabled = testimonialsCurrentSlide === 0;
+        prevBtn.style.opacity = testimonialsCurrentSlide === 0 ? '0.4' : '1';
+    }
+    
+    if (nextBtn) {
+        const maxSlide = getTestimonialsMaxSlide();
+        nextBtn.disabled = false; // Nunca deshabilitar porque vuelve al inicio
+        nextBtn.style.opacity = '1';
+    }
+}
+
+// Auto-play mejorado
+function startTestimonialsAutoPlay() {
+    if (testimonialsAutoPlayInterval) {
+        clearInterval(testimonialsAutoPlayInterval);
+    }
+    
+    testimonialsAutoPlayInterval = setInterval(function() {
+        if (testimonialsInitialized) {
+            moveTestimonialsToNext();
+        }
+    }, 4000); // 4 segundos
+    
+    console.log('▶️ Auto-play de testimonios iniciado');
+}
+
+function stopTestimonialsAutoPlay() {
+    if (testimonialsAutoPlayInterval) {
+        clearInterval(testimonialsAutoPlayInterval);
+        testimonialsAutoPlayInterval = null;
+        console.log('⏸️ Auto-play de testimonios pausado');
+    }
+}
+
+function restartTestimonialsAutoPlay() {
+    stopTestimonialsAutoPlay();
+    setTimeout(startTestimonialsAutoPlay, 1000); // Reiniciar después de 1 segundo
+}
+
+// Función para ir a un testimonio específico
+function goToTestimonial(index) {
+    const maxSlide = getTestimonialsMaxSlide();
+    
+    if (index >= 0 && index <= maxSlide) {
+        testimonialsCurrentSlide = index;
+        updateTestimonialsDisplay();
+        console.log(`🎯 Yendo al testimonio: ${index}`);
+        restartTestimonialsAutoPlay();
+    }
+}
+
+// ===== TOUCH/SWIPE SUPPORT PARA MÓVILES =====
+function initializeTestimonialsTouch() {
+    const carousel = document.getElementById('testimonialsCarousel');
+    if (!carousel) return;
+    
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+    
+    // Touch start
+    carousel.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+        stopTestimonialsAutoPlay();
+    });
+    
+    // Touch move
+    carousel.addEventListener('touchmove', function(e) {
+        if (!isDragging) return;
+        currentX = e.touches[0].clientX;
+    });
+    
+    // Touch end
+    carousel.addEventListener('touchend', function(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        
+        const diffX = startX - currentX;
+        const threshold = 50; // Mínimo de pixels para considerar swipe
+        
+        if (Math.abs(diffX) > threshold) {
+            if (diffX > 0) {
+                // Swipe izquierda - siguiente
+                moveTestimonialsToNext();
+            } else {
+                // Swipe derecha - anterior
+                moveTestimonialsToPrevious();
+            }
+        } else {
+            // Si no hay swipe, reiniciar auto-play
+            setTimeout(startTestimonialsAutoPlay, 2000);
+        }
+    });
+    
+    console.log('👆 Touch/swipe activado para testimonios');
+}
+
+// ===== PAUSAR AUTO-PLAY EN HOVER =====
+function initializeTestimonialsHover() {
+    const container = document.querySelector('.testimonials-carousel-container');
+    if (!container) return;
+    
+    container.addEventListener('mouseenter', function() {
+        stopTestimonialsAutoPlay();
+        console.log('🖱️ Mouse sobre testimonios - auto-play pausado');
+    });
+    
+    container.addEventListener('mouseleave', function() {
+        setTimeout(startTestimonialsAutoPlay, 1000);
+        console.log('🖱️ Mouse fuera de testimonios - auto-play reanudado');
+    });
+}
+
+// ===== OBSERVADOR DE INTERSECCIÓN PARA ANIMACIONES =====
+function initializeTestimonialsAnimations() {
+    const testimonialsSection = document.querySelector('.testimonials-new');
+    
+    if (testimonialsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    console.log('🎬 Animando entrada de testimonios');
+                }
+            });
+        }, { threshold: 0.2 });
+        
+        observer.observe(testimonialsSection);
+    }
+}
+
+// ===== ACCESIBILIDAD MEJORADA =====
+function initializeTestimonialsAccessibility() {
+    const buttons = document.querySelectorAll('.testimonials-btn');
+    
+    buttons.forEach(button => {
+        // Agregar atributos ARIA
+        button.setAttribute('role', 'button');
+        button.setAttribute('tabindex', '0');
+        
+        if (button.classList.contains('testimonials-btn-prev')) {
+            button.setAttribute('aria-label', 'Testimonio anterior');
+        } else {
+            button.setAttribute('aria-label', 'Testimonio siguiente');
+        }
+        
+        // Soporte para navegación con teclado
+        button.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                button.click();
+            }
+        });
+    });
+    
+    // Anunciar cambios a lectores de pantalla
+    const track = document.getElementById('testimonialsTrack');
+    if (track) {
+        track.setAttribute('role', 'region');
+        track.setAttribute('aria-label', 'Testimonios de clientes');
+        track.setAttribute('aria-live', 'polite');
+    }
+    
+    console.log('♿ Accesibilidad configurada para testimonios');
+}
+
+// ===== FUNCIÓN PRINCIPAL DE INICIALIZACIÓN =====
+function initializeTestimonialsComplete() {
+    console.log('🚀 Inicialización completa de testimonios...');
+    
+    // Inicializar carrusel básico
+    initializeTestimonialsCarousel();
+    
+    // Inicializar funciones adicionales después de un pequeño delay
+    setTimeout(() => {
+        initializeTestimonialsAnimations();
+        initializeTestimonialsTouch();
+        initializeTestimonialsHover();
+        initializeTestimonialsAccessibility();
+    }, 500);
+    
+    console.log('✅ Testimonios completamente inicializados');
+}
+
+// ===== FUNCIONES DE DEBUG =====
+function debugTestimonials() {
+    console.log('🔍 DEBUG TESTIMONIOS:');
+    console.log('Inicializado:', testimonialsInitialized);
+    console.log('Slide actual:', testimonialsCurrentSlide);
+    console.log('Total slides:', testimonialsTotalSlides);
+    console.log('Cards por vista:', testimonialsCardsPerView);
+    console.log('Auto-play activo:', !!testimonialsAutoPlayInterval);
+    
+    const track = document.getElementById('testimonialsTrack');
+    const prevBtn = document.getElementById('testimonialsePrevBtn');
+    const nextBtn = document.getElementById('testimonialsNextBtn');
+    
+    console.log('Elementos encontrados:');
+    console.log('- Track:', !!track);
+    console.log('- Botón Prev:', !!prevBtn);
+    console.log('- Botón Next:', !!nextBtn);
+    
+    if (track) {
+        console.log('- Transform actual:', track.style.transform);
+        console.log('- Cards en track:', track.querySelectorAll('.testimonial-card-new').length);
+    }
+}
+
+function resetTestimonials() {
+    console.log('🔄 Reseteando carrusel de testimonios...');
+    testimonialsCurrentSlide = 0;
+    updateTestimonialsDisplay();
+    restartTestimonialsAutoPlay();
+}
+
+// Hacer funciones disponibles globalmente
+window.debugTestimonials = debugTestimonials;
+window.resetTestimonials = resetTestimonials;
+window.goToTestimonial = goToTestimonial;
+window.TestimonialsCarousel = {
+    init: initializeTestimonialsComplete,
+    goTo: goToTestimonial,
+    next: moveTestimonialsToNext,
+    prev: moveTestimonialsToPrevious,
+    reset: resetTestimonials,
+    debug: debugTestimonials
+};
+

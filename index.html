@@ -332,59 +332,165 @@
 </section>
 
     <!-- Sección Testimonios -->
-    <section class="testimonials">
-        <div class="container">
-            <h2 class="section-title">Testimonios</h2>
+    <!-- ===== SECCIÓN TESTIMONIOS - REEMPLAZAR EN TU index.html ===== -->
+<!-- Busca en tu index.html la sección con class="testimonials" y reemplázala por esto: -->
+
+<!-- Sección Testimonios - Nuevo Diseño -->
+<!-- ===== HTML CORREGIDO - REEMPLAZAR SECCIÓN TESTIMONIOS EN index.html ===== -->
+
+<!-- Sección Testimonios - Nuevo Diseño -->
+<section class="testimonials-new">
+    <div class="container">
+        <!-- Título principal -->
+        <div class="testimonials-header">
+            <h2 class="testimonials-title">Por qué vamos<br>más allá</h2>
+            <p class="testimonials-subtitle">Mira lo que dicen los usuarios sobre nosotros.</p>
+            <div class="testimonials-rating">
+                <span class="rating-label">Excelente</span>
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <p class="rating-info">Mira nuestras reseñas en ⭐ Trustpilot</p>
+            </div>
+        </div>
+
+        <!-- Contenedor del carrusel de testimonios -->
+        <div class="testimonials-carousel-container">
+            <!-- Flecha izquierda - ID CORREGIDO -->
+            <button class="testimonials-btn testimonials-btn-prev" id="testimonialsePrevBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
             
-            <div class="testimonials-grid">
-                <!-- Testimonio 1 -->
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <img src="assets/avatar-1.jpg" alt="Bruno Leonardi" class="testimonial-avatar">
-                        <div class="testimonial-info">
-                            <h4 class="testimonial-name">Bruno Leonardi</h4>
-                            <span class="testimonial-role">Transportista</span>
+            <!-- Flecha derecha -->
+            <button class="testimonials-btn testimonials-btn-next" id="testimonialsNextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+            <!-- Carrusel de testimonios -->
+            <div class="testimonials-carousel" id="testimonialsCarousel">
+                <div class="testimonials-track" id="testimonialsTrack">
+                    <!-- Testimonio 1 -->
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-header-new">
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="testimonial-date">27/08/2025</span>
+                        </div>
+                        <h3 class="testimonial-title-new">El trato fue excelente</h3>
+                        <p class="testimonial-text-new">¡El trato fue excelente! Rápido, bien coordinado y muy servicial.</p>
+                        <div class="testimonial-author">
+                            <strong>Eniko Horvath</strong>
                         </div>
                     </div>
-                    <div class="testimonial-rating">
-                        <span>⭐⭐⭐⭐⭐</span>
-                    </div>
-                    <p class="testimonial-text">"La atención personalizada y la transparencia desde el primer contacto. Encontré el camión perfecto para mi empresa y el proceso fue excelente."</p>
-                </div>
 
-                <!-- Testimonio 2 -->
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <img src="assets/avatar-2.jpg" alt="Lionel Constructora Ferco" class="testimonial-avatar">
-                        <div class="testimonial-info">
-                            <h4 class="testimonial-name">Lionel | Constructora Ferco</h4>
-                            <span class="testimonial-role">Empresa</span>
+                    <!-- Testimonio 2 -->
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-header-new">
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="testimonial-date">12/08/2025</span>
+                        </div>
+                        <h3 class="testimonial-title-new">Los empleados son expertos.</h3>
+                        <p class="testimonial-text-new">Los empleados tienen amplios conocimientos sobre su trabajo. Responden con rapidez y toman decisiones.</p>
+                        <div class="testimonial-author">
+                            <strong>Raimondas</strong>
                         </div>
                     </div>
-                    <div class="testimonial-rating">
-                        <span>⭐⭐⭐⭐⭐</span>
-                    </div>
-                    <p class="testimonial-text">"Compramos varios camiones y siempre recibimos un servicio profesional. La calidad de las unidades y el respaldo post-venta son excepcionales."</p>
-                </div>
 
-                <!-- Testimonio 3 -->
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <img src="assets/avatar-3.jpg" alt="Matías Guerra" class="testimonial-avatar">
-                        <div class="testimonial-info">
-                            <h4 class="testimonial-name">Matías Guerra</h4>
-                            <span class="testimonial-role">Empresario</span>
+                    <!-- Testimonio 3 -->
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-header-new">
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="testimonial-date">30/06/2025</span>
+                        </div>
+                        <h3 class="testimonial-title-new">Servicio excelente, personal</h3>
+                        <p class="testimonial-text-new">Desde la primera llamada telefónica sentí confianza, y esa confianza se cumplió con creces. Recibí actualizaciones constantes, mis expectativas fueron gestionadas y la venta fue sin preocupaciones.</p>
+                        <div class="testimonial-author">
+                            <strong>Dick de Jong</strong>
                         </div>
                     </div>
-                    <div class="testimonial-rating">
-                        <span>⭐⭐⭐⭐⭐</span>
+
+                    <!-- Testimonio 4 -->
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-header-new">
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="testimonial-date">15/07/2025</span>
+                        </div>
+                        <h3 class="testimonial-title-new">Proceso de compra transparente</h3>
+                        <p class="testimonial-text-new">Todo el proceso fue claro desde el primer momento. No hubo sorpresas y cumplieron con todos los plazos prometidos.</p>
+                        <div class="testimonial-author">
+                            <strong>María González</strong>
+                        </div>
                     </div>
-                    <p class="testimonial-text">"La confianza que transmiten y su conocimiento del mercado hicieron que la inversión fuera la correcta. Totalmente recomendable."</p>
+
+                    <!-- Testimonio 5 -->
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-header-new">
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="testimonial-date">22/06/2025</span>
+                        </div>
+                        <h3 class="testimonial-title-new">Atención post-venta excepcional</h3>
+                        <p class="testimonial-text-new">Después de la compra siguieron en contacto para asegurar que todo funcionara perfecto. Muy profesionales.</p>
+                        <div class="testimonial-author">
+                            <strong>Carlos Mendoza</strong>
+                        </div>
+                    </div>
+
+                    <!-- Testimonio 6 -->
+                    <div class="testimonial-card-new">
+                        <div class="testimonial-header-new">
+                            <div class="testimonial-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="testimonial-date">08/05/2025</span>
+                        </div>
+                        <h3 class="testimonial-title-new">La mejor experiencia de compra</h3>
+                        <p class="testimonial-text-new">Llevo años en el transporte y nunca había tenido una experiencia tan profesional comprando un camión. Totalmente recomendable.</p>
+                        <div class="testimonial-author">
+                            <strong>Roberto Silva</strong>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-
+    </div>
+</section>
     <!-- Sección Financiamiento -->
     <section class="financing">
         <div class="container">
