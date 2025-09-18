@@ -3226,14 +3226,14 @@ img:not([src]) {
         height: 50px !important;
     }
 }
-/* ===== SECCIÓN TESTIMONIOS CORREGIDA - REEMPLAZAR EN styles/main.css ===== */
+/* ===== SECCIÓN TESTIMONIOS - CSS CORREGIDO ===== */
 
-/* IMPORTANTE: Primero oculta la sección de testimonios anterior */
+/* Ocultar testimonios anteriores */
 .testimonials {
     display: none !important;
 }
 
-/* ===== NUEVA SECCIÓN TESTIMONIOS - LAYOUT HORIZONTAL ===== */
+/* ===== NUEVA SECCIÓN TESTIMONIOS ===== */
 .testimonials-new {
     padding: 80px 0;
     background: #f8f9fa;
@@ -3242,19 +3242,19 @@ img:not([src]) {
 }
 
 .testimonials-new .container {
-    max-width: 1400px; /* AUMENTADO para dar más espacio */
+    max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
-    display: flex; /* CAMBIADO: Layout horizontal */
-    align-items: flex-start; /* CAMBIADO: Alinear arriba */
-    gap: 80px; /* CAMBIADO: Espacio entre texto y carrusel */
+    display: flex;
+    align-items: flex-start;
+    gap: 80px;
 }
 
 /* ===== HEADER DE TESTIMONIOS - LADO IZQUIERDO ===== */
 .testimonials-header {
-    flex: 0 0 450px; /* CAMBIADO: Ancho fijo para el texto */
+    flex: 0 0 450px;
     max-width: 450px;
-    margin-bottom: 0; /* CAMBIADO: Sin margen inferior */
+    margin-bottom: 0;
 }
 
 .testimonials-title {
@@ -3275,7 +3275,7 @@ img:not([src]) {
     text-align: left;
 }
 
-/* ===== RATING SECTION ===== */
+/* ===== RATING SECTION CORREGIDA ===== */
 .testimonials-rating {
     display: flex;
     flex-direction: column;
@@ -3289,6 +3289,7 @@ img:not([src]) {
     text-align: left;
 }
 
+/* ESTRELLAS PRINCIPALES - AMARILLAS/DORADAS */
 .stars {
     display: flex;
     gap: 4px;
@@ -3296,8 +3297,9 @@ img:not([src]) {
 }
 
 .stars i {
-    color: #00b67a;
+    color: #FFD700; /* Dorado/amarillo para las estrellas principales */
     font-size: 1.2rem;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .rating-info {
@@ -3307,11 +3309,11 @@ img:not([src]) {
     text-align: left;
 }
 
-/* ===== CARRUSEL DE TESTIMONIOS - LADO DERECHO ===== */
+/* ===== CARRUSEL DE TESTIMONIOS ===== */
 .testimonials-carousel-container {
-    flex: 1; /* CAMBIADO: Ocupa el resto del espacio */
+    flex: 1;
     position: relative;
-    min-width: 0; /* IMPORTANTE: Para que flex funcione correctamente */
+    min-width: 0;
 }
 
 .testimonials-carousel {
@@ -3329,17 +3331,24 @@ img:not([src]) {
 
 /* ===== TARJETAS DE TESTIMONIO ===== */
 .testimonial-card-new {
-    flex: 0 0 320px !important; /* FIJO: Ancho fijo de tarjeta */
+    flex: 0 0 320px !important;
     width: 320px !important;
     background: #2d3748;
     color: var(--primary-white);
     padding: 30px 25px;
-    border-radius: 0;
+    border-radius: 8px; /* Bordes ligeramente redondeados */
     position: relative;
     min-height: 280px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.testimonial-card-new:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 /* Header con estrellas y fecha */
@@ -3350,14 +3359,16 @@ img:not([src]) {
     margin-bottom: 20px;
 }
 
+/* ESTRELLAS EN TARJETAS - VERDES COMO TRUSTPILOT */
 .testimonial-stars {
     display: flex;
     gap: 3px;
 }
 
 .testimonial-stars i {
-    color: #00b67a;
+    color: #00b67a; /* Verde Trustpilot */
     font-size: 1rem;
+    text-shadow: none;
 }
 
 .testimonial-date {
@@ -3399,7 +3410,7 @@ img:not([src]) {
     font-weight: 600;
 }
 
-/* ===== BOTONES DE NAVEGACIÓN - POSICIONADOS CORRECTAMENTE ===== */
+/* ===== BOTONES DE NAVEGACIÓN CORREGIDOS ===== */
 .testimonials-btn {
     position: absolute;
     top: 50%;
@@ -3436,11 +3447,11 @@ img:not([src]) {
 }
 
 .testimonials-btn-prev {
-    left: -60px; /* CAMBIADO: Posición relativa al carrusel */
+    left: -60px;
 }
 
 .testimonials-btn-next {
-    right: -60px; /* CAMBIADO: Posición relativa al carrusel */
+    right: -60px;
 }
 
 .testimonials-btn:disabled {
@@ -3465,7 +3476,7 @@ img:not([src]) {
     color: #cbd5e0;
 }
 
-/* ===== RESPONSIVE DESIGN CORREGIDO ===== */
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1200px) {
     .testimonials-new .container {
         gap: 60px;
@@ -3498,7 +3509,7 @@ img:not([src]) {
 
 @media (max-width: 1024px) {
     .testimonials-new .container {
-        flex-direction: column; /* CAMBIADO: Stack vertical en tablets */
+        flex-direction: column;
         gap: 40px;
         align-items: center;
     }
@@ -3506,7 +3517,7 @@ img:not([src]) {
     .testimonials-header {
         flex: none;
         max-width: 100%;
-        text-align: center; /* CENTRADO en tablets */
+        text-align: center;
     }
     
     .testimonials-title {
@@ -3549,7 +3560,7 @@ img:not([src]) {
     
     .testimonials-carousel-container {
         max-width: 100%;
-        padding: 0 60px; /* Espacio para botones */
+        padding: 0 60px;
     }
     
     .testimonial-card-new {
@@ -3617,16 +3628,6 @@ img:not([src]) {
 }
 
 /* ===== EFECTOS ADICIONALES ===== */
-.testimonial-card-new {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.testimonial-card-new:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-/* Animación de aparición */
 .testimonials-new.animate-in .testimonials-header {
     animation: fadeInLeft 0.8s ease forwards;
 }
@@ -3657,30 +3658,88 @@ img:not([src]) {
         transform: translateX(0);
     }
 }
-/* ===== DEBUG: FORZAR VISIBILIDAD DE TODO ===== */
-/* Descomenta estas líneas si sigues teniendo problemas */
 
-/*
-.randon-section,
-.randon-section *,
-.randon-content,
-.randon-image-container,
-.randon-main-image,
-.randon-logo-overlay,
-.randon-text-overlay,
-.btn-randon {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    position: relative !important;
+/* ===== MEJORAS ADICIONALES PARA PUNTUACIÓN ===== */
+
+/* Rating más visible */
+.testimonials-rating {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.randon-main-image {
-    position: static !important;
+/* Estrellas con gradiente para más impacto */
+.stars i {
+    background: linear-gradient(45deg, #FFD700, #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(1px 1px 2px rgba(255, 215, 0, 0.3));
 }
 
-.randon-logo-overlay,
-.randon-text-overlay {
-    position: absolute !important;
+/* Estrellas en testimonios con efecto brillante */
+.testimonial-stars i {
+    color: #00b67a;
+    filter: drop-shadow(0 0 3px rgba(0, 182, 122, 0.3));
 }
-*/
+
+/* Hover en tarjetas de testimonio */
+.testimonial-card-new:hover .testimonial-stars i {
+    filter: drop-shadow(0 0 5px rgba(0, 182, 122, 0.5));
+}
+
+/* ===== ACCESIBILIDAD ===== */
+.testimonials-btn:focus {
+    outline: 3px solid var(--primary-blue);
+    outline-offset: 2px;
+}
+
+.testimonial-card-new:focus {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+}
+
+/* ===== LOADING STATE ===== */
+.testimonials-new.loading .testimonial-card-new {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.testimonials-new.loading .testimonials-btn {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+    .testimonials-new {
+        padding: 20px 0;
+        background: white !important;
+    }
+    
+    .testimonials-btn {
+        display: none;
+    }
+    
+    .testimonials-track {
+        transform: none !important;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .testimonial-card-new {
+        background: white !important;
+        color: black !important;
+        border: 1px solid #ccc;
+        break-inside: avoid;
+        margin-bottom: 20px;
+    }
+}
+.stars i,
+.testimonial-stars i {
+    background: linear-gradient(45deg, var(--primary-blue), var(--secondary-light-blue)) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+}

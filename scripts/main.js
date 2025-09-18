@@ -1,29 +1,33 @@
-// ===== VARIABLES GLOBALES =====
-let currentTestimonial = 0;
-const testimonials = [];
-
 // ===== INICIALIZACIÓN =====
 document.addEventListener('DOMContentLoaded', function() {
     initializeNavigation();
     initializeHeroAnimations();
     initializeCategoryButtons();
     initializeScrollAnimations();
-   // initializeTestimonials();//
     initializeContactForms();
     initializeLazyLoading();
     initializeScrollToTop();
-
-   
-    setTimeout(function() {
-        console.log('⏰ Inicializando testimonios tras delay...');
-        initializeTestimonialsComplete();
-    }, 1500); // Aumentar delay a 1.5 segundos
+    initializeBrandsStatic();
     
-    // Tu carrusel de unidades existente
+    // Carrusel de unidades con delay
     setTimeout(function() {
-        console.log('⏰ Inicializando carrusel tras delay...');
-        initializeCarousel();
+        console.log('⏰ Inicializando carrusel de unidades...');
+        if (typeof initializeCarousel === 'function') {
+            initializeCarousel();
+        }
     }, 1000);
+    
+    // Navegación activa
+    setTimeout(() => {
+        initializeActiveNavigation();
+    }, 100);
+    
+    // Actualizar navegación cuando se navega con el botón atrás/adelante
+    window.addEventListener('popstate', function() {
+        setTimeout(() => {
+            initializeActiveNavigation();
+        }, 50);
+    });
 });
 
 // ===== NAVEGACIÓN =====
@@ -32,6 +36,9 @@ function initializeNavigation() {
     const navMenu = document.querySelector('.nav-menu');
     const navLinks = document.querySelectorAll('.nav-link');
     const navbar = document.querySelector('.navbar');
+
+    // Inicializar navegación activa al cargar
+    initializeActiveNavigation();
 
     // Toggle menú hamburguesa
     if (hamburger) {
@@ -71,27 +78,99 @@ function initializeNavigation() {
             navbar.style.transform = 'translateY(0)';
         }
         lastScrollTop = scrollTop;
+        
+        // Actualizar navegación activa solo en inicio
+        updateNavigationOnScroll();
     });
+}
 
-    // Highlighting del link activo según la sección
-    const sections = document.querySelectorAll('section[id]');
+// ===== NAVEGACIÓN ACTIVA MEJORADA =====
+function initializeActiveNavigation() {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const currentPage = getCurrentPageName();
     
-    window.addEventListener('scroll', function() {
-        let current = '';
-        sections.forEach(section => {
-            const sectionTop = section.getBoundingClientRect().top;
-            const sectionHeight = section.offsetHeight;
-            if (sectionTop <= 100 && sectionTop + sectionHeight > 100) {
-                current = section.getAttribute('id');
-            }
-        });
+    console.log('🧭 Página actual detectada:', currentPage);
+    
+    // Remover todas las clases active
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    // Agregar clase active según la página actual
+    navLinks.forEach(link => {
+        const href = link.getAttribute('href');
+        const linkPage = getPageFromHref(href);
+        
+        console.log('🔗 Comparando:', linkPage, 'vs', currentPage);
+        
+        if (linkPage === currentPage) {
+            link.classList.add('active');
+            console.log('✅ Marcando como activo:', href);
+        }
+    });
+}
 
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href').includes(current)) {
-                link.classList.add('active');
-            }
-        });
+// Detectar el nombre de la página actual
+function getCurrentPageName() {
+    const path = window.location.pathname;
+    const fileName = path.split('/').pop();
+    
+    // Mapear archivos a nombres de página
+    const pageMap = {
+        'index.html': 'inicio',
+        '': 'inicio', // Para cuando está en la raíz
+        'unidadesDisponibles.html': 'unidades',
+        'LarrosaCamiones.html': 'empresa', 
+        'contacto.html': 'contacto'
+    };
+    
+    return pageMap[fileName] || 'inicio';
+}
+
+// Extraer página desde el href del link
+function getPageFromHref(href) {
+    if (!href) return 'inicio';
+    
+    // Mapear hrefs a nombres de página
+    if (href.includes('#inicio') || href === 'index.html' || href === '/') {
+        return 'inicio';
+    } else if (href.includes('unidadesDisponibles.html')) {
+        return 'unidades';
+    } else if (href.includes('LarrosaCamiones.html')) {
+        return 'empresa';
+    } else if (href.includes('contacto.html')) {
+        return 'contacto';
+    }
+    
+    return 'inicio';
+}
+
+// Actualizar navegación cuando cambia la página
+function updateNavigationOnScroll() {
+    // Solo en la página de inicio (con secciones)
+    if (getCurrentPageName() !== 'inicio') return;
+    
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    let current = 'inicio';
+    
+    sections.forEach(section => {
+        const sectionTop = section.getBoundingClientRect().top;
+        const sectionHeight = section.offsetHeight;
+        
+        if (sectionTop <= 100 && sectionTop + sectionHeight > 100) {
+            current = section.getAttribute('id');
+        }
+    });
+    
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        const href = link.getAttribute('href');
+        
+        if (href && href.includes(`#${current}`)) {
+            link.classList.add('active');
+        }
     });
 }
 
@@ -236,40 +315,6 @@ function animateSectionTitle(title) {
         title.style.opacity = '1';
         title.style.transform = 'translateY(0)';
     }, 100);
-}
-
-// ===== TESTIMONIOS DINÁMICOS =====
-function initializeTestimonials() {
-    const testimonialCards = document.querySelectorAll('.testimonial-card');
-    
-    if (testimonialCards.length > 0) {
-        // Efecto hover en testimonios
-        testimonialCards.forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px) scale(1.02)';
-                this.style.boxShadow = '0 10px 40px rgba(0, 0, 0, 0.15)';
-            });
-
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = '';
-                this.style.boxShadow = '';
-            });
-        });
-
-        // Auto-scroll suave de testimonios en móvil
-        if (window.innerWidth <= 768 && testimonialCards.length > 1) {
-            let currentIndex = 0;
-            setInterval(() => {
-                testimonialCards[currentIndex].style.opacity = '0.7';
-                currentIndex = (currentIndex + 1) % testimonialCards.length;
-                testimonialCards[currentIndex].style.opacity = '1';
-                testimonialCards[currentIndex].scrollIntoView({ 
-                    behavior: 'smooth', 
-                    inline: 'center' 
-                });
-            }, 5000);
-        }
-    }
 }
 
 // ===== FORMULARIOS DE CONTACTO =====
@@ -432,107 +477,9 @@ function initializeScrollToTop() {
     });
 }
 
-// ===== NOTIFICACIONES =====
-function showNotification(message, type = 'info') {
-    const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: ${type === 'info' ? '#3D5FAC' : '#28a745'};
-        color: white;
-        padding: 15px 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        z-index: 1001;
-        transform: translateX(100%);
-        transition: transform 0.3s ease;
-        max-width: 300px;
-        font-weight: 600;
-    `;
-    notification.textContent = message;
-    
-    document.body.appendChild(notification);
-    
-    // Animar entrada
-    setTimeout(() => {
-        notification.style.transform = 'translateX(0)';
-    }, 100);
-    
-    // Animar salida
-    setTimeout(() => {
-        notification.style.transform = 'translateX(100%)';
-        setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, 3000);
-}
-
-// ===== UTILIDADES =====
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// Optimizar eventos de scroll
-const optimizedScrollHandler = debounce(() => {
-    // Código de scroll optimizado aquí
-}, 16); // ~60fps
-
-// ===== RESPONSIVE UTILITIES =====
-function handleResize() {
-    const isMobile = window.innerWidth <= 768;
-    const isTablet = window.innerWidth <= 1024 && window.innerWidth > 768;
-    
-    // Ajustes específicos para diferentes tamaños de pantalla
-    if (isMobile) {
-        // Lógica específica para móvil
-        document.body.classList.add('mobile');
-        document.body.classList.remove('tablet', 'desktop');
-    } else if (isTablet) {
-        // Lógica específica para tablet
-        document.body.classList.add('tablet');
-        document.body.classList.remove('mobile', 'desktop');
-    } else {
-        // Lógica específica para desktop
-        document.body.classList.add('desktop');
-        document.body.classList.remove('mobile', 'tablet');
-    }
-}
-
-// Ejecutar al cargar y redimensionar
-window.addEventListener('resize', debounce(handleResize, 250));
-handleResize(); // Ejecutar inmediatamente
-
-// ===== PERFORMANCE MONITORING =====
-window.addEventListener('load', function() {
-    console.log('🚛 Larrosa Camiones - Sitio web cargado correctamente');
-    console.log('⚡ Tiempo de carga:', performance.now().toFixed(2) + 'ms');
-})// ===== JAVASCRIPT ACTUALIZADO PARA MARCAS ESTÁTICAS =====
-// Reemplaza o modifica el JavaScript existente
-
-document.addEventListener('DOMContentLoaded', function() {
-    // ===== INICIALIZACIÓN DE MARCAS ESTÁTICAS =====
-    initializeBrandsStatic();
-});
-
+// ===== MARCAS ESTÁTICAS =====
 function initializeBrandsStatic() {
     console.log('🏢 Inicializando marcas estáticas...');
-    
-    // Ya NO duplicamos el contenido porque es estático
-    // const brandsTrack = document.querySelector('.brands-track');
-    // if (brandsTrack) {
-    //     const originalContent = brandsTrack.innerHTML;
-    //     brandsTrack.innerHTML = originalContent + originalContent;
-    // }
     
     // Agregar animación de entrada
     const brandsSection = document.querySelector('.brands');
@@ -566,9 +513,6 @@ function initializeBrandsStatic() {
                     transport_type: 'beacon'
                 });
             }
-            
-            // Ejemplo de acción al hacer click (puedes modificar)
-            // window.open(`https://ejemplo.com/marca/${brandName.toLowerCase()}`, '_blank');
         });
         
         // Mejorar accesibilidad
@@ -588,139 +532,10 @@ function initializeBrandsStatic() {
         logo.style.animationDelay = `${index * 0.1}s`;
     });
     
-    // ===== ELIMINADO: Funcionalidad de pausa =====
-    // Ya no necesitamos pausar/reanudar porque no hay animación
-    
     console.log('✅ Marcas estáticas inicializadas correctamente');
 }
 
-// ===== FUNCIÓN PARA DESTACAR UNA MARCA ESPECÍFICA (OPCIONAL) =====
-function highlightBrand(brandName) {
-    const brandLogos = document.querySelectorAll('.brand-logo');
-    
-    brandLogos.forEach(logo => {
-        if (logo.alt.toLowerCase().includes(brandName.toLowerCase())) {
-            // Destacar la marca
-            logo.style.transform = 'scale(1.2)';
-            logo.style.opacity = '1';
-            logo.style.filter = 'grayscale(0%) brightness(1)';
-            logo.style.boxShadow = '0 8px 25px rgba(61, 95, 172, 0.3)';
-            logo.style.zIndex = '10';
-            
-            // Quitar el destacado después de 3 segundos
-            setTimeout(() => {
-                logo.style.transform = '';
-                logo.style.opacity = '';
-                logo.style.filter = '';
-                logo.style.boxShadow = '';
-                logo.style.zIndex = '';
-            }, 3000);
-            
-            console.log(`🎯 Destacando marca: ${brandName}`);
-        }
-    });
-}
-
-// ===== FUNCIÓN PARA FILTRAR MARCAS (OPCIONAL) =====
-function filterBrands(brandNames = []) {
-    const brandLogos = document.querySelectorAll('.brand-logo');
-    
-    if (brandNames.length === 0) {
-        // Mostrar todas las marcas
-        brandLogos.forEach(logo => {
-            logo.style.display = 'block';
-            logo.style.opacity = '0.7';
-        });
-        console.log('🔄 Mostrando todas las marcas');
-        return;
-    }
-    
-    brandLogos.forEach(logo => {
-        const brandName = logo.alt.toLowerCase();
-        const shouldShow = brandNames.some(name => 
-            brandName.includes(name.toLowerCase())
-        );
-        
-        if (shouldShow) {
-            logo.style.display = 'block';
-            logo.style.opacity = '1';
-            logo.style.filter = 'grayscale(0%) brightness(1)';
-        } else {
-            logo.style.display = 'none';
-        }
-    });
-    
-    console.log(`🎯 Filtrando marcas: ${brandNames.join(', ')}`);
-}
-
-// ===== FUNCIÓN PARA REORGANIZAR MARCAS (OPCIONAL) =====
-function reorderBrands(newOrder = []) {
-    const brandsTrack = document.querySelector('.brands-track');
-    if (!brandsTrack) return;
-    
-    const brandLogos = Array.from(document.querySelectorAll('.brand-logo'));
-    
-    if (newOrder.length === 0) {
-        console.log('ℹ️ No se especificó nuevo orden de marcas');
-        return;
-    }
-    
-    // Crear nuevo orden basado en los nombres proporcionados
-    const reorderedLogos = [];
-    
-    newOrder.forEach(brandName => {
-        const logo = brandLogos.find(logo => 
-            logo.alt.toLowerCase().includes(brandName.toLowerCase())
-        );
-        if (logo) {
-            reorderedLogos.push(logo);
-        }
-    });
-    
-    // Agregar las marcas restantes que no estaban en la lista
-    brandLogos.forEach(logo => {
-        if (!reorderedLogos.includes(logo)) {
-            reorderedLogos.push(logo);
-        }
-    });
-    
-    // Limpiar el contenedor y agregar en el nuevo orden
-    brandsTrack.innerHTML = '';
-    reorderedLogos.forEach(logo => {
-        brandsTrack.appendChild(logo);
-    });
-    
-    console.log('🔄 Marcas reorganizadas:', newOrder);
-}
-
-// ===== EXPORTAR FUNCIONES GLOBALES =====
-window.BrandsStatic = {
-    highlight: highlightBrand,
-    filter: filterBrands,
-    reorder: reorderBrands,
-    reinitialize: initializeBrandsStatic
-};
-
-// ===== EJEMPLOS DE USO =====
-/*
-// Destacar una marca específica
-// BrandsStatic.highlight('Scania');
-
-// Filtrar solo ciertas marcas
-// BrandsStatic.filter(['Scania', 'Volvo', 'Mercedes']);
-
-// Mostrar todas las marcas nuevamente
-// BrandsStatic.filter([]);
-
-// Reorganizar marcas en un orden específico
-// BrandsStatic.reorder(['Randon', 'Scania', 'Volvo', 'Mercedes', 'Iveco']);
-
-// Reinicializar si es necesario
-// BrandsStatic.reinitialize();
-*/
-
-// ===== REEMPLAZAR LA SECCIÓN DEL CARRUSEL EN TU scripts/main.js CON ESTE CÓDIGO =====
-
+// ===== CARRUSEL DE UNIDADES =====
 // Variables globales del carrusel
 let carouselCurrentSlide = 0;
 let carouselTotalSlides = 0;
@@ -908,41 +723,369 @@ function updateCarouselIndicators() {
     });
 }
 
-// ===== ACTUALIZAR TU FUNCIÓN initializeScrollAnimations() =====
-// Modifica tu función existente para incluir esto:
-
-// Función para inicializar todo cuando la página carga
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 DOM cargado, inicializando...');
+// ===== TESTIMONIOS - SISTEMA COMPLETAMENTE AISLADO =====
+window.TestimonialsSystem = (function() {
+    'use strict';
     
-    // Tus funciones existentes
-    initializeNavigation();
-    initializeHeroAnimations();
-    initializeCategoryButtons();
-    initializeScrollAnimations();
-    initializeTestimonials();
-    initializeContactForms();
-    initializeLazyLoading();
-    initializeScrollToTop();
+    // Variables privadas para evitar conflictos
+    let slideIndex = 0;
+    let totalTestimonials = 0;
+    let isReady = false;
+    let autoTimer = null;
     
-    // NUEVO: Inicializar carrusel con delay para asegurar que el DOM esté listo
-    setTimeout(function() {
-        console.log('⏰ Inicializando carrusel tras delay...');
-        initializeCarousel();
-    }, 1000);
-});
-
-// También inicializar cuando la ventana termine de cargar completamente
-window.addEventListener('load', function() {
-    console.log('🏁 Window loaded, verificando carrusel...');
-    if (!carouselInitialized) {
-        setTimeout(initializeCarousel, 500);
+    // Configuración
+    const config = {
+        slideWidth: 350, // 320px card + 30px gap
+        animationDuration: 500,
+        autoPlayInterval: 4000
+    };
+    
+    // Función principal de inicialización
+    function init() {
+        console.log('🎭 Inicializando sistema de testimonios...');
+        
+        try {
+            // Buscar elementos
+            const elements = getElements();
+            if (!elements.isValid) {
+                console.error('❌ Elementos HTML no encontrados');
+                return false;
+            }
+            
+            // Configurar
+            setup(elements);
+            
+            // Contar testimonios
+            totalTestimonials = elements.track.querySelectorAll('.testimonial-card-new').length;
+            console.log(`📊 ${totalTestimonials} testimonios encontrados`);
+            
+            if (totalTestimonials === 0) {
+                console.error('❌ No hay testimonios');
+                return false;
+            }
+            
+            // Configurar eventos
+            setupEvents(elements);
+            
+            // Estado inicial
+            slideIndex = 0;
+            isReady = true;
+            
+            // Mostrar primer slide
+            updateView();
+            
+            // Iniciar autoplay
+            startAutoPlay();
+            
+            console.log('✅ Testimonios listos');
+            return true;
+            
+        } catch (error) {
+            console.error('❌ Error inicializando testimonios:', error);
+            return false;
+        }
     }
-});
+    
+    // Obtener elementos del DOM
+    function getElements() {
+        const track = document.getElementById('testimonialsTrack');
+        const prevBtn = document.getElementById('testimonialsPrevBtn');
+        const nextBtn = document.getElementById('testimonialsNextBtn');
+        
+        console.log('🔍 Buscando elementos:', {
+            track: !!track,
+            prevBtn: !!prevBtn,
+            nextBtn: !!nextBtn
+        });
+        
+        return {
+            track: track,
+            prevBtn: prevBtn,
+            nextBtn: nextBtn,
+            isValid: track && prevBtn && nextBtn
+        };
+    }
+    
+    // Configurar estilos básicos
+    function setup(elements) {
+        // Configurar track
+        elements.track.style.display = 'flex';
+        elements.track.style.gap = '30px';
+        elements.track.style.transition = `transform ${config.animationDuration}ms ease`;
+        elements.track.style.transform = 'translateX(0px)';
+        
+        console.log('✅ Estilos configurados');
+    }
+    
+    // Configurar eventos
+    function setupEvents(elements) {
+        // Limpiar eventos anteriores
+        elements.prevBtn.onclick = null;
+        elements.nextBtn.onclick = null;
+        
+        // Eventos nuevos
+        elements.prevBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('⬅️ Anterior');
+            previous();
+        });
+        
+        elements.nextBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('➡️ Siguiente');
+            next();
+        });
+        
+        console.log('✅ Eventos configurados');
+    }
+    
+    // Ir al anterior
+    function previous() {
+        if (!isReady) return;
+        
+        console.log(`Slide actual: ${slideIndex}`);
+        
+        if (slideIndex > 0) {
+            slideIndex--;
+        } else {
+            // Ir al último
+            slideIndex = Math.max(0, totalTestimonials - 2);
+        }
+        
+        console.log(`Nuevo slide: ${slideIndex}`);
+        updateView();
+        restartAutoPlay();
+    }
+    
+    // Ir al siguiente
+    function next() {
+        if (!isReady) return;
+        
+        console.log(`Slide actual: ${slideIndex}`);
+        
+        const maxSlide = Math.max(0, totalTestimonials - 2);
+        
+        if (slideIndex < maxSlide) {
+            slideIndex++;
+        } else {
+            // Volver al inicio
+            slideIndex = 0;
+        }
+        
+        console.log(`Nuevo slide: ${slideIndex}`);
+        updateView();
+        restartAutoPlay();
+    }
+    
+    // Actualizar vista
+    function updateView() {
+        const track = document.getElementById('testimonialsTrack');
+        if (!track) return;
+        
+        const offset = slideIndex * config.slideWidth;
+        track.style.transform = `translateX(-${offset}px)`;
+        
+        console.log(`🎯 Desplazando ${offset}px`);
+        
+        // Actualizar botones (siempre habilitados)
+        const prevBtn = document.getElementById('testimonialsPrevBtn');
+        const nextBtn = document.getElementById('testimonialsNextBtn');
+        
+        if (prevBtn) {
+            prevBtn.style.opacity = '1';
+            prevBtn.disabled = false;
+        }
+        
+        if (nextBtn) {
+            nextBtn.style.opacity = '1';
+            nextBtn.disabled = false;
+        }
+    }
+    
+    // AutoPlay
+    function startAutoPlay() {
+        if (autoTimer) clearInterval(autoTimer);
+        
+        autoTimer = setInterval(function() {
+            if (isReady) next();
+        }, config.autoPlayInterval);
+        
+        console.log('▶️ AutoPlay iniciado');
+    }
+    
+    function stopAutoPlay() {
+        if (autoTimer) {
+            clearInterval(autoTimer);
+            autoTimer = null;
+            console.log('⏸️ AutoPlay detenido');
+        }
+    }
+    
+    function restartAutoPlay() {
+        stopAutoPlay();
+        setTimeout(startAutoPlay, 1000);
+    }
+    
+    // Funciones de utilidad
+    function debug() {
+        console.log('🔍 DEBUG TESTIMONIOS:');
+        console.log('- Listo:', isReady);
+        console.log('- Slide actual:', slideIndex);
+        console.log('- Total:', totalTestimonials);
+        console.log('- AutoPlay:', !!autoTimer);
+        
+        const track = document.getElementById('testimonialsTrack');
+        if (track) {
+            console.log('- Transform:', track.style.transform);
+        }
+    }
+    
+    function reset() {
+        console.log('🔄 Reset');
+        stopAutoPlay();
+        slideIndex = 0;
+        updateView();
+        startAutoPlay();
+    }
+    
+    function repair() {
+        console.log('🔧 Reparando...');
+        
+        // Corregir ID si está mal
+        const wrongBtn = document.getElementById('testimonialsePrevBtn');
+        if (wrongBtn) {
+            wrongBtn.id = 'testimonialsPrevBtn';
+            console.log('✅ ID corregido');
+        }
+        
+        // Reinicializar
+        isReady = false;
+        stopAutoPlay();
+        setTimeout(init, 500);
+    }
+    
+    // API pública
+    return {
+        init: init,
+        next: next,
+        previous: previous,
+        debug: debug,
+        reset: reset,
+        repair: repair
+    };
+})();
+
+// Auto-inicialización con reintentos para testimonios
+function startTestimonialsSystem() {
+    console.log('🎯 Iniciando sistema de testimonios...');
+    
+    let attempts = 0;
+    const maxAttempts = 5;
+    
+    function tryInit() {
+        attempts++;
+        console.log(`Intento ${attempts}/${maxAttempts}`);
+        
+        if (window.TestimonialsSystem.init()) {
+            console.log('✅ Sistema de testimonios funcionando');
+        } else if (attempts < maxAttempts) {
+            console.log(`⚠️ Reintentando en 1 segundo...`);
+            setTimeout(tryInit, 1000);
+        } else {
+            console.error('❌ No se pudo inicializar después de varios intentos');
+            console.log('💡 Usa TestimonialsSystem.repair() para intentar reparar');
+        }
+    }
+    
+    tryInit();
+}
+
+// Inicialización automática de testimonios
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(startTestimonialsSystem, 2500);
+    });
+} else {
+    setTimeout(startTestimonialsSystem, 2500);
+}
+
+// ===== NOTIFICACIONES =====
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${type === 'info' ? '#3D5FAC' : '#28a745'};
+        color: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        z-index: 1001;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        max-width: 300px;
+        font-weight: 600;
+    `;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    // Animar entrada
+    setTimeout(() => {
+        notification.style.transform = 'translateX(0)';
+    }, 100);
+    
+    // Animar salida
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+// ===== UTILIDADES =====
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+// ===== RESPONSIVE UTILITIES =====
+function handleResize() {
+    const isMobile = window.innerWidth <= 768;
+    const isTablet = window.innerWidth <= 1024 && window.innerWidth > 768;
+    
+    // Ajustes específicos para diferentes tamaños de pantalla
+    if (document.body) {
+        if (isMobile) {
+            document.body.classList.add('mobile');
+            document.body.classList.remove('tablet', 'desktop');
+        } else if (isTablet) {
+            document.body.classList.add('tablet');
+            document.body.classList.remove('mobile', 'desktop');
+        } else {
+            document.body.classList.add('desktop');
+            document.body.classList.remove('mobile', 'tablet');
+        }
+    }
+}
+
+// Ejecutar al cargar y redimensionar
+window.addEventListener('resize', debounce(handleResize, 250));
+window.addEventListener('load', handleResize);
 
 // ===== FUNCIONES DE DEBUG =====
-// Funciones útiles para verificar el estado (usar en consola del navegador)
-
 function debugCarousel() {
     console.log('🔍 DEBUG CARRUSEL:');
     console.log('Inicializado:', carouselInitialized);
@@ -965,6 +1108,21 @@ function debugCarousel() {
     }
 }
 
+function debugNavigation() {
+    console.log('🔍 DEBUG NAVEGACIÓN:');
+    console.log('Página actual:', getCurrentPageName());
+    console.log('URL actual:', window.location.pathname);
+    
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach((link, index) => {
+        console.log(`Link ${index}:`, {
+            href: link.getAttribute('href'),
+            texto: link.textContent.trim(),
+            activo: link.classList.contains('active')
+        });
+    });
+}
+
 // Funciones de control manual (usar en consola)
 function forceNext() {
     console.log('🔧 Forzando siguiente...');
@@ -984,573 +1142,80 @@ function resetCarousel() {
 
 // Hacer funciones disponibles globalmente para debugging
 window.debugCarousel = debugCarousel;
+window.debugNavigation = debugNavigation;
 window.forceNext = forceNext;
 window.forcePrev = forcePrev;
 window.resetCarousel = resetCarousel;
 
-// ===== AGREGAR ESTE CÓDIGO AL FINAL DE scripts/main.js ===== 
-
-// ===== NAVEGACIÓN ACTIVA MEJORADA =====
-function initializeActiveNavigation() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    const currentPage = getCurrentPageName();
-    
-    console.log('🧭 Página actual detectada:', currentPage);
-    
-    // Remover todas las clases active
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-    });
-    
-    // Agregar clase active según la página actual
-    navLinks.forEach(link => {
-        const href = link.getAttribute('href');
-        const linkPage = getPageFromHref(href);
+// ===== EXPORTAR FUNCIONES GLOBALES DE MARCAS =====
+window.BrandsStatic = {
+    highlight: function(brandName) {
+        const brandLogos = document.querySelectorAll('.brand-logo');
         
-        console.log('🔗 Comparando:', linkPage, 'vs', currentPage);
-        
-        if (linkPage === currentPage) {
-            link.classList.add('active');
-            console.log('✅ Marcando como activo:', href);
-        }
-    });
-}
-
-// Detectar el nombre de la página actual
-function getCurrentPageName() {
-    const path = window.location.pathname;
-    const fileName = path.split('/').pop();
-    
-    // Mapear archivos a nombres de página
-    const pageMap = {
-        'index.html': 'inicio',
-        '': 'inicio', // Para cuando está en la raíz
-        'unidadesDisponibles.html': 'unidades',
-        'LarrosaCamiones.html': 'empresa', 
-        'contacto.html': 'contacto'
-    };
-    
-    return pageMap[fileName] || 'inicio';
-}
-
-// Extraer página desde el href del link
-function getPageFromHref(href) {
-    if (!href) return 'inicio';
-    
-    // Mapear hrefs a nombres de página
-    if (href.includes('#inicio') || href === 'index.html' || href === '/') {
-        return 'inicio';
-    } else if (href.includes('unidadesDisponibles.html')) {
-        return 'unidades';
-    } else if (href.includes('LarrosaCamiones.html')) {
-        return 'empresa';
-    } else if (href.includes('contacto.html')) {
-        return 'contacto';
-    }
-    
-    return 'inicio';
-}
-
-// Actualizar navegación cuando cambia la página
-function updateNavigationOnScroll() {
-    // Solo en la página de inicio (con secciones)
-    if (getCurrentPageName() !== 'inicio') return;
-    
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    let current = 'inicio';
-    
-    sections.forEach(section => {
-        const sectionTop = section.getBoundingClientRect().top;
-        const sectionHeight = section.offsetHeight;
-        
-        if (sectionTop <= 100 && sectionTop + sectionHeight > 100) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        const href = link.getAttribute('href');
-        
-        if (href && href.includes(`#${current}`)) {
-            link.classList.add('active');
-        }
-    });
-}
-
-// ===== ACTUALIZAR TU FUNCIÓN initializeNavigation() EXISTENTE =====
-// Reemplaza tu función initializeNavigation() con esta versión mejorada:
-
-function initializeNavigation() {
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const navbar = document.querySelector('.navbar');
-
-    // Inicializar navegación activa al cargar
-    initializeActiveNavigation();
-
-    // Toggle menú hamburguesa
-    if (hamburger) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-            
-            // Prevenir scroll del body cuando el menú está abierto
-            document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
-        });
-    }
-
-    // Cerrar menú al hacer click en un link
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            hamburger?.classList.remove('active');
-            navMenu?.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    });
-
-    // Navbar transparente/sólido al hacer scroll
-    let lastScrollTop = 0;
-    window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        if (scrollTop > 100) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-
-        // Ocultar/mostrar navbar al hacer scroll
-        if (scrollTop > lastScrollTop && scrollTop > 200) {
-            navbar.style.transform = 'translateY(-100%)';
-        } else {
-            navbar.style.transform = 'translateY(0)';
-        }
-        lastScrollTop = scrollTop;
-        
-        // Actualizar navegación activa solo en inicio
-        updateNavigationOnScroll();
-    });
-}
-
-// ===== AGREGAR AL FINAL DE TU DOMContentLoaded ===== 
-// En tu evento DOMContentLoaded existente, agrega esto:
-
-document.addEventListener('DOMContentLoaded', function() {
-    // ... tus funciones existentes ...
-    
-    // NUEVO: Reinicializar navegación activa después de un pequeño delay
-    setTimeout(() => {
-        initializeActiveNavigation();
-    }, 100);
-    
-    // NUEVO: Actualizar navegación cuando se navega con el botón atrás/adelante
-    window.addEventListener('popstate', function() {
-        setTimeout(() => {
-            initializeActiveNavigation();
-        }, 50);
-    });
-});
-
-// ===== DEBUGGING (OPCIONAL - REMOVER EN PRODUCCIÓN) =====
-// Función para debug - puedes llamarla en la consola del navegador
-function debugNavigation() {
-    console.log('🔍 DEBUG NAVEGACIÓN:');
-    console.log('Página actual:', getCurrentPageName());
-    console.log('URL actual:', window.location.pathname);
-    
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach((link, index) => {
-        console.log(`Link ${index}:`, {
-            href: link.getAttribute('href'),
-            texto: link.textContent.trim(),
-            activo: link.classList.contains('active')
-        });
-    });
-}
-
-// Hacer función disponible globalmente para debugging
-window.debugNavigation = debugNavigation;
-// ===== JAVASCRIPT CORREGIDO PARA TESTIMONIOS - REEMPLAZAR EN scripts/main.js =====
-
-// Variables globales para testimonios
-let testimonialsCurrentSlide = 0;
-let testimonialsTotalSlides = 0;
-let testimonialsCardsPerView = 1; // Cambiar a 1 para mostrar una tarjeta a la vez
-let testimonialsInitialized = false;
-let testimonialsAutoPlayInterval = null;
-
-// Inicializar carrusel de testimonios
-function initializeTestimonialsCarousel() {
-    console.log('🎭 Iniciando carrusel de testimonios...');
-    
-    // Buscar elementos con IDs correctos
-    const track = document.getElementById('testimonialsTrack');
-    const prevBtn = document.getElementById('testimonialsePrevBtn'); // Nota: hay una 'e' extra en el ID
-    const nextBtn = document.getElementById('testimonialsNextBtn');
-    const carousel = document.getElementById('testimonialsCarousel');
-    
-    // Verificar que existen los elementos
-    if (!track || !prevBtn || !nextBtn || !carousel) {
-        console.log('❌ Elementos del carrusel de testimonios no encontrados');
-        console.log('Track:', !!track, 'PrevBtn:', !!prevBtn, 'NextBtn:', !!nextBtn, 'Carousel:', !!carousel);
-        return;
-    }
-    
-    // Evitar inicialización múltiple
-    if (testimonialsInitialized) {
-        console.log('⚠️ Carrusel de testimonios ya inicializado');
-        return;
-    }
-    
-    const cards = track.querySelectorAll('.testimonial-card-new');
-    testimonialsTotalSlides = cards.length;
-    
-    console.log(`📊 Total de testimonios encontrados: ${testimonialsTotalSlides}`);
-    
-    if (testimonialsTotalSlides === 0) {
-        console.log('❌ No se encontraron testimonios');
-        return;
-    }
-    
-    // Calcular cards por vista según tamaño de pantalla
-    updateTestimonialsCardsPerView();
-    
-    // Configurar event listeners
-    prevBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('⬅️ Click en botón anterior testimonios');
-        moveTestimonialsToPrevious();
-    });
-    
-    nextBtn.addEventListener('click', function(e) {
-        e.preventDefault();
-        console.log('➡️ Click en botón siguiente testimonios');
-        moveTestimonialsToNext();
-    });
-    
-    // Actualizar estado inicial
-    updateTestimonialsDisplay();
-    
-    // Marcar como inicializado
-    testimonialsInitialized = true;
-    
-    console.log('✅ Carrusel de testimonios inicializado correctamente');
-    console.log(`📱 Cards por vista: ${testimonialsCardsPerView}`);
-    
-    // Redimensionar ventana
-    window.addEventListener('resize', function() {
-        updateTestimonialsCardsPerView();
-        updateTestimonialsDisplay();
-    });
-    
-    // Iniciar auto-play
-    startTestimonialsAutoPlay();
-}
-
-// Calcular cuántas cards mostrar según pantalla
-function updateTestimonialsCardsPerView() {
-    const width = window.innerWidth;
-    
-    if (width <= 768) {
-        testimonialsCardsPerView = 1; // 1 tarjeta en móvil
-    } else if (width <= 1024) {
-        testimonialsCardsPerView = 1; // 1 tarjeta en tablet
-    } else {
-        testimonialsCardsPerView = 2; // 2 tarjetas en desktop
-    }
-    
-    console.log(`📏 Ancho: ${width}px, Cards por vista: ${testimonialsCardsPerView}`);
-}
-
-// Obtener el slide máximo
-function getTestimonialsMaxSlide() {
-    return Math.max(0, testimonialsTotalSlides - testimonialsCardsPerView);
-}
-
-// Mover a slide anterior
-function moveTestimonialsToPrevious() {
-    if (testimonialsCurrentSlide > 0) {
-        testimonialsCurrentSlide--;
-        updateTestimonialsDisplay();
-        console.log(`⬅️ Moviendo a testimonio: ${testimonialsCurrentSlide}`);
-    } else {
-        console.log('⚠️ Ya está en el primer testimonio');
-    }
-    
-    // Reiniciar auto-play
-    restartTestimonialsAutoPlay();
-}
-
-// Mover a slide siguiente
-function moveTestimonialsToNext() {
-    const maxSlide = getTestimonialsMaxSlide();
-    
-    if (testimonialsCurrentSlide < maxSlide) {
-        testimonialsCurrentSlide++;
-        updateTestimonialsDisplay();
-        console.log(`➡️ Moviendo a testimonio: ${testimonialsCurrentSlide}`);
-    } else {
-        // Volver al inicio cuando llega al final
-        testimonialsCurrentSlide = 0;
-        updateTestimonialsDisplay();
-        console.log('🔄 Volviendo al primer testimonio');
-    }
-    
-    // Reiniciar auto-play
-    restartTestimonialsAutoPlay();
-}
-
-// Actualizar la visualización del carrusel
-function updateTestimonialsDisplay() {
-    const track = document.getElementById('testimonialsTrack');
-    const prevBtn = document.getElementById('testimonialsePrevBtn');
-    const nextBtn = document.getElementById('testimonialsNextBtn');
-    
-    if (!track) return;
-    
-    // Calcular desplazamiento
-    const cardWidth = 320; // Ancho de cada tarjeta
-    const gap = 30; // Gap entre tarjetas
-    const moveDistance = (cardWidth + gap) * testimonialsCurrentSlide;
-    
-    // Aplicar transformación
-    track.style.transform = `translateX(-${moveDistance}px)`;
-    track.style.transition = 'transform 0.5s ease';
-    
-    console.log(`🎯 Desplazamiento testimonios: -${moveDistance}px, Slide: ${testimonialsCurrentSlide}`);
-    
-    // Actualizar botones
-    if (prevBtn) {
-        prevBtn.disabled = testimonialsCurrentSlide === 0;
-        prevBtn.style.opacity = testimonialsCurrentSlide === 0 ? '0.4' : '1';
-    }
-    
-    if (nextBtn) {
-        const maxSlide = getTestimonialsMaxSlide();
-        nextBtn.disabled = false; // Nunca deshabilitar porque vuelve al inicio
-        nextBtn.style.opacity = '1';
-    }
-}
-
-// Auto-play mejorado
-function startTestimonialsAutoPlay() {
-    if (testimonialsAutoPlayInterval) {
-        clearInterval(testimonialsAutoPlayInterval);
-    }
-    
-    testimonialsAutoPlayInterval = setInterval(function() {
-        if (testimonialsInitialized) {
-            moveTestimonialsToNext();
-        }
-    }, 4000); // 4 segundos
-    
-    console.log('▶️ Auto-play de testimonios iniciado');
-}
-
-function stopTestimonialsAutoPlay() {
-    if (testimonialsAutoPlayInterval) {
-        clearInterval(testimonialsAutoPlayInterval);
-        testimonialsAutoPlayInterval = null;
-        console.log('⏸️ Auto-play de testimonios pausado');
-    }
-}
-
-function restartTestimonialsAutoPlay() {
-    stopTestimonialsAutoPlay();
-    setTimeout(startTestimonialsAutoPlay, 1000); // Reiniciar después de 1 segundo
-}
-
-// Función para ir a un testimonio específico
-function goToTestimonial(index) {
-    const maxSlide = getTestimonialsMaxSlide();
-    
-    if (index >= 0 && index <= maxSlide) {
-        testimonialsCurrentSlide = index;
-        updateTestimonialsDisplay();
-        console.log(`🎯 Yendo al testimonio: ${index}`);
-        restartTestimonialsAutoPlay();
-    }
-}
-
-// ===== TOUCH/SWIPE SUPPORT PARA MÓVILES =====
-function initializeTestimonialsTouch() {
-    const carousel = document.getElementById('testimonialsCarousel');
-    if (!carousel) return;
-    
-    let startX = 0;
-    let currentX = 0;
-    let isDragging = false;
-    
-    // Touch start
-    carousel.addEventListener('touchstart', function(e) {
-        startX = e.touches[0].clientX;
-        isDragging = true;
-        stopTestimonialsAutoPlay();
-    });
-    
-    // Touch move
-    carousel.addEventListener('touchmove', function(e) {
-        if (!isDragging) return;
-        currentX = e.touches[0].clientX;
-    });
-    
-    // Touch end
-    carousel.addEventListener('touchend', function(e) {
-        if (!isDragging) return;
-        isDragging = false;
-        
-        const diffX = startX - currentX;
-        const threshold = 50; // Mínimo de pixels para considerar swipe
-        
-        if (Math.abs(diffX) > threshold) {
-            if (diffX > 0) {
-                // Swipe izquierda - siguiente
-                moveTestimonialsToNext();
-            } else {
-                // Swipe derecha - anterior
-                moveTestimonialsToPrevious();
+        brandLogos.forEach(logo => {
+            if (logo.alt.toLowerCase().includes(brandName.toLowerCase())) {
+                logo.style.transform = 'scale(1.2)';
+                logo.style.opacity = '1';
+                logo.style.filter = 'grayscale(0%) brightness(1)';
+                logo.style.boxShadow = '0 8px 25px rgba(61, 95, 172, 0.3)';
+                logo.style.zIndex = '10';
+                
+                setTimeout(() => {
+                    logo.style.transform = '';
+                    logo.style.opacity = '';
+                    logo.style.filter = '';
+                    logo.style.boxShadow = '';
+                    logo.style.zIndex = '';
+                }, 3000);
+                
+                console.log(`🎯 Destacando marca: ${brandName}`);
             }
-        } else {
-            // Si no hay swipe, reiniciar auto-play
-            setTimeout(startTestimonialsAutoPlay, 2000);
-        }
-    });
-    
-    console.log('👆 Touch/swipe activado para testimonios');
-}
-
-// ===== PAUSAR AUTO-PLAY EN HOVER =====
-function initializeTestimonialsHover() {
-    const container = document.querySelector('.testimonials-carousel-container');
-    if (!container) return;
-    
-    container.addEventListener('mouseenter', function() {
-        stopTestimonialsAutoPlay();
-        console.log('🖱️ Mouse sobre testimonios - auto-play pausado');
-    });
-    
-    container.addEventListener('mouseleave', function() {
-        setTimeout(startTestimonialsAutoPlay, 1000);
-        console.log('🖱️ Mouse fuera de testimonios - auto-play reanudado');
-    });
-}
-
-// ===== OBSERVADOR DE INTERSECCIÓN PARA ANIMACIONES =====
-function initializeTestimonialsAnimations() {
-    const testimonialsSection = document.querySelector('.testimonials-new');
-    
-    if (testimonialsSection) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
-                    console.log('🎬 Animando entrada de testimonios');
-                }
+        });
+    },
+    filter: function(brandNames = []) {
+        const brandLogos = document.querySelectorAll('.brand-logo');
+        
+        if (brandNames.length === 0) {
+            brandLogos.forEach(logo => {
+                logo.style.display = 'block';
+                logo.style.opacity = '0.7';
             });
-        }, { threshold: 0.2 });
-        
-        observer.observe(testimonialsSection);
-    }
-}
-
-// ===== ACCESIBILIDAD MEJORADA =====
-function initializeTestimonialsAccessibility() {
-    const buttons = document.querySelectorAll('.testimonials-btn');
-    
-    buttons.forEach(button => {
-        // Agregar atributos ARIA
-        button.setAttribute('role', 'button');
-        button.setAttribute('tabindex', '0');
-        
-        if (button.classList.contains('testimonials-btn-prev')) {
-            button.setAttribute('aria-label', 'Testimonio anterior');
-        } else {
-            button.setAttribute('aria-label', 'Testimonio siguiente');
+            console.log('🔄 Mostrando todas las marcas');
+            return;
         }
         
-        // Soporte para navegación con teclado
-        button.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                button.click();
+        brandLogos.forEach(logo => {
+            const brandName = logo.alt.toLowerCase();
+            const shouldShow = brandNames.some(name => 
+                brandName.includes(name.toLowerCase())
+            );
+            
+            if (shouldShow) {
+                logo.style.display = 'block';
+                logo.style.opacity = '1';
+                logo.style.filter = 'grayscale(0%) brightness(1)';
+            } else {
+                logo.style.display = 'none';
             }
         });
-    });
-    
-    // Anunciar cambios a lectores de pantalla
-    const track = document.getElementById('testimonialsTrack');
-    if (track) {
-        track.setAttribute('role', 'region');
-        track.setAttribute('aria-label', 'Testimonios de clientes');
-        track.setAttribute('aria-live', 'polite');
-    }
-    
-    console.log('♿ Accesibilidad configurada para testimonios');
-}
-
-// ===== FUNCIÓN PRINCIPAL DE INICIALIZACIÓN =====
-function initializeTestimonialsComplete() {
-    console.log('🚀 Inicialización completa de testimonios...');
-    
-    // Inicializar carrusel básico
-    initializeTestimonialsCarousel();
-    
-    // Inicializar funciones adicionales después de un pequeño delay
-    setTimeout(() => {
-        initializeTestimonialsAnimations();
-        initializeTestimonialsTouch();
-        initializeTestimonialsHover();
-        initializeTestimonialsAccessibility();
-    }, 500);
-    
-    console.log('✅ Testimonios completamente inicializados');
-}
-
-// ===== FUNCIONES DE DEBUG =====
-function debugTestimonials() {
-    console.log('🔍 DEBUG TESTIMONIOS:');
-    console.log('Inicializado:', testimonialsInitialized);
-    console.log('Slide actual:', testimonialsCurrentSlide);
-    console.log('Total slides:', testimonialsTotalSlides);
-    console.log('Cards por vista:', testimonialsCardsPerView);
-    console.log('Auto-play activo:', !!testimonialsAutoPlayInterval);
-    
-    const track = document.getElementById('testimonialsTrack');
-    const prevBtn = document.getElementById('testimonialsePrevBtn');
-    const nextBtn = document.getElementById('testimonialsNextBtn');
-    
-    console.log('Elementos encontrados:');
-    console.log('- Track:', !!track);
-    console.log('- Botón Prev:', !!prevBtn);
-    console.log('- Botón Next:', !!nextBtn);
-    
-    if (track) {
-        console.log('- Transform actual:', track.style.transform);
-        console.log('- Cards en track:', track.querySelectorAll('.testimonial-card-new').length);
-    }
-}
-
-function resetTestimonials() {
-    console.log('🔄 Reseteando carrusel de testimonios...');
-    testimonialsCurrentSlide = 0;
-    updateTestimonialsDisplay();
-    restartTestimonialsAutoPlay();
-}
-
-// Hacer funciones disponibles globalmente
-window.debugTestimonials = debugTestimonials;
-window.resetTestimonials = resetTestimonials;
-window.goToTestimonial = goToTestimonial;
-window.TestimonialsCarousel = {
-    init: initializeTestimonialsComplete,
-    goTo: goToTestimonial,
-    next: moveTestimonialsToNext,
-    prev: moveTestimonialsToPrevious,
-    reset: resetTestimonials,
-    debug: debugTestimonials
+        
+        console.log(`🎯 Filtrando marcas: ${brandNames.join(', ')}`);
+    },
+    reinitialize: initializeBrandsStatic
 };
 
+// ===== PERFORMANCE MONITORING =====
+window.addEventListener('load', function() {
+    console.log('🚛 Larrosa Camiones - Sitio web cargado correctamente');
+    console.log('⚡ Tiempo de carga:', performance.now().toFixed(2) + 'ms');
+    
+    // Verificar que el carrusel de unidades esté funcionando
+    if (!carouselInitialized) {
+        setTimeout(initializeCarousel, 500);
+    }
+});
+
+console.log('🎭 Sistema de testimonios cargado');
+console.log('💡 Usa TestimonialsSystem.debug() para verificar estado');
+console.log('🎠 Usa debugCarousel() para verificar carrusel de unidades');
+console.log('🧭 Usa debugNavigation() para verificar navegación');

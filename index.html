@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Larrosa Camiones - 40 años comercializando camiones</title>
     <link rel="stylesheet" href="styles/main.css">
     <script src="scripts/main.js"></script>
@@ -331,14 +332,8 @@
     </div>
 </section>
 
+
     <!-- Sección Testimonios -->
-    <!-- ===== SECCIÓN TESTIMONIOS - REEMPLAZAR EN TU index.html ===== -->
-<!-- Busca en tu index.html la sección con class="testimonials" y reemplázala por esto: -->
-
-<!-- Sección Testimonios - Nuevo Diseño -->
-<!-- ===== HTML CORREGIDO - REEMPLAZAR SECCIÓN TESTIMONIOS EN index.html ===== -->
-
-<!-- Sección Testimonios - Nuevo Diseño -->
 <section class="testimonials-new">
     <div class="container">
         <!-- Título principal -->
@@ -360,8 +355,8 @@
 
         <!-- Contenedor del carrusel de testimonios -->
         <div class="testimonials-carousel-container">
-            <!-- Flecha izquierda - ID CORREGIDO -->
-            <button class="testimonials-btn testimonials-btn-prev" id="testimonialsePrevBtn">
+            <!-- CORREGIDO: ID del botón anterior -->
+            <button class="testimonials-btn testimonials-btn-prev" id="testimonialsPrevBtn">
                 <i class="fas fa-chevron-left"></i>
             </button>
             
@@ -640,19 +635,6 @@ function updateAdminButtonState() {
     }
 }
 
-// Tracking para el botón MercadoLibre
-document.querySelector('.btn-mercadolibre')?.addEventListener('click', function() {
-    // Google Analytics tracking
-    if (typeof gtag !== 'undefined') {
-        gtag('event', 'click', {
-            event_category: 'External Link',
-            event_label: 'MercadoLibre',
-            transport_type: 'beacon'
-        });
-    }
-    
-    console.log('🛒 Redirect to MercadoLibre');
-});
 </script>
 
     <!-- Scripts -->
