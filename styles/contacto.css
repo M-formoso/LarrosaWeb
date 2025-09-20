@@ -9,6 +9,7 @@
     justify-content: center;
     overflow: hidden;
     margin-top: 80px;
+    margin-bottom: 0; /* AGREGADO: Eliminar margen inferior */
 }
 
 .contacto-hero .hero-background {
@@ -118,6 +119,7 @@
     padding: 25px 0;
     position: relative;
     z-index: 10;
+    margin: 0; /* AGREGADO: Eliminar márgenes */
 }
 
 .quick-contacts {
@@ -201,8 +203,9 @@
 
 /* ===== MAIN CONTACT SECTION ===== */
 .contact-main-section {
-    padding: 80px 0;
+    padding: 40px 0; /* REDUCIDO: de 80px a 40px */
     background: #f8f9fa;
+    margin: 0; /* AGREGADO: Eliminar márgenes */
 }
 
 .contact-layout {
@@ -1015,6 +1018,10 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
+    
+    .contact-main-section {
+        padding: 30px 0; /* REDUCIDO: de 60px a 30px en tablet */
+    }
 }
 
 @media (max-width: 768px) {
@@ -1057,7 +1064,7 @@
     }
     
     .contact-main-section {
-        padding: 60px 0;
+        padding: 20px 0; /* REDUCIDO: de 60px a 20px en móvil */
     }
     
     .contact-form-container {
@@ -1179,7 +1186,7 @@
     }
     
     .contact-main-section {
-        padding: 40px 0;
+        padding: 15px 0; /* REDUCIDO: de 40px a 15px en móvil pequeño */
     }
     
     .contact-form-container {
@@ -1530,9 +1537,8 @@
         display: none;
     }
 }
-/* ===== SECCIÓN MARCAS - VERSION ESTÁTICA ===== */
-/* Reemplaza el CSS del carrusel en todos tus archivos CSS */
 
+/* ===== SECCIÓN MARCAS - VERSION ESTÁTICA ===== */
 .brands {
     padding: 60px 0;
     background: #f8f9fa;
@@ -1544,21 +1550,19 @@
 }
 
 .brands-carousel {
-    overflow: visible; /* CAMBIADO: de hidden a visible */
+    overflow: visible;
     position: relative;
     width: 100%;
-    /* ELIMINADO: mask y -webkit-mask para que se vean todos los logos */
 }
 
 .brands-track {
     display: flex;
     align-items: center;
-    justify-content: center; /* CAMBIADO: de flex-start a center */
-    gap: 40px; /* REDUCIDO: de 60px a 40px para mejor distribución */
+    justify-content: center;
+    gap: 40px;
     padding: 20px 0;
-    /* ELIMINADO: animation para que sea estático */
-    width: 100%; /* CAMBIADO: de calc(200% + 60px) a 100% */
-    flex-wrap: wrap; /* AGREGADO: para que se ajuste en pantallas pequeñas */
+    width: 100%;
+    flex-wrap: wrap;
 }
 
 .brand-logo {
@@ -1567,12 +1571,12 @@
     max-width: 120px;
     min-width: 80px;
     object-fit: contain;
-    opacity: 0.7; /* CAMBIADO: de 0.6 a 0.7 para mejor visibilidad */
+    opacity: 0.7;
     transition: all 0.3s ease;
-    filter: grayscale(50%) brightness(0.9); /* REDUCIDO: de 100% a 50% grayscale */
+    filter: grayscale(50%) brightness(0.9);
     flex-shrink: 0;
     cursor: pointer;
-    margin: 10px; /* AGREGADO: margen para separación cuando se ajusta */
+    margin: 10px;
 }
 
 .brand-logo:hover {
@@ -1582,7 +1586,7 @@
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* Configuración específica para cada marca - MANTENER IGUAL */
+/* Configuración específica para cada marca */
 .brand-logo[alt="Scania"] {
     max-width: 100px;
 }
@@ -1620,13 +1624,7 @@
     height: 45px;
 }
 
-/* ELIMINADO: @keyframes brandCarousel - Ya no es necesario */
-
-/* ELIMINADO: .brands-track::after - Ya no necesitamos duplicar contenido */
-
-/* ELIMINADO: Pausa de animación - Ya no hay animación que pausar */
-
-/* Estados adicionales - MANTENER */
+/* Estados adicionales */
 .brands.with-title {
     padding-top: 80px;
 }
@@ -1670,7 +1668,7 @@
     filter: grayscale(0%) brightness(1) invert(1);
 }
 
-/* ===== RESPONSIVE DESIGN - ACTUALIZADO ===== */
+/* ===== RESPONSIVE DESIGN PARA MARCAS ===== */
 @media (max-width: 1200px) {
     .brands-track {
         gap: 35px;
@@ -1711,7 +1709,7 @@
     
     .brands-track {
         gap: 25px;
-        justify-content: center; /* Mantener centrado en móviles */
+        justify-content: center;
     }
     
     .brand-logo {
@@ -1726,7 +1724,6 @@
         max-width: 80px;
     }
     
-    /* Ajustes específicos para móviles */
     .brand-logo[alt="Mercedes-Benz"],
     .brand-logo[alt="Volkswagen"] {
         max-width: 85px;
@@ -1741,7 +1738,6 @@
     
     .brands-track {
         gap: 20px;
-        /* Permitir múltiples filas en pantallas muy pequeñas */
         justify-content: center;
         max-width: 100%;
     }
@@ -1759,7 +1755,7 @@
     }
 }
 
-/* ===== EFECTOS ADICIONALES - MANTENER ===== */
+/* ===== EFECTOS ADICIONALES ===== */
 .brand-logo:hover {
     box-shadow: 
         0 8px 25px rgba(0, 0, 0, 0.1),
@@ -1767,7 +1763,7 @@
     border-radius: 8px;
 }
 
-/* Animación de entrada - MANTENER */
+/* Animación de entrada */
 .brands.animate-in .brand-logo {
     animation: fadeInBrand 0.6s ease forwards;
     opacity: 0;
@@ -1779,12 +1775,12 @@
         transform: translateY(20px) scale(0.8);
     }
     to {
-        opacity: 0.7; /* CAMBIADO: de 0.6 a 0.7 */
+        opacity: 0.7;
         transform: translateY(0) scale(1);
     }
 }
 
-/* Delay escalonado para las marcas - MANTENER */
+/* Delay escalonado para las marcas */
 .brands.animate-in .brand-logo:nth-child(1) { animation-delay: 0.1s; }
 .brands.animate-in .brand-logo:nth-child(2) { animation-delay: 0.2s; }
 .brands.animate-in .brand-logo:nth-child(3) { animation-delay: 0.3s; }
@@ -1794,14 +1790,14 @@
 .brands.animate-in .brand-logo:nth-child(7) { animation-delay: 0.7s; }
 .brands.animate-in .brand-logo:nth-child(8) { animation-delay: 0.8s; }
 
-/* Accesibilidad - MANTENER */
+/* Accesibilidad */
 @media (prefers-reduced-motion: reduce) {
     .brand-logo {
         transition: none;
     }
 }
 
-/* Focus para accesibilidad - MANTENER */
+/* Focus para accesibilidad */
 .brand-logo:focus {
     outline: 3px solid #3D5FAC;
     outline-offset: 3px;
@@ -1809,7 +1805,7 @@
     filter: grayscale(0%) brightness(1);
 }
 
-/* ===== VARIANTES ESPECÍFICAS POR PÁGINA - MANTENER ===== */
+/* ===== VARIANTES ESPECÍFICAS POR PÁGINA ===== */
 .page-inicio .brands {
     background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
 }
@@ -1825,7 +1821,7 @@
 
 .page-contacto .brands {
     background: #ffffff;
-    margin-top: 60px;
+    margin-top: 0; /* ELIMINADO: era 60px, ahora 0 para pegarlo al formulario */
 }
 
 .page-detalle .brands {

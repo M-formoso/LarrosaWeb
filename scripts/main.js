@@ -1637,3 +1637,394 @@ window.debugModals = function() {
 
 console.log('🎯 Sistema de modales de cotización cargado');
 console.log('💡 Usa debugModals() para verificar estado');
+// ===== JAVASCRIPT MODIFICADO - SOLO "COMPRAMOS TU USADO" CLICKEABLE =====
+
+// ===== FUNCIONES GLOBALES PARA MODALES - SOLO USADO ACTIVO =====
+
+// ===== SOLO MANTENER FUNCIONES PARA "COMPRAMOS TU USADO" =====
+
+// Abrir modal USADO (formulario) - ÚNICA FUNCIÓN ACTIVA
+function openUsadoModal() {
+    console.log('🚗 Abriendo modal de cotización...');
+    
+    const modal = document.getElementById('usadoModal');
+    
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Focus en el primer campo después de la animación
+        setTimeout(() => {
+            const firstInput = modal.querySelector('input[name="marca"]');
+            if (firstInput) firstInput.focus();
+        }, 400);
+        
+        // Analytics tracking (opcional)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'cotizacion_modal_opened', {
+                event_category: 'lead_generation',
+                event_label: 'usado_form'
+            });
+        }
+    }
+}
+
+// Cerrar modal USADO
+function closeUsadoModal() {
+    console.log('🚗 Cerrando modal de cotización...');
+    
+    const modal = document.getElementById('usadoModal');
+    
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// ===== FUNCIONES DESHABILITADAS PARA RANDON Y MELI =====
+
+// Estas funciones ahora solo muestran mensaje informativo o no hacen nada
+function openRandonModal() {
+    console.log('ℹ️ RANDON modal deshabilitado - solo visual');
+    // No hacer nada o mostrar mensaje
+    return false;
+}
+
+function closeRandonModal() {
+    // Función vacía - no hace nada
+    return false;
+}
+
+function openMeliModal() {
+    console.log('ℹ️ MELI modal deshabilitado - solo visual');
+    // No hacer nada o mostrar mensaje
+    return false;
+}
+
+function closeMeliModal() {
+    // Función vacía - no hace nada
+    return false;
+}
+
+function openVideoModal() {
+    console.log('ℹ️ Video modal deshabilitado - solo visual');
+    // No hacer nada o mostrar mensaje
+    return false;
+}
+
+function closeVideoModal() {
+    // Función vacía - no hace nada
+    return false;
+}
+
+// ===== FUNCIONES DE REDIRECCIÓN DESHABILITADAS =====
+function redirectToRandon() {
+    console.log('ℹ️ Redirección RANDON deshabilitada');
+    return false;
+}
+
+function redirectToMercadoLibre() {
+    console.log('ℹ️ Redirección MercadoLibre deshabilitada');
+    return false;
+}
+
+// ===== MANEJO DEL FORMULARIO - SIN CAMBIOS =====
+function handleUsadoForm(event) {
+    event.preventDefault();
+    
+    console.log('📝 Procesando formulario de cotización...');
+    
+    // Obtener datos del formulario
+    const formData = new FormData(event.target);
+    const data = {
+        marca: formData.get('marca'),
+        modelo: formData.get('modelo'),
+        año: formData.get('año'),
+        kilometros: formData.get('kilometros'),
+        nombre: formData.get('nombre'),
+        telefono: formData.get('telefono'),
+        email: formData.get('email'),
+        observaciones: formData.get('observaciones') || ''
+    };
+    
+    // Validar datos básicos
+    if (!data.marca || !data.modelo || !data.año || !data.nombre || !data.telefono || !data.email) {
+        alert('Por favor completa todos los campos obligatorios.');
+        return;
+    }
+    
+    // Deshabilitar botón y mostrar carga
+    const submitBtn = event.target.querySelector('.btn-modal-action');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'ENVIANDO...';
+    submitBtn.disabled = true;
+    
+    // Simular envío (reemplazar con tu lógica real)
+    setTimeout(() => {
+        // Aquí harías la petición real a tu backend
+        console.log('Datos a enviar:', data);
+        
+        // Mostrar mensaje de éxito
+        alert(`¡Gracias ${data.nombre}! Hemos recibido tu solicitud de cotización para el ${data.marca} ${data.modelo}. Te contactaremos pronto.`);
+        
+        // Cerrar modal
+        closeUsadoModal();
+        
+        // Resetear formulario
+        event.target.reset();
+        
+        // Restaurar botón
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        
+        // Analytics tracking (opcional)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'cotizacion_submitted', {
+                event_category: 'lead_generation',
+                event_label: 'usado_form_completed',
+                custom_parameters: {
+                    vehicle_brand: data.marca,
+                    vehicle_model: data.modelo,
+                    vehicle_year: data.año
+                }
+            });
+        }
+        
+    }, 2000); // Simular delay de red
+}
+
+// ===== INICIALIZACIÓN CON EVENTOS SELECTIVOS =====
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎯 Inicializando sistema de modales selectivo...');
+    
+    // ===== SOLO CONFIGURAR EVENTOS PARA "COMPRAMOS TU USADO" =====
+    
+    // Event listener SOLO para el botón "Compramos tu usado"
+    const usadoButton = document.querySelector('.usado-modal');
+    if (usadoButton) {
+        usadoButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            openUsadoModal();
+        });
+        
+        // Agregar cursor pointer para indicar que es clickeable
+        usadoButton.style.cursor = 'pointer';
+        
+        console.log('✅ Botón "Compramos tu usado" configurado como clickeable');
+    }
+    
+    // ===== DESHABILITAR EVENTOS PARA RANDON Y MELI =====
+    
+    // Remover cursor pointer y eventos de RANDON
+    const randonButton = document.querySelector('.randon-modal');
+    if (randonButton) {
+        randonButton.style.cursor = 'default'; // Cursor normal
+        randonButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            // No hacer nada
+        });
+        
+        console.log('🚫 Botón RANDON deshabilitado - solo visual');
+    }
+    
+    // Remover cursor pointer y eventos de MELI
+    const meliButton = document.querySelector('.meli-modal');
+    if (meliButton) {
+        meliButton.style.cursor = 'default'; // Cursor normal
+        meliButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            // No hacer nada
+        });
+        
+        console.log('🚫 Botón MELI deshabilitado - solo visual');
+    }
+    
+    // Deshabilitar click en video también
+    const videoContainer = document.querySelector('.cotizacion-video-container');
+    if (videoContainer) {
+        videoContainer.style.cursor = 'default'; // Cursor normal
+        videoContainer.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            // No hacer nada
+        });
+        
+        console.log('🚫 Video deshabilitado - solo visual');
+    }
+    
+    // ===== CONFIGURAR EVENTOS PARA CERRAR MODALES =====
+    setupModalEventListeners();
+    
+    // ===== CONFIGURAR FORMULARIO =====
+    setupFormEventListener();
+    
+    console.log('✅ Sistema de modales selectivo inicializado');
+    console.log('✅ Solo "Compramos tu usado" es clickeable');
+});
+
+// ===== CONFIGURACIÓN DE EVENTOS PARA CERRAR MODALES =====
+function setupModalEventListeners() {
+    // Cerrar modales al hacer click fuera - SOLO PARA USADO
+    window.addEventListener('click', function(event) {
+        const usadoModal = document.getElementById('usadoModal');
+        
+        // Solo manejar el modal de USADO
+        if (event.target === usadoModal) {
+            usadoModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Cerrar modales con tecla ESC - SOLO PARA USADO
+    window.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const usadoModal = document.getElementById('usadoModal');
+            if (usadoModal && usadoModal.classList.contains('active')) {
+                usadoModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+    });
+}
+
+// ===== CONFIGURACIÓN DEL FORMULARIO - SIN CAMBIOS =====
+function setupFormEventListener() {
+    const form = document.getElementById('usadoForm');
+    if (form) {
+        form.addEventListener('submit', handleUsadoForm);
+        
+        // Validación en tiempo real
+        const inputs = form.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                validateField(this);
+            });
+            
+            input.addEventListener('input', function() {
+                clearFieldError(this);
+            });
+        });
+        
+        console.log('✅ Formulario configurado correctamente');
+    }
+}
+
+// ===== FUNCIONES DE VALIDACIÓN - SIN CAMBIOS =====
+function validateField(field) {
+    const value = field.value.trim();
+    const fieldName = field.name;
+    
+    // Remover errores previos
+    clearFieldError(field);
+    
+    // Validaciones específicas
+    if (field.required && !value) {
+        showFieldError(field, 'Este campo es obligatorio');
+        return false;
+    }
+    
+    if (fieldName === 'email' && value) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            showFieldError(field, 'Ingresa un email válido');
+            return false;
+        }
+    }
+    
+    if (fieldName === 'telefono' && value) {
+        const phoneRegex = /^[\d\s\-\+\(\)]{8,}$/;
+        if (!phoneRegex.test(value)) {
+            showFieldError(field, 'Ingresa un teléfono válido');
+            return false;
+        }
+    }
+    
+    if (fieldName === 'año' && value) {
+        const currentYear = new Date().getFullYear();
+        const year = parseInt(value);
+        if (year < 1990 || year > currentYear + 1) {
+            showFieldError(field, `Año debe estar entre 1990 y ${currentYear + 1}`);
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+function showFieldError(field, message) {
+    field.style.borderColor = '#dc3545';
+    field.style.backgroundColor = '#ffeaa7';
+    
+    // Crear mensaje de error si no existe
+    let errorMsg = field.parentNode.querySelector('.field-error');
+    if (!errorMsg) {
+        errorMsg = document.createElement('div');
+        errorMsg.className = 'field-error';
+        errorMsg.style.cssText = `
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: block;
+        `;
+        field.parentNode.appendChild(errorMsg);
+    }
+    errorMsg.textContent = message;
+}
+
+function clearFieldError(field) {
+    field.style.borderColor = '#e5e7eb';
+    field.style.backgroundColor = '#f8f9fa';
+    
+    const errorMsg = field.parentNode.querySelector('.field-error');
+    if (errorMsg) {
+        errorMsg.remove();
+    }
+}
+
+// ===== FUNCIONES PARA DEBUG =====
+window.debugModals = function() {
+    console.log('🔍 DEBUG MODALES SELECTIVOS:');
+    console.log('✅ Activo: usadoModal');
+    console.log('🚫 Deshabilitado: randonModal');
+    console.log('🚫 Deshabilitado: meliModal');
+    console.log('🚫 Deshabilitado: videoModal');
+    
+    const usadoModal = document.getElementById('usadoModal');
+    console.log('usadoModal existe:', !!usadoModal);
+    console.log('usadoModal activo:', usadoModal?.classList.contains('active'));
+};
+
+// ===== FUNCIÓN PARA REACTIVAR OTROS MODALES (SI ES NECESARIO) =====
+window.reactivateAllModals = function() {
+    console.log('🔄 Reactivando todos los modales...');
+    
+    // Reactivar eventos para todos los botones
+    const randonButton = document.querySelector('.randon-modal');
+    const meliButton = document.querySelector('.meli-modal');
+    const videoContainer = document.querySelector('.cotizacion-video-container');
+    
+    if (randonButton) {
+        randonButton.style.cursor = 'pointer';
+        randonButton.onclick = function() { openRandonModal(); };
+    }
+    
+    if (meliButton) {
+        meliButton.style.cursor = 'pointer';
+        meliButton.onclick = function() { openMeliModal(); };
+    }
+    
+    if (videoContainer) {
+        videoContainer.style.cursor = 'pointer';
+        videoContainer.onclick = function() { openVideoModal(); };
+    }
+    
+    console.log('✅ Todos los modales reactivados');
+};
+
+console.log('🎯 Sistema de modales selectivo cargado');
+console.log('💡 Solo "Compramos tu usado" es clickeable');
+console.log('💡 Usa debugModals() para verificar estado');
+console.log('💡 Usa reactivateAllModals() para reactivar todos si es necesario');
