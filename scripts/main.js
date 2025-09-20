@@ -1219,3 +1219,421 @@ console.log('🎭 Sistema de testimonios cargado');
 console.log('💡 Usa TestimonialsSystem.debug() para verificar estado');
 console.log('🎠 Usa debugCarousel() para verificar carrusel de unidades');
 console.log('🧭 Usa debugNavigation() para verificar navegación');
+// ===== JAVASCRIPT PARA MODALES DE COTIZACIÓN =====
+// Agregar este código a scripts/main.js
+
+// ===== FUNCIONES GLOBALES PARA ABRIR MODALES =====
+
+// Abrir modal de video
+function openVideoModal() {
+    console.log('📹 Abriendo modal de video...');
+    
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('modalVideo');
+    
+    if (modal && iframe) {
+        // URL del video de YouTube (reemplazar con tu video real)
+        const videoUrl = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0&showinfo=0';
+        
+        iframe.src = videoUrl;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Analytics tracking (opcional)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'video_modal_opened', {
+                event_category: 'engagement',
+                event_label: 'cotizacion_video'
+            });
+        }
+    }
+}
+
+// Cerrar modal de video
+function closeVideoModal() {
+    console.log('📹 Cerrando modal de video...');
+    
+    const modal = document.getElementById('videoModal');
+    const iframe = document.getElementById('modalVideo');
+    
+    if (modal && iframe) {
+        modal.classList.remove('active');
+        iframe.src = '';
+        document.body.style.overflow = '';
+    }
+}
+
+// Abrir modal RANDON
+function openRandonModal() {
+    console.log('🚛 Abriendo modal RANDON...');
+    
+    const modal = document.getElementById('randonModal');
+    
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Analytics tracking (opcional)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'randon_modal_opened', {
+                event_category: 'engagement',
+                event_label: 'randon_info'
+            });
+        }
+    }
+}
+
+// Cerrar modal RANDON
+function closeRandonModal() {
+    console.log('🚛 Cerrando modal RANDON...');
+    
+    const modal = document.getElementById('randonModal');
+    
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Abrir modal USADO (formulario)
+function openUsadoModal() {
+    console.log('🚗 Abriendo modal de cotización...');
+    
+    const modal = document.getElementById('usadoModal');
+    
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Focus en el primer campo después de la animación
+        setTimeout(() => {
+            const firstInput = modal.querySelector('input[name="marca"]');
+            if (firstInput) firstInput.focus();
+        }, 400);
+        
+        // Analytics tracking (opcional)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'cotizacion_modal_opened', {
+                event_category: 'lead_generation',
+                event_label: 'usado_form'
+            });
+        }
+    }
+}
+
+// Cerrar modal USADO
+function closeUsadoModal() {
+    console.log('🚗 Cerrando modal de cotización...');
+    
+    const modal = document.getElementById('usadoModal');
+    
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Abrir modal MERCADOLIBRE
+function openMeliModal() {
+    console.log('🛒 Abriendo modal MercadoLibre...');
+    
+    const modal = document.getElementById('meliModal');
+    
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Analytics tracking (opcional)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'meli_modal_opened', {
+                event_category: 'engagement',
+                event_label: 'mercadolibre_info'
+            });
+        }
+    }
+}
+
+// Cerrar modal MERCADOLIBRE
+function closeMeliModal() {
+    console.log('🛒 Cerrando modal MercadoLibre...');
+    
+    const modal = document.getElementById('meliModal');
+    
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// ===== FUNCIONES DE REDIRECCIÓN =====
+
+// Redirección a RANDON (desde botón dentro del modal)
+function redirectToRandon() {
+    console.log('🚛 Redirigiendo a sección RANDON...');
+    
+    // Cerrar modal primero
+    closeRandonModal();
+    
+    // Pequeño delay y redirección
+    setTimeout(() => {
+        window.location.href = 'sections/LarrosaCamiones.html#randon';
+    }, 300);
+    
+    // Analytics tracking (opcional)
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'randon_redirect', {
+            event_category: 'navigation',
+            event_label: 'randon_section'
+        });
+    }
+}
+
+// Redirección a MercadoLibre (desde botón dentro del modal)
+function redirectToMercadoLibre() {
+    console.log('🛒 Redirigiendo a MercadoLibre...');
+    
+    // Cerrar modal primero
+    closeMeliModal();
+    
+    // Pequeño delay y redirección
+    setTimeout(() => {
+        // Reemplazar con tu URL real de MercadoLibre
+        window.open('https://listado.mercadolibre.com.ar/larrosa-camiones', '_blank');
+    }, 300);
+    
+    // Analytics tracking (opcional)
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'mercadolibre_redirect', {
+            event_category: 'external_link',
+            event_label: 'mercadolibre_store'
+        });
+    }
+}
+
+// ===== MANEJO DEL FORMULARIO =====
+function handleUsadoForm(event) {
+    event.preventDefault();
+    
+    console.log('📝 Procesando formulario de cotización...');
+    
+    // Obtener datos del formulario
+    const formData = new FormData(event.target);
+    const data = {
+        marca: formData.get('marca'),
+        modelo: formData.get('modelo'),
+        año: formData.get('año'),
+        kilometros: formData.get('kilometros'),
+        nombre: formData.get('nombre'),
+        telefono: formData.get('telefono'),
+        email: formData.get('email'),
+        observaciones: formData.get('observaciones') || ''
+    };
+    
+    // Validar datos básicos
+    if (!data.marca || !data.modelo || !data.año || !data.nombre || !data.telefono || !data.email) {
+        alert('Por favor completa todos los campos obligatorios.');
+        return;
+    }
+    
+    // Deshabilitar botón y mostrar carga
+    const submitBtn = event.target.querySelector('.btn-modal-action');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'ENVIANDO...';
+    submitBtn.disabled = true;
+    
+    // Simular envío (reemplazar con tu lógica real)
+    setTimeout(() => {
+        // Aquí harías la petición real a tu backend
+        console.log('Datos a enviar:', data);
+        
+        // Mostrar mensaje de éxito
+        alert(`¡Gracias ${data.nombre}! Hemos recibido tu solicitud de cotización para el ${data.marca} ${data.modelo}. Te contactaremos pronto.`);
+        
+        // Cerrar modal
+        closeUsadoModal();
+        
+        // Resetear formulario
+        event.target.reset();
+        
+        // Restaurar botón
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        
+        // Analytics tracking (opcional)
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'cotizacion_submitted', {
+                event_category: 'lead_generation',
+                event_label: 'usado_form_completed',
+                custom_parameters: {
+                    vehicle_brand: data.marca,
+                    vehicle_model: data.modelo,
+                    vehicle_year: data.año
+                }
+            });
+        }
+        
+    }, 2000); // Simular delay de red
+}
+
+// ===== INICIALIZACIÓN =====
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎯 Inicializando sistema de modales...');
+    
+    // Event listeners para cerrar modales
+    setupModalEventListeners();
+    
+    // Event listener para el formulario
+    setupFormEventListener();
+    
+    console.log('✅ Sistema de modales inicializado');
+});
+
+function setupModalEventListeners() {
+    // Cerrar modales al hacer click fuera
+    window.addEventListener('click', function(event) {
+        const modals = [
+            'videoModal',
+            'randonModal', 
+            'usadoModal',
+            'meliModal'
+        ];
+        
+        modals.forEach(modalId => {
+            const modal = document.getElementById(modalId);
+            if (event.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                
+                // Limpiar video si es el modal de video
+                if (modalId === 'videoModal') {
+                    const iframe = document.getElementById('modalVideo');
+                    if (iframe) iframe.src = '';
+                }
+            }
+        });
+    });
+    
+    // Cerrar modales con tecla ESC
+    window.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const activeModals = document.querySelectorAll('.modal-overlay.active');
+            activeModals.forEach(modal => {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+                
+                // Limpiar video si es necesario
+                const iframe = modal.querySelector('iframe');
+                if (iframe) iframe.src = '';
+            });
+        }
+    });
+}
+
+function setupFormEventListener() {
+    const form = document.getElementById('usadoForm');
+    if (form) {
+        form.addEventListener('submit', handleUsadoForm);
+        
+        // Validación en tiempo real
+        const inputs = form.querySelectorAll('input, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                validateField(this);
+            });
+            
+            input.addEventListener('input', function() {
+                clearFieldError(this);
+            });
+        });
+    }
+}
+
+// ===== FUNCIONES DE VALIDACIÓN =====
+function validateField(field) {
+    const value = field.value.trim();
+    const fieldName = field.name;
+    
+    // Remover errores previos
+    clearFieldError(field);
+    
+    // Validaciones específicas
+    if (field.required && !value) {
+        showFieldError(field, 'Este campo es obligatorio');
+        return false;
+    }
+    
+    if (fieldName === 'email' && value) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            showFieldError(field, 'Ingresa un email válido');
+            return false;
+        }
+    }
+    
+    if (fieldName === 'telefono' && value) {
+        const phoneRegex = /^[\d\s\-\+\(\)]{8,}$/;
+        if (!phoneRegex.test(value)) {
+            showFieldError(field, 'Ingresa un teléfono válido');
+            return false;
+        }
+    }
+    
+    if (fieldName === 'año' && value) {
+        const currentYear = new Date().getFullYear();
+        const year = parseInt(value);
+        if (year < 1990 || year > currentYear + 1) {
+            showFieldError(field, `Año debe estar entre 1990 y ${currentYear + 1}`);
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+function showFieldError(field, message) {
+    field.style.borderColor = '#dc3545';
+    field.style.backgroundColor = '#ffeaa7';
+    
+    // Crear mensaje de error si no existe
+    let errorMsg = field.parentNode.querySelector('.field-error');
+    if (!errorMsg) {
+        errorMsg = document.createElement('div');
+        errorMsg.className = 'field-error';
+        errorMsg.style.cssText = `
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: block;
+        `;
+        field.parentNode.appendChild(errorMsg);
+    }
+    errorMsg.textContent = message;
+}
+
+function clearFieldError(field) {
+    field.style.borderColor = '#e5e7eb';
+    field.style.backgroundColor = '#f8f9fa';
+    
+    const errorMsg = field.parentNode.querySelector('.field-error');
+    if (errorMsg) {
+        errorMsg.remove();
+    }
+}
+
+// ===== FUNCIONES PARA DEBUG =====
+window.debugModals = function() {
+    console.log('🔍 DEBUG MODALES:');
+    
+    const modals = ['videoModal', 'randonModal', 'usadoModal', 'meliModal'];
+    modals.forEach(modalId => {
+        const modal = document.getElementById(modalId);
+        console.log(`${modalId}:`, {
+            exists: !!modal,
+            active: modal?.classList.contains('active'),
+            display: modal?.style.display
+        });
+    });
+};
+
+console.log('🎯 Sistema de modales de cotización cargado');
+console.log('💡 Usa debugModals() para verificar estado');

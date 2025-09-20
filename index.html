@@ -487,17 +487,160 @@
     </div>
 </section>
     <!-- Sección Financiamiento -->
-    <section class="financing">
-        <div class="container">
-            <div class="financing-content">
-                <div class="financing-overlay">
-                    <h2 class="financing-title">Le ponemos un precio a tu usado.</h2>
-                    <p class="financing-subtitle">Dejanos los datos de tu vehículo para poder hacer una cotización.</p>
-                    <button class="btn-financing">QUIERO COTIZAR MI VEHÍCULO</button>
+    <!-- SECCIÓN COTIZACIÓN REDISEÑADA - Reemplazar en index.html -->
+<section class="cotizacion-section">
+    <div class="cotizacion-container">
+        <!-- Contenido principal -->
+        <div class="cotizacion-content">
+            <!-- Columna izquierda - Video principal -->
+            <div class="cotizacion-left">
+                <div class="cotizacion-video-container" onclick="openVideoModal()">
+                    <video autoplay muted loop playsinline class="cotizacion-main-video">
+                        <source src="assets/cotizacion-video.mp4" type="video/mp4">
+                        <!-- Fallback con imagen -->
+                        <img src="assets/cotizacion-video-poster.jpg" alt="Video principal" class="video-fallback">
+                    </video>
+                    <div class="video-overlay">
+                        <div class="play-button">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <span class="video-label">VIDEO</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Columna derecha - Grid de 3 modales -->
+            <div class="cotizacion-right">
+                <!-- Modal RANDON -->
+                <div class="cotizacion-modal-btn randon-modal" onclick="openRandonModal()">
+                    <img src="assets/randon-modal-bg.jpg" alt="RANDON" class="modal-bg-image">
+                    <div class="modal-overlay">
+                        <span class="modal-text">RANDON</span>
+                    </div>
+                </div>
+                
+                <!-- Modal COMPRAMOS TU USADO -->
+                <div class="cotizacion-modal-btn usado-modal" onclick="openUsadoModal()">
+                    <img src="assets/usado-modal-bg.jpg" alt="Compramos tu usado" class="modal-bg-image">
+                    <div class="modal-overlay">
+                        <div class="modal-text-container">
+                            <span class="modal-text">COMPRAMOS TU</span>
+                            <span class="modal-text">USADO</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Modal MERCADOLIBRE -->
+                <div class="cotizacion-modal-btn meli-modal" onclick="openMeliModal()">
+                    <img src="assets/meli-modal-bg.jpg" alt="MercadoLibre" class="modal-bg-image">
+                    <div class="modal-overlay">
+                        <span class="modal-text">MELI</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+    
+    <!-- Modal para Video ampliado -->
+    <div id="videoModal" class="modal-overlay">
+        <div class="modal-content-video">
+            <span class="modal-close" onclick="closeVideoModal()">&times;</span>
+            <div class="video-iframe-container">
+                <iframe id="modalVideo" src="" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal RANDON -->
+    <div id="randonModal" class="modal-overlay">
+        <div class="modal-content-randon">
+            <span class="modal-close" onclick="closeRandonModal()">&times;</span>
+            <div class="randon-modal-content">
+                <div class="randon-logo">
+                    <img src="assets/Logo negro sin fondo.png" alt="RANDON" class="randon-logo-img">
+                </div>
+                <h2>Concesión Oficial RANDON</h2>
+                <p>Desde 2006 Larrosa Camiones cuenta con la concesión oficial RANDON en Córdoba, La Rioja y Catamarca.</p>
+                <div class="randon-features">
+                    <div class="feature-item">
+                        <i class="fas fa-truck"></i>
+                        <span>Línea completa de semirremolques</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-tools"></i>
+                        <span>Servicio técnico especializado</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-certificate"></i>
+                        <span>Garantía oficial RANDON</span>
+                    </div>
+                </div>
+                <button class="btn-modal-action" onclick="redirectToRandon()">VER PRODUCTOS RANDON</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal COMPRAMOS TU USADO -->
+    <div id="usadoModal" class="modal-overlay">
+        <div class="modal-content-usado">
+            <span class="modal-close" onclick="closeUsadoModal()">&times;</span>
+            <div class="usado-modal-content">
+                <h2>Le ponemos un precio a tu usado</h2>
+                <p>Dejanos los datos de tu vehículo para poder hacer una cotización personalizada.</p>
+                <form id="usadoForm" class="usado-form">
+                    <div class="form-row">
+                        <input type="text" name="marca" placeholder="Marca del vehículo" required>
+                        <input type="text" name="modelo" placeholder="Modelo" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="number" name="año" placeholder="Año" min="1990" max="2025" required>
+                        <input type="number" name="kilometros" placeholder="Kilómetros" min="0" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="text" name="nombre" placeholder="Tu nombre completo" required>
+                        <input type="tel" name="telefono" placeholder="Teléfono" required>
+                    </div>
+                    <div class="form-row full-width">
+                        <input type="email" name="email" placeholder="Correo electrónico" required>
+                    </div>
+                    <div class="form-row full-width">
+                        <textarea name="observaciones" placeholder="Observaciones adicionales sobre el estado del vehículo (opcional)" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn-modal-action">SOLICITAR COTIZACIÓN</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal MERCADOLIBRE -->
+    <div id="meliModal" class="modal-overlay">
+        <div class="modal-content-meli">
+            <span class="modal-close" onclick="closeMeliModal()">&times;</span>
+            <div class="meli-modal-content">
+                <div class="meli-logo">
+                    <i class="fab fa-amazon" style="color: #3483FA; font-size: 4rem;"></i>
+                </div>
+                <h2>Nuestros Vehículos en MercadoLibre</h2>
+                <p>Encuentra toda nuestra oferta de camiones y semirremolques en la plataforma de ventas online más grande de Argentina.</p>
+                <div class="meli-benefits">
+                    <div class="benefit-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Compra Protegida</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-shipping-fast"></i>
+                        <span>Envío a todo el país</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Múltiples formas de pago</span>
+                    </div>
+                </div>
+                <button class="btn-modal-action" onclick="redirectToMercadoLibre()">VER EN MERCADOLIBRE</button>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- Sección Marcas - Sin Título -->
     <section class="brands">
