@@ -367,6 +367,9 @@ body {
 /* ===== BOTONES DE CATEGORÍAS - CORREGIDO SIN CONFLICTOS ===== */
 /* Reemplazar en styles/main.css SOLO la sección de .category-buttons */
 
+/* ===== BOTONES DE CATEGORÍAS - BLANCOS CON HOVER GRIS ===== */
+/* Reemplazar en styles/main.css la sección de .category-buttons */
+
 /* Contenedor de botones de categorías - MÁS ESPECÍFICO */
 .hero-section .category-buttons {
     position: absolute !important;
@@ -384,18 +387,18 @@ body {
     box-sizing: border-box !important;
 }
 
-/* Botones individuales - MÁS ESPECÍFICO */
+/* Botones individuales - NUEVOS ESTILOS BLANCOS */
 .hero-section .category-btn {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: flex-start !important;
-    background: #9ca3af !important;
+    background: #ffffff !important; /* CAMBIADO: Fondo blanco */
     color: #000000 !important;
-    border: none !important;
+    border: 2px solid #e5e7eb !important; /* CAMBIADO: Borde gris claro */
     padding: 18px 22px !important;
     cursor: pointer !important;
-    transition: all 0.2s ease !important;
+    transition: all 0.3s ease !important; /* CAMBIADO: Transición más suave */
     width: 220px !important;
     height: 70px !important;
     border-radius: 0 !important;
@@ -405,13 +408,16 @@ body {
     gap: 15px !important;
 }
 
+/* NUEVO: Estado hover - Gris */
 .hero-section .category-btn:hover {
-    background: rgba(255, 255, 255, 1) !important;
-    color: var(--primary-black) !important;
+    background: #f3f4f6 !important; /* CAMBIADO: Fondo gris claro en hover */
+    color: #374151 !important; /* CAMBIADO: Texto gris oscuro en hover */
+    border-color: #d1d5db !important; /* CAMBIADO: Borde gris en hover */
     transform: translateY(-2px) !important;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important; /* CAMBIADO: Sombra más suave */
 }
 
+/* Flecha derecha - ACTUALIZADA */
 .hero-section .category-btn::after {
     content: '→' !important;
     position: absolute !important;
@@ -419,15 +425,16 @@ body {
     top: 50% !important;
     transform: translateY(-50%) !important;
     font-size: 20px !important;
-    color: #000000 !important;
+    color: #6b7280 !important; /* CAMBIADO: Color gris por defecto */
     font-weight: bold !important;
+    transition: color 0.3s ease !important;
 }
 
 .hero-section .category-btn:hover::after {
-    color: var(--primary-black) !important;
+    color: #374151 !important; /* CAMBIADO: Color gris más oscuro en hover */
 }
 
-/* IMÁGENES MÁS GRANDES - MÁS ESPECÍFICO */
+/* IMÁGENES - SIN CAMBIOS MAYORES */
 .hero-section .category-icon {
     width: 60px !important;
     height: 55px !important;
@@ -435,22 +442,22 @@ body {
     margin-right: 0 !important;
     transition: var(--transition-fast) !important;
     filter: none !important;
-    opacity: 1 !important;
+    opacity: 0.8 !important; /* CAMBIADO: Ligeramente transparente por defecto */
     object-fit: contain !important;
     flex-shrink: 0 !important;
 }
 
 .hero-section .category-btn:hover .category-icon {
-    opacity: 1 !important;
-    transform: scale(1.08) !important;
+    opacity: 1 !important; /* CAMBIADO: Opacidad completa en hover */
+    transform: scale(1.05) !important; /* CAMBIADO: Escala más sutil */
 }
 
-/* TEXTO EN NEGRO Y MÁS GRANDE - MÁS ESPECÍFICO */
+/* TEXTO - ACTUALIZADO */
 .hero-section .category-btn span {
     font-family: var(--font-secondary) !important;
     font-size: 0.85rem !important;
-    color: #000000 !important;
-    transition: var(--transition-fast) !important;
+    color: #374151 !important; /* CAMBIADO: Color gris oscuro por defecto */
+    transition: color 0.3s ease !important;
     font-weight: 600 !important;
     text-align: left !important;
     line-height: 1.1 !important;
@@ -461,10 +468,47 @@ body {
 }
 
 .hero-section .category-btn:hover span {
-    color: var(--primary-black) !important;
+    color: #1f2937 !important; /* CAMBIADO: Color más oscuro en hover */
 }
 
-/* ===== RESPONSIVE ACTUALIZADO - MÁS ESPECÍFICO ===== */
+/* ===== ESTADOS ADICIONALES ===== */
+
+/* Estado activo/presionado */
+.hero-section .category-btn:active {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    background: #e5e7eb !important;
+}
+
+/* Estado focus para accesibilidad */
+.hero-section .category-btn:focus {
+    outline: 3px solid var(--primary-blue) !important;
+    outline-offset: 2px !important;
+    background: #f9fafb !important;
+}
+
+/* ===== VARIANTE ALTERNATIVA - MÁS CONTRASTE ===== */
+/* Si prefieres un hover más contrastante, descomenta estas líneas: */
+
+/*
+.hero-section .category-btn:hover {
+    background: #e5e7eb !important;
+    color: #111827 !important;
+    border-color: #9ca3af !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.hero-section .category-btn:hover::after {
+    color: #111827 !important;
+}
+
+.hero-section .category-btn:hover span {
+    color: #111827 !important;
+}
+*/
+
+/* ===== RESPONSIVE ACTUALIZADO ===== */
 @media (max-width: 1024px) {
     .hero-section .category-buttons {
         gap: 18px !important;
@@ -476,6 +520,11 @@ body {
         height: 68px !important;
         padding: 15px 18px !important;
         gap: 12px !important;
+        background: #ffffff !important; /* MANTENER: Fondo blanco */
+    }
+    
+    .hero-section .category-btn:hover {
+        background: #f3f4f6 !important; /* MANTENER: Hover gris */
     }
     
     .hero-section .category-icon {
@@ -485,11 +534,13 @@ body {
     
     .hero-section .category-btn span {
         font-size: 0.8rem !important;
+        color: #374151 !important; /* MANTENER: Color gris */
     }
     
     .hero-section .category-btn::after {
         right: 15px !important;
         font-size: 18px !important;
+        color: #6b7280 !important; /* MANTENER: Color gris */
     }
 }
 
@@ -511,23 +562,44 @@ body {
         justify-content: flex-start !important;
         padding: 15px 25px !important;
         gap: 18px !important;
+        background: #ffffff !important; /* MANTENER: Fondo blanco */
+        border-color: #e5e7eb !important; /* MANTENER: Borde gris claro */
+    }
+    
+    .hero-section .category-btn:hover {
+        background: #f3f4f6 !important; /* MANTENER: Hover gris */
+        border-color: #d1d5db !important;
     }
     
     .hero-section .category-btn::after {
         right: 18px !important;
+        color: #6b7280 !important; /* MANTENER: Color gris */
+    }
+    
+    .hero-section .category-btn:hover::after {
+        color: #374151 !important; /* MANTENER: Hover más oscuro */
     }
     
     .hero-section .category-icon {
         width: 45px !important;
         height: 42px !important;
         margin-bottom: 0 !important;
+        opacity: 0.8 !important;
+    }
+    
+    .hero-section .category-btn:hover .category-icon {
+        opacity: 1 !important;
     }
     
     .hero-section .category-btn span {
         font-size: 0.85rem !important;
         text-align: left !important;
         flex: 1 !important;
-        color: #000000 !important;
+        color: #374151 !important; /* MANTENER: Color gris */
+    }
+    
+    .hero-section .category-btn:hover span {
+        color: #1f2937 !important; /* MANTENER: Hover más oscuro */
     }
 }
 
@@ -542,6 +614,11 @@ body {
         padding: 12px 20px !important;
         max-width: 300px !important;
         gap: 15px !important;
+        background: #ffffff !important; /* MANTENER: Fondo blanco */
+    }
+    
+    .hero-section .category-btn:hover {
+        background: #f3f4f6 !important; /* MANTENER: Hover gris */
     }
     
     .hero-section .category-icon {
@@ -551,58 +628,101 @@ body {
     
     .hero-section .category-btn span {
         font-size: 0.8rem !important;
-        color: #000000 !important;
+        color: #374151 !important; /* MANTENER: Color gris */
+    }
+    
+    .hero-section .category-btn:hover span {
+        color: #1f2937 !important; /* MANTENER: Hover más oscuro */
     }
     
     .hero-section .category-btn::after {
         font-size: 18px !important;
-        color: #000000 !important;
+        color: #6b7280 !important; /* MANTENER: Color gris */
+    }
+    
+    .hero-section .category-btn:hover::after {
+        color: #374151 !important; /* MANTENER: Hover más oscuro */
     }
 }
 
-/* ===== MEJORAS ADICIONALES - MÁS ESPECÍFICO ===== */
+/* ===== MEJORAS ADICIONALES ===== */
 
-/* Mejor contraste para el texto negro */
-.hero-section .category-btn {
-    text-shadow: none !important;
-}
-
-/* Asegurar que el texto se vea bien en todos los estados */
+/* Mejor transición para todos los elementos */
+.hero-section .category-btn,
+.hero-section .category-btn::after,
 .hero-section .category-btn span,
-.hero-section .category-btn::after {
-    color: #000000 !important;
-    text-shadow: none !important;
+.hero-section .category-icon {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Estado hover mejorado */
+/* Efecto de elevación más suave */
 .hero-section .category-btn:hover {
-    background: rgba(255, 255, 255, 0.95) !important;
+    transform: translateY(-2px) scale(1.02) !important;
 }
 
-.hero-section .category-btn:hover span,
-.hero-section .category-btn:hover::after {
-    color: var(--primary-black) !important;
+/* Sombra más realista */
+.hero-section .category-btn {
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.1),
+        0 1px 2px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* ===== ASEGURAR QUE NO AFECTE OTRAS SECCIONES ===== */
-
-/* Proteger la sección RANDON de interferencias */
-.randon-section,
-.randon-section * {
-    /* Resetear cualquier interferencia de los estilos de categorías */
+.hero-section .category-btn:hover {
+    box-shadow: 
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        0 2px 4px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Asegurar que otros botones no se vean afectados */
-.btn-randon,
-.btn-view-unit,
-.btn-view-all,
-.btn-financing {
-    /* Estos botones mantienen sus estilos originales */
-    background: var(--primary-white) !important;
-    color: var(--primary-black) !important;
-    border: 2px solid var(--primary-black) !important;
-    text-decoration: none !important;
+/* ===== ACCESIBILIDAD MEJORADA ===== */
+
+/* Mejor contraste para lectores de pantalla */
+.hero-section .category-btn[aria-pressed="true"] {
+    background: #e5e7eb !important;
+    border-color: var(--primary-blue) !important;
 }
+
+/* Estado disabled si fuera necesario */
+.hero-section .category-btn:disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    background: #f9fafb !important;
+    color: #9ca3af !important;
+}
+
+.hero-section .category-btn:disabled:hover {
+    transform: none !important;
+    background: #f9fafb !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ===== INDICADOR VISUAL DE SELECCIÓN (OPCIONAL) ===== */
+/* Si quieres que un botón muestre que está seleccionado */
+.hero-section .category-btn.selected {
+    background: #dbeafe !important;
+    border-color: var(--primary-blue) !important;
+    color: var(--primary-blue) !important;
+}
+
+.hero-section .category-btn.selected span {
+    color: var(--primary-blue) !important;
+}
+
+.hero-section .category-btn.selected::after {
+    color: var(--primary-blue) !important;
+}
+
+/* ===== ALTERNATIVA CON GRADIENTE SUTIL (OPCIONAL) ===== */
+/* Si quieres un efecto más elegante, descomenta: */
+
+/*
+.hero-section .category-btn {
+    background: linear-gradient(145deg, #ffffff, #f8fafc) !important;
+}
+
+.hero-section .category-btn:hover {
+    background: linear-gradient(145deg, #f1f5f9, #e2e8f0) !important;
+}
+*/
 /* ===== SECCIÓN UNIDADES DESTACADAS - CENTRADO Y ESPACIADO CORREGIDO ===== */
 .featured-units {
     padding: 40px 0 60px 0;

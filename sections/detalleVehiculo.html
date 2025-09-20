@@ -47,12 +47,9 @@
                     </li>
                 </ul>
                 
-                <!-- Botón derecha - ACTUALIZADO -->
+                <!-- Botón derecha -->
                 <div class="nav-button">
-                    <!-- Botón MercadoLibre -->
-                    
-                    
-                    <!-- Botón Randon (opcional - mantener o quitar) -->
+                    <!-- Botón Randon -->
                     <a href="LarrosaCamiones.html#randon" class="btn-special">
                         <img src="../assets/Logo negro sin fondo.png" alt="Randon" class="btn-icon">
                     </a>
@@ -73,32 +70,7 @@
         <!-- Vehicle Detail Section -->
         <section class="vehicle-detail-section">
             <div class="container">
-                <!-- Vehicle Header -->
-                <div class="vehicle-header">
-                    <h1 id="vehicle-name">Iveco Stralis 360</h1>
-                    <div class="vehicle-header-actions">
-                        <button class="action-btn share-btn">
-                            <i class="fas fa-share-alt"></i>
-                            <span>Share</span>
-                        </button>
-                        <button class="action-btn print-btn" onclick="window.print()">
-                            <i class="fas fa-print"></i>
-                            <span>Print</span>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Status and Location -->
-                <div class="vehicle-meta">
-                    <div class="vehicle-status-badge">
-                        <i class="fas fa-bolt"></i>
-                        <span>Entrega inmediata</span>
-                    </div>
-                    <div class="vehicle-location">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Villa María, Córdoba</span>
-                    </div>
-                </div>
+                <!-- NO HAY HEADER ARRIBA - TODO VA EN LA COLUMNA DERECHA -->
 
                 <!-- Main Content Layout -->
                 <div class="vehicle-detail-layout">
@@ -128,14 +100,44 @@
                         </div>
                     </div>
 
-                    <!-- Right Column - Vehicle Info -->
+                    <!-- Right Column - Vehicle Info CON HEADER INTEGRADO -->
                     <div class="vehicle-info-column">
-                        <!-- Price Section -->
-                        <div class="price-section">
-                            <button class="price-btn">CONSULTAR PRECIO</button>
+                        <!-- NUEVA SECCIÓN: INFO DEL VEHÍCULO CON BOTONES REORGANIZADOS -->
+                        <div class="vehicle-info-header">
+                            <!-- TÍTULO + META (Izquierda) -->
+                            <div class="vehicle-title-section">
+                                <h1 class="vehicle-title-main" id="vehicle-name">Iveco Stralis 360</h1>
+                                <div class="vehicle-meta-new">
+                                    <div class="vehicle-status-badge">
+                                        <i class="fas fa-bolt"></i>
+                                        <span>Entrega inmediata</span>
+                                    </div>
+                                    <div class="vehicle-location">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span>Villa María, Córdoba</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- BOTONES SHARE/PRINT (Esquina superior derecha) -->
+                            <div class="vehicle-header-actions-new">
+                                <button class="action-btn share-btn">
+                                    <i class="fas fa-share-alt"></i>
+                                    <span>Share</span>
+                                </button>
+                                <button class="action-btn print-btn" onclick="window.print()">
+                                    <i class="fas fa-print"></i>
+                                    <span>Print</span>
+                                </button>
+                            </div>
+                            
+                            <!-- BOTÓN CONSULTAR PRECIO (Centrado abajo) -->
+                            <div class="vehicle-price-section">
+                                <button class="price-btn-new">CONSULTAR PRECIO</button>
+                            </div>
                         </div>
 
-                        <!-- All Specifications in one continuous block -->
+                        <!-- All Specifications (AHORA DEBAJO DEL HEADER) -->
                         <div class="all-specs">
                             <h3>Especificaciones generales</h3>
                             
@@ -263,6 +265,7 @@
                 </div>
             </div>
         </section>
+        
         <section class="brands">
             <div class="container">
                 <div class="brands-carousel">
@@ -341,62 +344,7 @@
         </div>
     </footer>
 
-    <!-- JavaScript para funcionalidad adicional -->
-    <script>
-        // Actualizar scripts/nav-session.js para que funcione con el botón en footer
-        document.addEventListener('DOMContentLoaded', function() {
-            updateAdminButtonState();
-        });
-
-        function updateAdminButtonState() {
-            const adminButton = document.querySelector('.btn-admin-footer');
-            if (!adminButton) return;
-
-            // Verificar si hay token de admin almacenado
-            const hasAdminToken = localStorage.getItem('admin_token') || sessionStorage.getItem('admin_token');
-            
-            if (hasAdminToken) {
-                // Mostrar estado "logueado"
-                adminButton.classList.add('logged-in');
-                adminButton.title = 'Panel de Administración (Sesión activa)';
-                
-                // Cambiar el texto si existe
-                const buttonText = adminButton.querySelector('span');
-                if (buttonText) {
-                    buttonText.textContent = 'Panel Activo';
-                }
-                
-                // Cambiar destino a dashboard en lugar de login
-                adminButton.href = '../admin/dashboard.html';
-            } else {
-                // Estado normal - ir a login
-                adminButton.classList.remove('logged-in');
-                adminButton.title = 'Panel de Administración';
-                adminButton.href = '../admin/login.html';
-                
-                const buttonText = adminButton.querySelector('span');
-                if (buttonText) {
-                    buttonText.textContent = 'Administración';
-                }
-            }
-        }
-
-        // Tracking para el botón MercadoLibre
-        document.querySelector('.btn-mercadolibre')?.addEventListener('click', function() {
-            // Google Analytics tracking
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'click', {
-                    event_category: 'External Link',
-                    event_label: 'MercadoLibre',
-                    transport_type: 'beacon'
-                });
-            }
-            
-            console.log('🛒 Redirect to MercadoLibre');
-        });
-    </script>
-
     <!-- Scripts -->
-     <!-- Al final del body, antes de </body> -->
-<script src="../scripts/unidades-fix.js"></script>
-    
+    <script src="../scripts/unidades-fix.js"></script>
+</body>
+</html>
