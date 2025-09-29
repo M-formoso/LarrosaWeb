@@ -75,92 +75,117 @@ class APIClient {
     }
 
     // MÉTODO CORREGIDO PARA MANEJO DE IMÁGENES
-    getImageUrl(imageData) {
-        console.log('🖼️ Processing image data:', imageData);
-        
-        // Si imageData es null o undefined
-        if (!imageData) {
-            console.log('⚠️ No image data provided, using placeholder');
-            return '../assets/imagenes/placeholder-vehicle.jpg';
-        }
-        
-        // Si es un string
-        if (typeof imageData === 'string') {
-            // Verificar cache primero
-            if (this.imageCache.has(imageData)) {
-                return this.imageCache.get(imageData);
-            }
-            
-            let finalUrl;
-            
-            // Si es una URL completa
-            if (imageData.startsWith('http')) {
-                finalUrl = imageData;
-                console.log('✅ Full HTTP URL found:', finalUrl);
-            } 
-            // Si es una ruta que comienza con 'static'
-            else if (imageData.startsWith('static/')) {
-                // CORREGIR: No duplicar 'static'
-                finalUrl = `${this.staticURL}/${imageData}`;
-                console.log('✅ Static path converted:', finalUrl);
-            }
-            // Si comienza con '/static'
-            else if (imageData.startsWith('/static/')) {
-                finalUrl = `${this.staticURL}${imageData}`;
-                console.log('✅ Absolute static path converted:', finalUrl);
-            }
-            // Si parece ser un nombre de archivo
-            else if (imageData.includes('.')) {
-                // Intentar con diferentes rutas posibles
-                const possiblePaths = [
-                    `${this.staticURL}/static/uploads/vehicles/${imageData}`,
-                    `${this.staticURL}/images/${imageData}`,
-                    `${this.staticURL}/media/${imageData}`,
-                    `${this.staticURL}/uploads/${imageData}`
-                ];
-                
-                // Usar la primera ruta por defecto
-                finalUrl = possiblePaths[0];
-                console.log('✅ Filename converted to static path:', finalUrl);
-                
-                // Async: verificar qué URL funciona
-                this.verifyImageUrl(imageData, possiblePaths);
-            }
-            // Fallback: tratar como ruta relativa
-            else {
-                finalUrl = imageData;
-                console.log('✅ Using as relative path:', finalUrl);
-            }
-            
-            // Guardar en cache
-            this.imageCache.set(imageData, finalUrl);
-            return finalUrl;
-        } 
-        
-        // Si es un objeto de imagen del backend
-        if (typeof imageData === 'object' && imageData !== null) {
-            console.log('📦 Image object detected:', imageData);
-            
-            // Buscar diferentes propiedades posibles
-            const imagePath = imageData.file_path || 
-                             imageData.filename || 
-                             imageData.url || 
-                             imageData.path ||
-                             imageData.image_url ||
-                             imageData.src;
-            
-            if (imagePath) {
-                console.log('🔍 Found path in object:', imagePath);
-                return this.getImageUrl(imagePath); // Recursión con el string encontrado
-            } else {
-                console.warn('⚠️ No valid path found in image object:', Object.keys(imageData));
-            }
-        }
-        
-        // Fallback final
-        console.warn('⚠️ Could not determine image URL for:', imageData);
+    // ===== REEMPLAZAR EL MÉTODO getImageUrl EN scripts/api.js =====
+
+// MÉTODO CORREGIDO PARA MANEJO DE IMÁGENES
+getImageUrl(imageData) {
+    console.log('🖼️ Processing image data:', imageData);
+    
+    // Si imageData es null o undefined
+    if (!imageData) {
+        console.log('⚠️ No image data provided, using placeholder');
         return '../assets/imagenes/placeholder-vehicle.jpg';
     }
+    
+    // Si es un string
+    if (typeof imageData === 'string') {
+        // Verificar cache primero
+        if (this.imageCache.has(imageData)) {
+            return this.imageCache.get(imageData);
+        }
+        
+        let finalUrl;
+        
+        // Si es una URL completa
+        if (imageData.startsWith('http')) {
+            finalUrl = imageData;
+            console.log('✅ Full HTTP URL found:', finalUrl);
+        } 
+        // Si es una ruta que comienza con 'static' (CASO MÁS COMÚN DEL BACKEND)
+        else if (imageData.startsWith('static/')) {
+            // CORRECCIÓN PRINCIPAL: Construir URL correcta
+            finalUrl = `${this.staticURL}/${imageData}`;
+            console.log('✅ Static path converted:', finalUrl);
+        }
+        // Si comienza con '/static'
+        else if (imageData.startsWith('/static/')) {
+            finalUrl = `${this.staticURL}${imageData}`;
+            console.log('✅ Absolute static path converted:', finalUrl);
+        }
+        // Si parece ser un nombre de archivo directo
+        else if (imageData.includes('.')) {
+            // Asumir que está en la carpeta de vehículos
+            finalUrl = `${this.staticURL}/static/uploads/vehicles/${imageData}`;
+            console.log('✅ Filename converted to full path:', finalUrl);
+        }
+        // Fallback: tratar como ruta relativa
+        else {
+            finalUrl = imageData;
+            console.log('⚠️ Using as relative path:', finalUrl);
+        }
+        
+        // Guardar en cache
+        this.imageCache.set(imageData, finalUrl);
+        return finalUrl;
+    } 
+    
+    // Si es un objeto de imagen del backend
+    if (typeof imageData === 'object' && imageData !== null) {
+        console.log('📦 Image object detected:', imageData);
+        
+        // Buscar diferentes propiedades posibles
+        const imagePath = imageData.file_path || 
+                         imageData.filename || 
+                         imageData.url || 
+                         imageData.path ||
+                         imageData.image_url ||
+                         imageData.src;
+        
+        if (imagePath) {
+            console.log('🔍 Found path in object:', imagePath);
+            return this.getImageUrl(imagePath); // Recursión con el string encontrado
+        } else {
+            console.warn('⚠️ No valid path found in image object:', Object.keys(imageData));
+        }
+    }
+    
+    // Fallback final
+    console.warn('⚠️ Could not determine image URL for:', imageData);
+    return '../assets/imagenes/placeholder-vehicle.jpg';
+}
+
+// AGREGAR TAMBIÉN ESTE MÉTODO PARA DEBUG
+debugImageInfo(imageData) {
+    console.log('🔍 DEBUG IMAGE INFO:');
+    console.log('Input data:', imageData);
+    console.log('Type:', typeof imageData);
+    console.log('Is Array:', Array.isArray(imageData));
+    
+    if (typeof imageData === 'object' && imageData !== null) {
+        console.log('Object keys:', Object.keys(imageData));
+        console.log('Object values:', Object.values(imageData));
+    }
+    
+    const processedUrl = this.getImageUrl(imageData);
+    console.log('Processed URL:', processedUrl);
+    
+    // Verificar si la URL es accesible
+    this.verifyImageAccessibility(processedUrl);
+    
+    return processedUrl;
+}
+
+// Verificar accesibilidad de imagen
+async verifyImageAccessibility(url) {
+    try {
+        const response = await fetch(url, { method: 'HEAD' });
+        console.log(`🔗 Image accessibility: ${response.status} ${response.statusText} for ${url}`);
+        return response.ok;
+    } catch (error) {
+        console.log(`❌ Image not accessible: ${url} - ${error.message}`);
+        return false;
+    }
+}
 
     // Verificar qué URL de imagen funciona (async)
     async verifyImageUrl(originalData, possiblePaths) {

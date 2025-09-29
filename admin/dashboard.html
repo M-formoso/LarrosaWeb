@@ -518,76 +518,136 @@
         }
         
         // NUEVA FUNCIÓN: Manejar envío del formulario
-        async function handleVehicleFormSubmit(event) {
-            event.preventDefault();
-            console.log('📝 Formulario enviado');
-            
-            const form = event.target;
-            const submitBtn = form.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            
-            // Mostrar loading
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
-            
-            try {
-                // Obtener datos del formulario
-                const formData = new FormData(form);
-                
-                // Crear objeto del vehículo
-                const vehicleData = {
-                    brand: formData.get('brand'),
-                    model: formData.get('model'),
-                    full_name: `${formData.get('brand')} ${formData.get('model')}`,
-                    type: formData.get('type'),
-                    type_name: getTypeName(formData.get('type')),
-                    year: parseInt(formData.get('year')),
-                    kilometers: parseInt(formData.get('kilometers')),
-                    power: parseInt(formData.get('power')) || null,
-                    traccion: formData.get('traccion') || null,
-                    transmission: formData.get('transmission') || null,
-                    color: formData.get('color') || null,
-                    status: formData.get('status'),
-                    price: parseFloat(formData.get('price')) || null,
-                    is_featured: formData.get('is_featured') === 'on',
-                    location: 'Villa María, Córdoba',
-                    description: formData.get('description') || null,
-                    observations: formData.get('observations') || null,
-                    date_registered: new Date().toLocaleDateString('es-AR')
-                };
+       // ===== REEMPLAZAR LA FUNCIÓN handleVehicleFormSubmit EN admin/dashboard.html =====
+
+// NUEVA FUNCIÓN: Manejar envío del formulario - CORREGIDA
+async function handleVehicleFormSubmit(event) {
+    event.preventDefault();
+    console.log('📝 Formulario enviado');
+    
+    const form = event.target;
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    
+    // Mostrar loading
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Guardando...';
+    
+    try {
+        // CORRECCIÓN: Obtener datos del formulario correctamente
+        const formData = new FormData(form);
         
-                console.log('Datos a enviar:', vehicleData);
+        // VALIDAR CAMPOS REQUERIDOS ANTES DE ENVIAR
+        const requiredFields = ['brand', 'model', 'year', 'kilometers', 'type', 'status'];
+        const missingFields = [];
         
-                // Enviar al backend
-                const response = await makeAuthenticatedRequest('/vehicles/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(vehicleData)
-                });
-        
-                console.log('✅ Respuesta del servidor:', response);
-        
-                // Mostrar éxito
-                showMessage('¡Vehículo creado exitosamente!', 'success');
-                
-                // Limpiar formulario
-                form.reset();
-                
-                // Actualizar dashboard
-                await loadDashboardData();
-        
-            } catch (error) {
-                console.error('❌ Error:', error);
-                showMessage(`Error: ${error.message}`, 'error');
-            } finally {
-                // Restaurar botón
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = originalText;
+        for (const field of requiredFields) {
+            const value = formData.get(field);
+            if (!value || value.trim() === '') {
+                missingFields.push(field);
             }
         }
         
+        if (missingFields.length > 0) {
+            throw new Error(`Campos requeridos faltantes: ${missingFields.join(', ')}`);
+        }
+        
+        // CONSTRUIR OBJETO CON VALIDACIÓN
+        const vehicleData = {
+            // Campos requeridos con validación
+            brand: formData.get('brand').trim(),
+            model: formData.get('model').trim(),
+            full_name: `${formData.get('brand').trim()} ${formData.get('model').trim()}`,
+            type: formData.get('type'),
+            type_name: getTypeName(formData.get('type')),
+            year: parseInt(formData.get('year')),
+            kilometers: parseInt(formData.get('kilometers')),
+            status: formData.get('status'),
+            
+            // Campos opcionales con valores por defecto
+            power: formData.get('power') ? parseInt(formData.get('power')) : null,
+            traccion: formData.get('traccion') || null,
+            transmission: formData.get('transmission') || null,
+            color: formData.get('color') || null,
+            price: formData.get('price') ? parseFloat(formData.get('price')) : null,
+            is_featured: formData.get('is_featured') === 'on',
+            location: 'Villa María, Córdoba',
+            description: formData.get('description') || null,
+            observations: formData.get('observations') || null,
+            date_registered: new Date().toLocaleDateString('es-AR')
+        };
+
+        console.log('📋 Datos validados a enviar:', vehicleData);
+
+        // VERIFICAR QUE LOS DATOS ESTÉN COMPLETOS
+        if (!vehicleData.brand || !vehicleData.model || !vehicleData.type) {
+            throw new Error('Faltan datos críticos del vehículo');
+        }
+
+        // Enviar al backend
+        const response = await makeAuthenticatedRequest('/vehicles/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(vehicleData)
+        });
+
+        console.log('✅ Respuesta del servidor:', response);
+
+        // Mostrar éxito
+        showMessage('¡Vehículo creado exitosamente!', 'success');
+        
+        // Limpiar formulario
+        form.reset();
+        
+        // Actualizar dashboard
+        await loadDashboardData();
+
+    } catch (error) {
+        console.error('❌ Error:', error);
+        showMessage(`Error: ${error.message}`, 'error');
+    } finally {
+        // Restaurar botón
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+    }
+}
+
+// AGREGAR TAMBIÉN ESTA FUNCIÓN DE DEBUG PARA EL FORMULARIO
+function debugFormData() {
+    const form = document.getElementById('add-vehicle-form');
+    if (!form) {
+        console.log('❌ Formulario no encontrado');
+        return;
+    }
+    
+    const formData = new FormData(form);
+    console.log('🔍 DEBUG FORM DATA:');
+    
+    for (let [key, value] of formData.entries()) {
+        console.log(`${key}: "${value}" (${typeof value})`);
+    }
+    
+    // Verificar campos requeridos
+    const requiredFields = ['brand', 'model', 'year', 'kilometers', 'type', 'status'];
+    requiredFields.forEach(field => {
+        const input = form.querySelector(`[name="${field}"]`);
+        if (input) {
+            console.log(`${field} input:`, {
+                value: input.value,
+                name: input.name,
+                type: input.type,
+                required: input.required
+            });
+        } else {
+            console.log(`❌ Input ${field} no encontrado`);
+        }
+    });
+}
+
+// Hacer función disponible globalmente para debug
+window.debugFormData = debugFormData;
         // Función helper
         function getTypeName(type) {
             const types = {
