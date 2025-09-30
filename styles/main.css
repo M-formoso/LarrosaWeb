@@ -740,18 +740,23 @@ body {
 /* Descomenta estas líneas y comenta las de arriba si prefieres este estilo */
 
 
+/* ===== AJUSTES PARA TÍTULO "UNIDADES DESTACADAS" ===== */
+/* Agregar/reemplazar en styles/main.css */
+
 .section-title-special {
     font-family: 'Roboto', sans-serif !important;
     font-size: 3.5rem !important;
     color: #9ca3af !important;
     text-align: center !important;
-    margin-bottom: 3rem !important;
+    margin-bottom: 1.5rem !important; /* REDUCIDO: era 3rem, ahora 1.5rem */
     margin-top: 0 !important;
+    padding-top: 0 !important; /* AGREGADO: eliminar padding superior */
     text-transform: none !important;
     font-weight: 300 !important;
     letter-spacing: 0.5px !important;
     line-height: 1.2 !important;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    word-spacing: -0.2em !important; /* AGREGADO: acerca las palabras */
 }
 
 .section-title-special .word-normal {
@@ -759,17 +764,30 @@ body {
     display: inline !important;
     font-weight: 300 !important;
     color: #9ca3af !important;
+    margin-right: 0.15em !important; /* REDUCIDO: acerca "Unidades" a "destacadas" */
 }
 
 .section-title-special .word-large {
     font-size: 1em !important;
     display: inline !important;
-    margin-left: 0.3em !important;
+    margin-left: 0 !important; /* ELIMINADO: el margen entre palabras */
     font-weight: 600 !important;
     font-family: 'Roboto', sans-serif !important;
     color: #6b7280 !important;
 }
-*/
+
+/* ===== REDUCIR ESPACIO ARRIBA DE LA SECCIÓN ===== */
+.featured-units {
+    padding: 20px 0 60px 0 !important; /* REDUCIDO: era 40px arriba, ahora 20px */
+    background: var(--primary-white);
+    position: relative;
+    margin-top: 0 !important;
+}
+
+/* ===== ESPACIO ENTRE TÍTULO Y CARRUSEL ===== */
+.carousel-container {
+    margin-top: -10px !important; /* AGREGADO: acerca el carrusel al título */
+}
 
 
 
@@ -902,25 +920,29 @@ body {
 }
 
 /* CORREGIDO: Botón Ver todas las UNIDADES centrado */
+/* ===== BOTÓN VER TODAS LAS UNIDADES - SIN LÍNEA Y MÁS ABAJO ===== */
 .view-all-container {
     text-align: center;
-    margin-top: 1.5rem;
+    margin-top: 3rem; /* AUMENTADO: de 1.5rem a 3rem para bajarlo más */
     margin-bottom: 0;
+    padding: 0 20px;
 }
 
 .btn-view-all {
     background: var(--primary-white);
     color: var(--primary-black);
     border: 2px solid var(--primary-black);
-    padding: 1rem 2.5rem;
+    padding: 0.7rem 1.8rem !important;
     font-family: var(--font-primary);
-    font-size: 0.9rem;
+    font-size: 0.8rem !important;
     border-radius: 0;
     cursor: pointer;
     transition: var(--transition-fast);
     text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 1px;
+    font-weight: 600 !important;
+    letter-spacing: 0.8px !important;
+    text-decoration: none !important; /* ELIMINAR: cualquier subrayado */
+    display: inline-block; /* ASEGURAR: comportamiento correcto */
 }
 
 .btn-view-all:hover {
@@ -928,8 +950,14 @@ body {
     color: var(--primary-white);
     transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    text-decoration: none !important; /* MANTENER: sin línea en hover */
 }
 
+/* ELIMINAR cualquier pseudo-elemento que cree líneas */
+.btn-view-all::before,
+.btn-view-all::after {
+    display: none !important;
+}
 /* ===== SECCIÓN RANDON - ESPACIADO REDUCIDO ===== */
 .randon-section {
     padding: 40px 0;
@@ -1062,11 +1090,28 @@ body {
     background: var(--primary-white);
 }
 
+/* ===== TÍTULO "¿POR QUÉ LARROSA CAMIONES?" - SIN MODIFICAR HTML ===== */
+/* ===== SECCIÓN ¿POR QUÉ LARROSA? - TÍTULO CORREGIDO ===== */
 .why-larrosa .section-title {
+    font-family: var(--font-primary);
+    font-size: 3rem;
+    color: var(--primary-blue); /* AZUL como antes */
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 3rem;
+    margin: 0 auto 3rem auto;
+    font-weight: 400; /* Peso intermedio por defecto */
+    line-height: 1.2;
+}
+
+/* Palabra "Porqué" más finita */
+.why-larrosa .section-title .word-light {
+    font-weight: 300; /* MÁS FINO */
+    color: var(--primary-blue);
+}
+
+/* Palabras "Larrosa Camiones" más anchas/bold */
+.why-larrosa .section-title .word-bold {
+    font-weight: 700; /* MÁS ANCHO/BOLD */
+    color: var(--primary-blue);
 }
 
 .values-grid {
@@ -1109,6 +1154,7 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 40%; /* CAMBIADO: de 'center' a 'center top' para priorizar la parte superior */
     transition: var(--transition-medium);
     filter: none;
 }
@@ -1866,234 +1912,192 @@ body {
 }
 
 /* ===== SECCIÓN MARCAS - VERSION ESTÁTICA ===== */
-/* Reemplaza el CSS del carrusel en todos tus archivos CSS */
-
+/* ===== SECCIÓN MARCAS - COMPACTA Y ARMÓNICA ===== */
 .brands {
-    padding: 60px 0;
+    padding: 30px 0; /* REDUCIDO: de 40px a 30px */
     background: #f8f9fa;
     border-top: 1px solid #e9ecef;
     border-bottom: 1px solid #e9ecef;
-    margin: 40px 0 0 0;
+    margin: 0 !important;
     position: relative;
     overflow: hidden;
 }
 
 .brands-carousel {
-    overflow: visible; /* CAMBIADO: de hidden a visible */
+    overflow: visible;
     position: relative;
     width: 100%;
-    /* ELIMINADO: mask y -webkit-mask para que se vean todos los logos */
 }
 
 .brands-track {
-    display: flex;
-    align-items: center;
-    justify-content: center; /* CAMBIADO: de flex-start a center */
-    gap: 40px; /* REDUCIDO: de 60px a 40px para mejor distribución */
-    padding: 20px 0;
-    /* ELIMINADO: animation para que sea estático */
-    width: 100%; /* CAMBIADO: de calc(200% + 60px) a 100% */
-    flex-wrap: wrap; /* AGREGADO: para que se ajuste en pantallas pequeñas */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 25px !important; /* REDUCIDO: de 40px a 25px para más compacto */
+    padding: 15px 0; /* REDUCIDO: de 20px a 15px */
+    width: 100% !important;
+    flex-wrap: wrap !important;
 }
 
+/* ===== LOGOS - TAMAÑO REDUCIDO ===== */
 .brand-logo {
-    height: 50px;
-    width: auto;
-    max-width: 120px;
-    min-width: 80px;
-    object-fit: contain;
-    opacity: 0.7; /* CAMBIADO: de 0.6 a 0.7 para mejor visibilidad */
-    transition: all 0.3s ease;
-    filter: grayscale(50%) brightness(0.9); /* REDUCIDO: de 100% a 50% grayscale */
-    flex-shrink: 0;
-    cursor: pointer;
-    margin: 10px; /* AGREGADO: margen para separación cuando se ajusta */
+    height: 38px !important; /* REDUCIDO: de 50px a 38px */
+    width: auto !important;
+    max-width: 95px !important; /* REDUCIDO: de 120px a 95px */
+    min-width: 65px !important; /* REDUCIDO: de 80px a 65px */
+    object-fit: contain !important;
+    opacity: 0.7 !important;
+    transition: all 0.3s ease !important;
+    filter: grayscale(50%) brightness(0.9) !important;
+    flex-shrink: 0 !important;
+    cursor: pointer !important;
+    margin: 6px !important; /* REDUCIDO: de 10px a 6px */
 }
 
 .brand-logo:hover {
-    opacity: 1;
-    filter: grayscale(0%) brightness(1);
-    transform: scale(1.1);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    opacity: 1 !important;
+    filter: grayscale(0%) brightness(1) !important;
+    transform: scale(1.08) !important; /* REDUCIDO: de 1.1 a 1.08 */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Configuración específica para cada marca - MANTENER IGUAL */
+/* ===== AJUSTES ESPECÍFICOS POR MARCA - COMPACTOS ===== */
 .brand-logo[alt="Scania"] {
-    max-width: 100px;
+    max-width: 80px !important; /* REDUCIDO */
 }
 
 .brand-logo[alt="Volvo"] {
-    max-width: 90px;
+    max-width: 72px !important; /* REDUCIDO */
 }
 
 .brand-logo[alt="Mercedes-Benz"] {
-    max-width: 110px;
+    max-width: 88px !important; /* REDUCIDO */
 }
 
 .brand-logo[alt="Iveco"] {
-    max-width: 100px;
+    max-width: 80px !important; /* REDUCIDO */
 }
 
 .brand-logo[alt="Volkswagen"] {
-    max-width: 110px;
+    max-width: 88px !important; /* REDUCIDO */
 }
 
 .brand-logo[alt="Renault"] {
-    max-width: 100px;
+    max-width: 80px !important; /* REDUCIDO */
 }
 
 .brand-logo[alt="Ford"] {
-    max-width: 90px;
+    max-width: 72px !important; /* REDUCIDO */
 }
 
 .brand-logo[alt="DAF"] {
-    max-width: 80px;
+    max-width: 65px !important; /* REDUCIDO */
 }
 
 .brand-logo[alt="Randon"] {
-    max-width: 100px;
-    height: 45px;
+    max-width: 80px !important; /* REDUCIDO */
+    height: 35px !important; /* REDUCIDO */
 }
 
-/* ELIMINADO: @keyframes brandCarousel - Ya no es necesario */
-
-/* ELIMINADO: .brands-track::after - Ya no necesitamos duplicar contenido */
-
-/* ELIMINADO: Pausa de animación - Ya no hay animación que pausar */
-
-/* Estados adicionales - MANTENER */
-.brands.with-title {
-    padding-top: 80px;
-}
-
-.brands.with-title::before {
-    content: 'Trabajamos con las mejores marcas';
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #2c3e50;
-    text-align: center;
-    width: 100%;
-}
-
-.brands.compact {
-    padding: 40px 0;
-}
-
-.brands.compact .brand-logo {
-    height: 40px;
-    max-width: 100px;
-}
-
-.brands.white-bg {
-    background: #ffffff;
-}
-
-.brands.dark-bg {
-    background: #2c3e50;
-    border-color: #34495e;
-}
-
-.brands.dark-bg .brand-logo {
-    filter: grayscale(50%) brightness(1.2) invert(1);
-}
-
-.brands.dark-bg .brand-logo:hover {
-    filter: grayscale(0%) brightness(1) invert(1);
-}
-
-/* ===== RESPONSIVE DESIGN - ACTUALIZADO ===== */
+/* ===== RESPONSIVE - COMPACTO ===== */
 @media (max-width: 1200px) {
+    .brands {
+        padding: 25px 0; /* REDUCIDO */
+    }
+    
     .brands-track {
-        gap: 35px;
+        gap: 22px !important; /* REDUCIDO */
     }
     
     .brand-logo {
-        height: 45px;
-        max-width: 110px;
-        margin: 8px;
+        height: 35px !important; /* REDUCIDO */
+        max-width: 88px !important; /* REDUCIDO */
+        margin: 5px !important; /* REDUCIDO */
     }
 }
 
 @media (max-width: 992px) {
     .brands {
-        padding: 50px 0;
+        padding: 22px 0; /* REDUCIDO */
     }
     
     .brands-track {
-        gap: 30px;
+        gap: 20px !important; /* REDUCIDO */
     }
     
     .brand-logo {
-        height: 42px;
-        max-width: 100px;
-        margin: 6px;
+        height: 32px !important; /* REDUCIDO */
+        max-width: 82px !important; /* REDUCIDO */
+        margin: 4px !important; /* REDUCIDO */
     }
     
     .brand-logo[alt="Randon"] {
-        height: 38px;
-        max-width: 90px;
+        height: 30px !important; /* REDUCIDO */
+        max-width: 72px !important; /* REDUCIDO */
     }
 }
 
 @media (max-width: 768px) {
     .brands {
-        padding: 40px 0;
+        padding: 20px 0; /* REDUCIDO */
     }
     
     .brands-track {
-        gap: 25px;
-        justify-content: center; /* Mantener centrado en móviles */
+        gap: 18px !important; /* REDUCIDO */
+        justify-content: center !important;
     }
     
     .brand-logo {
-        height: 38px;
-        max-width: 90px;
-        min-width: 60px;
-        margin: 5px;
+        height: 30px !important; /* REDUCIDO */
+        max-width: 75px !important; /* REDUCIDO */
+        min-width: 50px !important; /* REDUCIDO */
+        margin: 4px !important; /* REDUCIDO */
     }
     
     .brand-logo[alt="Randon"] {
-        height: 35px;
-        max-width: 80px;
-    }
-    
-    /* Ajustes específicos para móviles */
-    .brand-logo[alt="Mercedes-Benz"],
-    .brand-logo[alt="Volkswagen"] {
-        max-width: 85px;
+        height: 28px !important; /* REDUCIDO */
+        max-width: 68px !important; /* REDUCIDO */
     }
 }
 
 @media (max-width: 480px) {
     .brands {
-        padding: 30px 0;
-        margin: 20px 0 0 0;
+        padding: 18px 0; /* REDUCIDO */
     }
     
     .brands-track {
-        gap: 20px;
-        /* Permitir múltiples filas en pantallas muy pequeñas */
-        justify-content: center;
-        max-width: 100%;
+        gap: 15px !important; /* REDUCIDO */
+        justify-content: center !important;
     }
     
     .brand-logo {
-        height: 35px;
-        max-width: 80px;
-        min-width: 50px;
-        margin: 4px;
+        height: 28px !important; /* REDUCIDO */
+        max-width: 68px !important; /* REDUCIDO */
+        min-width: 45px !important; /* REDUCIDO */
+        margin: 3px !important; /* REDUCIDO */
     }
     
     .brand-logo[alt="Randon"] {
-        height: 32px;
-        max-width: 70px;
+        height: 26px !important; /* REDUCIDO */
+        max-width: 60px !important; /* REDUCIDO */
     }
 }
 
+/* ===== EFECTOS ADICIONALES ===== */
+.brand-logo:hover {
+    box-shadow: 
+        0 6px 20px rgba(0, 0, 0, 0.08),
+        0 0 15px rgba(61, 95, 172, 0.08) !important; /* REDUCIDO */
+    border-radius: 6px !important; /* REDUCIDO */
+}
+
+/* Focus para accesibilidad */
+.brand-logo:focus {
+    outline: 2px solid #3D5FAC !important; /* REDUCIDO */
+    outline-offset: 2px !important; /* REDUCIDO */
+    opacity: 1 !important;
+    filter: grayscale(0%) brightness(1) !important;
+}
 /* ===== EFECTOS ADICIONALES - MANTENER ===== */
 .brand-logo:hover {
     box-shadow: 
@@ -2137,12 +2141,7 @@ body {
 }
 
 /* Focus para accesibilidad - MANTENER */
-.brand-logo:focus {
-    outline: 3px solid #3D5FAC;
-    outline-offset: 3px;
-    opacity: 1;
-    filter: grayscale(0%) brightness(1);
-}
+
 
 /* ===== VARIANTES ESPECÍFICAS POR PÁGINA - MANTENER ===== */
 .page-inicio .brands {
@@ -2199,12 +2198,13 @@ body {
     text-align: left;
 }
 
-.footer-title {
-    font-family: var(--font-primary);
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-    color: var(--primary-blue);
-    text-align: left;
+.footer-title,
+.footer-section h4 {
+    font-family: var(--font-primary) !important;
+    font-size: 1.2rem !important;
+    margin-bottom: 1rem !important;
+    color: var(--primary-blue) !important; /* AZUL - mantener */
+    font-weight: 600 !important;
 }
 
 .footer-contact p {
@@ -2223,22 +2223,26 @@ body {
 }
 
 .footer-links {
-    list-style: none;
-    text-align: left;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 .footer-links li {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.5rem !important;
 }
 
 .footer-links a {
-    color: var(--primary-black);
-    text-decoration: none;
-    transition: var(--transition-fast);
+    color: var(--primary-black) !important; /* CAMBIADO: de blue a black */
+    text-decoration: none !important;
+    transition: var(--transition-fast) !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    display: inline-block !important;
 }
-
 .footer-links a:hover {
-    color: var(--primary-blue);
+    color: var(--primary-blue) !important; /* HOVER: azul */
+    text-decoration: underline !important;
 }
 
 .footer-bottom {
@@ -3066,11 +3070,11 @@ img:not([src]) {
 }
 
 .footer-links a:visited {
-    color: var(--primary-blue) !important;
+    color: var(--primary-black) !important; /* VISITADO: negro */
 }
 
 .footer-links a:focus {
-    color: var(--primary-blue) !important;
+    color: var(--primary-black) !important;
     outline: 2px solid var(--primary-blue) !important;
     outline-offset: 2px !important;
 }
@@ -3095,7 +3099,7 @@ img:not([src]) {
 }
 
 .footer-section ul li a {
-    color: var(--primary-blue) !important;
+    color: var(--primary-black) !important;
     text-decoration: none !important;
     transition: var(--transition-fast) !important;
     font-size: 0.95rem !important;
@@ -3510,6 +3514,7 @@ img:not([src]) {
     justify-content: center;
     gap: 10px;
     margin-top: 2.5rem;
+    padding-bottom: 15px;
 }
 
 .carousel-indicator {
@@ -3520,6 +3525,7 @@ img:not([src]) {
     background: #d1d5db;
     cursor: pointer;
     transition: all 0.3s ease;
+    flex-shrink: 0;
 }
 
 .carousel-indicator.active {
@@ -5057,4 +5063,31 @@ img:not([src]) {
 .btn-modal-action:focus {
     outline: 2px solid var(--primary-blue); /* REDUCIDO: de 3px a 2px */
     outline-offset: 2px; /* REDUCIDO: de 3px a 2px */
+}
+/* Agregar al final de styles/main.css */
+
+/* Eliminar outline solo cuando se hace clic con mouse */
+.nav-link:focus:not(:focus-visible),
+.category-btn:focus:not(:focus-visible),
+.btn-view-unit:focus:not(:focus-visible),
+.btn-view-all:focus:not(:focus-visible),
+.btn-randon:focus:not(:focus-visible),
+.btn-financing:focus:not(:focus-visible),
+.btn-mercadolibre:focus:not(:focus-visible),
+.unit-card:focus:not(:focus-visible),
+.value-card:focus:not(:focus-visible) {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Mantener outline para navegación con teclado (accesibilidad) */
+.nav-link:focus-visible,
+.category-btn:focus-visible,
+.btn-view-unit:focus-visible,
+.btn-view-all:focus-visible,
+.btn-randon:focus-visible,
+.btn-financing:focus-visible,
+.btn-mercadolibre:focus-visible {
+    outline: 3px solid var(--primary-blue) !important;
+    outline-offset: 2px !important;
 }
