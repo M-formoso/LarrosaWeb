@@ -73,10 +73,11 @@ body {
     max-width: var(--container-max-width);
     margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     padding: 0 20px;
     height: 90px; /* AUMENTADO: Era 80px, ahora 90px para más espacio */
+    gap: 3rem; /* AUMENTADO: Más espacio entre logo y navegación */
 }
 
 /* ===== NAVEGACIÓN ACTUALIZADA ===== */
@@ -161,6 +162,7 @@ body {
     display: flex;
     list-style: none;
     gap: 2rem;
+    
 }
 
 /* ===== NAVEGACIÓN CORREGIDA - REEMPLAZAR EN styles/main.css ===== */
@@ -480,11 +482,8 @@ body {
     background: #e5e7eb !important;
 }
 
-/* Estado focus para accesibilidad */
-.hero-section .category-btn:focus {
-    outline: 3px solid var(--primary-blue) !important;
-    outline-offset: 2px !important;
-    background: #f9fafb !important;
+.hero-section .category-btn:focus-visible {
+    outline: none !important;
 }
 
 /* ===== VARIANTE ALTERNATIVA - MÁS CONTRASTE ===== */
