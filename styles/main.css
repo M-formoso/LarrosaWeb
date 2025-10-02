@@ -1551,12 +1551,10 @@ body {
 
 /* Contenedor central: semirremolque + texto */
 .randon-main-content {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 12px; /* REDUCIDO: de 15px a 12px */
-    flex: 1;
-    padding-bottom: 5px; /* REDUCIDO: de 10px a 5px */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 25px !important;
 }
 
 /* Semirremolque a la izquierda - MÁS PEQUEÑO */
@@ -1568,12 +1566,11 @@ body {
 }
 
 .semiremolque-img {
-    max-width: 100%;
-    width: 830px; /* REDUCIDO: de 160px a 130px */
-    height: auto;
-    object-fit: contain;
+    width: 280px !important;
+    max-width: 400px !important;
+    min-width: 400px !important;
+    height: auto !important;
 }
-
 /* Texto y botón a la derecha - AJUSTADO */
 .randon-text-right {
     flex: 0 0 65%; /* AUMENTADO: de 60% a 65% */
@@ -1595,7 +1592,7 @@ body {
 
 .randon-description {
     font-size: 0.7rem; /* REDUCIDO: de 0.75rem a 0.7rem */
-    color: rgba(255, 255, 255, 0.9);
+    color: #FFFFFF !important;
     line-height: 1.25; /* REDUCIDO: de 1.3 a 1.25 */
     margin: 0;
     text-align: left;
@@ -5304,3 +5301,156 @@ img:not([src]) {
     outline: 3px solid var(--primary-blue) !important;
     outline-offset: 2px !important;
 }
+
+/* ===== CARD RANDON - SOLUCIÓN DEFINITIVA ===== */
+
+/* Ajustar el contenedor principal */
+.randon-bg-gradient {
+    padding: 18px 25px !important;
+}
+
+.randon-main-content {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 20px !important;
+}
+
+/* Semirremolque - TAMAÑO CORRECTO para que NO se desborde */
+.randon-semiremolque {
+    flex: 0 0 35% !important;
+    max-width: 35% !important;
+}
+
+.semiremolque-img {
+    width: 200px !important;
+    max-width: 200px !important;
+    min-width: 200px !important;
+    height: auto !important;
+}
+
+/* Texto - ESPACIO ADECUADO */
+.randon-text-right {
+    flex: 0 0 60% !important;
+    max-width: 60% !important;
+}
+
+/* Título - BLANCO */
+.randon-title {
+    font-size: 1.05rem !important;
+    font-weight: 400 !important;
+    color: #FFFFFF !important;
+    line-height: 1.3 !important;
+    margin: 0 0 6px 0 !important;
+    text-align: left !important;
+}
+
+/* Descripción - BLANCO y tamaño para 2 líneas */
+.randon-description {
+    font-size: 0.68rem !important;
+    color: #FFFFFF !important;
+    line-height: 1.35 !important;
+    margin: 0 0 10px 0 !important;
+    text-align: left !important;
+    font-weight: 300 !important;
+}
+
+/* Botón */
+.btn-randon-white {
+    padding: 8px 18px !important;
+    font-size: 0.72rem !important;
+    margin-top: 5px !important;
+}
+
+/* Altura de la card */
+.randon-modal {
+    min-height: 190px !important;
+}
+
+/* ===== AGRANDAR Y CENTRAR SEMIRREMOLQUE SIN MOVER TEXTO ===== */
+
+/* Semirremolque - MÁS GRANDE Y CENTRADO */
+.randon-semiremolque {
+    flex: 0 0 35% !important;
+    max-width: 35% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important; /* CENTRADO */
+}
+
+.semiremolque-img {
+    width: 240px !important; /* AGRANDADO: de 200px a 240px */
+    max-width: 240px !important;
+    min-width: 240px !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto !important; /* CENTRADO */
+}
+
+/* Texto - MANTENER EN SU LUGAR */
+.randon-text-right {
+    flex: 0 0 60% !important;
+    max-width: 60% !important;
+    padding-left: 0 !important; /* Sin padding extra */
+}
+
+/* Logo RANDON - MANTENER ARRIBA A LA DERECHA */
+.randon-logo-top {
+    position: absolute !important;
+    top: 15px !important;
+    right: 20px !important;
+    margin: 0 !important;
+}
+
+/* Asegurar que el contenedor principal no se mueva */
+.randon-main-content {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 20px !important;
+    position: relative !important;
+}
+
+
+.semiremolque-img {
+    width: 260px !important;
+    max-width: 260px !important;
+    min-width: 260px !important;
+}
+/* ===== CENTRAR SEMIRREMOLQUE VERTICALMENTE ===== */
+
+.randon-main-content {
+    display: flex !important;
+    align-items: center !important; /* Centrado vertical */
+    justify-content: space-between !important;
+    gap: 20px !important;
+    min-height: 140px !important; /* Dar altura para centrar */
+}
+
+.randon-semiremolque {
+    flex: 0 0 35% !important;
+    max-width: 35% !important;
+    display: flex !important;
+    align-items: center !important; /* Centrado vertical */
+    justify-content: center !important;
+    padding-top: 65px !important; /* BAJAR el semirremolque */
+}
+
+.semiremolque-img {
+    width: 240px !important;
+    max-width: 240px !important;
+    min-width: 240px !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+/* Ajustar el texto para que también esté centrado verticalmente */
+.randon-text-right {
+    flex: 0 0 60% !important;
+    max-width: 60% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important; /* Centrado vertical */
+}
+
