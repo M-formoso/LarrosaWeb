@@ -466,108 +466,99 @@
         </div>
     </div>
 </section>
-    <!-- Sección Financiamiento -->
-    <!-- SECCIÓN COTIZACIÓN REDISEÑADA - Reemplazar en index.html -->
+<!-- SECCIÓN COTIZACIÓN - Reemplazar en index.html -->
 <section class="cotizacion-section">
     <div class="cotizacion-container">
-        <!-- Contenido principal -->
         <div class="cotizacion-content">
-            <!-- Columna izquierda - Video principal -->
+            
+            <!-- COLUMNA IZQUIERDA - Video 60% -->
             <div class="cotizacion-left">
-                <div class="cotizacion-video-container" onclick="openVideoModal()">
+                <div class="cotizacion-video-wrapper">
                     <video autoplay muted loop playsinline class="cotizacion-main-video">
                         <source src="assets/IMG_3414.MOV" type="video/mp4">
-                        <!-- Fallback con imagen -->
-                        <img src="assets/cotizacion-video-poster.jpg" alt="Video principal" class="video-fallback">
                     </video>
-                    <div class="video-overlay">
-                        <div class="play-button">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <span class="video-label">VIDEO</span>
+                    
+                    <!-- Botón Ver Unidades -->
+                    <div class="video-button-overlay">
+                        <a href="sections/unidadesDisponibles.html" class="btn-ver-unidades">
+                            VER UNIDADES
+                        </a>
                     </div>
                 </div>
             </div>
             
-            <!-- Columna derecha - Grid de 3 modales -->
+            <!-- COLUMNA DERECHA - Grid 40% -->
             <div class="cotizacion-right">
-                <!-- Modal RANDON -->
-                <div class="cotizacion-modal-btn randon-modal" onclick="openRandonModal()">
-                    <img src="assets/Logo negro sin fondo.png" alt="RANDON" class="modal-bg-image">
-                    <div class="modal-overlay">
-                        <span class="modal-text">RANDON</span>
-                    </div>
+                
+                <!-- CARD RANDON - Arriba, con imagen del semirremolque y degradado azul -->
+<div class="cotizacion-modal-btn randon-modal">
+    <!-- Degradado azul de fondo -->
+    <div class="randon-bg-gradient">
+        <!-- Contenedor del contenido -->
+        <div class="randon-content-wrapper">
+            <!-- Logo RANDON arriba a la derecha -->
+            <div class="randon-logo-top">
+                <img src="assets/Logo blanco sin fondo.png" alt="RANDON CENTROCAM" class="randon-logo-img">
+            </div>
+            
+            <!-- Contenedor central con semirremolque y texto -->
+            <div class="randon-main-content">
+                <!-- Imagen del semirremolque a la izquierda -->
+                <div class="randon-semiremolque">
+                    <img src="assets/Recurso 1.png" alt="Semirremolque RANDON" class="semiremolque-img">
                 </div>
                 
-                <!-- Modal COMPRAMOS TU USADO -->
-                <div class="cotizacion-modal-btn usado-modal" onclick="openUsadoModal()">
-                    <img src="assets/Blanco fondo negro.pdf" alt="Compramos tu usado" class="modal-bg-image">
-                    <div class="modal-overlay">
-                        <div class="modal-text-container">
-                            <span class="modal-text">COMPRAMOS TU</span>
-                            <span class="modal-text">USADO</span>
+                <!-- Texto y botón a la derecha -->
+                <div class="randon-text-right">
+                    <h3 class="randon-title">¿Listo para renovar tu próximo semirremolque?</h3>
+                    <p class="randon-description">Desde 2006 Larrosa Camiones cuenta con la concesión oficial RANDON en Córdoba, La Rioja y Catamarca.</p>
+                    <a href="sections/LarrosaCamiones.html#randon" class="btn-randon-white">VER RANDON</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+                
+                <!-- GRID INFERIOR - 2 cards lado a lado -->
+                <div class="cotizacion-bottom-grid">
+                    
+                    <!-- CARD USADO - Abajo izquierda, SIN IMAGEN -->
+                    <div class="cotizacion-modal-btn usado-modal" onclick="openUsadoModal()">
+                        <div class="modal-overlay-gray">
+                            <div class="modal-text-container-center">
+                                <h3 class="modal-title-white">Le ponemos un precio a tu usado.</h3>
+                                <p class="modal-description-white">Tasación rápida y segura.</p>
+                                <button class="btn-modal-white">COTIZAR AHORA</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <!-- Modal MERCADOLIBRE -->
-                <div class="cotizacion-modal-btn meli-modal" onclick="openMeliModal()">
-                    <img src="assets/FOTO  066.jpg" alt="MercadoLibre" class="modal-bg-image">
-                    <div class="modal-overlay">
-                        <span class="modal-text">MELI</span>
+                    
+                    <!-- CARD MERCADOLIBRE - Abajo derecha -->
+                    <div class="cotizacion-modal-btn meli-modal">
+                        <div class="modal-overlay-yellow">
+                            <div class="modal-text-container-center">
+                                <h3 class="modal-title-black">Descubrí todas nuestras unidades.</h3>
+                                <!-- Logo MercadoLibre -->
+                                <img src="assets/Logo mercado libre.png" alt="MercadoLibre" class="meli-logo-img">
+                                <a href="https://listado.mercadolibre.com.ar/larrosa-camiones" target="_blank" class="btn-modal-yellow">VER MERCADO LIBRE</a>
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
-        </div>
-    </div>
-    
-    <!-- Modal para Video ampliado -->
-    <div id="videoModal" class="modal-overlay">
-        <div class="modal-content-video">
-            <span class="modal-close" onclick="closeVideoModal()">&times;</span>
-            <div class="video-iframe-container">
-                <iframe id="modalVideo" src="" frameborder="0" allowfullscreen></iframe>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal RANDON -->
-    <div id="randonModal" class="modal-overlay">
-        <div class="modal-content-randon">
-            <span class="modal-close" onclick="closeRandonModal()">&times;</span>
-            <div class="randon-modal-content">
-                <div class="randon-logo">
-                    <img src="assets/Logo negro sin fondo.png" alt="RANDON" class="randon-logo-img">
-                </div>
-                <h2>Concesión Oficial RANDON</h2>
-                <p>Desde 2006 Larrosa Camiones cuenta con la concesión oficial RANDON en Córdoba, La Rioja y Catamarca.</p>
-                <div class="randon-features">
-                    <div class="feature-item">
-                        <i class="fas fa-truck"></i>
-                        <span>Línea completa de semirremolques</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-tools"></i>
-                        <span>Servicio técnico especializado</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-certificate"></i>
-                        <span>Garantía oficial RANDON</span>
-                    </div>
-                </div>
-                <button class="btn-modal-action" onclick="redirectToRandon()">VER PRODUCTOS RANDON</button>
-            </div>
+            
         </div>
     </div>
     
     <!-- Modal COMPRAMOS TU USADO -->
-    <div id="usadoModal" class="modal-overlay">
+    <div id="usadoModal" class="modal-overlay" style="display: none;">
         <div class="modal-content-usado">
             <span class="modal-close" onclick="closeUsadoModal()">&times;</span>
             <div class="usado-modal-content">
                 <h2>Le ponemos un precio a tu usado</h2>
                 <p>Dejanos los datos de tu vehículo para poder hacer una cotización personalizada.</p>
-                <form id="usadoForm" class="usado-form">
+                <form id="usadoForm" class="usado-form" onsubmit="handleUsadoForm(event)">
                     <div class="form-row">
                         <input type="text" name="marca" placeholder="Marca del vehículo" required>
                         <input type="text" name="modelo" placeholder="Modelo" required>
@@ -588,35 +579,6 @@
                     </div>
                     <button type="submit" class="btn-modal-action">SOLICITAR COTIZACIÓN</button>
                 </form>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal MERCADOLIBRE -->
-    <div id="meliModal" class="modal-overlay">
-        <div class="modal-content-meli">
-            <span class="modal-close" onclick="closeMeliModal()">&times;</span>
-            <div class="meli-modal-content">
-                <div class="meli-logo">
-                    <i class="fab fa-amazon" style="color: #3483FA; font-size: 4rem;"></i>
-                </div>
-                <h2>Nuestros Vehículos en MercadoLibre</h2>
-                <p>Encuentra toda nuestra oferta de camiones y semirremolques en la plataforma de ventas online más grande de Argentina.</p>
-                <div class="meli-benefits">
-                    <div class="benefit-item">
-                        <i class="fas fa-shield-alt"></i>
-                        <span>Compra Protegida</span>
-                    </div>
-                    <div class="benefit-item">
-                        <i class="fas fa-shipping-fast"></i>
-                        <span>Envío a todo el país</span>
-                    </div>
-                    <div class="benefit-item">
-                        <i class="fas fa-credit-card"></i>
-                        <span>Múltiples formas de pago</span>
-                    </div>
-                </div>
-                <button class="btn-modal-action" onclick="redirectToMercadoLibre()">VER EN MERCADOLIBRE</button>
             </div>
         </div>
     </div>

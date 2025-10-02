@@ -3,7 +3,7 @@
 /* ===== HERO SECTION ===== */
 .contacto-hero {
     position: relative;
-    height: 80vh;
+    height: 450px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,6 +25,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center bottom;
 }
 
 .contacto-hero .hero-overlay {
@@ -960,7 +961,7 @@
 @media (max-width: 1200px) {
     .contact-layout {
         grid-template-columns: 1.5fr 1fr;
-        gap: 40px;
+        gap: 400px;
     }
     
     .quick-contacts {
@@ -976,7 +977,7 @@
 
 @media (max-width: 1024px) {
     .contacto-hero {
-        height: 70vh;
+        height: 400px;
     }
     
     .contacto-hero h1 {
@@ -1026,7 +1027,7 @@
 
 @media (max-width: 768px) {
     .contacto-hero {
-        height: 60vh;
+        height: 350px;
     }
     
     .contacto-hero h1 {
@@ -1145,7 +1146,7 @@
 
 @media (max-width: 480px) {
     .contacto-hero {
-        height: 50vh;
+        height: 280px;
     }
     
     .contacto-hero h1 {

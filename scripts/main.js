@@ -2028,3 +2028,131 @@ console.log('🎯 Sistema de modales selectivo cargado');
 console.log('💡 Solo "Compramos tu usado" es clickeable');
 console.log('💡 Usa debugModals() para verificar estado');
 console.log('💡 Usa reactivateAllModals() para reactivar todos si es necesario');
+// ===== MODAL "COMPRAMOS TU USADO" - FUNCIONES CORREGIDAS ===== 
+
+// Abrir modal
+function openUsadoModal() {
+    console.log('🚗 Abriendo modal de cotización...');
+    
+    const modal = document.getElementById('usadoModal');
+    
+    if (modal) {
+        modal.classList.add('active');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        // Focus en el primer campo
+        setTimeout(() => {
+            const firstInput = modal.querySelector('input[name="marca"]');
+            if (firstInput) firstInput.focus();
+        }, 400);
+    }
+}
+
+// Cerrar modal
+function closeUsadoModal() {
+    console.log('🚗 Cerrando modal de cotización...');
+    
+    const modal = document.getElementById('usadoModal');
+    
+    if (modal) {
+        modal.classList.remove('active');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300);
+        document.body.style.overflow = '';
+    }
+}
+
+// Manejar envío del formulario
+function handleUsadoForm(event) {
+    event.preventDefault();
+    
+    console.log('📝 Procesando formulario de cotización...');
+    
+    const formData = new FormData(event.target);
+    const data = {
+        marca: formData.get('marca'),
+        modelo: formData.get('modelo'),
+        año: formData.get('año'),
+        kilometros: formData.get('kilometros'),
+        nombre: formData.get('nombre'),
+        telefono: formData.get('telefono'),
+        email: formData.get('email'),
+        observaciones: formData.get('observaciones') || ''
+    };
+    
+    // Validar datos básicos
+    if (!data.marca || !data.modelo || !data.año || !data.nombre || !data.telefono || !data.email) {
+        alert('Por favor completa todos los campos obligatorios.');
+        return;
+    }
+    
+    const submitBtn = event.target.querySelector('.btn-modal-action');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'ENVIANDO...';
+    submitBtn.disabled = true;
+    
+    // Simular envío
+    setTimeout(() => {
+        console.log('Datos a enviar:', data);
+        
+        alert(`¡Gracias ${data.nombre}! Hemos recibido tu solicitud de cotización para el ${data.marca} ${data.modelo}. Te contactaremos pronto.`);
+        
+        closeUsadoModal();
+        event.target.reset();
+        
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }, 2000);
+}
+
+// ===== INICIALIZACIÓN DE CARDS ===== 
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎯 Inicializando sección de cotización...');
+    
+    // Cerrar modal con ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const modal = document.getElementById('usadoModal');
+            if (modal && modal.classList.contains('active')) {
+                closeUsadoModal();
+            }
+        }
+    });
+    
+    // Cerrar modal al hacer click fuera
+    const modal = document.getElementById('usadoModal');
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeUsadoModal();
+            }
+        });
+    }
+    
+    // Card RANDON - Click redirige
+    const randonCard = document.querySelector('.randon-card');
+    if (randonCard) {
+        randonCard.addEventListener('click', function(e) {
+            if (!e.target.classList.contains('btn-card-small')) {
+                window.location.href = 'sections/LarrosaCamiones.html#randon';
+            }
+        });
+    }
+    
+    // Card MERCADOLIBRE - Click redirige
+    const meliCard = document.querySelector('.meli-card');
+    if (meliCard) {
+        meliCard.addEventListener('click', function(e) {
+            if (!e.target.classList.contains('btn-card-small')) {
+                window.open('https://listado.mercadolibre.com.ar/larrosa-camiones', '_blank');
+            }
+        });
+    }
+    
+    console.log('✅ Sección de cotización inicializada');
+});
+
+console.log('🎯 Sistema de cotización cargado');
