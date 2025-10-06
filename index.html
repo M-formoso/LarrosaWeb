@@ -314,11 +314,15 @@
 
 
     <!-- Sección Testimonios -->
+    <!-- Sección Testimonios -->
 <section class="testimonials-new">
     <div class="container">
         <!-- Título principal -->
         <div class="testimonials-header">
-            <h2 class="testimonials-title">Donde la experiencia<br>se respalda en hechos</h2>
+            <h2 class="testimonials-title">
+                <span class="title-line-1">Donde la experiencia se</span>
+                <span class="title-line-2">respalda en hechos</span>
+            </h2>
             <p class="testimonials-subtitle">Mira lo que dicen los usuarios sobre nosotros.</p>
             <div class="testimonials-rating">
                 <span class="rating-label">Excelente</span>
@@ -329,13 +333,20 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                 </div>
-                <p class="rating-info">Mira nuestras reseñas en ⭐ Trustpilot</p>
+                <p class="rating-info">
+                    <a href="https://www.google.com/search?sa=X&sca_esv=bcbde2c97e10e811&biw=1680&bih=962&sxsrf=AE3TifPvyovp3V1L4BTd7ezR04gEyzInhA:1759535175325&kgmid=/g/11c42zd9d4&q=Larrosa+Camiones&shndl=30&shem=lcuae,uaasie,shrtsdl&source=sh/x/loc/uni/m1/1&kgs=624dde64f6911eca&utm_source=lcuae,uaasie,shrtsdl,sh/x/loc/uni/m1/1#lrd=0x95cc432ebb1b66e3:0xc0a2c534d30d7099,1" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="google-reviews-link">
+                         Nuestras reseñas en Google
+                    </a>
+                </p>
             </div>
         </div>
 
         <!-- Contenedor del carrusel de testimonios -->
         <div class="testimonials-carousel-container">
-            <!-- CORREGIDO: ID del botón anterior -->
+            <!-- Flecha izquierda -->
             <button class="testimonials-btn testimonials-btn-prev" id="testimonialsPrevBtn">
                 <i class="fas fa-chevron-left"></i>
             </button>
@@ -458,117 +469,8 @@
         </div>
     </div>
 </section>
-<!-- SECCIÓN COTIZACIÓN - Reemplazar en index.html -->
-<section class="cotizacion-section">
-    <div class="cotizacion-container">
-        <div class="cotizacion-content">
-            
-            <!-- COLUMNA IZQUIERDA - Video 60% -->
-            <div class="cotizacion-left">
-                <div class="cotizacion-video-wrapper">
-                    <video autoplay muted loop playsinline class="cotizacion-main-video">
-                        <source src="assets/IMG_3414.MOV" type="video/mp4">
-                    </video>
-                    
-                    <!-- Botón Ver Unidades -->
-                    <div class="video-button-overlay">
-                        <a href="sections/unidadesDisponibles.html" class="btn-ver-unidades">
-                            VER UNIDADES
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- COLUMNA DERECHA - Grid 40% -->
-            <div class="cotizacion-right">
-                
-                <!-- CARD RANDON - Arriba, con imagen del semirremolque y degradado azul -->
-                <div class="cotizacion-modal-btn randon-modal">
-                    <div class="randon-bg-gradient">
-                        <div class="randon-content-wrapper">
-                            <div class="randon-logo-top">
-                                <img src="assets/Logo blanco sin fondo.png" alt="RANDON CENTROCAM" class="randon-logo-img">
-                            </div>
-                            
-                            <div class="randon-main-content">
-                                <div class="randon-semiremolque">
-                                    <img src="assets/Recurso 1.png" alt="Semirremolque RANDON" class="semiremolque-img">
-                                </div>
-                                
-                                <div class="randon-text-right">
-                                    <h3 class="randon-title">¿Listo para renovar tu próximo semirremolque?</h3>
-                                    <p class="randon-description">Desde 2006 Larrosa Camiones cuenta con la concesión oficial RANDON en Córdoba, La Rioja y Catamarca.</p>
-                                    <a href="sections/LarrosaCamiones.html#randon" class="btn-randon-white">VER RANDON</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- GRID INFERIOR - 2 cards lado a lado -->
-                <div class="cotizacion-bottom-grid">
-                    
-                    <!-- CARD USADO - Abajo izquierda, SIN IMAGEN -->
-                    <div class="cotizacion-modal-btn usado-modal" onclick="openUsadoModal()">
-                        <div class="modal-overlay-gray">
-                            <div class="modal-text-container-center">
-                                <h3 class="modal-title-white">Le ponemos un precio a tu usado.</h3>
-                                <p class="modal-description-white">Tasación rápida y segura.</p>
-                                <button class="btn-modal-white">COTIZAR AHORA</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- CARD MERCADOLIBRE - Abajo derecha -->
-                    <div class="cotizacion-modal-btn meli-modal">
-                        <div class="modal-overlay-yellow">
-                            <div class="modal-text-container-center">
-                                <h3 class="modal-title-black">Descubrí todas nuestras unidades.</h3>
-                                <!-- Logo MercadoLibre -->
-                                <img src="assets/Logo mercado libre.png" alt="MercadoLibre" class="meli-logo-img">
-                                <a href="https://listado.mercadolibre.com.ar/larrosa-camiones" target="_blank" class="btn-modal-yellow">VER MERCADO LIBRE</a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-            
-        </div>
-    </div>
-    
-    <!-- Modal COMPRAMOS TU USADO -->
-    <div id="usadoModal" class="modal-overlay" style="display: none;">
-        <div class="modal-content-usado">
-            <span class="modal-close" onclick="closeUsadoModal()">&times;</span>
-            <div class="usado-modal-content">
-                <h2>Le ponemos un precio a tu usado</h2>
-                <p>Dejanos los datos de tu vehículo para poder hacer una cotización personalizada.</p>
-                <form id="usadoForm" class="usado-form" onsubmit="handleUsadoForm(event)">
-                    <div class="form-row">
-                        <input type="text" name="marca" placeholder="Marca del vehículo" required>
-                        <input type="text" name="modelo" placeholder="Modelo" required>
-                    </div>
-                    <div class="form-row">
-                        <input type="number" name="año" placeholder="Año" min="1990" max="2025" required>
-                        <input type="number" name="kilometros" placeholder="Kilómetros" min="0" required>
-                    </div>
-                    <div class="form-row">
-                        <input type="text" name="nombre" placeholder="Tu nombre completo" required>
-                        <input type="tel" name="telefono" placeholder="Teléfono" required>
-                    </div>
-                    <div class="form-row full-width">
-                        <input type="email" name="email" placeholder="Correo electrónico" required>
-                    </div>
-                    <div class="form-row full-width">
-                        <textarea name="observaciones" placeholder="Observaciones adicionales sobre el estado del vehículo (opcional)" rows="4"></textarea>
-                    </div>
-                    <button type="submit" class="btn-modal-action">SOLICITAR COTIZACIÓN</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
+
+
 
     <!-- Sección Marcas - Sin Título -->
     <section class="brands">

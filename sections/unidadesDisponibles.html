@@ -666,84 +666,223 @@
         <!-- Main Content with Sidebar -->
         <section class="content-section-full">
             <div class="content-layout-full">
-                <!-- Sidebar Filters -->
-                <aside class="sidebar-filters-full">
-                    <!-- Filter Search -->
-                    <div class="filter-search">
-                        <div class="search-input-container">
-                            <input type="text" placeholder="Buscar camiones..." id="filter-search" class="filter-search-input">
-                            <button class="clear-search-btn">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                        <div class="filter-actions">
-                            <button class="clear-all-btn">
-                                <span>Limpiar</span>
-                                <i class="fas fa-redo"></i>
-                            </button>
-                        </div>
-                    </div>
+                <!-- Sidebar de Filtros -->
+<aside class="sidebar-filters-full">
+    <!-- Búsqueda mejorada -->
+    <div class="filter-search">
+        <div class="search-input-wrapper">
+            <i class="fas fa-search search-icon"></i>
+            <input 
+                type="text" 
+                id="filter-search" 
+                class="filter-search-input" 
+                placeholder="Buscar marca, modelo..."
+                autocomplete="off">
+            <i class="fas fa-times clear-icon" id="clear-search" style="display: none;"></i>
+        </div>
+    </div>
 
-                    <!-- Tipo Filter -->
-                    <div class="filter-group">
-                        <button class="filter-title" onclick="toggleFilterGroup(this)">
-                            <span>Tipo</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="filter-content">
-                            <div class="filter-options">
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="tipo" value="camion-tractor">
-                                    <span class="option-text">Camión Tractor</span>
-                                </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="tipo" value="camion-chasis">
-                                    <span class="option-text">Camión Chasis</span>
-                                </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="tipo" value="remolques">
-                                    <span class="option-text">Remolques</span>
-                                </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="tipo" value="utilitarios">
-                                    <span class="option-text">Utilitarios</span>
-                                </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="tipo" value="varios">
-                                    <span class="option-text">Varios</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
+    <!-- Filtro de Año -->
+    <div class="filter-group expanded">
+        <button class="filter-title" onclick="toggleFilterGroup(this)">
+            <span>
+                <i class="fas fa-calendar-alt"></i>
+                Año
+            </span>
+            <i class="fas fa-chevron-down collapse-icon"></i>
+        </button>
+        <div class="filter-content" style="display: block;">
+            <div class="range-filter">
+                <div class="range-inputs">
+                    <input 
+                        type="number" 
+                        id="year-min" 
+                        class="range-input" 
+                        placeholder="Desde"
+                        min="2000"
+                        max="2025">
+                    <span class="range-separator">—</span>
+                    <input 
+                        type="number" 
+                        id="year-max" 
+                        class="range-input" 
+                        placeholder="Hasta"
+                        min="2000"
+                        max="2025">
+                </div>
+                <div class="range-slider">
+                    <input 
+                        type="range" 
+                        id="year-slider" 
+                        class="slider" 
+                        min="2000" 
+                        max="2025" 
+                        value="2025">
+                </div>
+                <div class="range-labels">
+                    <span class="range-label-min">2000</span>
+                    <span class="range-label-max">2025</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                    <!-- Marca Filter -->
-                    <div class="filter-group">
-                        <button class="filter-title" onclick="toggleFilterGroup(this)">
-                            <span>Marca</span>
-                            <i class="fas fa-chevron-down"></i>
-                        </button>
-                        <div class="filter-content">
-                            <div class="filter-options">
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="marca" value="scania">
-                                    <span class="option-text">Scania</span>
-                                </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="marca" value="volvo">
-                                    <span class="option-text">Volvo</span>
-                                </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="marca" value="mercedes">
-                                    <span class="option-text">Mercedes</span>
-                                </label>
-                                <label class="filter-checkbox">
-                                    <input type="checkbox" name="marca" value="iveco">
-                                    <span class="option-text">Iveco</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </aside>
+    <!-- Filtro de Kilómetros -->
+    <div class="filter-group expanded">
+        <button class="filter-title" onclick="toggleFilterGroup(this)">
+            <span>
+                <i class="fas fa-road"></i>
+                Kilómetros
+            </span>
+            <i class="fas fa-chevron-down collapse-icon"></i>
+        </button>
+        <div class="filter-content" style="display: block;">
+            <div class="range-filter">
+                <div class="range-inputs">
+                    <input 
+                        type="number" 
+                        id="km-min" 
+                        class="range-input" 
+                        placeholder="Desde"
+                        min="0"
+                        max="1000000"
+                        step="10000">
+                    <span class="range-separator">—</span>
+                    <input 
+                        type="number" 
+                        id="km-max" 
+                        class="range-input" 
+                        placeholder="Hasta"
+                        min="0"
+                        max="1000000"
+                        step="10000">
+                </div>
+                <div class="range-slider">
+                    <input 
+                        type="range" 
+                        id="km-slider" 
+                        class="slider" 
+                        min="0" 
+                        max="1000000" 
+                        value="500000"
+                        step="10000">
+                </div>
+                <div class="range-labels">
+                    <span class="range-label-min">0 km</span>
+                    <span class="range-label-max">1,000,000 km</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Filtro de Marca -->
+    <div class="filter-group expanded">
+        <button class="filter-title" onclick="toggleFilterGroup(this)">
+            <span>
+                <i class="fas fa-building"></i>
+                Marca
+            </span>
+            <i class="fas fa-chevron-down collapse-icon"></i>
+        </button>
+        <div class="filter-content" style="display: block;">
+            <div class="filter-options">
+                <label class="filter-checkbox">
+                    <input type="checkbox" name="marca" value="scania">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Scania</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" name="marca" value="volvo">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Volvo</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" name="marca" value="mercedes">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Mercedes-Benz</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" name="marca" value="iveco">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Iveco</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" name="marca" value="volkswagen">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Volkswagen</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" name="marca" value="renault">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Renault</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" name="marca" value="ford">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Ford</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtro de Tracción -->
+    <div class="filter-group expanded">
+        <button class="filter-title" onclick="toggleFilterGroup(this)">
+            <span>
+                <i class="fas fa-cogs"></i>
+                Tracción
+            </span>
+            <i class="fas fa-chevron-down collapse-icon"></i>
+        </button>
+        <div class="filter-content" style="display: block;">
+            <div class="filter-options">
+                <label class="filter-checkbox">
+                    <input type="checkbox" name="traccion" value="4x2">
+                    <span class="checkmark"></span>
+                    <span class="option-text">4x2</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" name="traccion" value="6x2">
+                    <span class="checkmark"></span>
+                    <span class="option-text">6x2</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" name="traccion" value="6x4">
+                    <span class="checkmark"></span>
+                    <span class="option-text">6x4</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filtro de Transmisión -->
+    <div class="filter-group expanded">
+        <button class="filter-title" onclick="toggleFilterGroup(this)">
+            <span>
+                <i class="fas fa-exchange-alt"></i>
+                Transmisión
+            </span>
+            <i class="fas fa-chevron-down collapse-icon"></i>
+        </button>
+        <div class="filter-content" style="display: block;">
+            <div class="filter-options">
+                <label class="filter-checkbox">
+                    <input type="checkbox" name="transmision" value="manual">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Manual</span>
+                </label>
+                <label class="filter-checkbox">
+                    <input type="checkbox" name="transmision" value="automatica">
+                    <span class="checkmark"></span>
+                    <span class="option-text">Automática</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    
+</aside>
 
                 <!-- Main Content Area -->
                 <div class="main-content-full">
