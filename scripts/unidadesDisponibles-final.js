@@ -801,7 +801,189 @@ document.addEventListener('DOMContentLoaded', function() {
     window.unidadesAPI = unidadesAPI;
     
     console.log('✅ Sistema Unidades Disponibles inicializado');
-});
+      // Mejorar búsqueda con efectos visuales
+      initializeSearchEffects();
+    
+      // Asegurar que filtros empiecen compactados
+      initializeCollapsedFilters();
+  });
+  
+  // === EFECTOS VISUALES PARA BÚSQUEDA ===
+  function initializeSearchEffects() {
+      const searchInput = document.getElementById('filter-search');
+      const searchWrapper = document.querySelector('.search-input-wrapper');
+      const clearIcon = document.getElementById('clear-search');
+      
+      if (!searchInput || !searchWrapper || !clearIcon) {
+          console.warn('⚠️ Elementos de búsqueda no encontrados');
+          return;
+      }
+      
+      // Mostrar/ocultar icono de limpiar con clase
+      searchInput.addEventListener('input', function() {
+          if (this.value.length > 0) {
+              searchWrapper.classList.add('has-content');
+              clearIcon.style.display = 'block';
+          } else {
+              searchWrapper.classList.remove('has-content');
+              clearIcon.style.display = 'none';
+          }
+      });
+      
+      // Limpiar búsqueda con animación
+      clearIcon.addEventListener('click', function() {
+          searchInput.value = '';
+          searchWrapper.classList.remove('has-content');
+          clearIcon.style.display = 'none';
+          searchInput.focus();
+          
+          // Actualizar filtros
+          currentFilters.search = '';
+          if (window.unidadesAPI && typeof window.unidadesAPI.applyFilters === 'function') {
+              window.unidadesAPI.applyFilters();
+          } else {
+              applyFilters();
+          }
+          
+          // Animación de limpieza
+          searchWrapper.classList.add('clearing');
+          setTimeout(() => searchWrapper.classList.remove('clearing'), 300);
+      });
+      
+      // Efectos de focus/blur
+      searchInput.addEventListener('focus', function() {
+          searchWrapper.classList.add('focused');
+      });
+      
+      searchInput.addEventListener('blur', function() {
+          searchWrapper.classList.remove('focused');
+      });
+      
+      // Simulador de búsqueda activa
+      let searchTimeout;
+      searchInput.addEventListener('input', function() {
+          clearTimeout(searchTimeout);
+          
+          // Mostrar estado de búsqueda
+          searchWrapper.classList.add('searching');
+          searchWrapper.classList.remove('has-results', 'no-results');
+          
+          searchTimeout = setTimeout(() => {
+              searchWrapper.classList.remove('searching');
+              
+              // Simular resultados (adaptar según tu lógica)
+              const hasResults = filteredVehicles && filteredVehicles.length > 0;
+              const hasSearchTerm = searchInput.value.length > 0;
+              
+              if (hasSearchTerm) {
+                  if (hasResults) {
+                      searchWrapper.classList.add('has-results');
+                  } else {
+                      searchWrapper.classList.add('no-results');
+                  }
+              }
+          }, 500);
+      });
+  }
+  
+  // === INICIALIZAR FILTROS COMPACTADOS ===
+  function initializeCollapsedFilters() {
+      const filterGroups = document.querySelectorAll('.filter-group');
+      
+      console.log(`🔧 Inicializando ${filterGroups.length} grupos de filtros...`);
+      
+      filterGroups.forEach((group, index) => {
+          // Remover clase expanded si existe
+          group.classList.remove('expanded');
+          
+          // Asegurar que el contenido esté oculto
+          const content = group.querySelector('.filter-content');
+          if (content) {
+              content.style.maxHeight = '0';
+              content.style.overflow = 'hidden';
+          }
+          
+          // Asegurar que el icono esté en posición inicial
+          const icon = group.querySelector('.collapse-icon');
+          if (icon) {
+              icon.style.transform = 'rotate(0deg)';
+          }
+          
+          // Agregar event listener al título
+          const titleButton = group.querySelector('.filter-title');
+          if (titleButton && !titleButton.hasAttribute('data-toggle-added')) {
+              titleButton.setAttribute('data-toggle-added', 'true');
+              titleButton.addEventListener('click', function() {
+                  toggleFilterGroup(this);
+              });
+          }
+      });
+      
+      console.log('✅ Filtros inicializados en modo compactado');
+  }
+  
+  // === FUNCIÓN MEJORADA DE TOGGLE PARA FILTROS ===
+  function toggleFilterGroup(titleElement) {
+      const filterGroup = titleElement.closest('.filter-group');
+      const content = filterGroup.querySelector('.filter-content');
+      const icon = titleElement.querySelector('.collapse-icon');
+      
+      if (!filterGroup || !content || !icon) {
+          console.warn('⚠️ Elementos de filtro no encontrados');
+          return;
+      }
+      
+      // Toggle clase expanded
+      const isExpanded = filterGroup.classList.contains('expanded');
+      
+      if (isExpanded) {
+          // Colapsar
+          filterGroup.classList.remove('expanded');
+          content.style.maxHeight = '0';
+          icon.style.transform = 'rotate(0deg)';
+      } else {
+          // Expandir
+          filterGroup.classList.add('expanded');
+          content.style.maxHeight = content.scrollHeight + 'px';
+          icon.style.transform = 'rotate(180deg)';
+      }
+      
+      // Agregar transición suave
+      content.style.transition = 'max-height 0.3s ease-out';
+  }
+  
+  // === FUNCIONES GLOBALES AUXILIARES ===
+  window.expandAllFilters = function() {
+      const filterGroups = document.querySelectorAll('.filter-group');
+      filterGroups.forEach(group => {
+          if (!group.classList.contains('expanded')) {
+              const titleButton = group.querySelector('.filter-title');
+              if (titleButton) {
+                  toggleFilterGroup(titleButton);
+              }
+          }
+      });
+      console.log('📂 Todos los filtros expandidos');
+  };
+  
+  window.collapseAllFilters = function() {
+      const filterGroups = document.querySelectorAll('.filter-group');
+      filterGroups.forEach(group => {
+          if (group.classList.contains('expanded')) {
+              const titleButton = group.querySelector('.filter-title');
+              if (titleButton) {
+                  toggleFilterGroup(titleButton);
+              }
+          }
+      });
+      console.log('📁 Todos los filtros colapsados');
+  };
+  
+  // Hacer toggleFilterGroup disponible globalmente
+  window.toggleFilterGroup = toggleFilterGroup;
+  
+  console.log('✨ Mejoras de UI aplicadas: búsqueda visual y filtros compactados');
+
 
 // Hacer función disponible globalmente
 window.toggleFilterGroup = toggleFilterGroup;

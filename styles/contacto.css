@@ -500,43 +500,59 @@
     color: var(--primary-blue);
 }
 
+
 /* ===== SOCIAL LINKS ===== */
 .social-links {
     padding-top: 25px;
     border-top: 2px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
 }
 
 .social-links h4 {
     color: var(--primary-black);
-    margin-bottom: 15px;
+    margin-bottom: 1px;
     font-weight: 600;
     font-size: 1rem;
+    width: 100%;
+    display: block;
 }
 
+/* ===== FORZAR BOTONES SOCIALES HORIZONTALES ===== */
+
+/* Para el FOOTER */
+.footer .social-links {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 15px !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+
+.footer .social-link {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    flex-shrink: 0 !important;
+}
+
+/* Para la sección de CONTACTO */
+.contact-info-card .social-buttons,
 .social-buttons {
-    display: flex;
-    gap: 12px;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 12px !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
 }
 
 .social-btn {
-    width: 40px;
-    height: 40px;
-    border-radius: 0;
-    border: 2px solid var(--primary-black);
-    background: var(--primary-white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--primary-black);
-    text-decoration: none;
-    transition: var(--transition-fast);
-    font-size: 1rem;
-}
-
-.social-btn:hover {
-    background: var(--primary-black);
-    color: var(--primary-white);
-    transform: translateY(-3px);
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    flex-shrink: 0 !important;
 }
 
 /* ===== MAP CARD ===== */
@@ -703,7 +719,7 @@
     font-size: 1rem;
 }
 
-/* ===== CTA SECTION ===== */
+/* ===== CTA SECTION - CORREGIDO PARA UNA LÍNEA ===== */
 .contacto-cta-section {
     padding: 80px 0;
     position: relative;
@@ -736,9 +752,11 @@
 .cta-content {
     position: relative;
     z-index: 1;
-    max-width: 700px;
+    max-width: 900px; /* AUMENTADO: de 700px a 900px para que quepa el título en una línea */
     margin: 0 auto;
     color: var(--primary-white);
+    text-align: center;
+    padding: 0 20px; /* Padding lateral para móviles */
 }
 
 .cta-icon {
@@ -763,6 +781,9 @@
     font-size: 2.5rem;
     margin-bottom: 20px;
     font-weight: 700;
+    text-align: center;
+    white-space: nowrap; /* CLAVE: EVITA QUE SE DIVIDA EN VARIAS LÍNEAS */
+    overflow: visible; /* Permite que el texto se expanda */
 }
 
 .cta-content p {
@@ -770,28 +791,31 @@
     margin-bottom: 40px;
     opacity: 0.95;
     line-height: 1.6;
+    text-align: center;
 }
 
 .cta-buttons {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* IMPORTANTE: Mantiene los botones en una sola línea */
+    align-items: center;
 }
 
 .cta-button,
 .cta-button-outline {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 16px 30px;
+    gap: 8px;
+    padding: 12px 24px; /* Botones más chicos */
     border-radius: 0;
-    font-size: 1.1rem;
+    font-size: 0.95rem; /* Texto más pequeño */
     font-weight: 600;
     text-decoration: none;
     transition: var(--transition-fast);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    white-space: nowrap;
 }
 
 .cta-button {
@@ -818,6 +842,94 @@
     transform: translateY(-3px);
 }
 
+/* ===== RESPONSIVE - ACTUALIZADO ===== */
+@media (max-width: 1024px) {
+    .cta-content {
+        max-width: 800px;
+    }
+    
+    .cta-content h2 {
+        font-size: 2.2rem; /* Reducir un poco el tamaño */
+    }
+}
+
+@media (max-width: 768px) {
+    .cta-content {
+        max-width: 100%;
+    }
+    
+    .cta-content h2 {
+        font-size: 1.8rem; /* MÁS PEQUEÑO en tablet */
+        white-space: normal; /* PERMITIR DIVISIÓN en pantallas pequeñas */
+    }
+    
+    .cta-buttons {
+        flex-direction: column; /* APILAR en móvil */
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .cta-button,
+    .cta-button-outline {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+        padding: 12px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .contacto-cta-section {
+        padding: 60px 0;
+    }
+    
+    .cta-content h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cta-content h2 {
+        font-size: 1.6rem; /* AÚN MÁS PEQUEÑO en móvil pequeño */
+        line-height: 1.3;
+        white-space: normal; /* División permitida en móvil */
+    }
+    
+    .cta-button,
+    .cta-button-outline {
+        padding: 10px 18px;
+        font-size: 0.85rem;
+    }
+    
+    .cta-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 20px;
+    }
+    
+    .cta-icon i {
+        font-size: 1.5rem;
+    }
+    
+    .cta-content p {
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+}
+
+/* Para pantallas MUY ANCHAS - asegurar que se vea bien */
+@media (min-width: 1400px) {
+    .cta-content {
+        max-width: 1000px;
+    }
+    
+    .cta-content h2 {
+        font-size: 2.8rem; /* Más grande en pantallas grandes */
+    }
+    
+    .cta-buttons {
+        gap: 20px;
+    }
+}
 /* ===== MODALS ===== */
 .modal {
     display: none;
@@ -864,22 +976,7 @@
     max-width: 900px;
 }
 
-.modal-header {
-    background: var(--primary-black);
-    color: var(--primary-white);
-    padding: 25px 30px;
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
 
-.modal-header h3 {
-    font-family: var(--font-primary);
-    font-size: 1.4rem;
-    margin: 0;
-    font-weight: 600;
-}
 
 .modal-header i {
     font-size: 1.3rem;

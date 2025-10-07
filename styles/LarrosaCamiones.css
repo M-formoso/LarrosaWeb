@@ -62,11 +62,13 @@
 }
 /* ===== CARRUSEL MÁS LENTO CON PAUSAS - REEMPLAZA EL CSS EXISTENTE ===== */
 
+/* ===== CARRUSEL - MISMA ALTURA QUE BANNER DE CONTACTO ===== */
+
 /* Contenedor principal del banner */
 .empresa-image-banner {
     margin-top: 80px; /* Offset para navbar fija */
     width: 100%;
-    height: 400px;
+    height: 450px; /* ACTUALIZADO: de 400px a 450px (igual que contacto) */
     overflow: hidden;
     position: relative;
 }
@@ -98,7 +100,7 @@
     display: block;
 }
 
-/* NUEVA ANIMACIÓN - MÁS LENTA CON PAUSAS */
+/* ANIMACIÓN - MÁS LENTA CON PAUSAS */
 @keyframes bannerSlideSlowInfinite {
     /* Mostrar primera imagen - 3 segundos (0% a 37.5% = 3s de 8s) */
     0%, 37.5% {
@@ -177,39 +179,9 @@
     }
 }
 
-/* Controles de navegación */
+/* Controles de navegación - OCULTOS */
 .banner-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    border: none;
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
-}
-
-.banner-nav:hover {
-    background: rgba(0, 0, 0, 0.8);
-    transform: translateY(-50%) scale(1.15);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-.banner-nav.prev {
-    left: 25px;
-}
-
-.banner-nav.next {
-    right: 25px;
+    display: none; /* OCULTAMOS LAS FLECHAS */
 }
 
 /* Pausa la animación al hacer hover */
@@ -240,7 +212,7 @@
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1024px) {
     .empresa-image-banner {
-        height: 350px;
+        height: 400px; /* ACTUALIZADO: misma proporción que contacto */
     }
     
     .banner-nav {
@@ -260,7 +232,7 @@
 
 @media (max-width: 768px) {
     .empresa-image-banner {
-        height: 300px;
+        height: 350px; /* ACTUALIZADO: misma proporción que contacto */
     }
     
     .banner-nav {
@@ -290,7 +262,7 @@
 
 @media (max-width: 480px) {
     .empresa-image-banner {
-        height: 250px;
+        height: 280px; /* ACTUALIZADO: misma proporción que contacto */
     }
     
     .banner-nav {

@@ -21,11 +21,11 @@ const CONFIG = {
         coordinates: {
             lat: -32.4167,
             lng: -63.2467
-        }
+        },
+        googleMapsUrl: 'https://www.google.com/maps/dir//Chiclana,+Larrabure,+X5900+Villa+Mar%C3%ADa,+C%C3%B3rdoba/@-32.3973954,-63.3400838,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x95cc432ebb1b66e3:0xc0a2c534d30d7099!2m2!1d-63.2576825!2d-32.3974222?entry=ttu&g_ep=EgoyMDI1MTAwMS4wIKXMDSoASAFQAw%3D%3D'
     }
 };
 
-// Initialize Application
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚛 Iniciando página de contacto...');
     
@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeValidation();
     initializeModalHandlers();
     initializeQuickContacts();
+    initializeMapClickHandler();
     
     console.log('✅ Contacto inicializado correctamente');
 });
@@ -927,6 +928,55 @@ function throttle(func, limit) {
             setTimeout(() => inThrottle = false, limit);
         }
     };
+    // ===== MAP CLICK HANDLER ===== 
+function initializeMapClickHandler() {
+    // Encontrar todos los contenedores de mapas
+    const mapContainers = document.querySelectorAll('.map-container');
+    
+    mapContainers.forEach(container => {
+        // Crear una capa transparente sobre el iframe
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 10;
+        `;
+        
+        // Hacer que el contenedor sea relativo si no lo es
+        if (getComputedStyle(container).position === 'static') {
+            container.style.position = 'relative';
+        }
+        
+        // Agregar el overlay al contenedor
+        container.appendChild(overlay);
+        
+        // Agregar evento de click al overlay
+        overlay.addEventListener('click', function() {
+            // Abrir Google Maps en una nueva pestaña
+            window.open(CONFIG.maps.googleMapsUrl, '_blank');
+            
+            // Track del evento
+            trackEvent('Map', 'Click', 'Direct to Google Maps');
+            console.log('🗺️ Abriendo Google Maps desde mapa');
+        });
+        
+        // Efecto hover
+        overlay.addEventListener('mouseenter', function() {
+            overlay.style.backgroundColor = 'rgba(61, 95, 172, 0.1)';
+        });
+        
+        overlay.addEventListener('mouseleave', function() {
+            overlay.style.backgroundColor = 'transparent';
+        });
+    });
+}
+
+// ===== GLOBAL EXPORTS ===== 
+// (continúa el resto del código...)
 }
 
 // ===== GLOBAL EXPORTS ===== 
@@ -939,26 +989,52 @@ window.closePrivacyModal = closePrivacyModal;
 window.openWhatsAppContact = openWhatsAppContact;
 window.openEmailContact = openEmailContact;
 
-// ===== INITIALIZATION ===== 
-// Initialize all features when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    initializeAccessibility();
-    initializeErrorHandling();
-    initializePerformanceMonitoring();
-    initializeResponsiveFeatures();
-});
-
-// ===== SERVICE WORKER REGISTRATION (OPTIONAL) ===== 
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js')
-            .then(function(registration) {
-                console.log('✅ ServiceWorker registrado:', registration.scope);
-            })
-            .catch(function(error) {
-                console.log('❌ Error registrando ServiceWorker:', error);
-            });
+// ===== MAP CLICK HANDLER ===== 
+function initializeMapClickHandler() {
+    // Encontrar todos los contenedores de mapas
+    const mapContainers = document.querySelectorAll('.map-container');
+    
+    mapContainers.forEach(container => {
+        // Crear una capa transparente sobre el iframe
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            z-index: 10;
+        `;
+        
+        // Hacer que el contenedor sea relativo si no lo es
+        if (getComputedStyle(container).position === 'static') {
+            container.style.position = 'relative';
+        }
+        
+        // Agregar el overlay al contenedor
+        container.appendChild(overlay);
+        
+        // Agregar evento de click al overlay
+        overlay.addEventListener('click', function() {
+            // Abrir Google Maps en una nueva pestaña
+            window.open(CONFIG.maps.googleMapsUrl, '_blank');
+            
+            // Track del evento
+            trackEvent('Map', 'Click', 'Direct to Google Maps');
+            console.log('🗺️ Abriendo Google Maps desde mapa');
+        });
+        
+        // Efecto hover
+        overlay.addEventListener('mouseenter', function() {
+            overlay.style.backgroundColor = 'rgba(61, 95, 172, 0.1)';
+        });
+        
+        overlay.addEventListener('mouseleave', function() {
+            overlay.style.backgroundColor = 'transparent';
+        });
     });
 }
 
-console.log('🚛 Contacto JavaScript cargado correctamente');
+// ===== INITIALIZATION ===== 
+// (resto del código...)

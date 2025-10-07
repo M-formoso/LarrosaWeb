@@ -6,6 +6,7 @@
     <title>Contacto - Larrosa Camiones</title>
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/contacto.css">
+    <link rel="icon" href="../assets/favicon.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="../scripts/nav-session.js"></script>
@@ -161,19 +162,7 @@
                                         <option value="otras">Otras</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="consulta-tipo">Tipo de consulta *</label>
-                                    <select id="consulta-tipo" name="consulta-tipo" required>
-                                        <option value="">Seleccionar tipo</option>
-                                        <option value="compra-camion">Compra de camión</option>
-                                        <option value="venta-camion">Venta de camión</option>
-                                        <option value="randon">Productos Randon</option>
-                                        <option value="financiacion">Financiación</option>
-                                        <option value="servicio">Servicio técnico</option>
-                                        <option value="repuestos">Repuestos</option>
-                                        <option value="otros">Otros</option>
-                                    </select>
-                                </div>
+                
                             </div>
 
                             <div class="form-group full-width">
@@ -285,7 +274,7 @@
                             <div class="map-header">
                                 <h3>Nuestra ubicación</h3>
                                 <button class="map-fullscreen-btn" onclick="openMapModal()">
-                                    <i class="fas fa-expand"></i>
+                                    
                                     Ver mapa completo
                                 </button>
                             </div>
@@ -404,34 +393,33 @@
     </main>
 
     <!-- Modal para Mapa -->
-    <div id="map-modal" class="modal">
-        <div class="modal-content map-modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-map-marker-alt"></i> Nuestra Ubicación</h3>
-                <span class="close" onclick="closeMapModal()">&times;</span>
+<div id="map-modal" class="modal">
+    <div class="modal-content map-modal-content">
+        <div class="modal-header">
+            <span class="close" onclick="closeMapModal()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.5!2d-63.2467!3d-32.4167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDI1JzAwLjEiUyA2M8KwMTQnNDguMSJX!5e0!3m2!1sen!2sar!4v1234567890"
+                    width="100%" 
+                    height="400" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
-            <div class="modal-body">
-                <div class="map-container">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.5!2d-63.2467!3d-32.4167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzLCsDI1JzAwLjEiUyA2M8KwMTQnNDguMSJX!5e0!3m2!1sen!2sar!4v1234567890"
-                        width="100%" 
-                        height="400" 
-                        style="border:0;" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
-                </div>
-                <div class="map-info">
-                    <h4>Información de contacto</h4>
-                    <p><i class="fas fa-map-marker-alt"></i> Av. Larrabure y Chiclana, Villa María, Córdoba</p>
-                    <p><i class="fas fa-phone"></i> +54 353 456-7890</p>
-                    <p><i class="fas fa-envelope"></i> info@larrosacamiones.com</p>
-                    <p><i class="fas fa-clock"></i> Lun-Vie: 8:00-18:00hs | Sáb: 8:00-12:00hs</p>
-                </div>
+            <div class="map-info">
+                <h4>Información de contacto</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Av. Larrabure y Chiclana, Villa María, Córdoba</p>
+                <p><i class="fas fa-phone"></i> +54 353 456-7890</p>
+                <p><i class="fas fa-envelope"></i> info@larrosacamiones.com</p>
+                <p><i class="fas fa-clock"></i> Lun-Vie: 8:00-18:00hs | Sáb: 8:00-12:00hs</p>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Modal para Política de Privacidad -->
     <div id="privacy-modal" class="modal">
@@ -485,12 +473,18 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <img src="../assets/Negro_page-0001.jpg" alt="Larrosa Camiones" class="footer-logo">
-                    <p class="footer-description">40 años comercializando camiones. Tu socio confiable en el transporte de cargas.</p>
+                    <img src="../assets/LOGO AZUL footer.png" alt="Larrosa Camiones" class="footer-logo">
+                    <p class="footer-description">Más de 40 años de trayectoria en la comercialización de camiones.</p>
                     <div class="social-links">
-                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
                     </div>
                 </div>
                 
