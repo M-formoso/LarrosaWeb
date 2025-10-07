@@ -612,17 +612,20 @@ function initializeCarousel() {
 }
 
 // Calcular cuántas cards mostrar según pantalla
+// Calcular cuántas cards mostrar según pantalla
 function updateCardsPerView() {
     const width = window.innerWidth;
     
     if (width <= 480) {
         carouselCardsPerView = 1;
-    } else if (width <= 768) {
+    } else if (width <= 600) {
+        carouselCardsPerView = 1;
+    } else if (width <= 900) {
         carouselCardsPerView = 2;
-    } else if (width <= 1024) {
+    } else if (width <= 1200) {
         carouselCardsPerView = 3;
     } else {
-        carouselCardsPerView = 4;
+        carouselCardsPerView = 4; // CAMBIADO: Mostrar 4 cards en desktop
     }
     
     console.log(`📏 Ancho: ${width}px, Cards por vista: ${carouselCardsPerView}`);
@@ -660,16 +663,16 @@ function updateCarouselDisplay() {
     
     if (!track) return;
     
-    // Calcular desplazamiento
-    const cardWidth = 270; // Ancho fijo de cada card
-    const gap = 40; // Gap en pixels
+    // Calcular desplazamiento CON NUEVO TAMAÑO
+    const cardWidth = 280; // REDUCIDO: de 350px a 280px
+    const gap = 35; // REDUCIDO: de 40px a 35px
     const moveDistance = (cardWidth + gap) * carouselCurrentSlide;
     
     // Aplicar transformación
     track.style.transform = `translateX(-${moveDistance}px)`;
     track.style.transition = 'transform 0.5s ease';
     
-    console.log(`🎯 Desplazamiento: -${moveDistance}px`);
+    console.log(`🎯 Desplazamiento: -${moveDistance}px (Card: ${cardWidth}px + Gap: ${gap}px)`);
     
     // Actualizar botones
     if (prevBtn) {
@@ -678,13 +681,28 @@ function updateCarouselDisplay() {
     }
     
     if (nextBtn) {
-        const maxSlide = Math.max(0, carouselTotalSlides - carouselCardsPerView);
+        const maxSlide = Math.max(0, carouselTotalSlides - 3); // 3 cards + media visible
         nextBtn.disabled = carouselCurrentSlide >= maxSlide;
         nextBtn.style.opacity = carouselCurrentSlide >= maxSlide ? '0.4' : '1';
     }
     
     // Actualizar indicadores
     updateCarouselIndicators();
+}
+
+// Calcular cuántas cards mostrar según pantalla
+function updateCardsPerView() {
+    const width = window.innerWidth;
+    
+    if (width <= 600) {
+        carouselCardsPerView = 1;
+    } else if (width <= 900) {
+        carouselCardsPerView = 2;
+    } else {
+        carouselCardsPerView = 3; // 3 cards visibles en desktop
+    }
+    
+    console.log(`📏 Ancho: ${width}px, Cards por vista: ${carouselCardsPerView}`);
 }
 
 // Crear indicadores

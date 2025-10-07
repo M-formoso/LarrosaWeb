@@ -334,7 +334,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(61, 95, 172, 0.3));
+    background: transparent; /* SIN FILTRO */
     z-index: -1;
 }
 
@@ -365,14 +365,113 @@ body {
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
     text-align: left;
 }
+/* ===== TEXTO SOBRE EL VIDEO - "DESDE 1977" ===== */
+.hero-text-overlay {
+    position: absolute;
+    bottom: 120px; /* POSICIONADO DESDE ABAJO - justo encima de los botones */
+    left: 9.5%;
+    z-index: 5;
+    text-align: left;
+    max-width: 1200px;
+    white-space: nowrap;
+}
 
-/* ===== BOTONES DE CATEGORÍAS - CORREGIDO SIN CONFLICTOS ===== */
-/* Reemplazar en styles/main.css SOLO la sección de .category-buttons */
+/* "Desde 1977" - texto pequeño arriba */
+.hero-year {
+    font-family: var(--font-secondary);
+    font-size: 1.4rem; /* REDUCIDO */
+    font-weight: 300;
+    color: var(--primary-white);
+    margin: 0 0 0.2rem 0; /* MENOS ESPACIO */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    letter-spacing: 0.5px;
+    line-height: 1;
+    opacity: 0.95;
+}
 
-/* ===== BOTONES DE CATEGORÍAS - BLANCOS CON HOVER GRIS ===== */
-/* Reemplazar en styles/main.css la sección de .category-buttons */
+/* "Comercializando camiones" - texto MÁS PEQUEÑO EN UNA LÍNEA */
+.hero-main-title {
+    font-family: var(--font-primary);
+    font-size: 3.2rem; /* REDUCIDO: de 4.2rem a 3.2rem */
+    font-weight: 700;
+    color: var(--primary-white);
+    margin: 0;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    letter-spacing: 0.5px;
+    line-height: 1;
+    text-transform: none;
+    white-space: nowrap;
+}
 
-/* Contenedor de botones de categorías - MÁS ESPECÍFICO */
+/* ===== RESPONSIVE PARA EL TEXTO ===== */
+@media (max-width: 1400px) {
+    .hero-text-overlay {
+        bottom: 75px;
+        left: 6%;
+        max-width: 1000px;
+    }
+    
+    .hero-year {
+        font-size: 1.2rem;
+    }
+    
+    .hero-main-title {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero-text-overlay {
+        bottom: 70px;
+        left: 5%;
+        max-width: 800px;
+    }
+    
+    .hero-year {
+        font-size: 1.1rem;
+    }
+    
+    .hero-main-title {
+        font-size: 2.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-text-overlay {
+        bottom: 60px;
+        left: 4%;
+        max-width: 90%;
+    }
+    
+    .hero-year {
+        font-size: 1rem;
+        margin-bottom: 0.2rem;
+    }
+    
+    .hero-main-title {
+        font-size: 1.8rem;
+        white-space: normal; /* PERMITIR SALTO en móvil */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text-overlay {
+        bottom: 50px;
+        left: 3%;
+    }
+    
+    .hero-year {
+        font-size: 0.9rem;
+    }
+    
+    .hero-main-title {
+        font-size: 1.4rem;
+        letter-spacing: 0.3px;
+        white-space: normal;
+    }
+}
+
+
 .hero-section .category-buttons {
     position: absolute !important;
     bottom: 0 !important;
@@ -724,10 +823,15 @@ body {
 */
 /* ===== SECCIÓN UNIDADES DESTACADAS - CENTRADO Y ESPACIADO CORREGIDO ===== */
 .featured-units {
-    padding: 40px 0 60px 0;
+    padding: 20px 0 60px 0 !important;
     background: var(--primary-white);
     position: relative;
-    margin-top: 0;
+    margin-top: 0 !important;
+}
+.featured-units .container {
+    max-width: 1400px !important;
+    margin: 0 auto !important;
+    padding: 0 20px !important;
 }
 
 /* CORREGIDO: Título centrado y sin cambios de tamaño innecesarios */
@@ -1175,8 +1279,7 @@ body {
 .value-title {
     font-family: var(--font-primary);
     font-size: 1.5rem;
-    color: var(--primary-black);
-    margin-bottom: 1rem;
+    color: var(--primary-blue);    margin-bottom: 1rem;
     font-weight: 700;
     text-align: left;
     line-height: 1.3;
@@ -3379,174 +3482,53 @@ img:not([src]) {
 }
 /* ===== REEMPLAZAR LOS ESTILOS DEL CARRUSEL EN TU styles/main.css CON ESTO ===== */
 
-/* ===== CARRUSEL DE UNIDADES DESTACADAS - VERSIÓN CORREGIDA ===== */
-
-/* IMPORTANTE: Ocultar el grid original */
-.featured-units .units-grid {
-    display: none !important;
-}
-
-/* Contenedor principal del carrusel - MÁS ESPACIO PARA FLECHAS */
-.carousel-container {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 80px; /* AUMENTADO: más espacio para las flechas */
-}
-
-/* Contenedor del carrusel */
-.units-carousel {
-    overflow: hidden;
-    position: relative;
-    width: 100%;
-}
-
-/* Track que contiene todas las cards */
-.units-track {
-    display: flex !important;
-    gap: 40px; /* Gap fijo en pixels */
-    transition: transform 0.5s ease;
-    width: fit-content;
-}
-
-/* Cards dentro del carrusel - estilos específicos */
-.units-track .unit-card {
-    flex: 0 0 270px !important; /* Ancho fijo */
-    width: 270px !important;
-    background: var(--primary-white);
-    border-radius: 0;
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #e5e7eb;
-    min-height: 320px;
-    
-    /* Remover animaciones automáticas */
-    animation: none !important;
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-}
-
-.units-track .unit-card:hover {
-    transform: translateY(-4px) !important;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12) !important;
-}
-
-/* Imagen de la unidad */
-.units-track .unit-card .unit-image {
-    position: relative;
-    height: 60%;
-    overflow: hidden;
-    background: #f8f9fa;
-}
-
-.units-track .unit-card .unit-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.units-track .unit-card:hover .unit-image img {
-    transform: scale(1.03);
-}
-
-/* Información de la unidad */
-.units-track .unit-card .unit-info {
-    padding: 1.5rem 1.2rem;
-    height: 40%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-}
-
-.units-track .unit-card .unit-title {
-    font-family: var(--font-primary);
-    font-size: 1rem;
-    color: var(--primary-black);
-    margin-bottom: 0.4rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    line-height: 1.2;
-}
-
-.units-track .unit-card .unit-details {
-    font-size: 0.85rem;
-    color: var(--secondary-gray);
-    margin-bottom: 0.8rem;
-    line-height: 1.3;
-}
-
-.units-track .unit-card .unit-details .unit-year {
-    font-weight: 600;
-    color: var(--primary-black);
-}
-
-.units-track .unit-card .btn-view-unit {
-    width: 100%;
-    background: var(--primary-white);
-    color: var(--primary-black);
-    border: 2px solid var(--primary-black);
-    padding: 0.7rem 1rem;
-    border-radius: 0;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-}
-
-.units-track .unit-card .btn-view-unit:hover {
-    background: var(--primary-black);
-    color: var(--primary-white);
-    transform: translateY(-1px);
-}
-
-/* ===== CARRUSEL DE ANCHO COMPLETO - HASTA LOS BORDES ===== */
-/* Reemplazar en styles/main.css la sección del carrusel */
+/* ===== CARRUSEL - 3 CARDS VISIBLES CON ESPACIOS ===== */
 
 /* Ocultar grid original */
 .featured-units .units-grid {
     display: none !important;
 }
 
-/* Contenedor principal SIN padding - ancho completo */
+
+/* Contenedor del carrusel - CENTRADO */
 .carousel-container {
     position: relative;
-    margin: 0;
-    padding: 0 !important; /* ELIMINADO: padding para que llegue a los bordes */
-    max-width: 100vw !important; /* CAMBIADO: ancho completo de la ventana */
+    margin: 0 auto;
+    padding: 0 !important;
+    max-width: 1200px !important; /* Ancho específico para centrar */
     width: 100% !important;
-    overflow: hidden; /* Para ocultar el desbordamiento */
+    overflow: visible !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Viewport del carrusel - ancho completo */
+/* Viewport del carrusel - CONTROLADO PARA MOSTRAR 3.5 CARDS */
 .units-carousel {
     overflow: hidden;
-    width: 100vw !important; /* CAMBIADO: ancho completo de la ventana */
-    margin: 0;
+    width: 1100px !important; /* Ancho fijo: (280px × 3.5) + (35px × 3 gaps) = 1085px ≈ 1100px */
+    max-width: 100%;
+    margin: 0 auto;
     position: relative;
 }
 
-/* Track con tarjetas pegadas - ancho calculado dinámicamente */
+/* Track - ALINEADO A LA IZQUIERDA DENTRO DEL VIEWPORT */
 .units-track {
     display: flex !important;
-    gap: 0px !important;
+    gap: 35px !important;
     transition: transform 0.5s ease !important;
-    width: 200vw !important; /* CAMBIADO: ancho para 8 tarjetas (2x el viewport) */
+    width: fit-content !important;
+    justify-content: flex-start !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
-/* Cards que se adaptan al ancho de la pantalla */
+/* Cards - TAMAÑO FIJO */
 .units-track .unit-card {
-    flex: none !important;
-    width: 25vw !important; /* CAMBIADO: cada tarjeta ocupa 25% del viewport width */
-    min-width: 25vw !important;
-    max-width: 25vw !important;
+    flex: 0 0 280px !important;
+    width: 280px !important;
+    min-width: 280px !important;
+    max-width: 280px !important;
     background: var(--primary-white);
     border-radius: 0;
     overflow: hidden;
@@ -3556,14 +3538,6 @@ img:not([src]) {
     flex-direction: column;
     border: 1px solid #e5e7eb;
     min-height: 320px;
-    
-    /* Borde para separar visualmente las tarjetas pegadas */
-    border-right: 2px solid #f3f4f6;
-}
-
-/* Quitar borde derecho de la última tarjeta visible */
-.units-track .unit-card:nth-child(4n) {
-    border-right: none;
 }
 
 .units-track .unit-card:hover {
@@ -3572,87 +3546,14 @@ img:not([src]) {
     z-index: 5;
 }
 
-/* Imagen de la unidad */
-.units-track .unit-card .unit-image {
-    position: relative;
-    height: 60%;
-    overflow: hidden;
-    background: #f8f9fa;
-}
-
-.units-track .unit-card .unit-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.units-track .unit-card:hover .unit-image img {
-    transform: scale(1.03);
-}
-
-/* Información de la unidad */
-.units-track .unit-card .unit-info {
-    padding: 1.5rem 1.2rem;
-    height: 40%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: center;
-}
-
-.units-track .unit-card .unit-title {
-    font-family: var(--font-primary);
-    font-size: 1rem;
-    color: var(--primary-black);
-    margin-bottom: 0.4rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    line-height: 1.2;
-}
-
-.units-track .unit-card .unit-details {
-    font-size: 0.85rem;
-    color: var(--secondary-gray);
-    margin-bottom: 0.8rem;
-    line-height: 1.3;
-}
-
-.units-track .unit-card .unit-details .unit-year {
-    font-weight: 600;
-    color: var(--primary-black);
-}
-
-.units-track .unit-card .btn-view-unit {
-    width: 100%;
-    background: var(--primary-white);
-    color: var(--primary-black);
-    border: 2px solid var(--primary-black);
-    padding: 0.7rem 1rem;
-    border-radius: 0;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-}
-
-.units-track .unit-card .btn-view-unit:hover {
-    background: var(--primary-black);
-    color: var(--primary-white);
-    transform: translateY(-1px);
-}
-
-/* Flechas posicionadas sobre las tarjetas */
+/* Flechas - FUERA DEL VIEWPORT */
 .carousel-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     width: 55px;
     height: 55px;
-    background: rgba(255, 255, 255, 0.95); /* CAMBIADO: fondo semi-transparente */
+    background: rgba(255, 255, 255, 0.95);
     border: 3px solid var(--primary-blue);
     border-radius: 50%;
     display: flex;
@@ -3670,12 +3571,13 @@ img:not([src]) {
     box-shadow: 0 6px 20px rgba(61, 95, 172, 0.3);
 }
 
+/* Posicionar flechas FUERA del viewport pero DENTRO del contenedor */
 .carousel-btn-prev {
-    left: 20px; /* CAMBIADO: más cerca del borde */
+    left: -70px !important; /* FUERA del viewport hacia la izquierda */
 }
 
 .carousel-btn-next {
-    right: 20px; /* CAMBIADO: más cerca del borde */
+    right: -70px !important; /* FUERA del viewport hacia la derecha */
 }
 
 .carousel-btn::before {
@@ -3718,133 +3620,70 @@ img:not([src]) {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Indicadores */
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 2.5rem;
-    padding-bottom: 15px;
-}
+/* ===== RESPONSIVE ===== */
 
-.carousel-indicator {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: none;
-    background: #d1d5db;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-}
-
-.carousel-indicator.active {
-    background: var(--primary-blue);
-    transform: scale(1.3);
-}
-
-.carousel-indicator:hover {
-    background: var(--primary-blue);
-    opacity: 0.7;
-}
-
-/* Botón "VER TODAS LAS UNIDADES" más pequeño */
-.view-all-container {
-    text-align: center;
-    margin-top: 1.5rem;
-    margin-bottom: 0;
-    padding: 0 20px; /* AGREGADO: padding para que no toque los bordes */
-}
-
-.btn-view-all {
-    background: var(--primary-white);
-    color: var(--primary-black);
-    border: 2px solid var(--primary-black);
-    padding: 0.7rem 1.8rem !important;
-    font-family: var(--font-primary);
-    font-size: 0.8rem !important;
-    border-radius: 0;
-    cursor: pointer;
-    transition: var(--transition-fast);
-    text-transform: uppercase;
-    font-weight: 600 !important;
-    letter-spacing: 0.8px !important;
-}
-
-.btn-view-all:hover {
-    background: var(--primary-black);
-    color: var(--primary-white);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* ===== RESPONSIVE PARA ANCHO COMPLETO ===== */
-
-/* Pantallas grandes (Desktop) */
-@media (min-width: 1400px) {
-    .units-track .unit-card .unit-title {
-        font-size: 1.1rem; /* Texto más grande en pantallas grandes */
+@media (max-width: 1400px) {
+    .carousel-container {
+        max-width: 1100px !important;
     }
     
-    .units-track .unit-card .unit-info {
-        padding: 2rem 1.5rem; /* Más padding en pantallas grandes */
+    .units-carousel {
+        width: 1000px !important;
     }
 }
 
-/* Tablets grandes */
 @media (max-width: 1200px) {
-    .units-track .unit-card .unit-title {
-        font-size: 0.95rem;
+    .carousel-container {
+        max-width: 1000px !important;
+        padding: 0 70px !important; /* Espacio para flechas en tablets */
     }
     
-    .units-track .unit-card .unit-info {
-        padding: 1.3rem 1rem;
-    }
-    
-    .carousel-btn {
-        width: 50px;
-        height: 50px;
-    }
-    
-    .carousel-btn::before {
-        font-size: 1.8rem;
-    }
-}
-
-/* Tablets */
-@media (max-width: 900px) {
-    /* En tablets, mostrar 2 tarjetas por vista */
-    .units-track .unit-card {
-        width: 50vw !important;
-        min-width: 50vw !important;
-        max-width: 50vw !important;
-    }
-    
-    .units-track {
-        width: 400vw !important; /* 8 cards × 50vw = 400vw */
+    .units-carousel {
+        width: 100% !important;
     }
     
     .carousel-btn-prev {
-        left: 15px;
+        left: 10px !important;
     }
     
     .carousel-btn-next {
-        right: 15px;
+        right: 10px !important;
     }
 }
 
-/* Móviles */
-@media (max-width: 600px) {
-    /* En móviles, mostrar 1 tarjeta por vista */
+@media (max-width: 900px) {
+    /* 2 cards en tablets */
+    .carousel-container {
+        padding: 0 60px !important;
+    }
+    
     .units-track .unit-card {
-        width: 100vw !important;
-        min-width: 100vw !important;
-        max-width: 100vw !important;
-        border-right: none; /* Sin bordes en móvil */
+        flex: 0 0 300px !important;
+        width: 300px !important;
+        min-width: 300px !important;
+        max-width: 300px !important;
     }
     
     .units-track {
-        width: 800vw !important; /* 8 cards × 100vw = 800vw */
+        gap: 30px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    /* 1 card en móviles */
+    .carousel-container {
+        padding: 0 50px !important;
+    }
+    
+    .units-track .unit-card {
+        flex: 0 0 280px !important;
+        width: 280px !important;
+        min-width: 280px !important;
+        max-width: 280px !important;
+    }
+    
+    .units-track {
+        gap: 25px !important;
     }
     
     .carousel-btn {
@@ -3852,49 +3691,117 @@ img:not([src]) {
         height: 45px;
     }
     
-    .carousel-btn::before {
-        font-size: 1.5rem;
-    }
-    
     .carousel-btn-prev {
-        left: 10px;
+        left: 5px !important;
     }
     
     .carousel-btn-next {
-        right: 10px;
+        right: 5px !important;
+    }
+}
+.carousel-btn::before {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-blue);
+    line-height: 1;
+}
+
+.carousel-btn-prev::before {
+    content: '‹';
+}
+
+.carousel-btn-next::before {
+    content: '›';
+}
+
+.carousel-btn:hover::before {
+    color: var(--primary-white);
+}
+
+.carousel-btn i {
+    display: none;
+}
+
+.carousel-btn:disabled {
+    opacity: 0.3 !important;
+    cursor: not-allowed !important;
+    background: rgba(243, 244, 246, 0.95) !important;
+    border-color: #d1d5db !important;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 1400px) {
+    .carousel-container {
+        max-width: 1200px !important;
+        padding: 0 70px !important;
     }
     
-    .btn-view-all {
-        padding: 0.6rem 1.5rem !important;
-        font-size: 0.75rem !important;
+    .units-track .unit-card {
+        flex: 0 0 320px !important;
+        width: 320px !important;
+        min-width: 320px !important;
+        max-width: 320px !important;
     }
 }
 
-/* Móviles pequeños */
-@media (max-width: 480px) {
-    .units-track .unit-card .unit-info {
-        padding: 1rem 0.8rem;
+@media (max-width: 1200px) {
+    .carousel-container {
+        padding: 0 60px !important;
     }
     
-    .units-track .unit-card .unit-title {
-        font-size: 0.85rem;
+    .units-track .unit-card {
+        flex: 0 0 300px !important;
+        width: 300px !important;
+        min-width: 300px !important;
+        max-width: 300px !important;
     }
     
-    .units-track .unit-card .unit-details {
-        font-size: 0.8rem;
+    .units-track {
+        gap: 30px !important;
     }
 }
-/* ===== FALLBACK ===== */
-/* Si algo falla, al menos las cards se ven */
-.units-track .unit-card {
-    display: block !important;
-    float: left !important;
-    margin-right: 40px !important;
+
+@media (max-width: 900px) {
+    /* 2 cards en tablets */
+    .carousel-container {
+        padding: 0 50px !important;
+    }
+    
+    .units-track .unit-card {
+        flex: 0 0 45% !important;
+        width: 45% !important;
+        min-width: 280px !important;
+        max-width: 400px !important;
+    }
+    
+    .units-track {
+        gap: 25px !important;
+    }
 }
 
-/* ===== RESTAURAR SECCIÓN RANDON - AGREGAR AL FINAL DEL CSS ===== */
-/* Si la sección RANDON está en blanco, agrega esto al final de tu CSS */
-
+@media (max-width: 600px) {
+    /* 1 card en móviles */
+    .carousel-container {
+        padding: 0 40px !important;
+    }
+    
+    .units-track .unit-card {
+        flex: 0 0 100% !important;
+        width: 100% !important;
+        min-width: 280px !important;
+        max-width: 100% !important;
+    }
+    
+    .units-track {
+        gap: 20px !important;
+    }
+    
+    .carousel-btn {
+        width: 45px;
+        height: 45px;
+    }
+}
 /* Forzar visibilidad de la sección RANDON */
 .randon-section {
     padding: 40px 0 !important;
