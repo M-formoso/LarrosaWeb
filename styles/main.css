@@ -1513,7 +1513,7 @@ body {
 .cotizacion-section {
     position: relative;
     padding: 40px 0; /* REDUCIDO */
-    background: #f8f9fa;
+    background: #f8f9fa; 
     overflow: hidden;
     margin: 0;
 }
@@ -2224,13 +2224,12 @@ body {
     }
 }
 
-/* ===== SECCIÓN MARCAS - VERSION ESTÁTICA ===== */
-/* ===== SECCIÓN MARCAS - COMPACTA Y ARMÓNICA ===== */
+/* ===== SECCIÓN MARCAS - ULTRA COMPACTA Y SIN FONDO BLANCO ===== */
 .brands {
-    padding: 30px 0; /* REDUCIDO: de 40px a 30px */
-    background: #f8f9fa;
-    border-top: 1px solid #e9ecef;
-    border-bottom: 1px solid #e9ecef;
+    padding: 20px 0 !important; /* REDUCIDO: de 30px a 20px */
+    background: transparent !important; /* ELIMINADO: fondo blanco */
+    border-top: none !important; /* ELIMINADO: borde superior */
+    border-bottom: none !important; /* ELIMINADO: borde inferior */
     margin: 0 !important;
     position: relative;
     overflow: hidden;
@@ -2240,186 +2239,196 @@ body {
     overflow: visible;
     position: relative;
     width: 100%;
+    background: transparent !important; /* SIN FONDO */
+
 }
 
 .brands-track {
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 25px !important; /* REDUCIDO: de 40px a 25px para más compacto */
-    padding: 15px 0; /* REDUCIDO: de 20px a 15px */
+    gap: 25px !important;
+    padding: 10px 0 !important;
     width: 100% !important;
     flex-wrap: wrap !important;
+    background: transparent !important; /* SIN FONDO */
 }
 
-/* ===== LOGOS - TAMAÑO REDUCIDO ===== */
+/* ===== LOGOS - MANTENER TAMAÑO ===== */
 .brand-logo {
-    height: 38px !important; /* REDUCIDO: de 50px a 38px */
+    height: 38px !important;
     width: auto !important;
-    max-width: 95px !important; /* REDUCIDO: de 120px a 95px */
-    min-width: 65px !important; /* REDUCIDO: de 80px a 65px */
+    max-width: 95px !important;
+    min-width: 65px !important;
     object-fit: contain !important;
     opacity: 0.7 !important;
     transition: all 0.3s ease !important;
     filter: grayscale(50%) brightness(0.9) !important;
     flex-shrink: 0 !important;
     cursor: pointer !important;
-    margin: 6px !important; /* REDUCIDO: de 10px a 6px */
+    margin: 6px !important;
+    background: transparent !important; /* ASEGURAR: sin fondo por defecto */
+    padding: 0 !important; /* ELIMINAR: cualquier padding */
 }
 
 .brand-logo:hover {
-    opacity: 1 !important;
-    filter: grayscale(0%) brightness(1) !important;
-    transform: scale(1.08) !important; /* REDUCIDO: de 1.1 a 1.08 */
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08) !important;
+    opacity: 1 !important; /* Completamente visible */
+    filter: grayscale(0%) brightness(1.05) !important; /* Sin grayscale, ligeramente más brillante */
+    transform: scale(1.1) !important; /* Ligeramente más grande */
+    box-shadow: none !important; /* SIN SOMBRA */
+    background: none !important; /* SIN FONDO */
+    border-radius: 0 !important; /* SIN BORDER RADIUS */
 }
 
-/* ===== AJUSTES ESPECÍFICOS POR MARCA - COMPACTOS ===== */
+/* ===== TRANSICIÓN SUAVE ===== */
+.brand-logo {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ===== AJUSTES ESPECÍFICOS POR MARCA - MANTENER ===== */
 .brand-logo[alt="Scania"] {
-    max-width: 80px !important; /* REDUCIDO */
+    max-width: 80px !important;
 }
 
 .brand-logo[alt="Volvo"] {
-    max-width: 72px !important; /* REDUCIDO */
+    max-width: 72px !important;
 }
 
 .brand-logo[alt="Mercedes-Benz"] {
-    max-width: 88px !important; /* REDUCIDO */
+    max-width: 88px !important;
 }
 
 .brand-logo[alt="Iveco"] {
-    max-width: 80px !important; /* REDUCIDO */
+    max-width: 80px !important;
 }
 
 .brand-logo[alt="Volkswagen"] {
-    max-width: 88px !important; /* REDUCIDO */
+    max-width: 88px !important;
 }
 
 .brand-logo[alt="Renault"] {
-    max-width: 80px !important; /* REDUCIDO */
+    max-width: 80px !important;
 }
 
 .brand-logo[alt="Ford"] {
-    max-width: 72px !important; /* REDUCIDO */
+    max-width: 72px !important;
 }
 
 .brand-logo[alt="DAF"] {
-    max-width: 65px !important; /* REDUCIDO */
+    max-width: 65px !important;
 }
 
 .brand-logo[alt="Randon"] {
-    max-width: 80px !important; /* REDUCIDO */
-    height: 35px !important; /* REDUCIDO */
+    max-width: 80px !important;
+    height: 35px !important;
 }
 
-/* ===== RESPONSIVE - COMPACTO ===== */
+/* ===== RESPONSIVE - ULTRA COMPACTO ===== */
 @media (max-width: 1200px) {
     .brands {
-        padding: 25px 0; /* REDUCIDO */
+        padding: 18px 0 !important; /* REDUCIDO */
     }
     
     .brands-track {
-        gap: 22px !important; /* REDUCIDO */
+        gap: 22px !important;
+        padding: 8px 0 !important; /* REDUCIDO */
     }
     
     .brand-logo {
-        height: 35px !important; /* REDUCIDO */
-        max-width: 88px !important; /* REDUCIDO */
-        margin: 5px !important; /* REDUCIDO */
+        height: 35px !important;
+        max-width: 88px !important;
+        margin: 5px !important;
     }
 }
 
 @media (max-width: 992px) {
     .brands {
-        padding: 22px 0; /* REDUCIDO */
+        padding: 15px 0 !important; /* REDUCIDO */
     }
     
     .brands-track {
-        gap: 20px !important; /* REDUCIDO */
+        gap: 20px !important;
+        padding: 6px 0 !important; /* REDUCIDO */
     }
     
     .brand-logo {
-        height: 32px !important; /* REDUCIDO */
-        max-width: 82px !important; /* REDUCIDO */
-        margin: 4px !important; /* REDUCIDO */
+        height: 32px !important;
+        max-width: 82px !important;
+        margin: 4px !important;
     }
     
     .brand-logo[alt="Randon"] {
-        height: 30px !important; /* REDUCIDO */
-        max-width: 72px !important; /* REDUCIDO */
+        height: 30px !important;
+        max-width: 72px !important;
     }
 }
 
 @media (max-width: 768px) {
     .brands {
-        padding: 20px 0; /* REDUCIDO */
+        padding: 12px 0 !important; /* REDUCIDO */
     }
     
     .brands-track {
-        gap: 18px !important; /* REDUCIDO */
+        gap: 18px !important;
         justify-content: center !important;
+        padding: 5px 0 !important; /* REDUCIDO */
     }
     
     .brand-logo {
-        height: 30px !important; /* REDUCIDO */
-        max-width: 75px !important; /* REDUCIDO */
-        min-width: 50px !important; /* REDUCIDO */
-        margin: 4px !important; /* REDUCIDO */
+        height: 30px !important;
+        max-width: 75px !important;
+        min-width: 50px !important;
+        margin: 4px !important;
     }
     
     .brand-logo[alt="Randon"] {
-        height: 28px !important; /* REDUCIDO */
-        max-width: 68px !important; /* REDUCIDO */
+        height: 28px !important;
+        max-width: 68px !important;
     }
 }
 
 @media (max-width: 480px) {
     .brands {
-        padding: 18px 0; /* REDUCIDO */
+        padding: 10px 0 !important; /* REDUCIDO */
     }
     
     .brands-track {
-        gap: 15px !important; /* REDUCIDO */
+        gap: 15px !important;
         justify-content: center !important;
+        padding: 4px 0 !important; /* REDUCIDO */
     }
     
     .brand-logo {
-        height: 28px !important; /* REDUCIDO */
-        max-width: 68px !important; /* REDUCIDO */
-        min-width: 45px !important; /* REDUCIDO */
-        margin: 3px !important; /* REDUCIDO */
+        height: 28px !important;
+        max-width: 68px !important;
+        min-width: 45px !important;
+        margin: 3px !important;
     }
     
     .brand-logo[alt="Randon"] {
-        height: 26px !important; /* REDUCIDO */
-        max-width: 60px !important; /* REDUCIDO */
+        height: 26px !important;
+        max-width: 60px !important;
     }
 }
 
-/* ===== EFECTOS ADICIONALES ===== */
-.brand-logo:hover {
-    box-shadow: 
-        0 6px 20px rgba(0, 0, 0, 0.08),
-        0 0 15px rgba(61, 95, 172, 0.08) !important; /* REDUCIDO */
-    border-radius: 6px !important; /* REDUCIDO */
-}
+
 
 /* Focus para accesibilidad */
 .brand-logo:focus {
-    outline: 2px solid #3D5FAC !important; /* REDUCIDO */
-    outline-offset: 2px !important; /* REDUCIDO */
+    outline: 2px solid #3D5FAC !important;
+    outline-offset: 2px !important;
     opacity: 1 !important;
     filter: grayscale(0%) brightness(1) !important;
-}
-/* ===== EFECTOS ADICIONALES - MANTENER ===== */
-.brand-logo:hover {
-    box-shadow: 
-        0 8px 25px rgba(0, 0, 0, 0.1),
-        0 0 20px rgba(61, 95, 172, 0.1);
-    border-radius: 8px;
+    background: transparent !important; /* SIN FONDO */
+    box-shadow: none !important; /* SIN SOMBRA */
 }
 
-/* Animación de entrada - MANTENER */
+.brand-logo::before,
+.brand-logo::after {
+    display: none !important;
+}
+
+/* ===== ANIMACIÓN DE ENTRADA ===== */
 .brands.animate-in .brand-logo {
     animation: fadeInBrand 0.6s ease forwards;
     opacity: 0;
@@ -2431,12 +2440,12 @@ body {
         transform: translateY(20px) scale(0.8);
     }
     to {
-        opacity: 0.7; /* CAMBIADO: de 0.6 a 0.7 */
+        opacity: 0.7;
         transform: translateY(0) scale(1);
     }
 }
 
-/* Delay escalonado para las marcas - MANTENER */
+/* Delay escalonado para las marcas */
 .brands.animate-in .brand-logo:nth-child(1) { animation-delay: 0.1s; }
 .brands.animate-in .brand-logo:nth-child(2) { animation-delay: 0.2s; }
 .brands.animate-in .brand-logo:nth-child(3) { animation-delay: 0.3s; }
@@ -2446,37 +2455,34 @@ body {
 .brands.animate-in .brand-logo:nth-child(7) { animation-delay: 0.7s; }
 .brands.animate-in .brand-logo:nth-child(8) { animation-delay: 0.8s; }
 
-/* Accesibilidad - MANTENER */
+/* ===== ACCESIBILIDAD ===== */
 @media (prefers-reduced-motion: reduce) {
     .brand-logo {
         transition: none;
     }
 }
 
-/* Focus para accesibilidad - MANTENER */
-
-
-/* ===== VARIANTES ESPECÍFICAS POR PÁGINA - MANTENER ===== */
+/* ===== VARIANTES ESPECÍFICAS POR PÁGINA - ACTUALIZADAS ===== */
 .page-inicio .brands {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    background: transparent !important; /* SIN FONDO */
 }
 
 .page-unidades .brands {
-    background: #ffffff;
-    border-top: 2px solid #3D5FAC;
+    background: transparent !important; /* SIN FONDO */
+    border-top: none !important; /* SIN BORDE */
 }
 
 .page-empresa .brands {
-    background: #f8f9fa;
+    background: transparent !important; /* SIN FONDO */
 }
 
 .page-contacto .brands {
-    background: #ffffff;
-    margin-top: 60px;
+    background: transparent !important; /* SIN FONDO */
+    margin-top: 0;
 }
 
 .page-detalle .brands {
-    background: #f8f9fa;
+    background: transparent !important; /* SIN FONDO */
     margin-top: 40px;
 }
 
@@ -2566,68 +2572,126 @@ body {
     max-width: var(--container-max-width);
     margin: 0 auto;
 }
-
-/* ===== BOTÓN ADMIN EN FOOTER ===== */
+/* ===== ELIMINAR SECCIÓN ADMIN ANTIGUA ===== */
 .footer-admin {
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    text-align: center;
+    display: none !important; /* OCULTAR: la sección separada antigua */
 }
 
 .btn-admin-footer {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 24px;
-    background: var(--primary-white);
-    color: var(--primary-black);
-    text-decoration: none;
-    border-radius: 0;
-    border: 2px solid var(--primary-black);
-    font-size: 0.9rem;
-    font-weight: 600;
-    transition: var(--transition-fast);
-    opacity: 0.8;
+    display: none !important; /* OCULTAR: el botón grande antiguo */
 }
 
-.btn-admin-footer:hover {
-    transform: translateY(-2px);
-    background: var(--primary-black);
-    color: var(--primary-white);
-    opacity: 1;
+/* ===== BOTÓN ADMIN INLINE - DISCRETO Y PEQUEÑO ===== */
+.btn-admin-inline {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    padding: 6px 12px !important; /* MUY COMPACTO */
+    background: transparent !important;
+    color: var(--secondary-gray) !important; /* GRIS DISCRETO */
+    text-decoration: none !important;
+    border-radius: 4px !important;
+    border: 1px solid transparent !important;
+    font-size: 0.75rem !important; /* PEQUEÑO */
+    font-weight: 500 !important;
+    transition: all 0.2s ease !important;
+    opacity: 0.6 !important; /* MÁS DISCRETO */
+    margin-top: 12px !important;
 }
 
-.btn-admin-footer i {
-    font-size: 1rem;
+.btn-admin-inline:hover {
+    opacity: 1 !important;
+    color: var(--primary-blue) !important;
+    border-color: var(--primary-blue) !important;
+    background: rgba(61, 95, 172, 0.05) !important; /* FONDO SUTIL */
+    transform: none !important; /* SIN MOVIMIENTO */
 }
 
-.btn-admin-footer span {
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.btn-admin-inline i {
+    font-size: 0.85rem !important;
+    color: inherit !important;
 }
 
-/* ===== INDICADOR DE SESIÓN ACTIVA EN FOOTER ===== */
-.btn-admin-footer.logged-in {
-    background: var(--primary-white);
-    color: #10b981;
-    border-color: #10b981;
-    animation: adminGlow 2s ease-in-out infinite alternate;
+.btn-admin-inline span {
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
 }
 
-.btn-admin-footer.logged-in::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    right: -2px;
-    width: 8px;
-    height: 8px;
-    background: #22c55e;
-    border: 2px solid var(--primary-white);
-    border-radius: 50%;
-    animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+/* ===== ESTADO DE SESIÓN ACTIVA - MÁS DISCRETO ===== */
+.btn-admin-inline.logged-in {
+    color: #10b981 !important; /* VERDE */
+    opacity: 0.7 !important;
+    border-color: transparent !important;
+}
+
+.btn-admin-inline.logged-in:hover {
+    opacity: 1 !important;
+    border-color: #10b981 !important;
+    background: rgba(16, 185, 129, 0.05) !important;
+}
+
+/* Indicador de sesión activa - pequeño punto verde */
+.btn-admin-inline.logged-in::before {
+    content: '' !important;
+    width: 6px !important;
+    height: 6px !important;
+    background: #22c55e !important;
+    border-radius: 50% !important;
+    margin-right: 2px !important;
+    animation: pulse 2s ease-in-out infinite !important;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* ===== AJUSTAR ESPACIADO EN CONTACT-INFO ===== */
+.footer-section .contact-info p {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    color: var(--primary-black) !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+}
+
+/* ===== RESPONSIVE PARA BOTÓN ADMIN ===== */
+@media (max-width: 768px) {
+    .btn-admin-inline {
+        padding: 5px 10px !important;
+        font-size: 0.7rem !important;
+        margin-top: 10px !important;
+    }
+    
+    .btn-admin-inline i {
+        font-size: 0.8rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-admin-inline {
+        padding: 4px 8px !important;
+        font-size: 0.65rem !important;
+        gap: 4px !important;
+    }
+    
+    .btn-admin-inline i {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* ===== ASEGURAR QUE NO INTERFIERA CON OTROS ELEMENTOS ===== */
+.footer-section .contact-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0 !important;
 }
 
 @keyframes adminGlow {
