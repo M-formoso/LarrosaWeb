@@ -89,44 +89,41 @@ getImageUrl(imageData) {
     
     // Si es un string
     if (typeof imageData === 'string') {
-        // Verificar cache primero
-        if (this.imageCache.has(imageData)) {
-            return this.imageCache.get(imageData);
-        }
-        
         let finalUrl;
         
-        // Si es una URL completa
+        // Si es una URL completa con http/https
         if (imageData.startsWith('http')) {
             finalUrl = imageData;
             console.log('✅ Full HTTP URL found:', finalUrl);
+            return finalUrl;
         } 
-        // Si es una ruta que comienza con 'static' (CASO MÁS COMÚN DEL BACKEND)
-        else if (imageData.startsWith('static/')) {
-            // CORRECCIÓN PRINCIPAL: Construir URL correcta
-            finalUrl = `${this.staticURL}/${imageData}`;
+        
+        // Si es una ruta que comienza con 'static/' (SIN BARRA INICIAL)
+        if (imageData.startsWith('static/')) {
+            // CONSTRUIR URL CORRECTA
+            finalUrl = `http://localhost:8000/${imageData}`;
             console.log('✅ Static path converted:', finalUrl);
-        }
-        // Si comienza con '/static'
-        else if (imageData.startsWith('/static/')) {
-            finalUrl = `${this.staticURL}${imageData}`;
-            console.log('✅ Absolute static path converted:', finalUrl);
-        }
-        // Si parece ser un nombre de archivo directo
-        else if (imageData.includes('.')) {
-            // Asumir que está en la carpeta de vehículos
-            finalUrl = `${this.staticURL}/static/uploads/vehicles/${imageData}`;
-            console.log('✅ Filename converted to full path:', finalUrl);
-        }
-        // Fallback: tratar como ruta relativa
-        else {
-            finalUrl = imageData;
-            console.log('⚠️ Using as relative path:', finalUrl);
+            return finalUrl;
         }
         
-        // Guardar en cache
-        this.imageCache.set(imageData, finalUrl);
-        return finalUrl;
+        // Si comienza con '/static/' (CON BARRA INICIAL)
+        if (imageData.startsWith('/static/')) {
+            finalUrl = `http://localhost:8000${imageData}`;
+            console.log('✅ Absolute static path converted:', finalUrl);
+            return finalUrl;
+        }
+        
+        // Si parece ser un nombre de archivo directo
+        if (imageData.includes('.')) {
+            // Asumir que está en la carpeta de vehículos
+            finalUrl = `http://localhost:8000/static/uploads/vehicles/${imageData}`;
+            console.log('✅ Filename converted to full path:', finalUrl);
+            return finalUrl;
+        }
+        
+        // Fallback: tratar como ruta relativa
+        console.log('⚠️ Using as relative path:', imageData);
+        return imageData;
     } 
     
     // Si es un objeto de imagen del backend
@@ -153,7 +150,6 @@ getImageUrl(imageData) {
     console.warn('⚠️ Could not determine image URL for:', imageData);
     return '../assets/imagenes/placeholder-vehicle.jpg';
 }
-
 // AGREGAR TAMBIÉN ESTE MÉTODO PARA DEBUG
 debugImageInfo(imageData) {
     console.log('🔍 DEBUG IMAGE INFO:');
