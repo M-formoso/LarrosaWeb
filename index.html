@@ -317,8 +317,135 @@
     </div>
 </section>
 
+<!-- Sección COTIZACIÓN con Video, Randon, Usado y MercadoLibre -->
+<section class="cotizacion-section">
+    <div class="cotizacion-container">
+        <div class="cotizacion-content">
+            
+            <!-- IZQUIERDA: VIDEO 60% -->
+            <div class="cotizacion-left">
+                <div class="cotizacion-video-wrapper">
+                    <video autoplay muted loop playsinline class="cotizacion-main-video">
+                        <source src="assets/video-camiones.mp4" type="video/mp4">
+                    </video>
+                    <div class="video-button-overlay">
+                        <a href="sections/unidadesDisponibles.html" class="btn-ver-unidades">
+                            VER UNIDADES
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- DERECHA: CARDS 40% -->
+            <div class="cotizacion-right">
+                
+                <!-- CARD RANDON - Arriba -->
+                <div class="cotizacion-modal-btn randon-modal" onclick="window.location.href='sections/LarrosaCamiones.html#randon'">
+                    <div class="randon-bg-gradient">
+                        <div class="randon-content-wrapper">
+                            <!-- Logo RANDON arriba a la derecha -->
+                            <div class="randon-logo-top">
+                                <img src="assets/Logo blanco sin fondo.png" alt="Randon" class="randon-logo-img">
+                            </div>
+                            
+                            <!-- Contenedor: Semirremolque + Texto -->
+                            <div class="randon-main-content">
+                                <!-- Pregunta arriba -->
+                                <div class="randon-question-top">
+                                    <h3 class="randon-question-text">¿Listo para renovar tu próximo semirremolque?</h3>
+                                    <p class="randon-question-subtitle">Desde 2006 Larrosa Camiones cuenta con la concesión oficial RANDON en Córdoba, La Rioja y Catamarca.</p>
+                                </div>
+                                
+                                <!-- Semirremolque a la izquierda -->
+                                <div class="randon-semiremolque">
+                                    <img src="assets/Recurso 1.png" alt="Semirremolque" class="semiremolque-img">
+                                </div>
+                                
+                                <!-- Botón a la derecha -->
+                                <div class="randon-button-right">
+                                    <a href="sections/LarrosaCamiones.html#randon" class="btn-randon-white">
+                                        VER RANDON
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- GRID INFERIOR: 2 CARDS -->
+                <div class="cotizacion-bottom-grid">
+                    
+                    <!-- CARD USADO - Izquierda -->
+                    <div class="cotizacion-modal-btn usado-modal" onclick="openUsadoModal()">
+                        <div class="modal-overlay-gray">
+                            <div class="modal-text-container-center">
+                                <h3 class="modal-title-white">Le ponemos un precio a tu usado.</h3>
+                                <p class="modal-description-white">
+                                    Tasación rápida y segura.
+                                </p>
+                                <button class="btn-modal-white" type="button">COTIZAR AHORA</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- CARD MERCADOLIBRE - Derecha -->
+                    <div class="cotizacion-modal-btn meli-modal" onclick="window.open('https://listado.mercadolibre.com.ar/larrosa-camiones#D[A:larrosa%20camiones]')">
+                        <div class="modal-overlay-yellow">
+                            <div class="modal-text-container-center">
+                                <h3 class="modal-title-black">Descubrí todas nuestras unidades.</h3>
+                                <button class="btn-modal-yellow" type="button">VER MERCADO LIBRE</button>
+                                <img src="assets/Logo mercado libre.png" alt="MercadoLibre" class="meli-logo-img">
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
 
-    <!-- Sección Testimonios -->
+<!-- Modal para "Compramos tu usado" -->
+<div id="usadoModal" class="modal-overlay">
+    <div class="modal-content-usado">
+        <span class="modal-close" onclick="closeUsadoModal()">&times;</span>
+        <div class="usado-modal-content">
+            <h2>Compramos tu camión usado</h2>
+            <p>Completá el formulario y te contactaremos para hacerte la mejor oferta</p>
+            
+            <form class="usado-form" id="usadoForm">
+                <div class="form-row">
+                    <input type="text" name="nombre" placeholder="NOMBRE COMPLETO" required>
+                    <input type="email" name="email" placeholder="EMAIL" required>
+                </div>
+                
+                <div class="form-row">
+                    <input type="tel" name="telefono" placeholder="TELÉFONO" required>
+                    <input type="text" name="localidad" placeholder="LOCALIDAD" required>
+                </div>
+                
+                <div class="form-row">
+                    <input type="text" name="marca" placeholder="MARCA DEL CAMIÓN" required>
+                    <input type="text" name="modelo" placeholder="MODELO" required>
+                </div>
+                
+                <div class="form-row">
+                    <input type="number" name="anio" placeholder="AÑO" required>
+                    <input type="text" name="kilometraje" placeholder="KILOMETRAJE" required>
+                </div>
+                
+                <div class="form-row full-width">
+                    <textarea name="observaciones" placeholder="OBSERVACIONES / CARACTERÍSTICAS ADICIONALES" rows="4"></textarea>
+                </div>
+                
+                <button type="submit" class="btn-modal-action">ENVIAR COTIZACIÓN</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
     <!-- Sección Testimonios -->
 <section class="testimonials-new">
     <div class="container">
@@ -343,7 +470,8 @@
                        target="_blank" 
                        rel="noopener noreferrer" 
                        class="google-reviews-link">
-                         Nuestras reseñas en Google
+                        <img src="assets/Google.png" alt="Google" class="google-logo-icon">
+                        Nuestras reseñas en Google
                     </a>
                 </p>
             </div>
@@ -592,6 +720,7 @@ function updateAdminButtonState() {
         }
     }
 }
+
 
 </script>
 

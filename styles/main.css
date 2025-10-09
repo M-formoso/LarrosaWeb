@@ -1407,11 +1407,10 @@ body {
     text-align: left;
 }
 
-/* ===== SECCIÓN COTIZACIÓN - DISEÑO FINAL EXACTO ===== */
-
+/* ===== SECCIÓN COTIZACIÓN - MÁS COMPACTA ===== */
 .cotizacion-section {
     position: relative;
-    padding: 60px 0;
+    padding: 30px 0 !important; /* REDUCIDO: de 40px a 30px */
     background: #f8f9fa;
     overflow: hidden;
     margin: 0;
@@ -1426,11 +1425,11 @@ body {
 .cotizacion-content {
     display: flex;
     align-items: stretch;
-    gap: 30px;
-    min-height: 500px;
+    gap: 25px !important; /* REDUCIDO: de 30px a 25px */
+    min-height: 350px !important; /* REDUCIDO: de 400px a 350px */
 }
 
-/* ===== VIDEO IZQUIERDA 60% ===== */
+/* ===== VIDEO IZQUIERDA 60% - MÁS COMPACTO ===== */
 .cotizacion-left {
     flex: 0 0 60%;
     width: 60%;
@@ -1456,7 +1455,7 @@ body {
 
 .video-button-overlay {
     position: absolute;
-    bottom: 30px;
+    bottom: 25px !important; /* REDUCIDO: de 30px a 25px */
     left: 50%;
     transform: translateX(-50%);
     z-index: 10;
@@ -1464,12 +1463,12 @@ body {
 
 .btn-ver-unidades {
     display: inline-block;
-    padding: 12px 30px;
+    padding: 10px 25px !important; /* REDUCIDO: de 12px 30px a 10px 25px */
     background: var(--primary-white);
     color: var(--primary-black);
     border: 2px solid var(--primary-white);
     border-radius: 6px;
-    font-size: 0.9rem;
+    font-size: 0.85rem !important; /* REDUCIDO: de 0.9rem a 0.85rem */
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -1491,7 +1490,7 @@ body {
     width: 40%;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px !important; /* REDUCIDO: de 20px a 18px */
 }
 
 /* ===== CARDS GENERALES ===== */
@@ -1509,245 +1508,143 @@ body {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
 }
 
-/* ===== SECCIÓN COTIZACIÓN - ALTURA REDUCIDA ===== */
-.cotizacion-section {
-    position: relative;
-    padding: 40px 0; /* REDUCIDO */
-    background: #f8f9fa; 
-    overflow: hidden;
-    margin: 0;
-}
-
-.cotizacion-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.cotizacion-content {
-    display: flex;
-    align-items: stretch;
-    gap: 30px;
-    min-height: 400px; /* REDUCIDO: de 500px a 400px */
-}
-
-/* ===== VIDEO IZQUIERDA 60% - ALTURA REDUCIDA ===== */
-.cotizacion-left {
-    flex: 0 0 60%;
-    width: 60%;
-    position: relative;
-}
-
-.cotizacion-video-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-}
-
-.cotizacion-main-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    display: block;
-}
-
-.video-button-overlay {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-}
-
-.btn-ver-unidades {
-    display: inline-block;
-    padding: 12px 30px;
-    background: var(--primary-white);
-    color: var(--primary-black);
-    border: 2px solid var(--primary-white);
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    text-decoration: none;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-}
-
-.btn-ver-unidades:hover {
-    background: rgba(255, 255, 255, 0.9);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* ===== COLUMNA DERECHA 40% ===== */
-.cotizacion-right {
-    flex: 0 0 40%;
-    width: 40%;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* ===== CARDS GENERALES ===== */
-.cotizacion-modal-btn {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.cotizacion-modal-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-/* ===== CARD RANDON - ALTURA REDUCIDA Y POSICIONAMIENTO EXACTO ===== */
+/* ===== CARD RANDON - POSICIONAMIENTO CORREGIDO ===== */
 .randon-modal {
     width: 100%;
-    min-height: 180px; /* REDUCIDO: de 250px a 180px */
+    min-height: 180px !important; /* Aumentado para dar más espacio */
     position: relative;
 }
 
-/* Degradado de negro a celeste RANDON */
 .randon-bg-gradient {
     width: 100%;
     height: 100%;
     background: linear-gradient(180deg, #1a1a1a 0%, #009fe3 100%);
-    padding: 20px; /* REDUCIDO: de 25px a 20px */
+    padding: 20px !important;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
-/* Contenedor principal */
 .randon-content-wrapper {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    position: relative;
 }
 
-/* Logo RANDON arriba a la derecha - MÁS PEQUEÑO */
+/* Logo RANDON arriba a la derecha */
 .randon-logo-top {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    margin-bottom: 10px; /* REDUCIDO: de 20px a 10px */
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    z-index: 2;
 }
 
 .randon-logo-img {
-    max-width: 100px; /* REDUCIDO: de 120px a 100px */
-    max-height: 32px; /* REDUCIDO: de 40px a 32px */
+    max-width: 100px !important;
+    max-height: 32px !important;
     width: auto;
     height: auto;
     object-fit: contain;
 }
 
-/* Contenedor central: semirremolque + texto */
+/* Contenedor principal */
 .randon-main-content {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    gap: 25px !important;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Semirremolque a la izquierda - MÁS PEQUEÑO */
+/* Pregunta y subtítulo arriba a la izquierda */
+.randon-question-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 70%;
+    z-index: 1;
+}
+
+.randon-question-text {
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    color: white !important;
+    line-height: 1.3 !important;
+    margin: 0 0 8px 0 !important;
+}
+
+.randon-question-subtitle {
+    font-size: 0.7rem !important;
+    color: rgba(255, 255, 255, 0.95) !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+    font-weight: 300 !important;
+}
+
+/* Semirremolque abajo a la izquierda */
 .randon-semiremolque {
-    flex: 0 0 35%; /* REDUCIDO: de 40% a 35% */
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-start;
+    position: absolute;
+    top: 95px;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
 }
 
 .semiremolque-img {
-    width: 280px !important;
-    max-width: 400px !important;
-    min-width: 400px !important;
+    width: 200px !important;
+    max-width: 200px !important;
     height: auto !important;
-}
-/* Texto y botón a la derecha - AJUSTADO */
-.randon-text-right {
-    flex: 0 0 65%; /* AUMENTADO: de 60% a 65% */
-    display: flex;
-    flex-direction: column;
-    gap: 8px; /* REDUCIDO: de 12px a 8px */
-    color: white;
-    justify-content: flex-end;
+    display: block;
 }
 
-.randon-title {
-    font-size: 0.9rem; /* REDUCIDO: de 1rem a 0.9rem */
-    font-weight: 400;
-    color: white;
-    line-height: 1.3; /* REDUCIDO: de 1.4 a 1.3 */
-    margin: 0;
-    text-align: left;
-}
-
-.randon-description {
-    font-size: 0.7rem; /* REDUCIDO: de 0.75rem a 0.7rem */
-    color: #FFFFFF !important;
-    line-height: 1.25; /* REDUCIDO: de 1.3 a 1.25 */
-    margin: 0;
-    text-align: left;
-    font-weight: 300;
+/* Botón abajo a la derecha */
+.randon-button-right {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    z-index: 2;
 }
 
 .btn-randon-white {
     display: inline-block;
-    padding: 6px 14px; /* REDUCIDO: de 8px 16px a 6px 14px */
+    padding: 8px 20px !important;
     background: transparent;
     color: white;
     border: 2px solid white;
-    border-radius: 4px;
-    font-size: 0.7rem; /* REDUCIDO: de 0.75rem a 0.7rem */
-    font-weight: 600;
+    border-radius: 6px;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
     text-transform: uppercase;
-    letter-spacing: 0.8px; /* REDUCIDO: de 1px a 0.8px */
+    letter-spacing: 1px !important;
     text-decoration: none;
     text-align: center;
     transition: all 0.3s ease;
     cursor: pointer;
-    width: fit-content;
-    margin-top: 6px; /* REDUCIDO: de 8px a 6px */
+    white-space: nowrap;
 }
 
 .btn-randon-white:hover {
     background: white;
     color: #009fe3;
+    transform: translateY(-2px);
 }
 
-/* ===== GRID INFERIOR - 2 CARDS - ALTURA REDUCIDA ===== */
-.cotizacion-bottom-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    width: 100%;
-}
-
-/* ===== CARD USADO - GRIS - ALTURA REDUCIDA ===== */
+/* ===== CARD USADO - SIN CAMBIOS ===== */
 .usado-modal {
     width: 100%;
-    min-height: 180px; /* REDUCIDO: de 220px a 180px */
+    min-height: 180px !important;
 }
 
 .modal-overlay-gray {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+    background: linear-gradient(135deg, #6b7280 0%, #9ca3af 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px; /* REDUCIDO: de 25px a 20px */
+    padding: 20px !important;
 }
 
 .modal-text-container-center {
@@ -1755,42 +1652,42 @@ body {
     flex-direction: column;
     align-items: flex-start;
     text-align: left;
-    gap: 10px; /* REDUCIDO: de 12px a 10px */
+    gap: 10px !important;
     width: 100%;
 }
 
 .modal-title-white {
-    font-size: 1rem; /* REDUCIDO: de 1.1rem a 1rem */
+    font-size: 1rem !important;
     font-weight: 700;
     color: white;
-    line-height: 1.25; /* REDUCIDO: de 1.3 a 1.25 */
+    line-height: 1.3 !important;
     margin: 0;
 }
 
 .modal-description-white {
-    font-size: 0.8rem; /* REDUCIDO: de 0.85rem a 0.8rem */
+    font-size: 0.8rem !important;
     color: rgba(255, 255, 255, 0.95);
-    line-height: 1.3; /* REDUCIDO: de 1.4 a 1.3 */
+    line-height: 1.3 !important;
     margin: 0;
 }
 
 .btn-modal-white {
     display: inline-block;
-    padding: 8px 16px; /* REDUCIDO: de 10px 20px a 8px 16px */
+    padding: 8px 18px !important;
     background: transparent;
     color: white;
     border: 2px solid white;
     border-radius: 6px;
-    font-size: 0.75rem; /* REDUCIDO: de 0.85rem a 0.75rem */
-    font-weight: 600;
+    font-size: 0.75rem !important;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.7px; /* REDUCIDO: de 0.8px a 0.7px */
+    letter-spacing: 1px !important;
     text-decoration: none;
     text-align: center;
     transition: all 0.3s ease;
     cursor: pointer;
     width: fit-content;
-    margin-top: 4px; /* REDUCIDO: de 5px a 4px */
+    margin-top: 5px !important;
 }
 
 .btn-modal-white:hover {
@@ -1798,55 +1695,47 @@ body {
     color: #4b5563;
 }
 
-/* ===== CARD MERCADOLIBRE - AMARILLO - ALTURA REDUCIDA ===== */
+/* ===== CARD MERCADOLIBRE - SIN CAMBIOS ===== */
 .meli-modal {
     width: 100%;
-    min-height: 180px; /* REDUCIDO: de 220px a 180px */
+    min-height: 180px !important;
 }
 
 .modal-overlay-yellow {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
+    background: #FFE600 !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px; /* REDUCIDO: de 25px a 20px */
+    padding: 20px !important;
 }
 
 .meli-modal .modal-text-container-center {
     align-items: flex-start;
     text-align: left;
+    gap: 12px !important;
 }
 
 .modal-title-black {
-    font-size: 1rem; /* REDUCIDO: de 1.1rem a 1rem */
+    font-size: 1rem !important;
     font-weight: 700;
     color: var(--primary-black);
-    line-height: 1.25; /* REDUCIDO: de 1.3 a 1.25 */
+    line-height: 1.3 !important;
     margin: 0;
-}
-
-.meli-logo-img {
-    max-width: 110px; /* REDUCIDO: de 130px a 110px */
-    max-height: 38px; /* REDUCIDO: de 45px a 38px */
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    margin: 8px 0; /* REDUCIDO: de 10px a 8px */
 }
 
 .btn-modal-yellow {
     display: inline-block;
-    padding: 8px 16px; /* REDUCIDO: de 10px 20px a 8px 16px */
+    padding: 8px 18px !important;
     background: var(--primary-black);
-    color: #fef08a;
+    color: #FFE600 !important;
     border: 2px solid var(--primary-black);
     border-radius: 6px;
-    font-size: 0.75rem; /* REDUCIDO: de 0.85rem a 0.75rem */
-    font-weight: 600;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
     text-transform: uppercase;
-    letter-spacing: 0.7px; /* REDUCIDO: de 0.8px a 0.7px */
+    letter-spacing: 1px !important;
     text-decoration: none;
     text-align: center;
     transition: all 0.3s ease;
@@ -1860,368 +1749,36 @@ body {
     border-color: var(--primary-black);
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 1200px) {
-    .cotizacion-content {
-        min-height: 380px; /* REDUCIDO */
-    }
-    
-    .randon-modal,
-    .usado-modal,
-    .meli-modal {
-        min-height: 170px; /* REDUCIDO */
-    }
-    
-    .semiremolque-img {
-        width: 120px;
-    }
-}
-
-@media (max-width: 1024px) {
-    .cotizacion-content {
-        min-height: 360px; /* REDUCIDO */
-    }
-    
-    .randon-modal,
-    .usado-modal,
-    .meli-modal {
-        min-height: 160px; /* REDUCIDO */
-    }
-}
-
-@media (max-width: 768px) {
-    .cotizacion-content {
-        flex-direction: column;
-        gap: 25px;
-        min-height: auto;
-    }
-    
-    .cotizacion-left,
-    .cotizacion-right {
-        flex: none;
-        width: 100%;
-    }
-    
-    .cotizacion-left {
-        height: 300px; /* REDUCIDO: de 350px a 300px */
-    }
-    
-    .randon-modal {
-        min-height: 200px;
-    }
-    
-    .cotizacion-bottom-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .usado-modal,
-    .meli-modal {
-        min-height: 160px;
-    }
-}
-
-@media (max-width: 480px) {
-    .cotizacion-section {
-        padding: 30px 0; /* REDUCIDO */
-    }
-    
-    .cotizacion-left {
-        height: 250px; /* REDUCIDO: de 300px a 250px */
-    }
-    
-    .randon-modal,
-    .usado-modal,
-    .meli-modal {
-        min-height: 180px;
-    }
-}
-/* ===== GRID INFERIOR - 2 CARDS ===== */
-.cotizacion-bottom-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    width: 100%;
-}
-
-/* ===== CARD USADO - GRIS ===== */
-.usado-modal {
-    width: 100%;
-    min-height: 220px;
-}
-
-.modal-overlay-gray {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 25px;
-}
-
-.modal-text-container-center {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    text-align: left;
-    gap: 12px;
-    width: 100%;
-}
-
-.modal-title-white {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: white;
-    line-height: 1.3;
-    margin: 0;
-}
-
-.modal-description-white {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.95);
-    line-height: 1.4;
-    margin: 0;
-}
-
-.btn-modal-white {
-    display: inline-block;
-    padding: 10px 20px;
-    background: transparent;
-    color: white;
-    border: 2px solid white;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    text-decoration: none;
-    text-align: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    width: fit-content;
-    margin-top: 5px;
-}
-
-.btn-modal-white:hover {
-    background: white;
-    color: #4b5563;
-}
-
-/* ===== CARD MERCADOLIBRE - AMARILLO ===== */
-.meli-modal {
-    width: 100%;
-    min-height: 220px;
-}
-
-.modal-overlay-yellow {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #ffeb3b 0%, #ffeb3b 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 25px;
-}
-
-/* Contenedor de MercadoLibre alineado a la izquierda */
-.meli-modal .modal-text-container-center {
-    align-items: flex-start;
-    text-align: left;
-}
-
-.modal-title-black {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--primary-black);
-    line-height: 1.3;
-    margin: 0;
-}
-
 .meli-logo-img {
-    max-width: 130px;
-    max-height: 45px;
+    max-width: 100px !important;
+    max-height: 36px !important;
     width: auto;
     height: auto;
     object-fit: contain;
-    margin: 10px 0;
 }
 
-.btn-modal-yellow {
-    display: inline-block;
-    padding: 10px 20px;
-    background: var(--primary-black);
-    color: #fef08a;
-    border: 2px solid var(--primary-black);
-    border-radius: 6px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    text-decoration: none;
-    text-align: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    width: fit-content;
+/* ===== GRID INFERIOR ===== */
+.cotizacion-bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px !important;
+    width: 100%;
 }
 
-.btn-modal-yellow:hover {
-    background: transparent;
-    color: var(--primary-black);
-    border-color: var(--primary-black);
+/* ===== CONTENEDOR PRINCIPAL ===== */
+.cotizacion-content {
+    display: flex;
+    align-items: stretch;
+    gap: 20px !important;
+    min-height: 400px !important;
 }
 
-/* ===== MODAL FORMULARIO ===== */
-.modal-overlay {
-    display: none !important;
-    position: fixed;
-    z-index: 10000;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.85);
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(5px);
-}
-
-.modal-overlay.active {
-    display: flex !important;
-}
-
-/* ===== RESPONSIVE ===== */
-
-@media (max-width: 1200px) {
-    .randon-modal {
-        min-height: 230px;
-    }
-    
-    .semiremolque-img {
-        width: 160px;
-    }
-    
-    .randon-title {
-        font-size: 1rem;
-    }
-    
-    .randon-description {
-        font-size: 0.8rem;
-    }
-}
-
-@media (max-width: 1024px) {
-    .randon-bg-gradient {
-        padding: 20px;
-    }
-    
-    .randon-main-content {
-        gap: 15px;
-    }
-    
-    .semiremolque-img {
-        width: 140px;
-    }
-}
-
-@media (max-width: 768px) {
-    .cotizacion-content {
-        flex-direction: column;
-        gap: 25px;
-    }
-    
-    .cotizacion-left,
-    .cotizacion-right {
-        flex: none;
-        width: 100%;
-    }
-    
-    .cotizacion-left {
-        height: 350px;
-    }
-    
-    .randon-modal {
-        min-height: 250px;
-    }
-    
-    .cotizacion-bottom-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    .cotizacion-section {
-        padding: 40px 0;
-    }
-    
-    .cotizacion-left {
-        height: 300px;
-    }
-    
-    .randon-bg-gradient {
-        padding: 18px;
-    }
-    
-    .randon-main-content {
-        flex-direction: column;
-        gap: 15px;
-    }
-    
-    .randon-semiremolque,
-    .randon-text-right {
-        flex: none;
-        width: 100%;
-    }
-    
-    .semiremolque-img {
-        width: 150px;
-    }
-    
-    .randon-title,
-    .modal-title-white,
-    .modal-title-black {
-        font-size: 0.95rem;
-    }
-    
-    .randon-description,
-    .modal-description-white {
-        font-size: 0.8rem;
-    }
-    
-    .randon-logo-img {
-        max-width: 110px;
-        max-height: 38px;
-    }
-}
-
-/* ===== ANIMACIONES ===== */
-.cotizacion-modal-btn {
-    animation: fadeInUp 0.6s ease forwards;
-    opacity: 0;
-}
-
-.randon-modal {
-    animation-delay: 0.1s;
-}
-
-.usado-modal {
-    animation-delay: 0.2s;
-}
-
-.meli-modal {
-    animation-delay: 0.3s;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.cotizacion-right {
+    flex: 0 0 40%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px !important;
 }
 
 /* ===== SECCIÓN MARCAS - ULTRA COMPACTA Y SIN FONDO BLANCO ===== */
@@ -5004,6 +4561,28 @@ img:not([src]) {
         transform: translateY(0) scale(1);
     }
 }
+/* ===== MODAL OCULTO POR DEFECTO ===== */
+.modal-overlay {
+    display: none !important;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.85);
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+}
+
+.modal-overlay.active {
+    display: flex !important;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
 
 /* ===== ESTADOS DE CARGA - COMPACTOS ===== */
 .btn-modal-action:disabled {
@@ -5139,7 +4718,7 @@ img:not([src]) {
 /* Semirremolque - MÁS GRANDE Y CENTRADO */
 .randon-semiremolque {
     flex: 0 0 35% !important;
-    max-width: 35% !important;
+    max-width: 45% !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important; /* CENTRADO */
@@ -5281,5 +4860,46 @@ img:not([src]) {
     .google-reviews-link {
         font-size: 0.85rem !important;
     }
+}
+
+/* ===== LOGO DE GOOGLE EN ENLACE ===== */
+.google-logo-icon {
+    width: 40px !important;
+    height: 40px !important;
+    object-fit: contain !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin-right: 5px !important;
+}
+
+/* Ajustar el enlace para que el logo quede bien */
+.google-reviews-link {
+    color: var(--primary-blue) !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    transition: all 0.3s ease !important;
+    padding: 8px 0 !important;
+    border-bottom: 2px solid transparent !important;
+}
+
+/* Eliminar el ::before de la estrella */
+.google-reviews-link::before {
+    display: none !important;
+}
+
+/* Mantener el hover */
+.google-reviews-link:hover {
+    color: var(--secondary-dark-blue) !important;
+    border-bottom-color: var(--primary-blue) !important;
+    transform: translateX(3px) !important;
+}
+
+.google-reviews-link:hover .google-logo-icon {
+    transform: scale(1.1) !important;
+    transition: transform 0.3s ease !important;
 }
 
