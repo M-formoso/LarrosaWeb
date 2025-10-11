@@ -88,7 +88,15 @@ class UnidadesDisponibles {
         this.api = new LarrosaAPIClient();
         this.vehicles = [];
         this.filtered = [];
-        this.filters = { category: 'all', search: '' };
+        this.filters = { 
+            category: 'all', 
+            search: '',
+            yearMin: null,
+            yearMax: null,
+            kmMin: null,
+            kmMax: null,
+            brands: []
+        };
         this.currentSort = 'relevance';
     }
 
@@ -243,91 +251,299 @@ class UnidadesDisponibles {
         window.location.href = `detalleVehiculo.html?id=${vehicle.id}`;
     }
 
+    
     setupUI() {
-        // Categorías
+        console.log('🎛️ Configurando UI de filtros...');
+        
+        // Categorías superiores
         document.querySelectorAll('.category-item').forEach(item => {
             item.addEventListener('click', () => {
+                console.log('📂 Categoría clickeada:', item.dataset.category);
                 document.querySelectorAll('.category-item').forEach(c => c.classList.remove('active'));
                 item.classList.add('active');
                 this.filterByCategory(item.dataset.category);
             });
         });
-
-        // Búsqueda
+    
+        // Búsqueda mejorada
         const searchInput = document.getElementById('filter-search');
-        if (searchInput) {
+        const clearIcon = document.getElementById('clear-search');
+        const searchWrapper = searchInput?.parentElement;
+    
+        if (searchInput && clearIcon) {
             searchInput.addEventListener('input', this.debounce((e) => {
-                this.filters.search = e.target.value.toLowerCase();
+                const value = e.target.value.toLowerCase();
+                this.filters.search = value;
+                
+                console.log('🔍 Buscando:', value);
+                
+                // Mostrar/ocultar icono de limpiar
+                if (value) {
+                    clearIcon.classList.add('show');
+                    searchWrapper?.classList.add('has-text');
+                } else {
+                    clearIcon.classList.remove('show');
+                    searchWrapper?.classList.remove('has-text');
+                }
+                
                 this.applyFilters();
             }, 300));
+    
+            // Botón limpiar búsqueda
+            clearIcon.addEventListener('click', () => {
+                searchInput.value = '';
+                this.filters.search = '';
+                clearIcon.classList.remove('show');
+                searchWrapper?.classList.remove('has-text');
+                this.applyFilters();
+                searchInput.focus();
+            });
         }
-
+    
         // Ordenamiento
         this.setupSorting();
+        
+        // Filtros de rango
+        this.setupRangeFilters();
+        
+        console.log('✅ UI configurada correctamente');
     }
-
+    
+    setupRangeFilters() {
+        console.log('📊 Configurando filtros de rango...');
+        
+        // Filtro de año
+        const yearMin = document.getElementById('year-min');
+        const yearMax = document.getElementById('year-max');
+        
+        if (yearMin && yearMax) {
+            const updateYearFilter = () => {
+                const min = parseInt(yearMin.value) || null;
+                const max = parseInt(yearMax.value) || null;
+                
+                this.filters.yearMin = min;
+                this.filters.yearMax = max;
+                
+                console.log('📅 Filtro año:', min, '-', max);
+                this.applyFilters();
+            };
+            
+            yearMin.addEventListener('input', this.debounce(updateYearFilter, 500));
+            yearMax.addEventListener('input', this.debounce(updateYearFilter, 500));
+        }
+        
+        // Filtro de kilómetros
+        const kmMin = document.getElementById('km-min');
+        const kmMax = document.getElementById('km-max');
+        
+        if (kmMin && kmMax) {
+            const updateKmFilter = () => {
+                const min = parseInt(kmMin.value) || null;
+                const max = parseInt(kmMax.value) || null;
+                
+                this.filters.kmMin = min;
+                this.filters.kmMax = max;
+                
+                console.log('🛣️ Filtro km:', min, '-', max);
+                this.applyFilters();
+            };
+            
+            kmMin.addEventListener('input', this.debounce(updateKmFilter, 500));
+            kmMax.addEventListener('input', this.debounce(updateKmFilter, 500));
+        }
+        
+        // Filtros de marca (checkboxes)
+        document.querySelectorAll('input[name="marca"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                this.filters.brands = Array.from(document.querySelectorAll('input[name="marca"]:checked'))
+                    .map(cb => cb.value);
+                
+                console.log('🏢 Marcas seleccionadas:', this.filters.brands);
+                this.applyFilters();
+            });
+        });
+        
+        console.log('✅ Filtros de rango configurados');
+    }
+    
+    filterByCategory(category) {
+        console.log('🔄 Filtrando por categoría:', category);
+        this.filters.category = category;
+        this.applyFilters();
+    }
+    
+    applyFilters() {
+        console.log('🔍 Aplicando filtros:', this.filters);
+        
+        this.filtered = this.vehicles.filter(v => {
+            // Categoría
+            if (this.filters.category && this.filters.category !== 'all') {
+                if (v.type !== this.filters.category) {
+                    return false;
+                }
+            }
+    
+            // Búsqueda por texto
+            if (this.filters.search) {
+                const searchText = this.filters.search.toLowerCase();
+                const vehicleText = `${v.brand} ${v.model} ${v.full_name} ${v.description}`.toLowerCase();
+                if (!vehicleText.includes(searchText)) {
+                    return false;
+                }
+            }
+            
+            // Filtro de año
+            if (this.filters.yearMin && v.year < this.filters.yearMin) {
+                return false;
+            }
+            if (this.filters.yearMax && v.year > this.filters.yearMax) {
+                return false;
+            }
+            
+            // Filtro de kilómetros
+            if (this.filters.kmMin && v.kilometers < this.filters.kmMin) {
+                return false;
+            }
+            if (this.filters.kmMax && v.kilometers > this.filters.kmMax) {
+                return false;
+            }
+            
+            // Filtro de marcas
+            if (this.filters.brands && this.filters.brands.length > 0) {
+                const vehicleBrand = v.brand.toLowerCase();
+                const hasMatchingBrand = this.filters.brands.some(brand => 
+                    vehicleBrand.includes(brand) || brand.includes(vehicleBrand)
+                );
+                if (!hasMatchingBrand) {
+                    return false;
+                }
+            }
+    
+            return true;
+        });
+    
+        console.log(`✅ Filtrados: ${this.filtered.length} de ${this.vehicles.length} vehículos`);
+        
+        this.applySort();
+        this.renderVehicles();
+    }
+    
     setupSorting() {
         const sortBtn = document.querySelector('.sort-btn');
         const sortMenu = document.querySelector('.sort-menu');
         const sortOptions = document.querySelectorAll('.sort-option');
-
+    
         if (sortBtn && sortMenu) {
-            sortBtn.addEventListener('click', () => {
-                sortMenu.style.display = sortMenu.style.display === 'block' ? 'none' : 'block';
+            sortBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isVisible = sortMenu.style.display === 'block';
+                sortMenu.style.display = isVisible ? 'none' : 'block';
+            });
+    
+            // Cerrar al hacer click fuera
+            document.addEventListener('click', () => {
+                sortMenu.style.display = 'none';
             });
         }
-
+    
         sortOptions.forEach(option => {
             option.addEventListener('click', () => {
                 this.currentSort = option.dataset.sort;
+                console.log('🔀 Orden cambiado a:', this.currentSort);
+                
                 this.applySort();
-                sortMenu.style.display = 'none';
+                this.renderVehicles();
+                
+                if (sortMenu) sortMenu.style.display = 'none';
                 
                 sortOptions.forEach(o => o.classList.remove('active'));
                 option.classList.add('active');
             });
         });
     }
-
-    filterByCategory(category) {
-        this.filters.category = category;
-        this.applyFilters();
-    }
-
-    applyFilters() {
-        this.filtered = this.vehicles.filter(v => {
-            // Categoría
-            if (this.filters.category && this.filters.category !== 'all') {
-                if (v.type !== this.filters.category) return false;
-            }
-
-            // Búsqueda
-            if (this.filters.search) {
-                const text = `${v.brand} ${v.model} ${v.full_name}`.toLowerCase();
-                if (!text.includes(this.filters.search)) return false;
-            }
-
-            return true;
-        });
-
-        this.applySort();
-        this.renderVehicles();
-    }
-
+    
     applySort() {
+        console.log('🔀 Aplicando orden:', this.currentSort);
+        
         this.filtered.sort((a, b) => {
             switch (this.currentSort) {
-                case 'year-desc': return b.year - a.year;
-                case 'year-asc': return a.year - b.year;
-                case 'km-asc': return a.kilometers - b.kilometers;
-                case 'km-desc': return b.kilometers - a.kilometers;
+                case 'year-desc':
+                    return b.year - a.year;
+                case 'year-asc':
+                    return a.year - b.year;
+                case 'km-asc':
+                    return a.kilometers - b.kilometers;
+                case 'km-desc':
+                    return b.kilometers - a.kilometers;
                 default: // relevance
+                    // Destacados primero
                     if (a.is_featured && !b.is_featured) return -1;
                     if (!a.is_featured && b.is_featured) return 1;
-                    return 0;
+                    // Luego por año (más nuevo primero)
+                    return b.year - a.year;
             }
         });
     }
+    
+    setupRangeFilters() {
+        // Filtro de año
+        const yearMin = document.getElementById('year-min');
+        const yearMax = document.getElementById('year-max');
+        const yearSlider = document.getElementById('year-slider');
+        
+        if (yearMin && yearMax && yearSlider) {
+            const updateYearFilter = () => {
+                const min = parseInt(yearMin.value) || 2000;
+                const max = parseInt(yearMax.value) || new Date().getFullYear();
+                
+                this.filters.yearMin = min;
+                this.filters.yearMax = max;
+                this.applyFilters();
+            };
+            
+            yearMin.addEventListener('change', updateYearFilter);
+            yearMax.addEventListener('change', updateYearFilter);
+            yearSlider.addEventListener('input', (e) => {
+                yearMax.value = e.target.value;
+                updateYearFilter();
+            });
+        }
+        
+        // Filtro de kilómetros
+        const kmMin = document.getElementById('km-min');
+        const kmMax = document.getElementById('km-max');
+        const kmSlider = document.getElementById('km-slider');
+        
+        if (kmMin && kmMax && kmSlider) {
+            const updateKmFilter = () => {
+                const min = parseInt(kmMin.value) || 0;
+                const max = parseInt(kmMax.value) || 1000000;
+                
+                this.filters.kmMin = min;
+                this.filters.kmMax = max;
+                this.applyFilters();
+            };
+            
+            kmMin.addEventListener('change', updateKmFilter);
+            kmMax.addEventListener('change', updateKmFilter);
+            kmSlider.addEventListener('input', (e) => {
+                kmMax.value = e.target.value;
+                updateKmFilter();
+            });
+        }
+        
+        // Filtros de marca (checkboxes)
+        document.querySelectorAll('input[name="marca"]').forEach(checkbox => {
+            checkbox.addEventListener('change', () => {
+                this.filters.brands = Array.from(document.querySelectorAll('input[name="marca"]:checked'))
+                    .map(cb => cb.value);
+                this.applyFilters();
+            });
+        });
+    }
+    
+    
+   
 
     checkURLFilters() {
         const params = new URLSearchParams(window.location.search);
@@ -655,3 +871,22 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 console.log('✅ Sistema Unificado Larrosa Camiones cargado');
+
+// ===== FUNCIONES GLOBALES PARA FILTROS =====
+window.toggleFilterGroup = function(titleElement) {
+    const group = titleElement.closest('.filter-group');
+    const content = group.querySelector('.filter-content');
+    const icon = titleElement.querySelector('.collapse-icon');
+    
+    // Toggle clase expanded
+    group.classList.toggle('expanded');
+    
+    // Animación suave
+    if (group.classList.contains('expanded')) {
+        content.style.maxHeight = content.scrollHeight + 'px';
+        if (icon) icon.style.transform = 'rotate(180deg)';
+    } else {
+        content.style.maxHeight = '0';
+        if (icon) icon.style.transform = 'rotate(0deg)';
+    }
+};
