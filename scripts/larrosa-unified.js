@@ -235,13 +235,62 @@ createCard(v) {
     card.querySelector('.vehicle-title').textContent = v.full_name;
     card.querySelector('.vehicle-subtitle').textContent = `${v.type_name || 'Tractor'} ${v.traccion || '4x2'}`;
     
-    // Especificaciones
+    // ===== ESPECIFICACIONES CON RUTAS CORREGIDAS =====
     card.querySelector('.spec-km').textContent = `${this.formatNumber(v.kilometers)} Km`;
     card.querySelector('.spec-year').textContent = v.year;
     card.querySelector('.spec-transmission').textContent = v.transmission || 'Manual';
     card.querySelector('.spec-color').textContent = v.color || 'Blanco';
     
-    // Footer
+    // ===== CORREGIR RUTAS DE ICONOS =====
+    // Las imágenes del template ya tienen las rutas correctas,
+    // pero si quieres asegurar que funcionen desde el JS:
+    
+    const iconKm = card.querySelector('.vehicle-spec img[alt="Km"]');
+    if (iconKm) {
+        iconKm.src = '../assets/imagenes/camiones-logos/Kilometros.png';
+        iconKm.onerror = function() {
+            console.error('❌ No se cargó Kilometros.png');
+            this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><text y="12" font-size="14">🛣️</text></svg>';
+        };
+    }
+    
+    const iconYear = card.querySelector('.vehicle-spec img[alt="Año"]');
+    if (iconYear) {
+        iconYear.src = '../assets/imagenes/camiones-logos/Ano.png';
+        iconYear.onerror = function() {
+            console.error('❌ No se cargó Ano.png');
+            this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><text y="12" font-size="14">📅</text></svg>';
+        };
+    }
+    
+    const iconTrans = card.querySelector('.vehicle-spec img[alt="Trans"]');
+    if (iconTrans) {
+        iconTrans.src = '../assets/imagenes/camiones-logos/VELOCIDAD.png';
+        iconTrans.onerror = function() {
+            console.error('❌ No se cargó VELOCIDAD.png');
+            this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><text y="12" font-size="14">⚙️</text></svg>';
+        };
+    }
+    
+    const iconColor = card.querySelector('.vehicle-spec img[alt="Color"]');
+    if (iconColor) {
+        iconColor.src = '../assets/imagenes/camiones-logos/Color.png';
+        iconColor.onerror = function() {
+            console.error('❌ No se cargó Color.png');
+            this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><text y="12" font-size="14">🎨</text></svg>';
+        };
+    }
+    
+    // Footer - ubicación
+    const locationIcon = card.querySelector('.location-icon');
+    if (locationIcon) {
+        locationIcon.src = '../assets/imagenes/camiones-logos/Argentina.png';
+        locationIcon.onerror = function() {
+            console.error('❌ No se cargó Argentina.png');
+            this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><text y="12" font-size="14">🇦🇷</text></svg>';
+        };
+    }
+    
     card.querySelector('.location-text').textContent = v.location;
     
     // Precio (si existe)

@@ -1,84 +1,29 @@
-/* ===== DETALLE VEHÍCULO CSS - LAYOUT REORGANIZADO ===== */
+/* ===== DETALLE VEHÍCULO - ULTRA COMPACTO PARA VER MAPA ===== */
 
 .vehicle-detail-main {
-    padding-top: 98px; /* Ajustado para navbar más alto */
+    padding-top: 80px;
     background: #f8f9fa;
     min-height: 100vh;
 }
 
-/* Vehicle Detail Section */
 .vehicle-detail-section {
-    padding: 40px 0;
+    padding: 25px 0 12px;
     background: var(--primary-white);
 }
 
-/* ===== HEADER COMPLETAMENTE VACÍO ===== */
-.vehicle-header {
-    display: none; /* OCULTAR: Todo va a la columna derecha */
+.vehicle-detail-section .container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
-.vehicle-header-actions {
-    display: none; /* OCULTAR: Se mueve a la columna derecha */
-}
-
-.action-btn {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 8px 12px;
-    background: transparent;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    color: var(--secondary-gray);
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: var(--transition-fast);
-}
-
-.action-btn:hover {
-    background: #f8f9fa;
-    border-color: var(--primary-blue);
-    color: var(--primary-blue);
-}
-
-/* Vehicle Meta - YA DEFINIDO EN EL HEADER GRID */
-
-.vehicle-status-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: #fef3cd;
-    color: #856404;
-    padding: 6px 10px; /* REDUCIDO: menos padding */
-    border-radius: 15px; /* REDUCIDO: menos redondeado */
-    font-size: 0.8rem; /* REDUCIDO: texto más pequeño */
-    font-weight: 600;
-}
-
-.vehicle-status-badge i {
-    color: #f0ad4e;
-    font-size: 0.9rem; /* AGREGADO: icono más pequeño */
-}
-
-.vehicle-location {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--secondary-gray);
-    font-size: 0.95rem;
-}
-
-.vehicle-location i {
-    color: var(--primary-blue);
-}
-
-/* ===== NUEVO LAYOUT - IMAGEN IZQUIERDA + INFO DERECHA ===== */
+/* ===== LAYOUT PRINCIPAL ===== */
 .vehicle-detail-layout {
     display: grid;
-    grid-template-columns: 1fr 400px; /* CAMBIADO: Columna derecha más ancha y fija */
-    gap: 30px; /* AUMENTADO: Más separación */
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
     align-items: start;
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
 }
 
@@ -86,25 +31,24 @@
 .vehicle-images-column {
     display: flex;
     flex-direction: column;
-    gap: 15px; /* AUMENTADO: Más separación */
-    height: 100%;
+    gap: 8px;
+    height: fit-content;
 }
 
 .main-image-container {
     position: relative;
     background: #f8f9fa;
-    border-radius: 0; /* CAMBIADO: Sin bordes redondeados */
+    border-radius: 8px;
     overflow: hidden;
-    height: 450px; /* AUMENTADO: Imagen más grande */
-    flex: 1;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    height: 580px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .main-vehicle-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transition-medium);
+    transition: transform 0.3s ease;
 }
 
 .image-navigation {
@@ -115,9 +59,9 @@
     transform: translateY(-50%);
     display: flex;
     justify-content: space-between;
-    padding: 0 15px;
+    padding: 0 12px;
     opacity: 0;
-    transition: var(--transition-fast);
+    transition: opacity 0.3s ease;
 }
 
 .main-image-container:hover .image-navigation {
@@ -125,17 +69,18 @@
 }
 
 .nav-btn {
-    width: 40px;
-    height: 40px;
-    background: rgba(0, 0, 0, 0.7);
-    color: var(--primary-white);
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
     border: none;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: var(--transition-fast);
+    transition: all 0.3s ease;
+    font-size: 14px;
 }
 
 .nav-btn:hover {
@@ -143,21 +88,22 @@
     transform: scale(1.1);
 }
 
+/* Thumbnails */
 .thumbnails-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* CAMBIADO: 4 thumbnails */
-    gap: 10px; /* AUMENTADO: Más separación */
-    height: 100px; /* AUMENTADO: Thumbnails más grandes */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    height: 75px;
 }
 
 .thumbnail {
     aspect-ratio: 4/3;
-    border-radius: 0; /* CAMBIADO: Sin bordes redondeados */
+    border-radius: 6px;
     overflow: hidden;
     cursor: pointer;
     border: 2px solid transparent;
-    transition: var(--transition-fast);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .thumbnail.active {
@@ -165,7 +111,7 @@
 }
 
 .thumbnail:hover {
-    border-color: var(--secondary-light-blue);
+    border-color: #6b8dd6;
 }
 
 .thumbnail img {
@@ -174,41 +120,40 @@
     object-fit: cover;
 }
 
-/* ===== COLUMNA DERECHA - CON HEADER INTEGRADO ARRIBA ===== */
+/* ===== COLUMNA DERECHA - MISMA ALTURA TOTAL ===== */
 .vehicle-info-column {
     display: flex;
     flex-direction: column;
     gap: 0;
     background: var(--primary-white);
-    border-radius: 0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     overflow: hidden;
-    height: fit-content;
-    position: sticky;
-    top: 120px;
+    height: 663px; /* Mantener altura total */
 }
 
-/* ===== HEADER DE INFO CON BOTONES REORGANIZADOS - COLUMNA DERECHA ===== */
+/* ===== HEADER SÚPER COMPACTO ===== */
 .vehicle-info-header {
-    padding: 20px;
+    padding: 12px 15px 10px;
     background: var(--primary-white);
     border-bottom: 1px solid #e5e7eb;
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
-    gap: 15px 20px;
+    gap: 6px 12px;
     align-items: start;
+    flex-shrink: 0;
 }
 
 .vehicle-title-section {
     grid-column: 1;
-    grid-row: 1 / 3; /* CAMBIADO: Ocupa ambas filas */
+    grid-row: 1 / 3;
 }
 
 .vehicle-title-main {
-    font-size: 2rem;
-    color: var(--secondary-gray);
-    margin: 0 0 8px 0;
+    font-size: 1.5rem;
+    color: #4a5568;
+    margin: 0 0 5px 0;
     font-weight: 400;
     line-height: 1.2;
 }
@@ -216,41 +161,93 @@
 .vehicle-meta-new {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 4px;
 }
 
-/* BOTONES SHARE/PRINT EN LA PRIMERA FILA DERECHA */
+.vehicle-status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: #fef3cd;
+    color: #856404;
+    padding: 3px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    width: fit-content;
+}
+
+.vehicle-status-badge i {
+    color: #f0ad4e;
+    font-size: 0.75rem;
+}
+
+.vehicle-location {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    color: #718096;
+    font-size: 0.8rem;
+}
+
+.vehicle-location i {
+    color: var(--primary-blue);
+    font-size: 0.85rem;
+}
+
+/* Botones superiores más pequeños */
 .vehicle-header-actions-new {
     grid-column: 2;
     grid-row: 1;
     display: flex;
-    gap: 8px;
+    gap: 5px;
     justify-self: end;
-    align-self: start;
 }
 
-/* BOTÓN CONSULTAR PRECIO EN LA SEGUNDA FILA DERECHA - MÁS PEQUEÑO */
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 5px 9px;
+    background: transparent;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    color: #6b7280;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    background: #f3f4f6;
+    border-color: var(--primary-blue);
+    color: var(--primary-blue);
+}
+
+.action-btn i {
+    font-size: 0.75rem;
+}
+
+/* Botón CONSULTAR PRECIO */
 .vehicle-price-section {
     grid-column: 2;
     grid-row: 2;
     display: flex;
     justify-content: flex-end;
-    align-items: flex-start;
 }
 
 .price-btn-new {
-    background: var(--primary-white);
-    color: var(--primary-black);
-    border: 2px solid #d1d5db;
-    padding: 8px 16px; /* REDUCIDO: botón más pequeño */
-    font-size: 0.85rem; /* REDUCIDO: texto más pequeño */
+    background: white;
+    color: #1a202c;
+    border: 2px solid #e2e8f0;
+    padding: 6px 13px;
+    font-size: 0.75rem;
     font-weight: 700;
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: all 0.2s ease;
     text-transform: uppercase;
-    letter-spacing: 0.5px; /* REDUCIDO: menos espaciado */
-    border-radius: 0;
-    white-space: nowrap; /* AGREGADO: evitar salto de línea */
+    letter-spacing: 0.5px;
+    border-radius: 4px;
 }
 
 .price-btn-new:hover {
@@ -258,83 +255,89 @@
     border-color: var(--primary-blue);
 }
 
-/* ===== ESPECIFICACIONES - SIN BORDE SUPERIOR (AHORA ES EL PRIMER ELEMENTO) ===== */
+/* ===== ESPECIFICACIONES ULTRA COMPACTAS ===== */
 .all-specs {
-    padding: 20px;
-    background: var(--primary-white);
-    border: 1px solid #d1d5db; /* AGREGADO: borde completo */
-    border-radius: 0;
+    padding: 8px 15px 10px;
+    background: white;
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 .all-specs h3 {
-    color: var(--primary-black);
-    font-size: 1rem; /* REDUCIDO: título más pequeño */
+    color: #1a202c;
+    font-size: 0.8rem;
     font-weight: 600;
-    margin: 0 0 15px 0;
-    padding: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border-bottom: 2px solid var(--primary-blue);
-    padding-bottom: 8px;
+    margin: 0 0 5px 0;
+    padding: 0 0 3px 0;
+    text-transform: none;
+    letter-spacing: 0;
+    border-bottom: 2px solid #e2e8f0;
 }
 
 .all-specs h3:not(:first-child) {
-    margin-top: 20px; /* REDUCIDO: menos separación */
+    margin-top: 8px;
 }
 
-/* ===== LÍNEAS DE ESPECIFICACIONES ===== */
+/* ===== LÍNEAS DE ESPECIFICACIONES MÁS COMPACTAS ===== */
 .spec-line {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 0; /* AUMENTADO: Más padding vertical */
-    border-bottom: 1px solid #f3f4f6;
-    font-size: 0.95rem;
+    padding: 4px 0;
+    border-bottom: 1px solid #f7fafc;
+    font-size: 0.78rem;
+    line-height: 1.2;
 }
 
 .spec-line:last-child {
     border-bottom: none;
+    padding-bottom: 0;
 }
 
 .spec-label {
-    color: var(--secondary-gray);
-    font-weight: 500;
+    color: #718096;
+    font-weight: 400;
     flex: 1;
 }
 
 .spec-value {
-    color: var(--primary-black);
+    color: #1a202c;
     font-weight: 600;
     text-align: right;
     flex: 1;
 }
 
-/* ===== INFORMACIÓN DE LA EMPRESA + MAPA - COMO EN LA IMAGEN ===== */
+/* ===== EMPRESA + MAPA - MÁS ESPACIO PARA EL MAPA ===== */
 .company-address {
-    color: var(--secondary-gray);
-    font-size: 0.9rem;
-    margin: 15px 0 0 0; /* CAMBIADO: solo margen superior */
+    color: #718096;
+    font-size: 0.78rem;
+    margin: 6px 0 0 0;
     text-align: left;
-    font-style: italic;
-    padding-top: 15px; /* AGREGADO: padding superior */
-    border-top: 1px solid #e5e7eb; /* AGREGADO: línea separadora como en la imagen */
+    font-style: normal;
+    padding-top: 6px;
+    border-top: 1px solid #e2e8f0;
+    font-weight: 500;
+    line-height: 1.3;
 }
 
-/* ===== CONTENEDOR DEL MAPA - PEGADO A LA EMPRESA ===== */
 .map-container {
-    margin-top: 15px; /* REDUCIDO: pegado a la dirección */
-    border: 1px solid #e5e7eb;
-    border-radius: 0;
+    margin-top: 6px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .map-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 12px;
-    background: #f8f9fa;
-    border-bottom: 1px solid #e5e7eb;
+    padding: 4px 8px;
+    background: #f7fafc;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .map-tabs {
@@ -343,41 +346,43 @@
 }
 
 .map-tab {
-    padding: 4px 10px;
+    padding: 2px 6px;
     background: transparent;
     border: none;
-    border-radius: 4px;
-    font-size: 0.75rem;
+    border-radius: 3px;
+    font-size: 0.65rem;
     cursor: pointer;
-    transition: var(--transition-fast);
-    color: var(--secondary-gray);
+    transition: all 0.2s ease;
+    color: #718096;
+    font-weight: 500;
 }
 
 .map-tab.active {
-    background: var(--primary-white);
-    color: var(--primary-black);
+    background: white;
+    color: #1a202c;
     font-weight: 600;
 }
 
 .fullscreen-btn {
     background: none;
     border: none;
-    color: var(--secondary-gray);
+    color: #718096;
     cursor: pointer;
-    padding: 4px;
-    border-radius: 4px;
-    transition: var(--transition-fast);
-    font-size: 0.8rem;
+    padding: 2px;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+    font-size: 0.7rem;
 }
 
 .fullscreen-btn:hover {
-    background: var(--primary-white);
+    background: white;
     color: var(--primary-blue);
 }
 
+/* ===== MAPA MÁS GRANDE Y VISIBLE ===== */
 .map-iframe {
     position: relative;
-    height: 180px;
+    height: 180px; /* AUMENTADO de 150px a 180px */
     overflow: hidden;
 }
 
@@ -389,384 +394,159 @@
 
 .map-controls {
     position: absolute;
-    right: 8px; /* REDUCIDO: Más cerca del borde */
-    bottom: 8px; /* REDUCIDO: Más cerca del borde */
+    right: 6px;
+    bottom: 6px;
     display: flex;
     flex-direction: column;
     gap: 2px;
 }
 
 .map-control-btn {
-    width: 28px; /* REDUCIDO: Botones más pequeños */
-    height: 28px; /* REDUCIDO: Botones más pequeños */
-    background: var(--primary-white);
-    border: 1px solid #d1d5db;
-    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: var(--transition-fast);
-    font-size: 0.75rem; /* REDUCIDO: Iconos más pequeños */
-    color: var(--secondary-gray);
+    transition: all 0.2s ease;
+    font-size: 0.65rem;
+    color: #4a5568;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .map-control-btn:hover {
-    background: #f8f9fa;
+    background: #f7fafc;
     color: var(--primary-blue);
+    border-color: var(--primary-blue);
 }
 
-/* ===== CONTACT SECTION - SIN CAMBIOS ===== */
+/* ===== CONTACT SECTION ===== */
 .contact-section {
-    padding: 20px 0;
-    background: var(--primary-white);
+    padding: 40px 0;
+    background: white;
     border-top: 1px solid #e5e7eb;
+    margin-top: 40px;
 }
 
 .contact-buttons-main {
     display: flex;
     justify-content: center;
     gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .contact-buttons-main .contact-btn {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
+    gap: 10px;
+    padding: 14px 28px;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: var(--transition-fast);
+    transition: all 0.3s ease;
     text-decoration: none;
-    min-width: 140px;
+    min-width: 150px;
     justify-content: center;
 }
 
 .contact-buttons-main .whatsapp-btn {
     background: #25d366;
-    color: var(--primary-white);
+    color: white;
 }
 
 .contact-buttons-main .whatsapp-btn:hover {
-    background: #128c7e;
+    background: #20ba5a;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
 }
 
 .contact-buttons-main .phone-btn {
     background: var(--primary-blue);
-    color: var(--primary-white);
+    color: white;
 }
 
 .contact-buttons-main .phone-btn:hover {
     background: var(--secondary-dark-blue);
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(61, 95, 172, 0.3);
 }
 
 .contact-buttons-main .email-btn {
-    background: #6c757d;
-    color: var(--primary-white);
+    background: #6b7280;
+    color: white;
 }
 
 .contact-buttons-main .email-btn:hover {
-    background: #495057;
+    background: #4b5563;
     transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(107, 114, 128, 0.3);
 }
 
-/* ===== RELATED VEHICLES - SIN CAMBIOS ===== */
-.related-vehicles-section {
-    padding: 40px 0;
-    background: #f8f9fa;
-}
-
-.related-vehicles-section h2 {
-    font-size: 2rem;
-    color: var(--primary-black);
-    margin-bottom: 30px;
-    text-align: left;
-    margin-left: 20px;
-}
-
-.related-vehicles-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 20px;
-}
-
-/* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 1024px) {
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1200px) {
     .vehicle-detail-layout {
-        grid-template-columns: 1fr 350px; /* REDUCIDO: Columna derecha más pequeña */
-        gap: 25px;
-    }
-    
-    .main-image-container {
-        height: 400px; /* REDUCIDO: Imagen más pequeña */
-    }
-    
-    .thumbnails-container {
-        height: 80px; /* REDUCIDO: Thumbnails más pequeños */
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
     
     .vehicle-info-column {
-        position: static; /* REMOVIDO: Sin posición fija en tablet */
+        order: -1;
+        height: auto;
+        max-height: none;
+    }
+    
+    .all-specs {
+        overflow-y: auto;
+        max-height: 500px;
+    }
+    
+    .main-image-container {
+        height: 500px;
     }
 }
 
 @media (max-width: 768px) {
     .vehicle-detail-main {
-        padding-top: 98px; /* MANTENER: Compensación navbar */
-    }
-    
-    .vehicle-detail-layout {
-        grid-template-columns: 1fr; /* CAMBIADO: Una sola columna */
-        gap: 20px;
-    }
-    
-    /* ===== REORDENAR EN MÓVIL: INFO ARRIBA, IMAGEN ABAJO ===== */
-    .vehicle-info-column {
-        position: static; /* REMOVIDO: Sin posición fija */
-        order: -1; /* AGREGADO: Info arriba en móvil */
-    }
-    
-    .vehicle-images-column {
-        order: 1; /* AGREGADO: Imagen abajo en móvil */
-    }
-    
-    /* ===== HEADER DE INFO RESPONSIVE - GRID SIMPLIFICADO ===== */
-    .vehicle-info-header {
-        grid-template-columns: 1fr; /* UNA COLUMNA en móvil */
-        grid-template-rows: auto auto auto; /* TRES FILAS en móvil */
-        gap: 15px;
-        padding: 15px;
-    }
-    
-    .vehicle-title-section {
-        grid-column: 1;
-        grid-row: 1;
+        padding-top: 80px;
     }
     
     .vehicle-title-main {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
     }
     
-    .vehicle-meta-new {
-        gap: 6px;
+    .vehicle-info-header {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
     }
     
-    /* BOTONES EN LA SEGUNDA FILA */
     .vehicle-header-actions-new {
         grid-column: 1;
         grid-row: 2;
-        justify-self: center; /* CENTRADO en móvil */
-        gap: 6px;
+        justify-self: start;
     }
     
-    .action-btn {
-        padding: 6px 10px;
-        font-size: 0.75rem;
-    }
-    
-    /* PRECIO EN LA TERCERA FILA - CENTRADO Y MÁS GRANDE EN MÓVIL */
     .vehicle-price-section {
         grid-column: 1;
         grid-row: 3;
-        justify-content: center; /* CENTRADO en móvil */
-    }
-    
-    .price-btn-new {
-        padding: 10px 20px; /* MÁS GRANDE en móvil */
-        font-size: 0.9rem; /* LIGERAMENTE más grande en móvil */
+        justify-content: center;
     }
     
     .thumbnails-container {
-        grid-template-columns: repeat(3, 1fr); /* REDUCIDO: 3 thumbnails en móvil */
+        grid-template-columns: repeat(3, 1fr);
+        height: 70px;
     }
     
     .main-image-container {
-        height: 300px; /* REDUCIDO: Imagen más pequeña en móvil */
-    }
-    
-    .all-specs {
-        padding: 15px; /* REDUCIDO: Menos padding en móvil */
+        height: 400px;
     }
     
     .map-iframe {
-        height: 150px; /* REDUCIDO: Mapa más pequeño en móvil */
-    }
-    
-    .related-vehicles-grid {
-        grid-template-columns: repeat(2, 1fr); /* CAMBIADO: 2 columnas en móvil */
-    }
-}
-
-@media (max-width: 480px) {
-    /* ===== HEADER MÁS COMPACTO ===== */
-    .vehicle-header h1 {
-        font-size: 1.4rem; /* REDUCIDO: título aún más pequeño */
-        line-height: 1.3;
-    }
-    
-    .vehicle-header {
-        margin-bottom: 10px; /* REDUCIDO: menos margen */
-    }
-    
-    .vehicle-header-actions {
-        gap: 6px; /* REDUCIDO: botones más juntos */
-    }
-    
-    .action-btn {
-        padding: 6px 8px; /* REDUCIDO: botones más pequeños */
-        font-size: 0.75rem; /* REDUCIDO: texto más pequeño */
-    }
-    
-    /* ===== META MÁS COMPACTA ===== */
-    .vehicle-meta {
-        margin-bottom: 12px; /* REDUCIDO: menos margen */
-        gap: 6px; /* REDUCIDO: menos espacio */
-    }
-    
-    .vehicle-status-badge {
-        padding: 4px 8px; /* REDUCIDO: menos padding */
-        font-size: 0.75rem; /* REDUCIDO: texto más pequeño */
-    }
-    
-    .vehicle-location {
-        font-size: 0.8rem; /* REDUCIDO: texto más pequeño */
-    }
-    
-    /* ===== PRICE BUTTON COMPACTO ===== */
-    .price-section {
-        padding: 10px 12px; /* REDUCIDO: menos padding */
-    }
-    
-    .price-btn {
-        font-size: 0.85rem; /* REDUCIDO: texto más pequeño */
-    }
-    
-    /* ===== SPECS MÁS COMPACTAS ===== */
-    .spec-line {
-        flex-direction: column; /* CAMBIADO: Columna vertical en móviles pequeños */
-        align-items: flex-start;
-        gap: 2px; /* REDUCIDO: menos espacio */
-        padding: 6px 0; /* REDUCIDO: menos padding */
-    }
-    
-    .spec-value {
-        text-align: left; /* CAMBIADO: Alineado a la izquierda */
-        font-weight: 500;
-        font-size: 0.9rem; /* REDUCIDO: texto más pequeño */
-    }
-    
-    .spec-label {
-        font-size: 0.85rem; /* REDUCIDO: texto más pequeño */
-    }
-    
-    .all-specs {
-        padding: 12px; /* REDUCIDO: Menos padding */
-    }
-    
-    .all-specs h3 {
-        font-size: 0.9rem; /* REDUCIDO: títulos más pequeños */
-        margin-bottom: 10px; /* REDUCIDO: menos margen */
-    }
-    
-    .all-specs h3:not(:first-child) {
-        margin-top: 15px; /* REDUCIDO: menos separación */
-    }
-    
-    /* ===== COMPANY + MAPA COMPACTO ===== */
-    .company-address {
-        font-size: 0.8rem; /* REDUCIDO: texto más pequeño */
-        margin: 10px 0 0 0; /* REDUCIDO: menos margen */
-        padding-top: 10px; /* REDUCIDO: menos padding */
-    }
-    
-    .map-container {
-        margin-top: 10px; /* REDUCIDO: menos margen */
-    }
-    
-    .map-iframe {
-        height: 120px; /* REDUCIDO: Mapa muy pequeño */
-    }
-    
-    .thumbnails-container {
-        grid-template-columns: repeat(2, 1fr); /* REDUCIDO: 2 thumbnails */
-        height: 70px; /* REDUCIDO: Thumbnails más pequeños */
-    }
-    
-    .main-image-container {
-        height: 250px; /* REDUCIDO: imagen más pequeña */
-    }
-    
-    .related-vehicles-grid {
-        grid-template-columns: 1fr; /* CAMBIADO: 1 columna en móviles pequeños */
-    }
-}
-
-/* ===== MEJORAS ADICIONALES ===== */
-
-/* Efecto de sombra más suave para la info */
-.vehicle-info-column {
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-}
-
-/* Mejor separación visual entre secciones */
-.all-specs h3:first-child {
-    margin-top: 0;
-}
-
-/* Efecto hover en las líneas de especificaciones */
-.spec-line:hover {
-    background: #f8f9fa;
-    padding-left: 8px;
-    padding-right: 8px;
-    margin-left: -8px;
-    margin-right: -8px;
-    border-radius: 4px;
-}
-
-/* Transición suave para el sticky */
-.vehicle-info-column {
-    transition: all 0.3s ease;
-}
-
-/* Estados de focus mejorados */
-.nav-btn:focus,
-.action-btn:focus,
-.contact-btn:focus,
-.thumbnail:focus,
-.price-btn:focus {
-    outline: 2px solid var(--primary-blue);
-    outline-offset: 2px;
-}
-
-/* Print styles */
-@media print {
-    .vehicle-header-actions,
-    .contact-buttons-main,
-    .related-vehicles-section,
-    .nav-btn,
-    .map-controls {
-        display: none !important;
-    }
-    
-    .vehicle-detail-layout {
-        grid-template-columns: 1fr;
-        box-shadow: none;
-        border: 1px solid #000;
-    }
-    
-    .main-vehicle-image {
-        max-height: 400px;
-    }
-    
-    .vehicle-info-column {
-        position: static;
-        page-break-inside: avoid;
+        height: 130px;
     }
 }
