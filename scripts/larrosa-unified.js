@@ -197,55 +197,69 @@ class UnidadesDisponibles {
         if (counter) counter.textContent = this.filtered.length;
     }
 
-    createCard(v) {
-        const card = document.createElement('div');
-        card.className = 'vehicle-card fade-in';
-        card.dataset.vehicleId = v.id;
-        
-        const imageUrl = v.images[0] ? this.api.getImageUrl(v.images[0]) : LARROSA_CONFIG.PLACEHOLDER_IMAGE;
-        const statusClass = v.status.toLowerCase().includes('disponible') ? 'available' : 'reserved';
 
-        card.innerHTML = `
-            <div class="vehicle-image">
-                <img src="${imageUrl}" alt="${v.full_name}" loading="lazy"
-                     onerror="this.src='${LARROSA_CONFIG.PLACEHOLDER_IMAGE}'">
-                <div class="vehicle-status ${statusClass}">${v.status}</div>
-                ${v.is_featured ? '<div class="vehicle-featured">⭐ Destacado</div>' : ''}
-            </div>
-            <div class="vehicle-content">
-                <h3 class="vehicle-title">${v.full_name}</h3>
-                <p class="vehicle-subtitle">${v.description}</p>
-                <div class="vehicle-specs">
-                    <div class="vehicle-spec">
-                        <span class="vehicle-spec-icon">📅</span>
-                        <span class="vehicle-spec-value">${v.year}</span>
-                    </div>
-                    <div class="vehicle-spec">
-                        <span class="vehicle-spec-icon">🛣️</span>
-                        <span class="vehicle-spec-value">${this.formatNumber(v.kilometers)} km</span>
-                    </div>
-                    <div class="vehicle-spec">
-                        <span class="vehicle-spec-icon">⚙️</span>
-                        <span class="vehicle-spec-value">${v.transmission}</span>
-                    </div>
-                    <div class="vehicle-spec">
-                        <span class="vehicle-spec-icon">🔋</span>
-                        <span class="vehicle-spec-value">${v.power} HP</span>
-                    </div>
-                </div>
-            </div>
-            <div class="vehicle-footer">
-                <div class="vehicle-location">
-                    <span>🇦🇷</span>
-                    <span>${v.location}</span>
-                </div>
-            </div>
-        `;
+// USA ESTA VERSIÓN CUANDO TENGAS LOS ARCHIVOS PNG EN assets/imagenes/
 
-        card.addEventListener('click', () => this.goToDetail(v));
-        return card;
+// REEMPLAZA createCard - Para carpeta "camiones-logos" (sin espacio)
+// PRIMERO: Renombra la carpeta "camiones logos" a "camiones-logos"
+
+
+// REEMPLAZA createCard en larrosa-unified.js
+// Esta versión usa el template HTML con las imágenes ya definidas
+
+createCard(v) {
+    // Obtener el template del HTML
+    const template = document.getElementById('vehicle-card-template');
+    if (!template) {
+        console.error('❌ Template no encontrado');
+        return document.createElement('div');
     }
-
+    
+    // Clonar el template
+    const card = template.content.cloneNode(true).firstElementChild;
+    
+    // Configurar data attributes
+    card.dataset.vehicleId = v.id;
+    card.dataset.vehicleData = JSON.stringify(v);
+    
+    // Obtener URL de la imagen principal
+    const imageUrl = v.images[0] ? this.api.getImageUrl(v.images[0]) : LARROSA_CONFIG.PLACEHOLDER_IMAGE;
+    
+    // Llenar datos en el template
+    card.querySelector('.vehicle-main-img').src = imageUrl;
+    card.querySelector('.vehicle-main-img').alt = v.full_name;
+    card.querySelector('.vehicle-main-img').onerror = function() {
+        this.src = LARROSA_CONFIG.PLACEHOLDER_IMAGE;
+    };
+    
+    card.querySelector('.vehicle-title').textContent = v.full_name;
+    card.querySelector('.vehicle-subtitle').textContent = `${v.type_name || 'Tractor'} ${v.traccion || '4x2'}`;
+    
+    // Especificaciones
+    card.querySelector('.spec-km').textContent = `${this.formatNumber(v.kilometers)} Km`;
+    card.querySelector('.spec-year').textContent = v.year;
+    card.querySelector('.spec-transmission').textContent = v.transmission || 'Manual';
+    card.querySelector('.spec-color').textContent = v.color || 'Blanco';
+    
+    // Footer
+    card.querySelector('.location-text').textContent = v.location;
+    
+    // Precio (si existe)
+    const priceElement = card.querySelector('.vehicle-price');
+    if (v.price) {
+        priceElement.textContent = `$${this.formatNumber(v.price)}`;
+    } else {
+        priceElement.style.display = 'none';
+    }
+    
+    // Código
+    card.querySelector('.vehicle-code').textContent = `Cod: ${v.id}`;
+    
+    // Event listener para ir al detalle
+    card.addEventListener('click', () => this.goToDetail(v));
+    
+    return card;
+}
     goToDetail(vehicle) {
         sessionStorage.setItem('currentVehicle', JSON.stringify(vehicle));
         window.location.href = `detalleVehiculo.html?id=${vehicle.id}`;

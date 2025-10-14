@@ -890,6 +890,51 @@
     </footer>
 
     <script src="../scripts/larrosa-unified.js"></script>
-
+<!-- Template para las cards de vehículos -->
+<template id="vehicle-card-template">
+    <div class="vehicle-card fade-in">
+        <div class="vehicle-image">
+            <img class="vehicle-main-img" src="" alt="" loading="lazy">
+        </div>
+        <div class="vehicle-content">
+            <h3 class="vehicle-title"></h3>
+            <p class="vehicle-subtitle"></p>
+            <div class="vehicle-specs">
+                <div class="vehicle-spec">
+                    <img src="../assets/imagenes/camiones-logos/Kilometros.png" class="vehicle-spec-icon" alt="Km" 
+                         onerror="this.style.display='none'; this.nextElementSibling.style.marginLeft='0'">
+                    <span class="vehicle-spec-value spec-km"></span>
+                </div>
+                <div class="vehicle-spec">
+                    <img src="../assets/imagenes/camiones-logos/Año.png" class="vehicle-spec-icon" alt="Año"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.marginLeft='0'">
+                    <span class="vehicle-spec-value spec-year"></span>
+                </div>
+                <div class="vehicle-spec">
+                    <img src="../assets/imagenes/camiones-logos/VELOCIDAD.png" class="vehicle-spec-icon" alt="Trans"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.marginLeft='0'">
+                    <span class="vehicle-spec-value spec-transmission"></span>
+                </div>
+                <div class="vehicle-spec">
+                    <img src="../assets/imagenes/camiones-logos/Color.png" class="vehicle-spec-icon" alt="Color"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.marginLeft='0'">
+                    <span class="vehicle-spec-value spec-color"></span>
+                </div>
+            </div>
+        </div>
+        <div class="vehicle-footer">
+            <div class="vehicle-location">
+                <img src="../assets/imagenes/camiones-logos/Argentina.png" class="location-icon" alt="Ubicación"
+                     onerror="this.style.display='none'">
+                <span class="location-text"></span>
+            </div>
+        </div>
+        <div class="vehicle-actions">
+            <button class="btn-consult">CONSULTAR</button>
+            <span class="vehicle-price"></span>
+        </div>
+        <div class="vehicle-code"></div>
+    </div>
+</template>
 </body>
 </html>

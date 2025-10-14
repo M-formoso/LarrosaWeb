@@ -182,32 +182,37 @@
     border: 1px solid #e5e7eb !important;
 }
 
-/* ===== VEHICLE CARD - NUEVO DISEÑO COMPACTO ===== */
+/* ===== VEHICLE CARD - DISEÑO  ===== */
 .vehicle-card {
     background: var(--primary-white) !important;
-    border: none !important; /* SIN BORDES */
-    border-radius: 0 !important; /* SIN BORDER RADIUS */
+    border: 1px solid #e5e7eb !important;
+    border-radius: 8px !important;
     overflow: hidden !important;
     transition: all 0.2s ease !important;
     cursor: pointer !important;
     position: relative !important;
-    box-shadow: none !important; /* SIN SOMBRA INICIAL */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
     display: flex !important;
     flex-direction: column !important;
-    min-height: 280px !important; /* ALTURA MÍNIMA UNIFORME */
+    min-height: 380px !important;
 }
 
 .vehicle-card:hover {
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important; /* SOMBRA SOLO EN HOVER */
-    transform: translateY(-2px) scale(1.02) !important; /* EFECTO HOVER SUTIL */
-    z-index: 10 !important;
-    border-radius: 8px !important; /* BORDES REDONDEADOS SOLO EN HOVER */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12) !important;
+    transform: translateY(-4px) !important;
+    border-color: var(--primary-blue) !important;
+}
+
+/* ===== ELIMINAR BADGES AMARILLOS ===== */
+.vehicle-status,
+.vehicle-featured {
+    display: none !important;
 }
 
 /* ===== IMAGEN DEL VEHÍCULO ===== */
 .vehicle-image {
     position: relative !important;
-    height: 140px !important; /* ALTURA FIJA PARA UNIFORMIDAD */
+    height: 180px !important;
     overflow: hidden !important;
     background: #f8f9fa !important;
     flex-shrink: 0 !important;
@@ -221,268 +226,150 @@
 }
 
 .vehicle-card:hover .vehicle-image img {
-    transform: scale(1.05) !important;
+    transform: scale(1.08) !important;
 }
 
 /* ===== CONTENIDO DEL VEHÍCULO ===== */
 .vehicle-content {
-    padding: 12px !important;
+    padding: 16px !important;
     flex: 1 !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
+    gap: 12px !important;
 }
 
-/* ===== TÍTULO DEL VEHÍCULO ===== */
+/* ===== TÍTULO Y SUBTÍTULO ===== */
 .vehicle-title {
-    font-size: 0.9rem !important;
+    font-size: 1.1rem !important;
     font-weight: 700 !important;
     color: var(--primary-black) !important;
-    margin-bottom: 8px !important;
-    line-height: 1.2 !important;
+    margin: 0 !important;
+    line-height: 1.3 !important;
     text-transform: uppercase !important;
     letter-spacing: 0.3px !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
 }
 
-/* ===== SUBTÍTULO/DESCRIPCIÓN ===== */
 .vehicle-subtitle {
-    font-size: 0.75rem !important;
-    color: var(--secondary-gray) !important;
-    margin-bottom: 10px !important;
-    line-height: 1.3 !important;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    display: -webkit-box !important;
-    -webkit-line-clamp: 2 !important;
-    -webkit-box-orient: vertical !important;
+    font-size: 0.85rem !important;
+    color: #6b7280 !important;
+    margin: 0 !important;
+    font-weight: 500 !important;
 }
 
 /* ===== ESPECIFICACIONES CON ICONOS ===== */
 .vehicle-specs {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    gap: 6px !important;
-    margin-bottom: 10px !important;
+    gap: 10px !important;
 }
 
 .vehicle-spec {
     display: flex !important;
     align-items: center !important;
-    gap: 4px !important;
-    font-size: 0.7rem !important;
-    color: var(--secondary-gray) !important;
-    padding: 2px 0 !important;
+    gap: 8px !important;
+    font-size: 0.8rem !important;
+    color: #4b5563 !important;
 }
 
-/* ===== ICONOS DE ESPECIFICACIONES - AQUÍ PONDRÁS TUS IMÁGENES ===== */
-.vehicle-spec i {
-    width: 14px !important;
-    height: 14px !important;
-    font-size: 0.7rem !important;
-    color: var(--primary-blue) !important;
+.vehicle-spec-icon {
+    width: 16px !important;
+    height: 16px !important;
     flex-shrink: 0 !important;
-}
-
-/* ===== PLACEHOLDERS PARA TUS ICONOS ===== */
-.vehicle-spec .icon-calendar,
-.vehicle-spec .icon-road,
-.vehicle-spec .icon-gear,
-.vehicle-spec .icon-power {
-    width: 14px !important;
-    height: 14px !important;
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: center !important;
-    display: inline-block !important;
-    flex-shrink: 0 !important;
-}
-
-/* AQUÍ PONDRÁS LAS RUTAS DE TUS IMÁGENES */
-.vehicle-spec .icon-calendar {
-    background-image: url('../assets/icons/calendar-icon.png') !important;
-}
-
-.vehicle-spec .icon-road {
-    background-image: url('../assets/icons/road-icon.png') !important;
-}
-
-.vehicle-spec .icon-gear {
-    background-image: url('../assets/icons/gear-icon.png') !important;
-}
-
-.vehicle-spec .icon-power {
-    background-image: url('../assets/icons/power-icon.png') !important;
+    opacity: 0.7 !important;
 }
 
 .vehicle-spec-value {
     font-weight: 600 !important;
     color: var(--primary-black) !important;
-    font-size: 0.7rem !important;
+    font-size: 0.8rem !important;
 }
 
-/* ===== SECCIÓN MARCAS - VERSION ESTÁTICA ===== */
-.brands {
-    padding: 60px 0;
-    background: #f8f9fa;
-    border-top: 1px solid #e9ecef;
-    border-bottom: 1px solid #e9ecef;
-    margin: 40px 0 0 0;
-    position: relative;
-    overflow: hidden;
-}
-
-.brands-carousel {
-    overflow: visible;
-    position: relative;
-    width: 100%;
-}
-
-.brands-track {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 40px;
-    padding: 20px 0;
-    width: 100%;
-    flex-wrap: wrap;
-}
-
-.brand-logo {
-    height: 50px;
-    width: auto;
-    max-width: 120px;
-    min-width: 80px;
-    object-fit: contain;
-    opacity: 0.7;
-    transition: all 0.3s ease;
-    filter: grayscale(50%) brightness(0.9);
-    flex-shrink: 0;
-    cursor: pointer;
-    margin: 10px;
-}
-
-.brand-logo:hover {
-    opacity: 1;
-    filter: grayscale(0%) brightness(1);
-    transform: scale(1.1);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-}
-
-/* Configuración específica para cada marca */
-.brand-logo[alt="Scania"] {
-    max-width: 100px;
-}
-
-.brand-logo[alt="Volvo"] {
-    max-width: 90px;
-}
-
-.brand-logo[alt="Mercedes-Benz"] {
-    max-width: 110px;
-}
-
-.brand-logo[alt="Iveco"] {
-    max-width: 100px;
-}
-
-.brand-logo[alt="Volkswagen"] {
-    max-width: 110px;
-}
-
-.brand-logo[alt="Renault"] {
-    max-width: 100px;
-}
-
-.brand-logo[alt="Ford"] {
-    max-width: 90px;
-}
-
-.brand-logo[alt="DAF"] {
-    max-width: 80px;
-}
-
-.brand-logo[alt="Randon"] {
-    max-width: 100px;
-    height: 45px;
-}
-
-/* Estados adicionales */
-.brands.with-title {
-    padding-top: 80px;
-}
-
-.brands.with-title::before {
-    content: 'Trabajamos con las mejores marcas';
-    position: absolute;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #2c3e50;
-    text-align: center;
-    width: 100%;
-}
-
-.brands.compact {
-    padding: 40px 0;
-}
-
-.brands.compact .brand-logo {
-    height: 40px;
-    max-width: 100px;
-}
-
-.brands.white-bg {
-    background: #ffffff;
-}
-
-.brands.dark-bg {
-    background: #2c3e50;
-    border-color: #34495e;
-}
-
-.brands.dark-bg .brand-logo {
-    filter: grayscale(50%) brightness(1.2) invert(1);
-}
-
-.brands.dark-bg .brand-logo:hover {
-    filter: grayscale(0%) brightness(1) invert(1);
-}
-
-/* ===== FOOTER DEL VEHÍCULO ===== */
+/* ===== FOOTER CON UBICACIÓN ===== */
 .vehicle-footer {
-    padding: 8px 12px !important;
+    padding: 12px 16px !important;
     background: #f8f9fa !important;
     border-top: 1px solid #e5e7eb !important;
     display: flex !important;
-    justify-content: center !important;
     align-items: center !important;
-    margin-top: auto !important;
+    justify-content: center !important;
 }
 
 .vehicle-location {
     display: flex !important;
     align-items: center !important;
-    gap: 4px !important;
-    font-size: 0.7rem !important;
-    color: var(--secondary-gray) !important;
+    gap: 6px !important;
+    font-size: 0.8rem !important;
+    color: #6b7280 !important;
+}
+
+.location-icon {
+    width: 14px !important;
+    height: 14px !important;
+    opacity: 0.7 !important;
+}
+
+/* ===== ACCIONES (CONSULTAR + PRECIO) ===== */
+.vehicle-actions {
+    padding: 12px 16px !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-top: 1px solid #e5e7eb !important;
+}
+
+.btn-consult {
+    background: transparent !important;
+    border: none !important;
+    color: var(--primary-black) !important;
+    font-weight: 700 !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    padding: 8px 16px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.btn-consult:hover {
+    color: var(--primary-blue) !important;
+}
+
+.vehicle-price {
+    font-size: 1.2rem !important;
+    font-weight: 700 !important;
+    color: var(--primary-black) !important;
+}
+
+/* ===== CÓDIGO DEL VEHÍCULO ===== */
+.vehicle-code {
+    padding: 8px 16px !important;
     text-align: center !important;
-    width: 100% !important;
+    font-size: 0.75rem !important;
+    color: #9ca3af !important;
+    background: #fafafa !important;
+    border-top: 1px solid #e5e7eb !important;
 }
 
-/* ===== ELIMINAR ELEMENTOS NO DESEADOS ===== */
-.vehicle-status,
-.vehicle-price,
-.vehicle-price-btn {
-    display: none !important;
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .vehicle-card {
+        min-height: 350px !important;
+    }
+    
+    .vehicle-image {
+        height: 150px !important;
+    }
+    
+    .vehicle-title {
+        font-size: 0.95rem !important;
+    }
 }
 
+@media (max-width: 480px) {
+    .vehicle-specs {
+        grid-template-columns: 1fr !important;
+    }
+}
 /* ===== FILTROS COLAPSABLES - VERSIÓN CORREGIDA ===== */
 .filter-group {
     margin-bottom: 15px;
