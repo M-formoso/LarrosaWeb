@@ -372,62 +372,7 @@ createCard(v) {
         console.log('✅ UI configurada correctamente');
     }
     
-    setupRangeFilters() {
-        console.log('📊 Configurando filtros de rango...');
-        
-        // Filtro de año
-        const yearMin = document.getElementById('year-min');
-        const yearMax = document.getElementById('year-max');
-        
-        if (yearMin && yearMax) {
-            const updateYearFilter = () => {
-                const min = parseInt(yearMin.value) || null;
-                const max = parseInt(yearMax.value) || null;
-                
-                this.filters.yearMin = min;
-                this.filters.yearMax = max;
-                
-                console.log('📅 Filtro año:', min, '-', max);
-                this.applyFilters();
-            };
-            
-            yearMin.addEventListener('input', this.debounce(updateYearFilter, 500));
-            yearMax.addEventListener('input', this.debounce(updateYearFilter, 500));
-        }
-        
-        // Filtro de kilómetros
-        const kmMin = document.getElementById('km-min');
-        const kmMax = document.getElementById('km-max');
-        
-        if (kmMin && kmMax) {
-            const updateKmFilter = () => {
-                const min = parseInt(kmMin.value) || null;
-                const max = parseInt(kmMax.value) || null;
-                
-                this.filters.kmMin = min;
-                this.filters.kmMax = max;
-                
-                console.log('🛣️ Filtro km:', min, '-', max);
-                this.applyFilters();
-            };
-            
-            kmMin.addEventListener('input', this.debounce(updateKmFilter, 500));
-            kmMax.addEventListener('input', this.debounce(updateKmFilter, 500));
-        }
-        
-        // Filtros de marca (checkboxes)
-        document.querySelectorAll('input[name="marca"]').forEach(checkbox => {
-            checkbox.addEventListener('change', () => {
-                this.filters.brands = Array.from(document.querySelectorAll('input[name="marca"]:checked'))
-                    .map(cb => cb.value);
-                
-                console.log('🏢 Marcas seleccionadas:', this.filters.brands);
-                this.applyFilters();
-            });
-        });
-        
-        console.log('✅ Filtros de rango configurados');
-    }
+   
     
     filterByCategory(category) {
         console.log('🔄 Filtrando por categoría:', category);
