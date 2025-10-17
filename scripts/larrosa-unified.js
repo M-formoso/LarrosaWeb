@@ -143,6 +143,11 @@ class UnidadesDisponibles {
     }
 
     normalizeVehicle(v) {
+        // DEBUG: Ver datos crudos
+        console.log('🔍 Normalizando vehículo:', v.full_name);
+        console.log('   Color RAW:', v.color);
+        console.log('   Precio RAW:', v.price);
+        
         return {
             id: v.id,
             brand: v.brand || 'Marca desconocida',
@@ -158,6 +163,11 @@ class UnidadesDisponibles {
             transmission: v.transmission || 'Manual',
             traccion: v.traccion || v.traction || '4x2',
             description: v.description || 'Vehículo comercial',
+            
+            // ✅ ASEGÚRATE QUE ESTAS LÍNEAS ESTÉN CORRECTAS
+            color: v.color || 'No especificado',  // NO debe ser v.year
+            price: v.price || null,  // NO debe ser undefined
+            
             images: Array.isArray(v.images) ? v.images : (v.images ? [v.images] : []),
             is_featured: v.is_featured || false
         };
@@ -197,118 +207,71 @@ class UnidadesDisponibles {
         if (counter) counter.textContent = this.filtered.length;
     }
 
-
-// USA ESTA VERSIÓN CUANDO TENGAS LOS ARCHIVOS PNG EN assets/imagenes/
-
-// REEMPLAZA createCard - Para carpeta "camiones-logos" (sin espacio)
-// PRIMERO: Renombra la carpeta "camiones logos" a "camiones-logos"
-
-
-// REEMPLAZA createCard en larrosa-unified.js
-// Esta versión usa el template HTML con las imágenes ya definidas
+// ===== MÉTODO createCard ACTUALIZADO - DISEÑO LIMPIO =====
 
 createCard(v) {
-    // Obtener el template del HTML
-    const template = document.getElementById('vehicle-card-template');
-    if (!template) {
-        console.error('❌ Template no encontrado');
-        return document.createElement('div');
-    }
-    
-    // Clonar el template
-    const card = template.content.cloneNode(true).firstElementChild;
-    
-    // Configurar data attributes
+    const card = document.createElement('div');
+    card.className = 'vehicle-card fade-in';
     card.dataset.vehicleId = v.id;
     card.dataset.vehicleData = JSON.stringify(v);
     
-    // Obtener URL de la imagen principal
     const imageUrl = v.images[0] ? this.api.getImageUrl(v.images[0]) : LARROSA_CONFIG.PLACEHOLDER_IMAGE;
     
-    // Llenar datos en el template
-    card.querySelector('.vehicle-main-img').src = imageUrl;
-    card.querySelector('.vehicle-main-img').alt = v.full_name;
-    card.querySelector('.vehicle-main-img').onerror = function() {
-        this.src = LARROSA_CONFIG.PLACEHOLDER_IMAGE;
-    };
+    const hasPrice = v.price && v.price > 0;
+
+    // Formatear precio
+    const priceDisplay = v.price ? `${this.formatNumber(v.price)}` : '';
     
-    card.querySelector('.vehicle-title').textContent = v.full_name;
-    card.querySelector('.vehicle-subtitle').textContent = `${v.type_name || 'Tractor'} ${v.traccion || '4x2'}`;
-    
-    // ===== ESPECIFICACIONES CON RUTAS CORREGIDAS =====
-    card.querySelector('.spec-km').textContent = `${this.formatNumber(v.kilometers)} Km`;
-    card.querySelector('.spec-year').textContent = v.year;
-    card.querySelector('.spec-transmission').textContent = v.transmission || 'Manual';
-    card.querySelector('.spec-color').textContent = v.color || 'Blanco';
-    
-    // ===== CORREGIR RUTAS DE ICONOS =====
-    // Las imágenes del template ya tienen las rutas correctas,
-    // pero si quieres asegurar que funcionen desde el JS:
-    
-    const iconKm = card.querySelector('.vehicle-spec img[alt="Km"]');
-    if (iconKm) {
-        iconKm.src = '../assets/imagenes/camiones-logos/Kilometros.png';
-        iconKm.onerror = function() {
-            console.error('❌ No se cargó Kilometros.png');
-            this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><text y="12" font-size="14">🛣️</text></svg>';
-        };
-    }
-    
-    const iconYear = card.querySelector('.vehicle-spec img[alt="Año"]');
-    if (iconYear) {
-        iconYear.src = '../assets/imagenes/camiones-logos/Ano.png';
-        iconYear.onerror = function() {
-            console.error('❌ No se cargó Ano.png');
-            this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><text y="12" font-size="14">📅</text></svg>';
-        };
-    }
-    
-    const iconTrans = card.querySelector('.vehicle-spec img[alt="Trans"]');
-    if (iconTrans) {
-        iconTrans.src = '../assets/imagenes/camiones-logos/VELOCIDAD.png';
-        iconTrans.onerror = function() {
-            console.error('❌ No se cargó VELOCIDAD.png');
-            this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><text y="12" font-size="14">⚙️</text></svg>';
-        };
-    }
-    
-    const iconColor = card.querySelector('.vehicle-spec img[alt="Color"]');
-    if (iconColor) {
-        iconColor.src = '../assets/imagenes/camiones-logos/Color.png';
-        iconColor.onerror = function() {
-            console.error('❌ No se cargó Color.png');
-            this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><text y="12" font-size="14">🎨</text></svg>';
-        };
-    }
-    
-    // Footer - ubicación
-    const locationIcon = card.querySelector('.location-icon');
-    if (locationIcon) {
-        locationIcon.src = '../assets/imagenes/camiones-logos/Argentina.png';
-        locationIcon.onerror = function() {
-            console.error('❌ No se cargó Argentina.png');
-            this.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><text y="12" font-size="14">🇦🇷</text></svg>';
-        };
-    }
-    
-    card.querySelector('.location-text').textContent = v.location;
-    
-    // Precio (si existe)
-    const priceElement = card.querySelector('.vehicle-price');
-    if (v.price) {
-        priceElement.textContent = `$${this.formatNumber(v.price)}`;
-    } else {
-        priceElement.style.display = 'none';
-    }
-    
-    // Código
-    card.querySelector('.vehicle-code').textContent = `Cod: ${v.id}`;
+    card.innerHTML = `
+        <!-- Imagen -->
+        <div class="vehicle-image">
+            <img src="${imageUrl}" 
+                 alt="${v.full_name}"
+                 onerror="this.src='${LARROSA_CONFIG.PLACEHOLDER_IMAGE}'">
+        </div>
+        
+        <!-- Contenido Principal -->
+        <div class="vehicle-content-box">
+            <!-- Título -->
+            <h3 class="vehicle-title-new">${v.full_name}</h3>
+            
+            <!-- Subtítulo (Tipo) -->
+            <p class="vehicle-type-new">${v.type_name || 'Tractor'} ${v.traccion || '4x2'}</p>
+            
+            <!-- Grid de Especificaciones -->
+            <div class="specs-grid-new">
+                <div class="spec-item-new">
+                    <span class="spec-label-new">Año</span>
+                    <span class="spec-value-new">${v.year}</span>
+                </div>
+                <div class="spec-item-new">
+                    <span class="spec-label-new">Kilómetros</span>
+                    <span class="spec-value-new">${this.formatNumber(v.kilometers)} km</span>
+                </div>
+                <div class="spec-item-new">
+                    <span class="spec-label-new">Transmisión</span>
+                    <span class="spec-value-new">${v.transmission || 'Manual'}</span>
+                </div>
+                <div class="spec-item-new">
+                    <span class="spec-label-new">Color</span>
+                    <span class="spec-value-new">${v.color || 'No especificado'}</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer con Precio y Botón -->
+        <div class="vehicle-footer-new">
+            <div class="vehicle-price-display">${priceDisplay}</div>
+            <button class="btn-view-detail">VER DETALLE</button>
+        </div>
+    `;
     
     // Event listener para ir al detalle
     card.addEventListener('click', () => this.goToDetail(v));
     
     return card;
 }
+
     goToDetail(vehicle) {
         sessionStorage.setItem('currentVehicle', JSON.stringify(vehicle));
         window.location.href = `detalleVehiculo.html?id=${vehicle.id}`;
@@ -710,12 +673,25 @@ class DetalleVehiculo {
 
     populateData() {
         if (!this.vehicle) return;
-
+    
         // Título
         document.title = `${this.vehicle.full_name} - Larrosa Camiones`;
         const nameEl = document.getElementById('vehicle-name');
         if (nameEl) nameEl.textContent = this.vehicle.full_name;
-
+    
+        // PRECIO
+        const priceEl = document.getElementById('vehicle-price');
+        if (priceEl) {
+            if (this.vehicle.price) {
+                priceEl.textContent = `$${this.formatNumber(this.vehicle.price)}`;
+                // Ocultar botón consultar si hay precio
+                const consultBtn = document.getElementById('price-consult-btn');
+                if (consultBtn) consultBtn.style.display = 'none';
+            } else {
+                priceEl.textContent = '';
+            }
+        }
+    
         // Especificaciones
         this.updateSpec('spec-marca', this.vehicle.brand);
         this.updateSpec('spec-modelo', this.vehicle.model);
@@ -725,8 +701,8 @@ class DetalleVehiculo {
         this.updateSpec('spec-tipo', this.vehicle.type_name);
         this.updateSpec('spec-traccion', this.vehicle.traccion);
         this.updateSpec('spec-transmision', this.vehicle.transmission);
-        this.updateSpec('spec-potencia', `${this.vehicle.power} HP`);
-
+        this.updateSpec('spec-potencia', `${this.vehicle.power || 0} HP`);
+    
         // Imágenes
         this.images = this.vehicle.images || [];
         if (this.images.length > 0) {

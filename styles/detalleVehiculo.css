@@ -550,3 +550,38 @@
         height: 130px;
     }
 }
+
+/* ===== PRECIO EN DETALLE ===== */
+.vehicle-price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.vehicle-price-amount {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: 0.5px;
+}
+
+.price-btn-new {
+    background: white;
+    color: #1a202c;
+    border: 2px solid #e2e8f0;
+    padding: 6px 13px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.price-btn-new:hover {
+    color: #3D5FAC;
+    border-color: #3D5FAC;
+}

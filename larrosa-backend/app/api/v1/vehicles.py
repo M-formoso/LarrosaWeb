@@ -13,6 +13,7 @@ from app.schemas.vehicle import (
 )
 from app.models.user import User
 import json
+from datetime import datetime
 
 router = APIRouter()
 
@@ -436,3 +437,52 @@ def debug_vehicles_info(
             for v in recent
         ]
     }
+
+@router.get("/debug/vehicle/{vehicle_id}")
+def debug_vehicle(
+    vehicle_id: int,
+    db: Session = Depends(get_db)
+):
+    """Debug: Ver datos completos de un vehículo"""
+    vehicle = vehicle_crud.get_vehicle(db=db, vehicle_id=vehicle_id)
+    if not vehicle:
+        raise HTTPException(status_code=404, detail="Vehículo no encontrado")
+    
+    return {
+        "id": vehicle.id,
+        "full_name": vehicle.full_name,
+        "brand": vehicle.brand,
+        "model": vehicle.model,
+        "year": vehicle.year,
+        "color": vehicle.color,
+        "price": vehicle.price,
+        "kilometers": vehicle.kilometers,
+        "transmission": vehicle.transmission,
+        "type": vehicle.type,
+        "type_name": vehicle.type_name,
+        "traccion": vehicle.traccion,
+        "status": vehicle.status,
+        "is_featured": vehicle.is_featured,
+        "images_count": len(vehicle.images) if vehicle.images else 0
+    }
+
+test_vehicle_data = VehicleCreate(
+    brand="Scania",
+    model=f"R450 Test {datetime.now().strftime('%H%M%S')}",
+    full_name=f"Scania R450 Test {datetime.now().strftime('%H:%M:%S')}",
+    type="camion-tractor",
+    type_name="Camión Tractor",
+    year=2021,
+    kilometers=350000,
+    power=450,
+    traccion="6x2",
+    transmission="Manual",
+    color="Blanco",  # ✅ AÑADIDO
+    status="Disponible",
+    price=54500.00,  # ✅ AÑADIDO
+    is_featured=True,
+    location="Villa María, Córdoba",
+    description="Vehículo de prueba",
+    observations="Testing",
+    date_registered=datetime.now().strftime("%d/%m/%Y")
+)

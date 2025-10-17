@@ -73,7 +73,8 @@ class VehicleBase(BaseModel):
         return v
 
 class VehicleCreate(VehicleBase):
-    pass
+        color: str = "Blanco"  # Valor por defecto
+
 
 class VehicleUpdate(BaseModel):
     brand: Optional[str] = None
