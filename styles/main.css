@@ -4167,7 +4167,7 @@ img:not([src]) {
 }
 
 /* ===== TÍTULO PRINCIPAL - TAMAÑO REDUCIDO ===== */
-.usado-modal-content h2 {
+.usado-modal-content h3 {
     font-family: var(--font-primary);
     font-size: 2.2rem; /* REDUCIDO: de 2.8rem a 2.2rem */
     color: var(--primary-black);

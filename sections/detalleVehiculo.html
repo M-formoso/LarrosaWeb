@@ -132,13 +132,18 @@
                                 </button>
                             </div>
                             
-                            <!-- BOTÓN CONSULTAR PRECIO (Centrado abajo) -->
-                            <div class="vehicle-price-section">
-                                <div class="vehicle-price-wrapper">
-                                    <span class="vehicle-price-amount" id="vehicle-price">CONSULTAR</span>
-                                    <button class="price-btn-new" id="price-consult-btn">CONSULTAR PRECIO</button>
-                                </div>
-                            </div>
+                            <!-- Botón CONSULTAR PRECIO (Centrado abajo) -->
+<div class="vehicle-price-section">
+    <div class="vehicle-price-wrapper">
+        <!-- Precio (si existe) -->
+        <span class="vehicle-price-amount" id="vehicle-price"></span>
+        
+        <!-- Botón SIEMPRE VISIBLE -->
+        <button class="price-btn-consult" id="consult-btn">
+            CONSULTAR CON UN ASESOR
+        </button>
+    </div>
+</div>
                         </div>
 
                         <!-- All Specifications (AHORA DEBAJO DEL HEADER) -->
@@ -240,44 +245,97 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
-        <section class="contact-section">
-            <div class="container">
-                <div class="contact-buttons-main">
-                    <button class="contact-btn whatsapp-btn">
-                        <i class="fab fa-whatsapp"></i>
-                        <span>WhatsApp</span>
-                    </button>
-                    <button class="contact-btn phone-btn">
-                        <i class="fas fa-phone"></i>
-                        <span>Llamar</span>
-                    </button>
-                    <button class="contact-btn email-btn">
-                        <i class="fas fa-envelope"></i>
-                        <span>Email</span>
-                    </button>
-                </div>
-            </div>
-        </section>
 
-
+        <!-- Modal de Consulta -->
+<div class="modal-overlay" id="modal-consulta">
+    <div class="modal-consulta">
+        <div class="modal-header">
+            <h2>Consultar con un Asesor</h2>
+            <p>Completa el formulario y te contactaremos</p>
+            <button class="modal-close" id="close-modal">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
         
-        <section class="brands">
-            <div class="container">
-                <div class="brands-carousel">
-                    <div class="brands-track">
-                        <img src="../assets/Scania.png" alt="Scania" class="brand-logo">
-                        <img src="../assets/Volvo.png" alt="Volvo" class="brand-logo">
-                        <img src="../assets/Mercedez.png" alt="Mercedes-Benz" class="brand-logo">
-                        <img src="../assets/Iveco.png" alt="Iveco" class="brand-logo">
-                        <img src="../assets/Volkswagen.png" alt="Volkswagen" class="brand-logo">
-                        <img src="../assets/Renault.png" alt="Renault" class="brand-logo">
-                        <img src="../assets/Ford.png" alt="Ford" class="brand-logo">
-                        <img src="../assets/Logo negro sin fondo.png" alt="Randon" class="brand-logo">
-                    </div>
-                </div>
+        <div class="modal-body">
+            <!-- Info del vehículo -->
+            <div class="modal-vehicle-info">
+                <h3>Vehículo de interés</h3>
+                <p id="modal-vehicle-name">Cargando...</p>
             </div>
-        </section>
+            
+            <!-- Mensajes -->
+            <div class="success-message" id="success-message">
+                <i class="fas fa-check-circle"></i>
+                <p>¡Mensaje enviado! Te contactaremos pronto.</p>
+            </div>
+            
+            <div class="error-message" id="error-message">
+                <i class="fas fa-exclamation-circle"></i>
+                <p id="error-text">Error al enviar el mensaje.</p>
+            </div>
+            
+            <!-- Formulario -->
+            <form id="consult-form">
+                <div class="form-group">
+                    <label for="consult-name">
+                        Nombre completo <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="text" 
+                        id="consult-name" 
+                        name="name"
+                        placeholder="Ej: Juan Pérez"
+                        required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="consult-email">
+                        Email <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="email" 
+                        id="consult-email" 
+                        name="email"
+                        placeholder="ejemplo@mail.com"
+                        required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="consult-phone">
+                        Teléfono <span class="required">*</span>
+                    </label>
+                    <input 
+                        type="tel" 
+                        id="consult-phone" 
+                        name="phone"
+                        placeholder="Ej: +54 9 351 123-4567"
+                        required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="consult-message">
+                        Mensaje / Observaciones
+                    </label>
+                    <textarea 
+                        id="consult-message" 
+                        name="message"
+                        placeholder="Escribe aquí cualquier consulta adicional..."
+                        rows="4"></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" id="cancel-btn">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn-submit" id="submit-btn">
+                        Enviar Consulta
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
     </main>
 
     <!-- Footer -->

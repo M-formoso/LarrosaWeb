@@ -219,8 +219,8 @@ createCard(v) {
     
     const hasPrice = v.price && v.price > 0;
 
-    // Formatear precio
-    const priceDisplay = v.price ? `${this.formatNumber(v.price)}` : '';
+    // Formatear precio con signo de pesos
+    const priceDisplay = hasPrice ? `$${this.formatNumber(v.price)}` : '';
     
     card.innerHTML = `
         <!-- Imagen -->
@@ -260,9 +260,13 @@ createCard(v) {
         </div>
         
         <!-- Footer con Precio y Botón -->
-        <div class="vehicle-footer-new">
-            <div class="vehicle-price-display">${priceDisplay}</div>
-            <button class="btn-view-detail">VER DETALLE</button>
+        <div class="vehicle-footer-new ${hasPrice ? 'with-price' : 'no-price'}">
+            ${hasPrice ? `
+                <div class="vehicle-price-display">${priceDisplay}</div>
+                <button class="btn-view-detail">VER DETALLE</button>
+            ` : `
+                <button class="btn-view-detail-full">VER DETALLE</button>
+            `}
         </div>
     `;
     
@@ -635,6 +639,8 @@ class DetalleVehiculo {
         console.log('🚗 Iniciando Detalle Vehículo...');
         this.loadVehicleData();
         this.setupContactButtons();
+        this.setupConsultModal(); // ← AGREGAR ESTA LÍNEA
+
     }
 
     loadVehicleData() {
@@ -675,23 +681,19 @@ class DetalleVehiculo {
         if (!this.vehicle) return;
     
         // Título
-        document.title = `${this.vehicle.full_name} - Larrosa Camiones`;
-        const nameEl = document.getElementById('vehicle-name');
-        if (nameEl) nameEl.textContent = this.vehicle.full_name;
-    
-        // PRECIO
-        const priceEl = document.getElementById('vehicle-price');
-        if (priceEl) {
-            if (this.vehicle.price) {
-                priceEl.textContent = `$${this.formatNumber(this.vehicle.price)}`;
-                // Ocultar botón consultar si hay precio
-                const consultBtn = document.getElementById('price-consult-btn');
-                if (consultBtn) consultBtn.style.display = 'none';
-            } else {
-                priceEl.textContent = '';
-            }
+    document.title = `${this.vehicle.full_name} - Larrosa Camiones`;
+    const nameEl = document.getElementById('vehicle-name');
+    if (nameEl) nameEl.textContent = this.vehicle.full_name;
+
+    // PRECIO - Mostrar si existe, sino dejar vacío
+    const priceEl = document.getElementById('vehicle-price');
+    if (priceEl) {
+        if (this.vehicle.price && this.vehicle.price > 0) {
+            priceEl.textContent = `$${this.formatNumber(this.vehicle.price)}`;
+        } else {
+            priceEl.textContent = ''; // Vacío si no hay precio
         }
-    
+    }
         // Especificaciones
         this.updateSpec('spec-marca', this.vehicle.brand);
         this.updateSpec('spec-modelo', this.vehicle.model);
@@ -796,6 +798,162 @@ class DetalleVehiculo {
     formatNumber(num) {
         return new Intl.NumberFormat('es-AR').format(num || 0);
     }
+
+
+    // Al final de la clase DetalleVehiculo, agregar estos métodos:
+
+setupConsultModal() {
+    const consultBtn = document.getElementById('consult-btn');
+    const modal = document.getElementById('modal-consulta');
+    const closeBtn = document.getElementById('close-modal');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const form = document.getElementById('consult-form');
+    
+    if (!consultBtn || !modal) return;
+    
+    // Abrir modal
+    consultBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.openConsultModal();
+    });
+    
+    // Cerrar modal
+    closeBtn.addEventListener('click', () => this.closeConsultModal());
+    cancelBtn.addEventListener('click', () => this.closeConsultModal());
+    
+    // Cerrar al hacer click fuera
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            this.closeConsultModal();
+        }
+    });
+    
+    // Enviar formulario
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        this.handleConsultSubmit(e);
+    });
+    
+    // Cerrar con ESC
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            this.closeConsultModal();
+        }
+    });
+}
+
+openConsultModal() {
+    const modal = document.getElementById('modal-consulta');
+    const vehicleName = document.getElementById('modal-vehicle-name');
+    
+    if (this.vehicle && vehicleName) {
+        vehicleName.textContent = this.vehicle.full_name || 'Vehículo';
+    }
+    
+    // Limpiar mensajes previos
+    document.getElementById('success-message')?.classList.remove('show');
+    document.getElementById('error-message')?.classList.remove('show');
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevenir scroll
+}
+
+closeConsultModal() {
+    const modal = document.getElementById('modal-consulta');
+    const form = document.getElementById('consult-form');
+    
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    // Limpiar formulario después de la animación
+    setTimeout(() => {
+        form.reset();
+        document.getElementById('success-message')?.classList.remove('show');
+        document.getElementById('error-message')?.classList.remove('show');
+    }, 300);
+}
+
+async handleConsultSubmit(e) {
+    e.preventDefault();
+    
+    const form = e.target;
+    const submitBtn = document.getElementById('submit-btn');
+    const successMsg = document.getElementById('success-message');
+    const errorMsg = document.getElementById('error-message');
+    
+    // Obtener datos del formulario
+    const formData = {
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        message: form.message.value,
+        vehicle: this.vehicle ? this.vehicle.full_name : 'No especificado',
+        vehicleId: this.vehicle ? this.vehicle.id : null
+    };
+    
+    // Deshabilitar botón
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'ENVIANDO...';
+    
+    try {
+        // Construir mensaje personalizado
+        const emailMessage = `
+Hola, vengo de la web por el ${formData.vehicle}
+
+--- DATOS DEL CLIENTE ---
+Nombre: ${formData.name}
+Email: ${formData.email}
+Teléfono: ${formData.phone}
+
+--- MENSAJE ---
+${formData.message || 'Sin mensaje adicional'}
+
+--- INFO DEL VEHÍCULO ---
+ID: ${formData.vehicleId || 'N/A'}
+Nombre: ${formData.vehicle}
+        `.trim();
+        
+        // Enviar email usando FormSubmit o tu API
+        const response = await fetch('https://formsubmit.co/ajax/Recepcion@larrosacamiones.com.ar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+                _subject: `Nueva consulta - ${formData.vehicle}`,
+                name: formData.name,
+                email: formData.email,
+                phone: formData.phone,
+                message: emailMessage,
+                _captcha: 'false'
+            })
+        });
+        
+        if (response.ok) {
+            // Mostrar mensaje de éxito
+            successMsg.classList.add('show');
+            form.reset();
+            
+            // Cerrar modal después de 3 segundos
+            setTimeout(() => {
+                this.closeConsultModal();
+            }, 3000);
+            
+        } else {
+            throw new Error('Error en el envío');
+        }
+        
+    } catch (error) {
+        console.error('Error:', error);
+        errorMsg.classList.add('show');
+        document.getElementById('error-text').textContent = 
+            'Error al enviar el mensaje. Por favor, intenta nuevamente o contáctanos por teléfono.';
+    } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'ENVIAR CONSULTA';
+    }
+}
 }
 
 // ===== FUNCIONES GLOBALES =====
