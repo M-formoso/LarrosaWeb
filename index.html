@@ -316,92 +316,74 @@
     </div>
 </section>
 
-<!-- Sección COTIZACIÓN con Video, Randon, Usado y MercadoLibre -->
-<section class="cotizacion-section">
-    <div class="cotizacion-container">
-        <div class="cotizacion-content">
+<!-- Sección COTIZACIÓN - DISEÑO EXACTO -->
+<section class="cotizacion-section-new">
+    <div class="cotizacion-container-new">
+        
+        <!-- VIDEO IZQUIERDA 60% -->
+        <div class="cotizacion-video-section">
+            <div class="cotizacion-video-wrapper-new">
+                <video autoplay muted loop playsinline class="cotizacion-video">
+                    <source src="assets/video chico inicio.mov" type="video/mp4">
+                </video>
+                <div class="video-button-center">
+                    <a href="sections/unidadesDisponibles.html" class="btn-ver-unidades-new">
+                        VER UNIDADES
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- COLUMNA DERECHA 40% - CARDS -->
+        <div class="cotizacion-cards-section">
             
-            <!-- IZQUIERDA: VIDEO 60% -->
-            <div class="cotizacion-left">
-                <div class="cotizacion-video-wrapper">
-                    <video autoplay muted loop playsinline class="cotizacion-main-video">
-                        <source src="assets/video chico inicio.mov" type="video/mp4">
-                    </video>
-                    <div class="video-button-overlay">
-                        <a href="sections/unidadesDisponibles.html" class="btn-ver-unidades">
-                            VER UNIDADES
-                        </a>
+            <!-- CARD RANDON - ARRIBA -->
+            <div class="card-randon-new" onclick="window.location.href='sections/LarrosaCamiones.html#randon'">
+                <div class="randon-content-new">
+                    <!-- Logo RANDON arriba derecha -->
+                    <div class="randon-logo-corner">
+                        <img src="assets/Logo blanco sin fondo.png" alt="Randon">
+                    </div>
+                    
+                    <!-- Título y texto -->
+                    <div class="randon-text-content">
+                        <h3>¿Listo para renovar tu próximo semirremolque?</h3>
+                        <p>Desde 2006 Larrosa Camiones cuenta con la concesión oficial RANDON en Córdoba, La Rioja y Catamarca.</p>
+                    </div>
+                    
+                    <!-- Semirremolque centrado -->
+                    <div class="randon-trailer-center">
+                        <img src="assets/Recurso 1.png" alt="Semirremolque">
+                    </div>
+                    
+                    <!-- Botón abajo derecha -->
+                    <div class="randon-button-corner">
+                        <a href="sections/LarrosaCamiones.html#randon" class="btn-randon-new">VER RANDON</a>
                     </div>
                 </div>
             </div>
             
-            <!-- DERECHA: CARDS 40% -->
-            <div class="cotizacion-right">
+            <!-- GRID INFERIOR - 2 CARDS -->
+            <div class="cards-bottom-grid">
                 
-                <!-- CARD RANDON - Arriba -->
-                <div class="cotizacion-modal-btn randon-modal" onclick="window.location.href='sections/LarrosaCamiones.html#randon'">
-                    <div class="randon-bg-gradient">
-                        <div class="randon-content-wrapper">
-                            <!-- Logo RANDON arriba a la derecha -->
-                            <div class="randon-logo-top">
-                                <img src="assets/Logo blanco sin fondo.png" alt="Randon" class="randon-logo-img">
-                            </div>
-                            
-                            <!-- Contenedor: Semirremolque + Texto -->
-                            <div class="randon-main-content">
-                                <!-- Pregunta arriba -->
-                                <div class="randon-question-top">
-                                    <h3 class="randon-question-text">¿Listo para renovar tu próximo semirremolque?</h3>
-                                    <p class="randon-question-subtitle">Desde 2006 Larrosa Camiones cuenta con la concesión oficial RANDON en Córdoba, La Rioja y Catamarca.</p>
-                                </div>
-                                
-                                <!-- Semirremolque a la izquierda -->
-                                <div class="randon-semiremolque">
-                                    <img src="assets/Recurso 1.png" alt="Semirremolque" class="semiremolque-img">
-                                </div>
-                                
-                                <!-- Botón a la derecha -->
-                                <div class="randon-button-right">
-                                    <a href="sections/LarrosaCamiones.html#randon" class="btn-randon-white">
-                                        VER RANDON
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <!-- CARD USADO - IZQUIERDA -->
+                <div class="card-usado-new" onclick="openUsadoModal()">
+                    <h3>Le ponemos un precio a tu usado.</h3>
+                    <p>Tasación rápida y segura.</p>
+                    <button class="btn-cotizar-new">COTIZAR AHORA</button>
                 </div>
                 
-                <!-- GRID INFERIOR: 2 CARDS -->
-                <div class="cotizacion-bottom-grid">
-                    
-                    <!-- CARD USADO - Izquierda -->
-                    <div class="cotizacion-modal-btn usado-modal" onclick="openUsadoModal()">
-                        <div class="modal-overlay-gray">
-                            <div class="modal-text-container-center">
-                                <h3 class="modal-title-white">Le ponemos un precio a tu usado.</h3>
-                                <p class="modal-description-white">
-                                    Tasación rápida y segura.
-                                </p>
-                                <button class="btn-modal-white" type="button">COTIZAR AHORA</button>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- CARD MERCADOLIBRE - Derecha -->
-                    <div class="cotizacion-modal-btn meli-modal" onclick="window.open('https://www.mercadolibre.com.ar/pagina/larrosacamiones')">
-                        <div class="modal-overlay-yellow">
-                            <div class="modal-text-container-center">
-                                <h3 class="modal-title-black">Descubrí todas nuestras unidades.</h3>
-                                <button class="btn-modal-yellow" type="button">VER MERCADO LIBRE</button>
-                                <img src="assets/Logo mercado libre.png" alt="MercadoLibre" class="meli-logo-img">
-                            </div>
-                        </div>
-                    </div>
-                    
+                <!-- CARD MERCADOLIBRE - DERECHA -->
+                <div class="card-meli-new" onclick="window.open('https://www.mercadolibre.com.ar/pagina/larrosacamiones')">
+                    <h3>Descubrí todas nuestras unidades.</h3>
+                    <button class="btn-meli-new">VER MERCADO LIBRE</button>
+                    <img src="assets/Logo mercado libre.png" alt="MercadoLibre" class="meli-logo-new">
                 </div>
+                
             </div>
             
         </div>
+        
     </div>
 </section>
 
