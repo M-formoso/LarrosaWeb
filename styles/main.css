@@ -366,9 +366,10 @@ body {
     text-align: left;
 }
 /* ===== TEXTO SOBRE EL VIDEO - "DESDE 1977" ===== */
+/* ===== TEXTO SOBRE EL VIDEO - "DESDE 1977" - SIN SOMBRA ===== */
 .hero-text-overlay {
     position: absolute;
-    bottom: 120px; /* POSICIONADO DESDE ABAJO - justo encima de los botones */
+    bottom: 120px;
     left: 9.5%;
     z-index: 5;
     text-align: left;
@@ -379,11 +380,11 @@ body {
 /* "Desde 1977" - texto pequeño arriba */
 .hero-year {
     font-family: var(--font-secondary);
-    font-size: 1.4rem; /* REDUCIDO */
+    font-size: 1.4rem;
     font-weight: 300;
     color: var(--primary-white);
-    margin: 0 0 0.2rem 0; /* MENOS ESPACIO */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    margin: 0 0 0.2rem 0;
+    /* text-shadow eliminado */
     letter-spacing: 0.5px;
     line-height: 1;
     opacity: 0.95;
@@ -392,16 +393,17 @@ body {
 /* "Comercializando camiones" - texto MÁS PEQUEÑO EN UNA LÍNEA */
 .hero-main-title {
     font-family: var(--font-primary);
-    font-size: 3.2rem; /* REDUCIDO: de 4.2rem a 3.2rem */
+    font-size: 3.2rem;
     font-weight: 700;
     color: var(--primary-white);
     margin: 0;
-    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
+    /* text-shadow eliminado */
     letter-spacing: 0.5px;
     line-height: 1;
     text-transform: none;
     white-space: nowrap;
 }
+
 
 /* ===== RESPONSIVE PARA EL TEXTO ===== */
 @media (max-width: 1400px) {
@@ -838,37 +840,40 @@ body {
 /* ===== AJUSTES PARA TÍTULO "UNIDADES DESTACADAS" ===== */
 /* Agregar/reemplazar en styles/main.css */
 
+/* ===== TÍTULO "UNIDADES DESTACADAS" - CORREGIDO ===== */
+
 .section-title-special {
     font-family: 'Roboto', sans-serif !important;
     font-size: 3.5rem !important;
-    color: #9ca3af !important;
+    color: #9ca3af !important; /* MISMO GRIS PARA AMBAS PALABRAS */
     text-align: center !important;
-    margin-bottom: 0.5rem !important; /* REDUCIDO: era 3rem, ahora 1.5rem */
+    margin-bottom: 0.5rem !important;
     margin-top: 0 !important;
-    padding-top: 0 !important; /* AGREGADO: eliminar padding superior */
+    padding-top: 0 !important;
     text-transform: none !important;
-    font-weight: 300 !important;
+    font-weight: 300 !important; /* Peso ligero por defecto */
     letter-spacing: 0.5px !important;
     line-height: 1.2 !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
-    word-spacing: -0.2em !important; /* AGREGADO: acerca las palabras */
+    text-shadow: none !important; /* Sin sombra */
+    word-spacing: -0.2em !important;
 }
 
 .section-title-special .word-normal {
     font-size: 1em !important;
     display: inline !important;
-    font-weight: 300 !important;
-    color: #9ca3af !important;
-    margin-right: 0.15em !important; /* REDUCIDO: acerca "Unidades" a "destacadas" */
+    font-weight: 300 !important; /* Peso ligero para "Unidades" */
+    color: #9ca3af !important; /* MISMO GRIS */
+    margin-right: 0.3em !important; /* Espacio entre palabras */
+    font-family: 'Roboto', sans-serif !important;
 }
 
 .section-title-special .word-large {
     font-size: 1em !important;
     display: inline !important;
-    margin-left: 0 !important; /* ELIMINADO: el margen entre palabras */
-    font-weight: 600 !important;
+    margin-left: 0 !important;
+    font-weight: 700 !important; /* MÁS GRUESO para "destacadas" */
     font-family: 'Roboto', sans-serif !important;
-    color: #6b7280 !important;
+    color: #9ca3af !important; /* MISMO GRIS que word-normal */
 }
 
 /* ===== REDUCIR ESPACIO ARRIBA DE LA SECCIÓN ===== */
@@ -1015,11 +1020,19 @@ body {
 }
 
 /* ===== BOTÓN VER TODAS LAS UNIDADES - MÁS ABAJO ===== */
+/* ===== VERSIÓN MÁS COMPACTA ===== */
 .view-all-container {
     text-align: center;
-    margin-top: 4rem !important; /* AUMENTADO: de 3rem a 4rem */
-    margin-bottom: 0;
+    margin-top: 2rem !important;
+    margin-bottom: 0 !important; /* SIN margen inferior */
     padding: 0 20px;
+}
+
+/* ===== SECCIÓN ¿POR QUÉ LARROSA? - ESPACIADO MÍNIMO ===== */
+.why-larrosa {
+    padding: 1rem 0 2rem 0 !important; /* REDUCIDO: menos espacio arriba */
+    background: var(--primary-white);
+    margin-top: 0 !important;
 }
 
 .btn-view-all {
@@ -1178,9 +1191,11 @@ body {
 }
 
 /* ===== SECCIÓN ¿POR QUÉ LARROSA? - ESTILO MODERNO CON IMÁGENES ===== */
+/* ===== SECCIÓN ¿POR QUÉ LARROSA? - ESPACIADO MÍNIMO ===== */
 .why-larrosa {
-    padding: 5px 0 !important; /* REDUCIDO: de 50px a 10px */
+    padding: 1rem 0 2rem 0 !important; /* REDUCIDO: menos espacio arriba */
     background: var(--primary-white);
+    margin-top: 0 !important;
 }
 
 /* ===== SECCIÓN ¿POR QUÉ LARROSA? - TÍTULO CORREGIDO ===== */
@@ -3611,11 +3626,11 @@ img:not([src]) {
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
-    background: var(--primary-white) !important; /* CAMBIADO: blanco en lugar de #2d3748 */
+    background: transparent !important; /* SIN FONDO */
     padding: 25px 20px !important;
-    border-radius: 8px !important;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
-    border: 1px solid #e5e7eb !important; /* AGREGADO: borde sutil */
+    border-radius: 0 !important; /* SIN BORDES REDONDEADOS */
+    box-shadow: none !important; /* SIN SOMBRA */
+    border: none !important; /* SIN BORDE */
 }
 
 /* ===== TÍTULO - TEXTO NEGRO ===== */
@@ -3740,8 +3755,8 @@ img:not([src]) {
 .testimonials-new .testimonial-card-new {
     flex: 0 0 320px !important;
     width: 320px !important;
-    background: #2d3748;
-    color: var(--primary-white);
+    background: #e5e7eb !important; /* FONDO GRIS CLARO */
+    color: var(--primary-black) !important; /* TEXTO NEGRO */
     padding: 30px 25px;
     border-radius: 8px;
     position: relative;
@@ -3770,15 +3785,16 @@ img:not([src]) {
     gap: 3px;
 }
 
+/* Busca esto */
 .testimonials-new .testimonial-stars i {
-    color: #4299e1 !important;
+    color: var(--primary-blue) !important;
     font-size: 1rem;
 }
 
 .testimonials-new .testimonial-title-new {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--primary-white);
+    color: var(--primary-black) !important; /* TÍTULO NEGRO */
     margin-bottom: 15px;
     line-height: 1.3;
     text-align: left;
@@ -3786,7 +3802,7 @@ img:not([src]) {
 }
 
 .testimonials-new .testimonial-text-new {
-    color: #e2e8f0;
+    color: #4b5563 !important; /* TEXTO GRIS OSCURO */
     font-size: 0.95rem;
     line-height: 1.5;
     margin-bottom: 20px;
@@ -3796,13 +3812,13 @@ img:not([src]) {
 }
 
 .testimonials-new .testimonial-author {
-    border-top: 1px solid #4a5568;
+    border-top: 1px solid #d1d5db !important; /* BORDE GRIS */
     padding-top: 15px;
     margin-top: auto;
 }
 
 .testimonials-new .testimonial-author strong {
-    color: var(--primary-white);
+    color: var(--primary-black) !important; /* AUTOR NEGRO */
     font-size: 0.9rem;
     font-weight: 600;
     font-family: 'Roboto', sans-serif;
@@ -3872,18 +3888,17 @@ img:not([src]) {
     
     .testimonials-new .testimonials-title,
     .testimonials-new .title-line-1,
-    .testimonials-new .title-line-2 {
-        text-align: center !important;
-        color: var(--primary-black) !important;
-    }
-    
-    .testimonials-new .testimonials-subtitle,
-    .testimonials-new .rating-label,
-    .testimonials-new .rating-info {
-        text-align: center !important;
-        color: var(--secondary-gray) !important;
-    }
-    
+.testimonials-new .title-line-2 {
+    color: var(--primary-black) !important; /* MANTENER NEGRO */
+}
+
+.testimonials-new .testimonials-subtitle {
+    color: var(--secondary-gray) !important; /* MANTENER GRIS */
+}
+
+.testimonials-new .rating-label {
+    color: var(--primary-black) !important; /* MANTENER NEGRO */
+}
     .testimonials-new .stars {
         justify-content: center !important;
     }
@@ -4169,12 +4184,12 @@ img:not([src]) {
 /* ===== TÍTULO PRINCIPAL - TAMAÑO REDUCIDO ===== */
 .usado-modal-content h3 {
     font-family: var(--font-primary);
-    font-size: 2.2rem; /* REDUCIDO: de 2.8rem a 2.2rem */
+    font-size: 2.2rem;
     color: var(--primary-black);
-    margin-bottom: 15px; /* REDUCIDO: de 20px a 15px */
+    margin-bottom: 15px;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px; /* REDUCIDO: de 2px a 1.5px */
+    text-transform: none; /* CAMBIADO: de uppercase a none */
+    letter-spacing: 1.5px;
     line-height: 1.1;
     text-align: center;
 }
