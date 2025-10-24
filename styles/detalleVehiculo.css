@@ -1482,4 +1482,7 @@ button#consult-btn:focus:not(:focus-visible) {
     border-color: var(--primary-blue);
 }
 
-/* ===== SECCIÓN PRINCIPAL SIN PADDING INFERIOR ===== */
+/* ===== OVERRIDE: Eliminar recuadro azul del botón Randon ===== */
+.nav-button .btn-special:hover {
+    border-color: transparent !important;
+}

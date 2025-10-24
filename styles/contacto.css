@@ -721,7 +721,7 @@
 
 /* ===== CTA SECTION - CORREGIDO PARA UNA LÍNEA ===== */
 .contacto-cta-section {
-    padding: 80px 0;
+    padding: 120px 0;
     position: relative;
     overflow: hidden;
     text-align: center;
@@ -1925,4 +1925,35 @@
 .page-detalle .brands {
     background: #f8f9fa;
     margin-top: 40px;
+}
+
+/* ===== OVERRIDE: Eliminar recuadro azul del botón Randon ===== */
+.nav-button .btn-special:hover {
+    border-color: transparent !important;
+}
+
+/* ===== AJUSTE DE ESPACIADO FAQ - AGREGAR A contacto.css ===== */
+/* Agregar al final del archivo styles/contacto.css */
+
+/* Aumentar espacio entre pregunta y respuesta */
+.faq-answer {
+    padding-top: 20px !important;  /* Más espacio arriba de la respuesta */
+}
+
+.faq-answer.active {
+    padding: 20px 25px 25px !important;  /* Más padding cuando está abierta */
+}
+
+/* Alternativa: Si el padding no funciona, usar margin en el párrafo */
+.faq-answer p {
+    margin-top: 5px !important;
+    margin-bottom: 0 !important;
+    padding-top: 5px !important;
+}
+
+/* Ajuste adicional para móviles */
+@media (max-width: 480px) {
+    .faq-answer.active {
+        padding: 15px 15px 20px !important;
+    }
 }

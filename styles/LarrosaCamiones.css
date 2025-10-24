@@ -1667,3 +1667,8 @@
         display: none;
     }
 }
+
+/* ===== OVERRIDE: Eliminar recuadro azul del botón Randon ===== */
+.nav-button .btn-special:hover {
+    border-color: transparent !important;
+}

@@ -10,6 +10,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="../scripts/nav-session.js"></script>
+    <style>
+        .social-btn .social-icon-custom {
+            width: 20px;
+            height: 20px;
+            object-fit: contain;
+        }
+        
+        .social-btn:hover .social-icon-custom {
+            transform: scale(1.15);
+        }
+        </style>
 </head>
 <body>
     <!-- Navegación -->
@@ -41,7 +52,7 @@
                 <!-- Botón MercadoLibre -->
                
                 <!-- Botón Randon -->
-                <a href="LarrosaCamiones.html#randon" class="btn-special">
+                <a href="https://centrocamsa.com.ar/" class="btn-special">
                     <img src="../assets/Logo negro sin fondo.png" alt="Randon" class="btn-icon">
                 </a>
             </div>
@@ -274,8 +285,12 @@
                             <a href="https://www.instagram.com/larrosacamiones/?hl=es" class="social-btn instagram">
                                 <i class="fab fa-instagram"></i>
                             </a>
-                            <a href="https://www.mercadolibre.com.ar/pagina/larrosacamiones" class="social-btn mercadolibre">
-                                <i class="fas fa-store"></i>
+                            <a href="https://www.mercadolibre.com.ar/pagina/larrosacamiones" 
+                                class="social-btn mercadolibre" 
+                                 target="_blank">
+                                <img src="../assets/Icono meli.png" 
+                                 alt="Mercado Libre" 
+                                  class="social-icon-custom">
                             </a>
                         </div>
                     </div>
@@ -304,6 +319,182 @@
     </div>
 </section>
 
+<!-- ===== SECCIÓN PREGUNTAS FRECUENTES - VERSIÓN MEJORADA ===== -->
+<!-- Agregar DESPUÉS de la sección .contact-main-section y ANTES de .contacto-cta-section -->
+
+<section class="faq-section">
+    <div class="container">
+        <div class="faq-header">
+            <h2>Preguntas frecuentes</h2>
+            <p>Encuentra respuestas rápidas a las consultas más comunes sobre nuestros servicios.</p>
+        </div>
+        
+        <div class="faq-grid">
+            <!-- Pregunta 1 -->
+            <div class="faq-item">
+                <button class="faq-question" type="button">
+                    ¿Cómo puedo comunicarme con ustedes?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Podés comunicarte con nuestro equipo llamando al <strong>(+54) 353 4531381</strong> o escribiéndonos por WhatsApp al <strong>353 4404651</strong>.</p>
+                </div>
+            </div>
+
+            <!-- Pregunta 2 -->
+            <div class="faq-item">
+                <button class="faq-question" type="button">
+                    ¿Cuál es el horario de atención?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Nuestro horario de atención comercial es de lunes a viernes de <strong>8:00 a 13:00 hs</strong> y de <strong>14:00 a 17:00 hs</strong>, y los sábados de <strong>8:00 a 12:30 hs</strong>.</p>
+                </div>
+            </div>
+
+            <!-- Pregunta 3 -->
+            <div class="faq-item">
+                <button class="faq-question" type="button">
+                    ¿Qué documentación necesito para comprar un camión?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Para comprar un camión necesitás: DNI o CUIT/CUIL, comprobante de ingresos, y en caso de financiación, documentación adicional que te indicará nuestro equipo comercial.</p>
+                </div>
+            </div>
+
+            <!-- Pregunta 4 -->
+            <div class="faq-item">
+                <button class="faq-question" type="button">
+                    ¿Dónde se encuentran ubicados?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p>Nuestro concesionario se encuentra en <strong>Av. Larrabure y Chiclana (Ruta 9 Km 560), Villa María, Córdoba</strong>.</p>
+                </div>
+            </div>
+
+            <!-- Pregunta 5 -->
+            <div class="faq-item">
+                <button class="faq-question" type="button">
+                    ¿Aceptan permutas?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Sí.</strong> Recibimos camiones en buen estado como parte de pago. Nuestro equipo evalúa la unidad y te brinda una cotización estimada para avanzar con la operación.</p>
+                </div>
+            </div>
+
+            <!-- Pregunta 6 -->
+            <div class="faq-item">
+                <button class="faq-question" type="button">
+                    ¿Ofrecen financiación?
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="faq-answer">
+                    <p><strong>Sí.</strong> Contamos con planes de financiación a medida para facilitar tu compra. Contactanos y un asesor comercial te ayudará a encontrar el plan que mejor se ajuste a tus necesidades.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script>
+// FAQ Accordion - Versión mejorada con debugging
+(function() {
+    'use strict';
+    
+    function initializeFAQ() {
+        console.log('🔍 Inicializando FAQ...');
+        
+        const faqQuestions = document.querySelectorAll('.faq-question');
+        
+        if (faqQuestions.length === 0) {
+            console.error('❌ No se encontraron elementos .faq-question en el DOM');
+            return;
+        }
+        
+        console.log('✅ FAQ encontrado:', faqQuestions.length, 'preguntas');
+        
+        faqQuestions.forEach((question, index) => {
+            // Remover listeners previos si existen
+            const newQuestion = question.cloneNode(true);
+            question.parentNode.replaceChild(newQuestion, question);
+            
+            newQuestion.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                console.log('👆 Click en pregunta', index + 1);
+                
+                const answer = this.nextElementSibling;
+                const isActive = this.classList.contains('active');
+                
+                if (!answer || !answer.classList.contains('faq-answer')) {
+                    console.error('❌ No se encontró .faq-answer después de la pregunta');
+                    return;
+                }
+                
+                // Cerrar todas las preguntas
+                document.querySelectorAll('.faq-question').forEach(q => {
+                    q.classList.remove('active');
+                });
+                document.querySelectorAll('.faq-answer').forEach(a => {
+                    a.classList.remove('active');
+                });
+                
+                // Si no estaba activa, abrirla
+                if (!isActive) {
+                    this.classList.add('active');
+                    answer.classList.add('active');
+                    console.log('✅ Pregunta', index + 1, 'abierta');
+                } else {
+                    console.log('➖ Pregunta', index + 1, 'cerrada');
+                }
+            });
+        });
+        
+        console.log('✅ FAQ inicializado correctamente');
+    }
+    
+    // Ejecutar cuando el DOM esté completamente cargado
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializeFAQ);
+    } else {
+        // El DOM ya está listo, ejecutar inmediatamente
+        initializeFAQ();
+    }
+    
+    // También ejecutar después de un pequeño delay por si hay otros scripts
+    setTimeout(initializeFAQ, 500);
+})();
+</script>
+
+<!-- ===== NOTAS DE TROUBLESHOOTING ===== -->
+<!--
+Si el script no funciona, verifica en la Consola del Navegador (F12):
+
+1. Abre las Herramientas de Desarrollo (F12)
+2. Ve a la pestaña "Console"
+3. Busca estos mensajes:
+   - "🔍 Inicializando FAQ..."
+   - "✅ FAQ encontrado: 6 preguntas"
+   - "✅ FAQ inicializado correctamente"
+
+Si ves "❌ No se encontraron elementos .faq-question":
+   - El HTML no está correctamente insertado
+   - Verifica que la sección FAQ esté en el HTML
+
+Si ves errores de JavaScript:
+   - Puede haber conflicto con otros scripts
+   - Asegúrate que este script esté al FINAL, después de todos los demás
+
+Si los clicks no funcionan:
+   - Verifica que el CSS de contacto.css esté cargado
+   - Busca errores de CSS que puedan estar bloqueando los clicks
+-->
+
 <!-- CTA ACTUALIZADA -->
 <section class="contacto-cta-section">
     <div class="container">
@@ -327,69 +518,122 @@
     </div>
 </section>
 
-<!-- FOOTER ACTUALIZADO -->
-<footer class="footer">
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-section">
-                <img src="../assets/LOGO AZUL footer.png" alt="Larrosa Camiones" class="footer-logo">
-                <p class="footer-description">Más de 40 años de trayectoria en la comercialización de camiones.</p>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/p/Larrosa-Camiones-100032453304802/?locale=es_LA" class="social-btn facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.instagram.com/larrosacamiones/?hl=es" class="social-btn instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://www.mercadolibre.com.ar/pagina/larrosacamiones" class="social-btn mercadolibre">
-                        <i class="fas fa-store"></i>
-                    </a>
+<!-- ===== FOOTER COMPLETO Y CORREGIDO ===== -->
+<!-- Reemplaza TODO el <footer> en contacto.html con este código -->
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Sección 1: Logo y redes sociales -->
+                <div class="footer-section">
+                    <img src="../assets/LOGO AZUL footer.png" alt="Larrosa Camiones" class="footer-logo">
+                    <p class="footer-description">Más de 40 años de trayectoria en la comercialización de camiones.</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/p/Larrosa-Camiones-100032453304802/?locale=es_LA" 
+                           class="social-btn facebook" 
+                           target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/larrosacamiones/?hl=es" 
+                           class="social-btn instagram" 
+                           target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.mercadolibre.com.ar/pagina/larrosacamiones" 
+                           class="social-btn mercadolibre" 
+                           target="_blank">
+                            <img src="../assets/Icono meli.png" 
+                                 alt="Mercado Libre" 
+                                 class="social-icon-custom">
+                        </a>
+                    </div>
+                </div>
+    
+                <!-- Sección 2: Navegación -->
+                <div class="footer-section">
+                    <h4 class="footer-title">Navegación</h4>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Inicio</a></li>
+                        <li><a href="unidadesDisponibles.html">Unidades Disponibles</a></li>
+                        <li><a href="LarrosaCamiones.html">Larrosa Camiones</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Sección 3: Servicios -->
+                <div class="footer-section">
+                    <h4 class="footer-title">Servicios</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Venta de Camiones</a></li>
+                        <li><a href="#">Productos Randon</a></li>
+                        <li><a href="#">Financiación</a></li>
+                        <li><a href="#">Servicio Técnico</a></li>
+                    </ul>
+                </div>
+    
+                <!-- Sección 4: Contacto -->
+                <div class="footer-section">
+                    <h4 class="footer-title">Contacto</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> Av. Larrabure y Chiclana (Ruta 9 Km 560) Villa María, Córdoba, Argentina</p>
+                        <p><i class="fas fa-phone"></i> +54 353 4404651</p>
+                        <p><i class="fas fa-envelope"></i> Recepcion@larrosacamiones.com.ar</p>
+                        <p><i class="fab fa-whatsapp"></i> WhatsApp Business</p>
+                    </div>
                 </div>
             </div>
-
-            <div class="footer-section">
-                <h4 class="footer-title">Navegación</h4>
-                <ul class="footer-links">
-                    <li><a href="../index.html">Inicio</a></li>
-                    <li><a href="unidadesDisponibles.html">Unidades Disponibles</a></li>
-                    <li><a href="LarrosaCamiones.html">Larrosa Camiones</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
-                </ul>
+    
+            <!-- Botón Admin -->
+            <div class="footer-admin">
+                <a href="../admin/login.html" class="btn-admin-footer" title="Panel de Administración">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Administración</span>
+                </a>
             </div>
-
-            <div class="footer-section">
-                <h4 class="footer-title">Servicios</h4>
-                <ul class="footer-links">
-                    <li><a href="#">Venta de Camiones</a></li>
-                    <li><a href="#">Productos Randon</a></li>
-                    <li><a href="#">Financiación</a></li>
-                    <li><a href="#">Servicio Técnico</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4 class="footer-title">Contacto</h4>
-                <div class="footer-contact">
-                    <p><i class="fas fa-map-marker-alt"></i> Av. Larrabure y Chiclana (Ruta 9 Km 560) Villa María, Córdoba, Argentina</p>
-                    <p><i class="fas fa-phone"></i> +54 353 4404651</p>
-                    <p><i class="fas fa-envelope"></i> Recepcion@larrosacamiones.com.ar</p>
-                    <p><i class="fab fa-whatsapp"></i> WhatsApp Business</p>
-                </div>
+    
+            <!-- Copyright -->
+            <div class="footer-bottom">
+                <p>&copy; 2025 Larrosa Camiones. Todos los derechos reservados.</p>
             </div>
         </div>
-
-        <div class="footer-admin">
-            <a href="../admin/login.html" class="btn-admin-footer" title="Panel de Administración">
-                <i class="fas fa-user-shield"></i>
-                <span>Administración</span>
-            </a>
-        </div>
-
-        <div class="footer-bottom">
-            <p>&copy; 2025 Larrosa Camiones. Todos los derechos reservados.</p>
-        </div>
-    </div>
-</footer>
+    </footer>
+    
+    <!-- ===== CSS PARA EL LOGO DE MERCADO LIBRE ===== -->
+    <!-- Agregar esto en el <head> de contacto.html -->
+    
+    <style>
+    /* Ajustar el logo personalizado de Mercado Libre en el footer */
+    .footer .social-links .social-icon-custom {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    
+    /* Asegurar que los botones sociales estén en fila horizontal */
+    .footer .social-links {
+        display: flex !important;
+        flex-direction: row !important;
+        gap: 12px !important;
+        align-items: center !important;
+    }
+    
+    .footer .social-btn {
+        width: 40px !important;
+        height: 40px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border-radius: 50% !important;
+    }
+    
+    /* Efecto hover */
+    .footer .social-btn:hover .social-icon-custom {
+        transform: scale(1.1);
+        transition: transform 0.3s ease;
+    }
+    </style>
 
 
     <!-- JavaScript para funcionalidad adicional -->

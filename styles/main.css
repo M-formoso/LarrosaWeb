@@ -14,7 +14,7 @@
     /* Colores secundarios */
     --secondary-dark-blue: #14264D;
     --secondary-light-blue: #7286B5;
-    --secondary-gray: #868991;
+    --secondary-gray: #747474;
     
     /* Tipografía */
     --font-primary: 'Roboto', sans-serif;
@@ -165,61 +165,106 @@ body {
     
 }
 
-/* ===== NAVEGACIÓN CORREGIDA - REEMPLAZAR EN styles/main.css ===== */
+/* ===== CORRECCIÓN FORZADA DE NAVEGACIÓN - AGREGARLO AL FINAL DE main.css ===== */
 
-/* EFECTO HOVER EN NAVEGACIÓN CON RAYA DEBAJO POSICIONADA MÁS ABAJO */
-.nav-link {
-    text-decoration: none;
-    color: var(--primary-black);
-    font-weight: 600;
-    font-size: 1rem;
-    transition: var(--transition-fast);
-    padding: 0.5rem 1rem 0.8rem 1rem; /* AUMENTADO: más padding inferior para bajar la raya */
-    border-radius: 0;
-    position: relative;
-    overflow: hidden;
-    background: transparent;
+/* ELIMINAR todos los estilos anteriores de .nav-link y reemplazar con estos */
+
+/* Reset completo de navegación */
+.navbar .nav-menu .nav-link {
+    all: unset !important;
+    display: inline-block !important;
+    text-decoration: none !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    font-family: 'Roboto', sans-serif !important;
+    transition: all 0.3s ease !important;
+    padding: 0.5rem 1rem 0.8rem 1rem !important;
+    border-radius: 0 !important;
+    position: relative !important;
+    overflow: hidden !important;
+    background: transparent !important;
+    cursor: pointer !important;
 }
 
-.nav-link:hover {
-    color: var(--primary-blue);
-    background: transparent;
-    transform: translateY(-1px);
+/* Hover - mantener negro */
+.navbar .nav-menu .nav-link:hover {
+    color: #000000 !important;
+    background: transparent !important;
+    transform: translateY(-1px) !important;
 }
 
-.nav-link.active {
-    color: var(--primary-blue);
-    background: transparent;
+/* Active - mantener negro y negritas */
+.navbar .nav-menu .nav-link.active {
+    color: #000000 !important;
+    background: transparent !important;
+    font-weight: 700 !important;
 }
 
-/* BARRA AZUL POSICIONADA MÁS ABAJO */
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 1px; /* CAMBIADO: era 0, ahora 4px más abajo */
-    left: 50%;
-    width: 0;
-    height: 3px;
-    background: var(--primary-blue);
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
+/* Barra azul inferior */
+.navbar .nav-menu .nav-link::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: 1px !important;
+    left: 50% !important;
+    width: 0 !important;
+    height: 3px !important;
+    background: #3D5FAC !important;
+    transition: all 0.3s ease !important;
+    transform: translateX(-50%) !important;
 }
 
-.nav-link:hover::after,
-.nav-link.active::after {
-    width: 80%;
+.navbar .nav-menu .nav-link:hover::after,
+.navbar .nav-menu .nav-link.active::after {
+    width: 80% !important;
 }
 
-/* ===== ASEGURAR QUE LA BARRA SE MANTENGA EN MOBILE ===== */
+/* EXTRA: Forzar para todos los nav-item también */
+.navbar .nav-item .nav-link {
+    color: #000000 !important;
+    font-weight: 700 !important;
+}
+
+.navbar .nav-item .nav-link:hover {
+    color: #000000 !important;
+}
+
+.navbar .nav-item .nav-link.active {
+    color: #000000 !important;
+    font-weight: 700 !important;
+}
+
+/* Asegurar que no haya estilos heredados que interfieran */
+.navbar .nav-menu a {
+    color: #000000 !important;
+    font-weight: 700 !important;
+}
+
+/* Si hay un contenedor nav-container */
+.nav-container .nav-link {
+    color: #000000 !important;
+    font-weight: 700 !important;
+}
+
+/* ===== RESPONSIVE - MANTENER ESTILOS EN MÓVIL ===== */
 @media (max-width: 768px) {
-    .nav-link {
-        padding: 1rem 1rem 1.2rem 1rem; /* Más espacio en móvil */
-    }
-    
-    .nav-link::after {
-        bottom: 8px; /* Más separación en móvil */
+    .navbar .nav-menu .nav-link {
+        color: #000000 !important;
+        font-weight: 700 !important;
+        padding: 1rem !important;
     }
 }
+
+/* ===== DEBUGGING - PUEDES COMENTAR ESTO DESPUÉS ===== */
+/* Esto te ayudará a ver qué elemento está causando el problema */
+/*
+.nav-link {
+    border: 2px solid red !important;
+    background: yellow !important;
+}
+*/
+
+
 
 /* LOGO RANDON - MANTENER ESTILO ORIGINAL */
 .nav-button .btn-special {
@@ -667,8 +712,9 @@ body {
     }
     
     .hero-section .category-btn:hover {
-        background: #f3f4f6 !important; /* MANTENER: Hover gris */
-        border-color: #d1d5db !important;
+        
+        border: none !important; /* ELIMINADO EL BORDE */
+        
     }
     
     .hero-section .category-btn::after {
@@ -980,9 +1026,8 @@ body {
 }
 
 .unit-details .unit-year {
-    font-weight: 600;
-    color: var(--primary-black);
-}
+    font-weight: 400;
+    color: var(--secondary-gray)}
 
 /* Eliminar elementos innecesarios */
 .unit-location {
@@ -1039,14 +1084,14 @@ body {
     background: var(--primary-white);
     color: var(--primary-black);
     border: 2px solid var(--primary-black);
-    padding: 0.7rem 1.8rem !important;
+    padding: 0.6rem 1.5rem !important;
     font-family: var(--font-primary);
-    font-size: 0.8rem !important;
+    font-size: 0.75rem !important;
     border-radius: 0;
     cursor: pointer;
     transition: var(--transition-fast);
     text-transform: uppercase;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     letter-spacing: 0.8px !important;
     text-decoration: none !important;
     display: inline-block;
@@ -5057,5 +5102,282 @@ body.modal-open {
     
     .carousel-indicator.active {
         width: 24px !important;
+    }
+}
+
+/* ===== UNIFICACIÓN DE GRISES - COLOR #747474 ===== */
+/* Agregar este código al final de styles/main.css */
+
+/* ===== ACTUALIZAR VARIABLE CSS ===== */
+:root {
+    --secondary-gray: #747474 !important; /* NUEVO GRIS UNIFICADO */
+}
+
+/* ===== SECCIÓN HERO - TEXTO SOBRE VIDEO ===== */
+.hero-year {
+    color: #747474 !important;
+}
+
+/* ===== TÍTULO "UNIDADES DESTACADAS" ===== */
+.section-title-special {
+    color: #747474 !important;
+}
+
+.section-title-special .word-normal {
+    color: #747474 !important;
+}
+
+.section-title-special .word-large {
+    color: #747474 !important;
+}
+
+/* ===== CARDS DE UNIDADES - DETALLES TÉCNICOS ===== */
+.unit-details {
+    color: #747474 !important;
+}
+
+/* ===== SECCIÓN "¿POR QUÉ LARROSA?" ===== */
+.value-description {
+    color: #747474 !important;
+}
+
+/* ===== SECCIÓN TESTIMONIOS ===== */
+.testimonials-new .testimonials-subtitle {
+    color: #747474 !important;
+}
+
+.testimonials-new .testimonial-text-new {
+    color: #747474 !important;
+}
+
+/* ===== CARD RANDON - DESCRIPCIÓN ===== */
+.randon-description {
+    color: #747474 !important;
+}
+
+.randon-text-content p {
+    color: #747474 !important;
+}
+
+/* ===== FORMULARIO "COMPRAMOS TU USADO" ===== */
+.usado-modal-content p {
+    color: #747474 !important;
+}
+
+.usado-form input::placeholder,
+.usado-form textarea::placeholder {
+    color: #747474 !important;
+}
+
+/* ===== FOOTER ===== */
+.footer-description {
+    color: #747474 !important;
+}
+
+.footer-contact p {
+    color: #747474 !important;
+}
+
+/* ===== CUALQUIER OTRO TEXTO GRIS EN INICIO ===== */
+.hero-section p,
+.hero-subtitle {
+    color: #747474 !important;
+}
+
+/* Texto secundario en general */
+p.text-gray,
+span.text-gray,
+.secondary-text {
+    color: #747474 !important;
+}
+
+/* ===== ASEGURAR QUE SE APLIQUE EN TODOS LOS ELEMENTOS ===== */
+/* Si hay algún gris que se me escapó, usa esta clase genérica */
+.gray-text {
+    color: #747474 !important;
+}
+
+/* ===== RESPONSIVE - MANTENER EL GRIS EN TODAS LAS PANTALLAS ===== */
+@media (max-width: 768px) {
+    .hero-year,
+    .section-title-special,
+    .unit-details,
+    .value-description,
+    .testimonials-new .testimonials-subtitle,
+    .testimonials-new .testimonial-text-new,
+    .randon-description,
+    .footer-description {
+        color: #747474 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-year,
+    .section-title-special,
+    .unit-details,
+    .value-description,
+    .testimonials-new .testimonials-subtitle,
+    .testimonials-new .testimonial-text-new,
+    .randon-description,
+    .footer-description {
+        color: #747474 !important;
+    }
+}
+
+/* ===== DEBUGGING - COMENTAR DESPUÉS DE VERIFICAR ===== */
+/* Esto te ayudará a ver todos los elementos grises */
+/*
+[style*="color: #868991"],
+[style*="color: #6b7280"],
+[style*="color: #4b5563"],
+[style*="color: rgb(134, 137, 145)"] {
+    outline: 2px dashed red !important;
+}
+*/
+
+/* ===== QUITAR BORDES DE BOTONES DE CATEGORÍAS ===== */
+/* Agregar este código al final de styles/main.css */
+
+/* Eliminar todos los bordes de los botones de categorías */
+.hero-section .category-btn {
+    border: none !important; /* ELIMINAR BORDE */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important; /* Mantener sombra sutil */
+}
+
+.hero-section .category-btn:hover {
+    border: none !important; /* ELIMINAR BORDE en hover también */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important; /* Sombra más pronunciada en hover */
+}
+
+.hero-section .category-btn:active {
+    border: none !important;
+}
+
+.hero-section .category-btn:focus {
+    border: none !important;
+    outline: none !important; /* También eliminar outline si lo había */
+}
+
+/* ===== RESPONSIVE - SIN BORDES EN TODAS LAS PANTALLAS ===== */
+@media (max-width: 1024px) {
+    .hero-section .category-btn {
+        border: none !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section .category-btn {
+        border: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section .category-btn {
+        border: none !important;
+    }
+}
+/* ===== AGRANDAR TEXTOS DEL HERO ===== */
+/* Agregar este código al final de styles/main.css */
+
+/* "Desde 1977" - MÁS GRANDE */
+.hero-year {
+    font-size: 2rem !important; /* AUMENTADO: de 1.4rem a 2rem */
+    font-weight: 300 !important;
+    color: var(--primary-white) !important;
+    margin: 0 0 0.3rem 0 !important;
+    letter-spacing: 0.5px !important;
+    line-height: 1 !important;
+    opacity: 0.95 !important;
+}
+
+/* "Comercializando camiones" - MÁS GRANDE */
+.hero-main-title {
+    font-size: 4.5rem !important; /* AUMENTADO: de 3.2rem a 4.5rem */
+    font-weight: 700 !important;
+    color: var(--primary-white) !important;
+    margin: 0 !important;
+    letter-spacing: 0.5px !important;
+    line-height: 1 !important;
+    text-transform: none !important;
+    white-space: nowrap !important;
+}
+
+/* ===== RESPONSIVE - AJUSTAR TAMAÑOS EN DIFERENTES PANTALLAS ===== */
+
+@media (max-width: 1400px) {
+    .hero-year {
+        font-size: 1.8rem !important;
+    }
+    
+    .hero-main-title {
+        font-size: 4rem !important;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero-year {
+        font-size: 1.6rem !important;
+    }
+    
+    .hero-main-title {
+        font-size: 3.5rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-year {
+        font-size: 1.4rem !important;
+        margin-bottom: 0.2rem !important;
+    }
+    
+    .hero-main-title {
+        font-size: 2.8rem !important;
+        white-space: normal !important; /* Permitir salto de línea en móvil */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-year {
+        font-size: 1.2rem !important;
+    }
+    
+    .hero-main-title {
+        font-size: 2.2rem !important;
+        letter-spacing: 0.3px !important;
+        white-space: normal !important;
+    }
+}
+
+/* ===== AJUSTAR POSICIÓN DEL CONTENEDOR SI ES NECESARIO ===== */
+.hero-text-overlay {
+    position: absolute !important;
+    bottom: 120px !important;
+    left: 9.5% !important;
+    z-index: 5 !important;
+    text-align: left !important;
+    max-width: 1200px !important;
+    white-space: nowrap !important;
+}
+
+/* Ajustar en pantallas más pequeñas */
+@media (max-width: 1024px) {
+    .hero-text-overlay {
+        bottom: 100px !important;
+        left: 7% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-text-overlay {
+        bottom: 80px !important;
+        left: 5% !important;
+        max-width: 90% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text-overlay {
+        bottom: 70px !important;
+        left: 4% !important;
     }
 }
